@@ -4,7 +4,7 @@
 
     border: 2px solid $sw-frame;
     border-radius: 6px;
-    background: linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel-shade);
+    background: linear-gradient(180deg, $sw-panel-light, $sw-panel-shade);
     color: $sw-ink;
 
     &__wrapper {

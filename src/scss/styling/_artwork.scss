@@ -39,7 +39,7 @@
     .sheet-sw-wrapper .sheet-sw-armour__wrapper.sheet-sw-panel {
         background:
             url($sw-art-armour-figure) 50% 3.5rem / auto 75% no-repeat,
-            linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel-shade);
+            linear-gradient(180deg, $sw-panel-light, $sw-panel-shade);
     }
 }
 

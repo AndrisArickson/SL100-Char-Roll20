@@ -247,7 +247,7 @@
                 &--1, &--2, &--3, &--4 {
                     display: none;
 
-                    background: linear-gradient(180deg, lighten($sw-success, 6%), $sw-success);
+                    background: linear-gradient(180deg, $sw-success-light, $sw-success);
                     border-radius: 2px;
                     color: #fff;
 

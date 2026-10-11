@@ -960,7 +960,7 @@ button.sheet-pictos[type=action]:hover {
 }
 .sheet-sw-settings__controlwrap span.sheet-sw-current_level--1, .sheet-sw-settings__controlwrap span.sheet-sw-current_level--2, .sheet-sw-settings__controlwrap span.sheet-sw-current_level--3, .sheet-sw-settings__controlwrap span.sheet-sw-current_level--4 {
   display: none;
-  background: linear-gradient(180deg, rgb(14.133126935%, 57.4747162023%, 35.8039215686%), #1e7a4c);
+  background: linear-gradient(180deg, #24935b, #1e7a4c);
   border-radius: 2px;
   color: #fff;
   font-size: 9pt;
@@ -1263,7 +1263,7 @@ button.sheet-pictos[type=action]:hover {
 }
 
 .sheet-sw-wrapper .sheet-sw-panel {
-  background: linear-gradient(180deg, rgb(96.5411764706%, 97.1176470588%, 97.6941176471%), #edf0f3 40%, #dde3e9);
+  background: linear-gradient(180deg, #f6f8f9, #edf0f3 40%, #dde3e9);
   border: 1px solid #0a0d12;
   border-radius: 3px;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
@@ -1283,7 +1283,7 @@ button.sheet-pictos[type=action]:hover {
 }
 
 .sheet-sw-wrapper .sheet-sw-armour__wrapper.sheet-sw-panel {
-  background: radial-gradient(circle at 50% 55%, transparent 0, transparent 58px, rgba(44, 109, 155, 0.25) 59px, rgba(44, 109, 155, 0.25) 60px, transparent 61px, transparent 100px, rgba(44, 109, 155, 0.18) 101px, rgba(44, 109, 155, 0.18) 102px, transparent 103px), linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% + 0.5px), transparent calc(50% + 0.5px)), linear-gradient(180deg, rgb(96.5411764706%, 97.1176470588%, 97.6941176471%), #dde3e9);
+  background: radial-gradient(circle at 50% 55%, transparent 0, transparent 58px, rgba(44, 109, 155, 0.25) 59px, rgba(44, 109, 155, 0.25) 60px, transparent 61px, transparent 100px, rgba(44, 109, 155, 0.18) 101px, rgba(44, 109, 155, 0.18) 102px, transparent 103px), linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% + 0.5px), transparent calc(50% + 0.5px)), linear-gradient(180deg, #f6f8f9, #dde3e9);
 }
 
 .sheet-sw-armour__display {
@@ -1377,7 +1377,7 @@ button.sheet-pictos[type=action]:hover {
   color: white;
 }
 .sheet-sw-wrapper .itemcontrol a.repcontrol_move {
-  background: rgb(96.5411764706%, 97.1176470588%, 97.6941176471%);
+  background: #f6f8f9;
 }
 .sheet-sw-wrapper .repcontrol {
   border-bottom: 1px solid rgba(60, 72, 87, 0.55);
@@ -1621,7 +1621,7 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   padding: 6px;
   border: 2px solid #151a21;
   border-radius: 6px;
-  background: linear-gradient(180deg, rgb(96.5411764706%, 97.1176470588%, 97.6941176471%), #dde3e9);
+  background: linear-gradient(180deg, #f6f8f9, #dde3e9);
   color: #10151c;
 }
 .sheet-sw-npc__wrapper h1 {
@@ -2020,10 +2020,10 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   margin-right: 0.5rem;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__success {
-  background: linear-gradient(180deg, rgb(14.133126935%, 57.4747162023%, 35.8039215686%), #1e7a4c);
+  background: linear-gradient(180deg, #24935b, #1e7a4c);
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__fail {
-  background: linear-gradient(180deg, rgb(74.3644189383%, 18.0277379244%, 19.8305117169%), #a5282c);
+  background: linear-gradient(180deg, #be2e33, #a5282c);
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__row, .sheet-rolltemplate-sw .sheet-sw-roll__row--full {
   display: grid;

@@ -117,6 +117,9 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     for (const match of css.matchAll(/url\(\s*["']?([^"')]*)/g)) {
         if (/[;@]/.test(match[1])) errors.push(`sw100.css has a url() containing ';' or '@', which Roll20 may reject: ${match[1]}`);
     }
+    // Modern Sass colour maths emits rgb(12.3%, ...) / hsl(...); stick to hex and rgba(r, g, b, a).
+    const modernColour = css.match(/rgba?\([^)]*%[^)]*\)|hsla?\([^)]*\)/);
+    if (modernColour) errors.push(`sw100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
 }
 
 // The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.

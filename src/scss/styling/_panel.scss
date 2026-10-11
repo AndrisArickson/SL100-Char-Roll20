@@ -1,5 +1,5 @@
 .sheet-sw-wrapper .sheet-sw-panel {
-    background: linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel 40%, $sw-panel-shade);
+    background: linear-gradient(180deg, $sw-panel-light, $sw-panel 40%, $sw-panel-shade);
 
     border: 1px solid #0a0d12;
     border-radius: 3px;
@@ -30,7 +30,7 @@
         background:
             radial-gradient(circle at 50% 55%, transparent 0, transparent 58px, rgba($sw-holo, .25) 59px, rgba($sw-holo, .25) 60px, transparent 61px, transparent 100px, rgba($sw-holo, .18) 101px, rgba($sw-holo, .18) 102px, transparent 103px),
             linear-gradient(90deg, transparent calc(50% - .5px), rgba($sw-holo, .18) calc(50% - .5px), rgba($sw-holo, .18) calc(50% + .5px), transparent calc(50% + .5px)),
-            linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel-shade);
+            linear-gradient(180deg, $sw-panel-light, $sw-panel-shade);
     }
 
     &__display {

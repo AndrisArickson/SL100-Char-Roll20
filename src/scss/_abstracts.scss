@@ -3,6 +3,9 @@ $margin-small: .25rem;
 $margin-general: .5rem;
 $margin-large: 1rem;
 
+// Colours are plain hex on purpose: Sass colour functions (lighten etc.)
+// emit percentage rgb()/hsl() values that Roll20's CSS sanitizer may reject.
+//
 // SW100 palette: a gunmetal console frame, pale datapad panels, hologram-blue
 // inputs and a signal-yellow accent.
 $sw-frame: #151a21;
@@ -11,12 +14,15 @@ $sw-steel: #3c4857;
 $sw-ink: #10151c;
 $sw-panel: #edf0f3;
 $sw-panel-shade: #dde3e9;
+$sw-panel-light: #f6f8f9;
 $sw-holo: #2c6d9b;
 $sw-holo-dark: #1d4f73;
 $sw-accent: #f3c331;
 $sw-accent-dark: #a77b06;
 $sw-success: #1e7a4c;
+$sw-success-light: #24935b;
 $sw-fail: #a5282c;
+$sw-fail-light: #be2e33;
 
 $border-color: rgba($sw-steel, .55);
 $border-color-recessed: rgba($sw-steel, .45);

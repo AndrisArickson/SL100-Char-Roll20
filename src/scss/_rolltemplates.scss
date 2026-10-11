@@ -134,11 +134,11 @@
         }
 
         &__success {
-            background: linear-gradient(180deg, lighten($sw-success, 6%), $sw-success);
+            background: linear-gradient(180deg, $sw-success-light, $sw-success);
         }
 
         &__fail {
-            background: linear-gradient(180deg, lighten($sw-fail, 6%), $sw-fail);
+            background: linear-gradient(180deg, $sw-fail-light, $sw-fail);
         }
 
         &__row {

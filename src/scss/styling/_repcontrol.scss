@@ -1,11 +1,11 @@
-.sheet-sw-wrapper {
+.sheet-sl-wrapper {
 
     .repcontainer {
 
         &.editmode { 
 
             + .repcontrol .repcontrol_edit {
-                background: rgba($sw-accent, 0.6);
+                background: rgba($sl-accent, 0.6);
                 
             }
         }
@@ -27,12 +27,12 @@
         }
 
         button.repcontrol_del {
-            background: $sw-fail;
+            background: $sl-fail;
             color: white;
         }
 
         a.repcontrol_move {
-            background: lighten($sw-panel, 3%); 
+            background: $sl-panel-light; 
         }
 
     }

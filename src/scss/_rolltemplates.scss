@@ -1,10 +1,10 @@
-.sheet-rolltemplate-sw {
+.sheet-rolltemplate-sl {
     overflow: hidden;
 
-    border: 1px solid $sw-frame;
+    border: 1px solid $sl-frame;
     border-radius: 4px;
-    background: $sw-panel;
-    color: $sw-ink;
+    background: $sl-panel;
+    color: $sl-ink;
 
     font-family: $font-family-alt;
 
@@ -20,7 +20,7 @@
     h1 {
         padding: .5rem 0 .25rem;
 
-        color: $sw-ink;
+        color: $sl-ink;
 
         font-family: $font-family-display;
         letter-spacing: .06em;
@@ -31,7 +31,7 @@
     }
 
     h2 {
-        color: $sw-steel;
+        color: $sl-steel;
 
         font-size: 10pt;
     }
@@ -39,13 +39,13 @@
     h3 {
         font-size: 9pt; 
         text-transform: uppercase;
-        color: $sw-steel;
+        color: $sl-steel;
     }
 
     > h3 {
         padding: 4px 0;
 
-        background: $sw-starfield;
+        background: $sl-starfield;
         color: #b9c7d6;
 
         font-family: $font-family-display;
@@ -66,15 +66,15 @@
 
     .sheet-fullcrit,
     .fullcrit {
-        color: $sw-success;
+        color: $sl-success;
     }
 
     .sheet-fullfail,
     .fullfail {
-        color: $sw-fail;
+        color: $sl-fail;
     }
 
-    .sheet-sw-roll {
+    .sheet-sl-roll {
         display: grid;
             gap: .25rem;
         padding: .5rem 1rem 1rem;
@@ -85,13 +85,13 @@
             margin: .25rem 0;
             grid-column: 1/-1;
 
-            background: linear-gradient(90deg, transparent, $sw-accent 20%, $sw-accent 80%, transparent);
+            background: linear-gradient(90deg, transparent, $sl-accent 20%, $sl-accent 80%, transparent);
         }
 
         &__result {
             grid-column: 1 / -1;
 
-            color: $sw-holo-dark;
+            color: $sl-holo-dark;
 
             font-family: $font-family-display;
             font-size: 3.25rem;
@@ -106,9 +106,9 @@
             grid-template-columns: 1fr 3em;
             padding: .5rem;
 
-            border: 1px solid rgba($sw-holo, .5);
+            border: 1px solid rgba($sl-holo, .5);
             border-radius: 3px;
-            background: rgba($sw-holo, .1);
+            background: rgba($sl-holo, .1);
 
             font-weight: bold;
         }
@@ -134,11 +134,11 @@
         }
 
         &__success {
-            background: linear-gradient(180deg, lighten($sw-success, 6%), $sw-success);
+            background: linear-gradient(180deg, $sl-success-light, $sl-success);
         }
 
         &__fail {
-            background: linear-gradient(180deg, lighten($sw-fail, 6%), $sw-fail);
+            background: linear-gradient(180deg, $sl-fail-light, $sl-fail);
         }
 
         &__row {
@@ -151,7 +151,7 @@
             }
 
             &--full {
-                @extend .sheet-sw-roll__row;
+                @extend .sheet-sl-roll__row;
                 grid-template-columns: 1fr;
 
                 grid-column: 1 / -1;
@@ -159,7 +159,7 @@
         }
 
         &__label {
-            color: $sw-steel;
+            color: $sl-steel;
 
             font-family: $font-family-display;
             font-size: .8em;

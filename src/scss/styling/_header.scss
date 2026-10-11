@@ -1,4 +1,4 @@
-.sheet-sw-header {
+.sheet-sl-header {
     padding: 0;
     overflow: hidden;
 
@@ -8,23 +8,37 @@
             align-items: center;
             justify-content: center;
 
-        background: $sw-starfield;
-        border-bottom: 3px solid $sw-accent;
+        background: $sl-starfield;
+        border-bottom: 3px solid $sl-accent;
     }
 
     &__logo-title {
-        color: $sw-accent;
+        color: $sl-accent;
 
-        font-family: $font-family-display;
-        font-size: 44px;
-        font-weight: 900;
-        letter-spacing: .18em;
+        font-family: $font-family-title;
+        font-size: 38px;
+        font-weight: 400;
+        letter-spacing: .14em;
         line-height: 1;
-        text-shadow: 0 0 12px rgba($sw-accent, .35);
+        text-transform: uppercase;
+        text-shadow: 0 0 12px rgba($sl-accent, .35);
+    }
+
+    &__logo-tagline {
+        margin-top: 4px;
+
+        color: #e6edf4;
+
+        font-family: $font-family-title;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: .55em;
+        line-height: 1;
+        text-transform: uppercase;
     }
 
     &__logo-subtitle {
-        margin-top: 6px;
+        margin-top: 8px;
 
         color: #b9c7d6;
 
@@ -37,6 +51,25 @@
 
     &__info {
         padding-top: .5em;
+    }
+
+    &__portrait {
+        overflow: hidden;
+
+        border: 2px solid $sl-accent;
+        border-radius: 3px;
+        background: $sl-starfield;
+        box-shadow: 0 0 0 1px $sl-frame, 0 0 10px rgba($sl-accent, .3);
+    }
+
+    &__portrait-empty {
+        color: #b9c7d6;
+
+        font-family: $font-family-display;
+        font-size: 9px;
+        letter-spacing: .08em;
+        line-height: 1.4;
+        text-transform: uppercase;
     }
 
     &__item-wrapper {
@@ -68,7 +101,7 @@
     &__title {
         padding: $margin-small;
 
-        color: $sw-steel;
+        color: $sl-steel;
 
         font-family: $font-family-display;
         font-size: 10px;

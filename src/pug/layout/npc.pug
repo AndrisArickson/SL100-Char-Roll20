@@ -1,33 +1,33 @@
-.sw-npc__wrapper
+.sl-npc__wrapper
 
-    .sw-npcsettings
+    .sl-npcsettings
 
-        label.sw-npcsettings__toggle 
-            input.sw-npcsettings__hide(name="attr_npc_settings", type="checkbox")
+        label.sl-npcsettings__toggle 
+            input.sl-npcsettings__hide(name="attr_npc_settings", type="checkbox")
             span.pictos y
             
         input(name="attr_npc_settings", type="hidden")
 
-        .sw-npcsettings__wrapper
+        .sl-npcsettings__wrapper
 
-            .sw-npcsettings__name
-                .sw-npcsettings__label(data-i18n="Name")
-                input.sw-npcsettings__input(name=`attr_character_name`, type="text")
+            .sl-npcsettings__name
+                .sl-npcsettings__label(data-i18n="Name")
+                input.sl-npcsettings__input(name=`attr_character_name`, type="text")
 
-            .sw-npcsettings__description
-                .sw-npcsettings__label(data-i18n="Description")
-                textarea.sw-npcsettings__textarea(name=`attr_npc_description`)
+            .sl-npcsettings__description
+                .sl-npcsettings__label(data-i18n="Description")
+                textarea.sl-npcsettings__textarea(name=`attr_npc_description`)
 
             h2(data-i18n="Characteristics")
-            .sw-npcsettings__characteristics
+            .sl-npcsettings__characteristics
                 each characteristic in npc_characteristics
                     - const attr = characteristic.name.toLowerCase().replace(/ /g,"_");
-                    .sw-npcsettings__characteristic
-                        .sw-npcsettings__label(data-i18n=characteristic.abbreviation)
-                        input.sw-npcsettings__input(name=`attr_${attr}`, type="number")
+                    .sl-npcsettings__characteristic
+                        .sl-npcsettings__label(data-i18n=characteristic.abbreviation)
+                        input.sl-npcsettings__input(name=`attr_${attr}`, type="number")
 
             h2(data-i18n="Skills")
-            .sw-npcsettings__skills
+            .sl-npcsettings__skills
                 - 
                     const skill_list = [...skills.basic, ...skills.advanced].sort((a,b)=> {                    
                         let nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -44,30 +44,30 @@
                     - 
                         const attr = skill.name.toLowerCase().replace(/ /g,"-");
                     if (skill.grouped !== true)
-                        .sw-npcsettings__skill
-                            .sw-npcsettings__label(data-i18n=skill.name)
-                            input.sw-npcsettings__input(name=`attr_${attr}`, type="number")
+                        .sl-npcsettings__skill
+                            .sl-npcsettings__label(data-i18n=skill.name)
+                            input.sl-npcsettings__input(name=`attr_${attr}`, type="number")
                             
                     if (skill.name === "Melee" || skill.name === "Ranged" || skill.name === "Force" || skill.name === "Language")
                         each specialism in skill.specialisations
-                            .sw-npcsettings__skill
-                                .sw-npcsettings__label(data-i18n=`${skill.name} (${specialism})`) 
-                                input.sw-npcsettings__input(name=`attr_${specialism}`, type="number")
+                            .sl-npcsettings__skill
+                                .sl-npcsettings__label(data-i18n=`${skill.name} (${specialism})`) 
+                                input.sl-npcsettings__input(name=`attr_${specialism}`, type="number")
 
             h2(data-i18n="Additional Skills")
-            .sw-npcsettings__skills--additional
+            .sl-npcsettings__skills--additional
                 +repeating-section("npc-skills","npc-additional-skill")
 
             h2(data-i18n="Settings")
-            .sw-npcsettings__settings
+            .sl-npcsettings__settings
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="NPC")
-                    input.sw-npcsettings__checkbox(name=`attr_npc`, type="checkbox")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="NPC")
+                    input.sl-npcsettings__checkbox(name=`attr_npc`, type="checkbox")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Character Size")
-                    select.sw-npcsettings__select(name="attr_size")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Character Size")
+                    select.sl-npcsettings__select(name="attr_size")
                         option(data-i18n="Tiny", value="tiny")
                         option(data-i18n="Little", value="little")
                         option(data-i18n="Small", value="small")
@@ -76,130 +76,130 @@
                         option(data-i18n="Enormous", value="enormous")
                         option(data-i18n="Monstrous", value="monstrous")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Whisper to GM")
-                    select.sw-npcsettings__select(name="attr_setting_whisper")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Whisper to GM")
+                    select.sl-npcsettings__select(name="attr_setting_whisper")
                         option(data-i18n="Off", value="1", selected)
                         option(data-i18n="On", value="2")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Query Difficulty")
-                    select.sw-npcsettings__select(name="attr_setting_diff_option")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Query Difficulty")
+                    select.sl-npcsettings__select(name="attr_setting_diff_option")
                         option(data-i18n="On", value="1", selected)
                         option(data-i18n="Off", value="2")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Query Additional Bonuses")
-                    select.sw-npcsettings__select(name="attr_setting_bonus_option")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Query Additional Bonuses")
+                    select.sl-npcsettings__select(name="attr_setting_bonus_option")
                         option(data-i18n="On", value="1", selected)
                         option(data-i18n="Off", value="2")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Automatic Success & Failure")
-                    select.sw-npcsettings__select(name="attr_setting_crit_option")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Automatic Success & Failure")
+                    select.sl-npcsettings__select(name="attr_setting_crit_option")
                         option(data-i18n="Default", value="1", selected)
                         option(value="2") 01/96-100
                         option(value="3") 01/100
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Initiative")
-                    select.sw-npcsettings__select(name="attr_setting_init_option")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Initiative")
+                    select.sl-npcsettings__select(name="attr_setting_init_option")
                         option(data-i18n="Default", value="1", selected)
                         option(value="2") 1d10+I
                         option(value="3") 1d10+IB+AgB
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Initiative Roll Bonus")
-                    input.sw-npcsettings__input(name=`attr_init_bonus`, type="number", value="0")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Initiative Roll Bonus")
+                    input.sl-npcsettings__input(name=`attr_init_bonus`, type="number", value="0")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Maximum Advantage")
-                    input.sw-npcsettings__input(name="attr_setting_max_advantage", type="number")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Maximum Advantage")
+                    input.sl-npcsettings__input(name="attr_setting_max_advantage", type="number")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Ranged Damage Bonus")
-                    input.sw-npcsettings__input(name="attr_ranged_damage_bonus", type="number")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Ranged Damage Bonus")
+                    input.sl-npcsettings__input(name="attr_ranged_damage_bonus", type="number")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Melee Damage Bonus")
-                    input.sw-npcsettings__input(name="attr_melee_damage_bonus", type="number")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Melee Damage Bonus")
+                    input.sl-npcsettings__input(name="attr_melee_damage_bonus", type="number")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Show Skills")
-                    input.sw-npcsettings__checkbox(name=`attr_npc_skill_flag`, type="checkbox")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Show Skills")
+                    input.sl-npcsettings__checkbox(name=`attr_npc_skill_flag`, type="checkbox")
 
-                .sw-npcsettings__row
-                    .sw-npcsettings__label(data-i18n="Show Trappings")
-                    input.sw-npcsettings__checkbox(name=`attr_npc_trapping_flag`, type="checkbox")
+                .sl-npcsettings__row
+                    .sl-npcsettings__label(data-i18n="Show Trappings")
+                    input.sl-npcsettings__checkbox(name=`attr_npc_trapping_flag`, type="checkbox")
 
 
-    .sw-npc__slash
+    .sl-npc__slash
 
-        .sw-npc__name
-            h1.sw-npc__name
+        .sl-npc__name
+            h1.sl-npc__name
                 span(name="attr_character_name")
 
-        .sw-npc__description
+        .sl-npc__description
             span(name="attr_npc_description")
 
-        .sw-npc__stats
+        .sl-npc__stats
             each characteristic in npc_characteristics
                 +npc-characteristic-col(characteristic)
 
-    .sw-npc__grid
+    .sl-npc__grid
 
-        .sw-npc__leftcol
+        .sl-npc__leftcol
             
             input(name=`attr_npc_skill_flag`, type="hidden")
-            .sw-npc__skills    
-                h2.sw-npc__subtitle(data-i18n="Skills")
+            .sl-npc__skills    
+                h2.sl-npc__subtitle(data-i18n="Skills")
 
-                .sw-npcskill__wrapper
+                .sl-npcskill__wrapper
                     each skill in [...skills.basic, ...skills.advanced]
                         +npc-skill(skill)
 
-                .sw-npcskill__wrapper
+                .sl-npcskill__wrapper
                     +repeating-section("npc-skills","npc-additional-skill-display")
 
 
-            .sw-npccombat
-                h2.sw-npc__subtitle(data-i18n="Combat")
-                .sw-npcadvantage
+            .sl-npccombat
+                h2.sl-npc__subtitle(data-i18n="Combat")
+                .sl-npcadvantage
                     +advantage()
-                        .sw-advantage__label(data-i18n="Advantage")  
-                .sw-npccontrols__wrapper
-                    .sw-npccontrols__button
-                        button(data-i18n="Initiative", type="roll", value=`&{template:sw} {{name=@{character_name}}} {{roll_name=Initiative}} @{roll_init}`)
-                    .sw-npccontrols__button
+                        .sl-advantage__label(data-i18n="Advantage")  
+                .sl-npccontrols__wrapper
+                    .sl-npccontrols__button
+                        button(data-i18n="Initiative", type="roll", value=`&{template:sl} {{name=@{character_name}}} {{roll_name=Initiative}} @{roll_init}`)
+                    .sl-npccontrols__button
                         button(data-i18n="Dodge", type="roll", value=rolls.combat.npc_dodge)
-                    .sw-npccontrols__button
+                    .sl-npccontrols__button
                         button(data-i18n="Endurance", type="roll", value=rolls.combat.npc_endurance)
-                    .sw-npccontrols__button
+                    .sl-npccontrols__button
                         button(data-i18n="Intuition", type="roll", value=rolls.combat.npc_intuition)
-                    .sw-npccontrols__button
+                    .sl-npccontrols__button
                         button(data-i18n="Perception", type="roll", value=rolls.combat.npc_perception)
-                    .sw-npccontrols__button
+                    .sl-npccontrols__button
                         button(data-i18n="Cool", type="roll", value=rolls.combat.npc_cool)
 
-            .sw-npcattack
-                h2.sw-npc__subtitle(data-i18n="Attacks")
+            .sl-npcattack
+                h2.sl-npc__subtitle(data-i18n="Attacks")
                 +repeating-section("attacks","npc-attack-row")
 
             input(name=`attr_npc_trapping_flag`, type="hidden") 
-            .sw-npctrappings
-                h2.sw-npc__subtitle(data-i18n="Trappings")
-                textarea.sw-npctrappings__textarea(name="attr_npc_trappings")
+            .sl-npctrappings
+                h2.sl-npc__subtitle(data-i18n="Trappings")
+                textarea.sl-npctrappings__textarea(name="attr_npc_trappings")
 
-        .sw-npc__rightcol
+        .sl-npc__rightcol
 
-            .sw-npctrait
-                h2.sw-npc__subtitle(data-i18n="Traits")
+            .sl-npctrait
+                h2.sl-npc__subtitle(data-i18n="Traits")
                 +repeating-section("traits","npc-trait-row")
 
-            .sw-npctrait
-                h2.sw-npc__subtitle(data-i18n="Talents")
+            .sl-npctrait
+                h2.sl-npc__subtitle(data-i18n="Talents")
                 +repeating-section("talent","npc-talent-row")
 
-            .sw-npctrait
-                h2.sw-npc__subtitle(data-i18n="Optional Traits")
+            .sl-npctrait
+                h2.sl-npc__subtitle(data-i18n="Optional Traits")
                 +repeating-section("optional-traits","npc-opttrait-row")

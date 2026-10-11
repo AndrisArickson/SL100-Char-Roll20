@@ -1,7 +1,7 @@
 mixin generic-textarea(name, box_type="flex", attr= name.toLowerCase().replace(/ /g,"_"))
     - 
-        const box = (box_type === "flex") ? "sw-textarea" : `sw-textarea--grid${box_type}`;
+        const box = (box_type === "flex") ? "sl-textarea" : `sl-textarea--grid${box_type}`;
 
     div(class=box)
-        span.sw-textarea__header(data-i18n=name)
-        textarea.sw-textarea__textarea(name=`attr_${attr}`)
+        span.sl-textarea__header(data-i18n=name)
+        textarea.sl-textarea__textarea(name=`attr_${attr}`)

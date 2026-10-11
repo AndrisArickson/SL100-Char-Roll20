@@ -1,0 +1,2126 @@
+@import url("https://fonts.googleapis.com/css?family=Orbitron:500,700,900|Exo+2:400,400i,600,700|Bruno+Ace+SC&display=swap");
+.charsheet .sheet-sl-wrapper {
+  position: relative;
+}
+.charsheet .sheet-sl-wrapper h1,
+.charsheet .sheet-sl-wrapper h2,
+.charsheet .sheet-sl-wrapper h3,
+.charsheet .sheet-sl-wrapper h4,
+.charsheet .sheet-sl-wrapper h5 {
+  line-height: 1.2;
+}
+.charsheet .sheet-sl-wrapper input,
+.charsheet .sheet-sl-wrapper input[type=number],
+.charsheet .sheet-sl-wrapper textarea,
+.charsheet .sheet-sl-wrapper select,
+.charsheet .sheet-sl-wrapper button,
+.charsheet .sheet-sl-wrapper button[type=roll] {
+  width: 100%;
+}
+.charsheet .sheet-sl-wrapper p,
+.charsheet .sheet-sl-wrapper input,
+.charsheet .sheet-sl-wrapper input[type=number],
+.charsheet .sheet-sl-wrapper textarea,
+.charsheet .sheet-sl-wrapper select,
+.charsheet .sheet-sl-wrapper button,
+.charsheet .sheet-sl-wrapper button[type=roll],
+.charsheet .sheet-sl-wrapper label {
+  min-width: 0;
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: inherit;
+  line-height: inherit;
+}
+.charsheet .sheet-sl-wrapper input[type=checkbox],
+.charsheet .sheet-sl-wrapper input[type=radio] {
+  width: auto;
+}
+.charsheet .sheet-sl-wrapper button {
+  padding: 0;
+}
+.charsheet .sheet-sl-wrapper button[type=roll]:before {
+  display: none;
+}
+.charsheet .sheet-sl-wrapper input[disabled],
+.charsheet .sheet-sl-wrapper select[disabled],
+.charsheet .sheet-sl-wrapper textarea[disabled],
+.charsheet .sheet-sl-wrapper input[readonly],
+.charsheet .sheet-sl-wrapper select[readonly],
+.charsheet .sheet-sl-wrapper textarea[readonly] {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.charsheet * {
+  font-size: 1em;
+  box-sizing: border-box;
+  font-family: inherit;
+  min-width: 0;
+}
+.charsheet fieldset {
+  background: transparent;
+}
+.charsheet span {
+  word-break: break-word;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sheet-sl-wrapper .sheet-sl-pc,
+.sheet-sl-wrapper .sheet-sl-npc {
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+}
+
+.sheet-sl-wrapper input[type=text],
+.sheet-sl-wrapper input[type=number],
+.sheet-sl-wrapper select,
+.sheet-sl-wrapper option,
+.sheet-sl-wrapper textarea,
+.sheet-sl-wrapper span.sheet-display {
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 10pt;
+}
+.sheet-sl-wrapper h1, .sheet-sl-wrapper h2, .sheet-sl-wrapper h3 {
+  margin: 0;
+  padding: 0;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sheet-sl-wrapper h1 {
+  font-size: 1.2rem;
+}
+.sheet-sl-wrapper h2 {
+  font-size: 1.1rem;
+}
+.sheet-sl-wrapper h3 {
+  font-size: 1rem;
+}
+.sheet-sl-wrapper .sheet-pictos {
+  font-family: Pictos;
+}
+
+.sheet-sl-pc {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 6px;
+  border: 2px solid #151a21;
+  border-radius: 6px;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0, rgba(255, 255, 255, 0.025) 2px, transparent 2px, transparent 9px), linear-gradient(180deg, #262e39, #151a21);
+  box-shadow: inset 0 0 0 1px rgba(243, 195, 49, 0.25);
+  color: #10151c;
+  grid-gap: 4px;
+}
+.sheet-sl-pc > * {
+  min-width: 100px;
+}
+.sheet-sl-pc .sheet-sl-header {
+  grid-column: 1/-1;
+}
+.sheet-sl-pc .sheet-sl-navigation {
+  grid-column: 1/-1;
+}
+.sheet-sl-pc .sheet-sl-characteristics {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+.sheet-sl-pc .sheet-sl-resilience, .sheet-sl-pc .sheet-sl-movement {
+  grid-column: span 2;
+}
+.sheet-sl-pc .sheet-sl-skills {
+  grid-column: span 2;
+  grid-row: span 4;
+}
+.sheet-sl-pc .sheet-sl-talents, .sheet-sl-pc .sheet-sl-conditions, .sheet-sl-pc .sheet-sl-psychology, .sheet-sl-pc .sheet-sl-corruption {
+  grid-column: span 2;
+}
+.sheet-sl-pc .sheet-sl-ambitions {
+  grid-column: span 3;
+  display: grid;
+  grid-template-rows: 2.5rem auto;
+}
+.sheet-sl-pc .sheet-sl-party {
+  grid-column: span 3;
+  display: grid;
+  grid-template-rows: 2.5rem auto;
+}
+.sheet-sl-pc .sheet-sl-armour {
+  grid-column: 3/span 4;
+}
+.sheet-sl-pc .sheet-sl-armour__wrapper {
+  grid-column: 3/span 2;
+  grid-row: span 4;
+}
+.sheet-sl-pc .sheet-sl-trappings {
+  grid-column: 1/span 2;
+  grid-row: span 5;
+  display: flex;
+  flex-direction: column;
+}
+.sheet-sl-pc .sheet-sl-trappings .sheet-sl-panel {
+  flex-grow: 0;
+}
+.sheet-sl-pc .sheet-sl-trappings .sheet-sl-panel--trappings {
+  flex-grow: 1;
+}
+.sheet-sl-pc .sheet-sl-experience--alt {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+}
+.sheet-sl-pc .sheet-sl-experience--alt .sheet-sl-panel {
+  flex-grow: 0;
+}
+.sheet-sl-pc .sheet-sl-experience--alt .sheet-sl-panel--awards {
+  flex-grow: 1;
+}
+.sheet-sl-pc .sheet-sl-career__characteristic--first {
+  display: none;
+}
+.sheet-sl-pc .sheet-sl-career__row, .sheet-sl-pc .sheet-sl-career__row--first, .sheet-sl-pc .sheet-sl-career__row--1, .sheet-sl-pc .sheet-sl-career__row--2, .sheet-sl-pc .sheet-sl-career__row--3, .sheet-sl-pc .sheet-sl-career__row--4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  border-top: 1px solid #000;
+}
+.sheet-sl-pc .sheet-sl-career__row--first {
+  display: none;
+}
+.sheet-sl-pc .sheet-sl-career__row h2, .sheet-sl-pc .sheet-sl-career__row--first h2, .sheet-sl-pc .sheet-sl-career__row--1 h2, .sheet-sl-pc .sheet-sl-career__row--2 h2, .sheet-sl-pc .sheet-sl-career__row--3 h2, .sheet-sl-pc .sheet-sl-career__row--4 h2 {
+  font-size: 16pt;
+  letter-spacing: 1px;
+}
+.sheet-sl-pc .sheet-sl-careers {
+  grid-column: 1/span 4;
+  display: grid;
+  grid-template-rows: 1fr minmax(5rem, auto);
+}
+.sheet-sl-pc .sheet-sl-careers + .sheet-sl-experience {
+  grid-column: span 2;
+}
+.sheet-sl-pc .sheet-sl-careers input[name*=first][value=on] + * .sheet-sl-career__row--first {
+  display: grid;
+}
+.sheet-sl-pc .sheet-sl-careers input[name*=first][value=on] + * .sheet-sl-career__characteristic--first {
+  display: grid;
+}
+.sheet-sl-pc .sheet-sl-careers input[name*=first][value=on] + * .sheet-sl-career__row--1 {
+  display: none;
+}
+.sheet-sl-pc .sheet-sl-careers input[name*=first][value=on] + * .sheet-sl-career__row--1 {
+  display: none;
+}
+.sheet-sl-pc .sheet-sl-encwealth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.sheet-sl-pc .sheet-sl-wounds {
+  grid-column: span 2;
+}
+.sheet-sl-pc .sheet-sl-controls {
+  grid-column: span 2;
+}
+.sheet-sl-pc .sheet-sl-controls__wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.25rem;
+  margin: 0.25rem;
+}
+.sheet-sl-pc .sheet-sl-advantage {
+  grid-column: span 2;
+}
+.sheet-sl-pc .sheet-sl-advantage__wrapper {
+  display: grid;
+  grid-template-columns: 3rem 3rem 1fr 3rem;
+  align-items: center;
+  width: 75%;
+  margin: 0.5rem auto;
+}
+.sheet-sl-pc .sheet-sl-weapons {
+  grid-column: 1/span 6;
+}
+.sheet-sl-pc .sheet-sl-spells {
+  grid-column: 1/-1;
+}
+.sheet-sl-pc .sheet-sl-settingswrapper {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+}
+.sheet-sl-pc .sheet-sl-settingswrapper > * {
+  flex-grow: 1;
+}
+
+.sheet-sl-header__logo {
+  height: 118px;
+}
+.sheet-sl-header__body {
+  display: flex;
+  align-items: stretch;
+}
+.sheet-sl-header__portrait {
+  position: relative;
+  flex: 0 0 auto;
+  width: 112px;
+  height: 112px;
+  margin: 0.5em 0 0.5em 1em;
+}
+.sheet-sl-header__portrait-empty {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  text-align: center;
+}
+.sheet-sl-header__portrait-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+.sheet-sl-header img.sheet-sl-header__portrait-img:not([src]),
+.sheet-sl-header img.sheet-sl-header__portrait-img[src=""] {
+  visibility: hidden;
+}
+.sheet-sl-header__info {
+  flex: 1 1 auto;
+  align-self: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: auto;
+  padding: 0 1.5em 0.5em;
+}
+.sheet-sl-header__item-wrapper, .sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--career_path, .sheet-sl-header__item-wrapper--age, .sheet-sl-header__item-wrapper--height, .sheet-sl-header__item-wrapper--homeworld, .sheet-sl-header__item-wrapper--eyes {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: baseline;
+  min-width: 0;
+}
+.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level {
+  grid-column: span 2;
+}
+.sheet-sl-header__item-wrapper--career_path {
+  grid-column: span 3;
+}
+.sheet-sl-header__title {
+  flex-shrink: 0;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+.sheet-sl-header__select, .sheet-sl-header__input, .sheet-sl-header__display {
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.25rem;
+}
+.sheet-sl-header__select, .sheet-sl-header__input {
+  height: 100% !important;
+}
+
+.sheet-sl-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.sheet-sl-navigation__roll {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.sheet-sl-navigation__roll label {
+  width: auto;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+.sheet-sl-navigation__roll label input[type=checkbox] {
+  display: none;
+}
+.sheet-sl-navigation__items {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.sheet-sl-navigation__items label {
+  width: auto;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+.sheet-sl-navigation__items label input {
+  display: none;
+}
+
+.sheet-sl-advancetable__row--head, .sheet-sl-advancetable__row, .sheet-sl-spelltable__row--head, .sheet-sl-trappingtable__row--head, .sheet-sl-armourtable__row--head, .sheet-sl-criticaltable__row--head, .sheet-sl-weapontable__row--head, .sheet-sl-spelltable__row, .sheet-sl-trappingtable__row, .sheet-sl-armourtable__row, .sheet-sl-criticaltable__row, .sheet-sl-weapontable__row, .sheet-sl-experiencetable__row--head, .sheet-sl-careertable__row--head, .sheet-sl-speciestable__row--head, .sheet-sl-experiencetable__row, .sheet-sl-careertable__row, .sheet-sl-speciestable__row, .sheet-sl-talenttable__row--head, .sheet-sl-conditiontable__row--head, .sheet-sl-psychologytable__row--head, .sheet-sl-corruptiontable__row--head, .sheet-sl-talenttable__row, .sheet-sl-conditiontable__row, .sheet-sl-psychologytable__row, .sheet-sl-corruptiontable__row {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr 5rem 3rem;
+  grid-column: 1/-1;
+}
+
+.sheet-sl-spelltable__cell--last, .sheet-sl-trappingtable__cell--last, .sheet-sl-armourtable__cell--last, .sheet-sl-criticaltable__cell--last, .sheet-sl-weapontable__cell--last, .sheet-sl-spelltable__cell--settingstoggle, .sheet-sl-trappingtable__cell--settingstoggle, .sheet-sl-armourtable__cell--settingstoggle, .sheet-sl-criticaltable__cell--settingstoggle, .sheet-sl-weapontable__cell--settingstoggle, .sheet-sl-spelltable__cell, .sheet-sl-trappingtable__cell, .sheet-sl-armourtable__cell, .sheet-sl-criticaltable__cell, .sheet-sl-weapontable__cell, .sheet-sl-experiencetable__cell--ltitle, .sheet-sl-careertable__cell--ltitle, .sheet-sl-speciestable__cell--ltitle, .sheet-sl-experiencetable__cell--last, .sheet-sl-careertable__cell--last, .sheet-sl-speciestable__cell--last, .sheet-sl-experiencetable__cell, .sheet-sl-careertable__cell, .sheet-sl-speciestable__cell, .sheet-sl-talenttable__cell--last, .sheet-sl-conditiontable__cell--last, .sheet-sl-psychologytable__cell--last, .sheet-sl-corruptiontable__cell--last, .sheet-sl-talenttable__cell, .sheet-sl-conditiontable__cell, .sheet-sl-psychologytable__cell, .sheet-sl-corruptiontable__cell, .sheet-sl-spelltable__cell--description, .sheet-sl-trappingtable__cell--description, .sheet-sl-armourtable__cell--description, .sheet-sl-criticaltable__cell--description, .sheet-sl-weapontable__cell--description, .sheet-sl-experiencetable__cell--description, .sheet-sl-careertable__cell--description, .sheet-sl-speciestable__cell--description, .sheet-sl-talenttable__cell--description, .sheet-sl-conditiontable__cell--description, .sheet-sl-psychologytable__cell--description, .sheet-sl-corruptiontable__cell--description {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+.sheet-sl-spelltable__cell--last:nth-child(2), .sheet-sl-trappingtable__cell--last:nth-child(2), .sheet-sl-armourtable__cell--last:nth-child(2), .sheet-sl-criticaltable__cell--last:nth-child(2), .sheet-sl-weapontable__cell--last:nth-child(2), .sheet-sl-spelltable__cell--settingstoggle:nth-child(2), .sheet-sl-trappingtable__cell--settingstoggle:nth-child(2), .sheet-sl-armourtable__cell--settingstoggle:nth-child(2), .sheet-sl-criticaltable__cell--settingstoggle:nth-child(2), .sheet-sl-weapontable__cell--settingstoggle:nth-child(2), .sheet-sl-spelltable__cell:nth-child(2), .sheet-sl-trappingtable__cell:nth-child(2), .sheet-sl-armourtable__cell:nth-child(2), .sheet-sl-criticaltable__cell:nth-child(2), .sheet-sl-weapontable__cell:nth-child(2), .sheet-sl-experiencetable__cell--ltitle:nth-child(2), .sheet-sl-careertable__cell--ltitle:nth-child(2), .sheet-sl-speciestable__cell--ltitle:nth-child(2), .sheet-sl-experiencetable__cell--last:nth-child(2), .sheet-sl-careertable__cell--last:nth-child(2), .sheet-sl-speciestable__cell--last:nth-child(2), .sheet-sl-experiencetable__cell:nth-child(2), .sheet-sl-careertable__cell:nth-child(2), .sheet-sl-speciestable__cell:nth-child(2), .sheet-sl-talenttable__cell--last:nth-child(2), .sheet-sl-conditiontable__cell--last:nth-child(2), .sheet-sl-psychologytable__cell--last:nth-child(2), .sheet-sl-corruptiontable__cell--last:nth-child(2), .sheet-sl-talenttable__cell:nth-child(2), .sheet-sl-conditiontable__cell:nth-child(2), .sheet-sl-psychologytable__cell:nth-child(2), .sheet-sl-corruptiontable__cell:nth-child(2), .sheet-sl-spelltable__cell--description:nth-child(2), .sheet-sl-trappingtable__cell--description:nth-child(2), .sheet-sl-armourtable__cell--description:nth-child(2), .sheet-sl-criticaltable__cell--description:nth-child(2), .sheet-sl-weapontable__cell--description:nth-child(2), .sheet-sl-experiencetable__cell--description:nth-child(2), .sheet-sl-careertable__cell--description:nth-child(2), .sheet-sl-speciestable__cell--description:nth-child(2), .sheet-sl-talenttable__cell--description:nth-child(2), .sheet-sl-conditiontable__cell--description:nth-child(2), .sheet-sl-psychologytable__cell--description:nth-child(2), .sheet-sl-corruptiontable__cell--description:nth-child(2) {
+  text-align: left;
+}
+.sheet-sl-spelltable__cell--last span, .sheet-sl-trappingtable__cell--last span, .sheet-sl-armourtable__cell--last span, .sheet-sl-criticaltable__cell--last span, .sheet-sl-weapontable__cell--last span, .sheet-sl-spelltable__cell--settingstoggle span, .sheet-sl-trappingtable__cell--settingstoggle span, .sheet-sl-armourtable__cell--settingstoggle span, .sheet-sl-criticaltable__cell--settingstoggle span, .sheet-sl-weapontable__cell--settingstoggle span, .sheet-sl-spelltable__cell span, .sheet-sl-trappingtable__cell span, .sheet-sl-armourtable__cell span, .sheet-sl-criticaltable__cell span, .sheet-sl-weapontable__cell span, .sheet-sl-experiencetable__cell--ltitle span, .sheet-sl-careertable__cell--ltitle span, .sheet-sl-speciestable__cell--ltitle span, .sheet-sl-experiencetable__cell--last span, .sheet-sl-careertable__cell--last span, .sheet-sl-speciestable__cell--last span, .sheet-sl-experiencetable__cell span, .sheet-sl-careertable__cell span, .sheet-sl-speciestable__cell span, .sheet-sl-talenttable__cell--last span, .sheet-sl-conditiontable__cell--last span, .sheet-sl-psychologytable__cell--last span, .sheet-sl-corruptiontable__cell--last span, .sheet-sl-talenttable__cell span, .sheet-sl-conditiontable__cell span, .sheet-sl-psychologytable__cell span, .sheet-sl-corruptiontable__cell span, .sheet-sl-spelltable__cell--description span, .sheet-sl-trappingtable__cell--description span, .sheet-sl-armourtable__cell--description span, .sheet-sl-criticaltable__cell--description span, .sheet-sl-weapontable__cell--description span, .sheet-sl-experiencetable__cell--description span, .sheet-sl-careertable__cell--description span, .sheet-sl-speciestable__cell--description span, .sheet-sl-talenttable__cell--description span, .sheet-sl-conditiontable__cell--description span, .sheet-sl-psychologytable__cell--description span, .sheet-sl-corruptiontable__cell--description span {
+  padding: 1px;
+}
+.sheet-sl-spelltable__cell--last span:empty, .sheet-sl-trappingtable__cell--last span:empty, .sheet-sl-armourtable__cell--last span:empty, .sheet-sl-criticaltable__cell--last span:empty, .sheet-sl-weapontable__cell--last span:empty, .sheet-sl-spelltable__cell--settingstoggle span:empty, .sheet-sl-trappingtable__cell--settingstoggle span:empty, .sheet-sl-armourtable__cell--settingstoggle span:empty, .sheet-sl-criticaltable__cell--settingstoggle span:empty, .sheet-sl-weapontable__cell--settingstoggle span:empty, .sheet-sl-spelltable__cell span:empty, .sheet-sl-trappingtable__cell span:empty, .sheet-sl-armourtable__cell span:empty, .sheet-sl-criticaltable__cell span:empty, .sheet-sl-weapontable__cell span:empty, .sheet-sl-experiencetable__cell--ltitle span:empty, .sheet-sl-careertable__cell--ltitle span:empty, .sheet-sl-speciestable__cell--ltitle span:empty, .sheet-sl-experiencetable__cell--last span:empty, .sheet-sl-careertable__cell--last span:empty, .sheet-sl-speciestable__cell--last span:empty, .sheet-sl-experiencetable__cell span:empty, .sheet-sl-careertable__cell span:empty, .sheet-sl-speciestable__cell span:empty, .sheet-sl-talenttable__cell--last span:empty, .sheet-sl-conditiontable__cell--last span:empty, .sheet-sl-psychologytable__cell--last span:empty, .sheet-sl-corruptiontable__cell--last span:empty, .sheet-sl-talenttable__cell span:empty, .sheet-sl-conditiontable__cell span:empty, .sheet-sl-psychologytable__cell span:empty, .sheet-sl-corruptiontable__cell span:empty, .sheet-sl-spelltable__cell--description span:empty, .sheet-sl-trappingtable__cell--description span:empty, .sheet-sl-armourtable__cell--description span:empty, .sheet-sl-criticaltable__cell--description span:empty, .sheet-sl-weapontable__cell--description span:empty, .sheet-sl-experiencetable__cell--description span:empty, .sheet-sl-careertable__cell--description span:empty, .sheet-sl-speciestable__cell--description span:empty, .sheet-sl-talenttable__cell--description span:empty, .sheet-sl-conditiontable__cell--description span:empty, .sheet-sl-psychologytable__cell--description span:empty, .sheet-sl-corruptiontable__cell--description span:empty {
+  display: none;
+}
+.sheet-sl-spelltable__cell--last select, .sheet-sl-trappingtable__cell--last select, .sheet-sl-armourtable__cell--last select, .sheet-sl-criticaltable__cell--last select, .sheet-sl-weapontable__cell--last select, .sheet-sl-spelltable__cell--settingstoggle select, .sheet-sl-trappingtable__cell--settingstoggle select, .sheet-sl-armourtable__cell--settingstoggle select, .sheet-sl-criticaltable__cell--settingstoggle select, .sheet-sl-weapontable__cell--settingstoggle select, .sheet-sl-spelltable__cell select, .sheet-sl-trappingtable__cell select, .sheet-sl-armourtable__cell select, .sheet-sl-criticaltable__cell select, .sheet-sl-weapontable__cell select, .sheet-sl-experiencetable__cell--ltitle select, .sheet-sl-careertable__cell--ltitle select, .sheet-sl-speciestable__cell--ltitle select, .sheet-sl-experiencetable__cell--last select, .sheet-sl-careertable__cell--last select, .sheet-sl-speciestable__cell--last select, .sheet-sl-experiencetable__cell select, .sheet-sl-careertable__cell select, .sheet-sl-speciestable__cell select, .sheet-sl-talenttable__cell--last select, .sheet-sl-conditiontable__cell--last select, .sheet-sl-psychologytable__cell--last select, .sheet-sl-corruptiontable__cell--last select, .sheet-sl-talenttable__cell select, .sheet-sl-conditiontable__cell select, .sheet-sl-psychologytable__cell select, .sheet-sl-corruptiontable__cell select, .sheet-sl-spelltable__cell--description select, .sheet-sl-trappingtable__cell--description select, .sheet-sl-armourtable__cell--description select, .sheet-sl-criticaltable__cell--description select, .sheet-sl-weapontable__cell--description select, .sheet-sl-experiencetable__cell--description select, .sheet-sl-careertable__cell--description select, .sheet-sl-speciestable__cell--description select, .sheet-sl-talenttable__cell--description select, .sheet-sl-conditiontable__cell--description select, .sheet-sl-psychologytable__cell--description select, .sheet-sl-corruptiontable__cell--description select,
+.sheet-sl-spelltable__cell--last input[type=text],
+.sheet-sl-trappingtable__cell--last input[type=text],
+.sheet-sl-armourtable__cell--last input[type=text],
+.sheet-sl-criticaltable__cell--last input[type=text],
+.sheet-sl-weapontable__cell--last input[type=text],
+.sheet-sl-spelltable__cell--settingstoggle input[type=text],
+.sheet-sl-trappingtable__cell--settingstoggle input[type=text],
+.sheet-sl-armourtable__cell--settingstoggle input[type=text],
+.sheet-sl-criticaltable__cell--settingstoggle input[type=text],
+.sheet-sl-weapontable__cell--settingstoggle input[type=text],
+.sheet-sl-spelltable__cell input[type=text],
+.sheet-sl-trappingtable__cell input[type=text],
+.sheet-sl-armourtable__cell input[type=text],
+.sheet-sl-criticaltable__cell input[type=text],
+.sheet-sl-weapontable__cell input[type=text],
+.sheet-sl-experiencetable__cell--ltitle input[type=text],
+.sheet-sl-careertable__cell--ltitle input[type=text],
+.sheet-sl-speciestable__cell--ltitle input[type=text],
+.sheet-sl-experiencetable__cell--last input[type=text],
+.sheet-sl-careertable__cell--last input[type=text],
+.sheet-sl-speciestable__cell--last input[type=text],
+.sheet-sl-experiencetable__cell input[type=text],
+.sheet-sl-careertable__cell input[type=text],
+.sheet-sl-speciestable__cell input[type=text],
+.sheet-sl-talenttable__cell--last input[type=text],
+.sheet-sl-conditiontable__cell--last input[type=text],
+.sheet-sl-psychologytable__cell--last input[type=text],
+.sheet-sl-corruptiontable__cell--last input[type=text],
+.sheet-sl-talenttable__cell input[type=text],
+.sheet-sl-conditiontable__cell input[type=text],
+.sheet-sl-psychologytable__cell input[type=text],
+.sheet-sl-corruptiontable__cell input[type=text],
+.sheet-sl-spelltable__cell--description input[type=text],
+.sheet-sl-trappingtable__cell--description input[type=text],
+.sheet-sl-armourtable__cell--description input[type=text],
+.sheet-sl-criticaltable__cell--description input[type=text],
+.sheet-sl-weapontable__cell--description input[type=text],
+.sheet-sl-experiencetable__cell--description input[type=text],
+.sheet-sl-careertable__cell--description input[type=text],
+.sheet-sl-speciestable__cell--description input[type=text],
+.sheet-sl-talenttable__cell--description input[type=text],
+.sheet-sl-conditiontable__cell--description input[type=text],
+.sheet-sl-psychologytable__cell--description input[type=text],
+.sheet-sl-corruptiontable__cell--description input[type=text],
+.sheet-sl-spelltable__cell--last input[type=number],
+.sheet-sl-trappingtable__cell--last input[type=number],
+.sheet-sl-armourtable__cell--last input[type=number],
+.sheet-sl-criticaltable__cell--last input[type=number],
+.sheet-sl-weapontable__cell--last input[type=number],
+.sheet-sl-spelltable__cell--settingstoggle input[type=number],
+.sheet-sl-trappingtable__cell--settingstoggle input[type=number],
+.sheet-sl-armourtable__cell--settingstoggle input[type=number],
+.sheet-sl-criticaltable__cell--settingstoggle input[type=number],
+.sheet-sl-weapontable__cell--settingstoggle input[type=number],
+.sheet-sl-spelltable__cell input[type=number],
+.sheet-sl-trappingtable__cell input[type=number],
+.sheet-sl-armourtable__cell input[type=number],
+.sheet-sl-criticaltable__cell input[type=number],
+.sheet-sl-weapontable__cell input[type=number],
+.sheet-sl-experiencetable__cell--ltitle input[type=number],
+.sheet-sl-careertable__cell--ltitle input[type=number],
+.sheet-sl-speciestable__cell--ltitle input[type=number],
+.sheet-sl-experiencetable__cell--last input[type=number],
+.sheet-sl-careertable__cell--last input[type=number],
+.sheet-sl-speciestable__cell--last input[type=number],
+.sheet-sl-experiencetable__cell input[type=number],
+.sheet-sl-careertable__cell input[type=number],
+.sheet-sl-speciestable__cell input[type=number],
+.sheet-sl-talenttable__cell--last input[type=number],
+.sheet-sl-conditiontable__cell--last input[type=number],
+.sheet-sl-psychologytable__cell--last input[type=number],
+.sheet-sl-corruptiontable__cell--last input[type=number],
+.sheet-sl-talenttable__cell input[type=number],
+.sheet-sl-conditiontable__cell input[type=number],
+.sheet-sl-psychologytable__cell input[type=number],
+.sheet-sl-corruptiontable__cell input[type=number],
+.sheet-sl-spelltable__cell--description input[type=number],
+.sheet-sl-trappingtable__cell--description input[type=number],
+.sheet-sl-armourtable__cell--description input[type=number],
+.sheet-sl-criticaltable__cell--description input[type=number],
+.sheet-sl-weapontable__cell--description input[type=number],
+.sheet-sl-experiencetable__cell--description input[type=number],
+.sheet-sl-careertable__cell--description input[type=number],
+.sheet-sl-speciestable__cell--description input[type=number],
+.sheet-sl-talenttable__cell--description input[type=number],
+.sheet-sl-conditiontable__cell--description input[type=number],
+.sheet-sl-psychologytable__cell--description input[type=number],
+.sheet-sl-corruptiontable__cell--description input[type=number] {
+  height: 100%;
+}
+
+.sheet-sl-spelltable__row--head div[class*=cell]:first-child, .sheet-sl-trappingtable__row--head div[class*=cell]:first-child, .sheet-sl-armourtable__row--head div[class*=cell]:first-child, .sheet-sl-criticaltable__row--head div[class*=cell]:first-child, .sheet-sl-weapontable__row--head div[class*=cell]:first-child, .sheet-sl-experiencetable__row--head div[class*=cell]:first-child, .sheet-sl-careertable__row--head div[class*=cell]:first-child, .sheet-sl-speciestable__row--head div[class*=cell]:first-child, .sheet-sl-talenttable__row--head div[class*=cell]:first-child, .sheet-sl-conditiontable__row--head div[class*=cell]:first-child, .sheet-sl-psychologytable__row--head div[class*=cell]:first-child, .sheet-sl-corruptiontable__row--head div[class*=cell]:first-child {
+  grid-column: span 2;
+  text-align: left;
+}
+.sheet-sl-spelltable__row--head div[class*=cell]:not(:first-child), .sheet-sl-trappingtable__row--head div[class*=cell]:not(:first-child), .sheet-sl-armourtable__row--head div[class*=cell]:not(:first-child), .sheet-sl-criticaltable__row--head div[class*=cell]:not(:first-child), .sheet-sl-weapontable__row--head div[class*=cell]:not(:first-child), .sheet-sl-experiencetable__row--head div[class*=cell]:not(:first-child), .sheet-sl-careertable__row--head div[class*=cell]:not(:first-child), .sheet-sl-speciestable__row--head div[class*=cell]:not(:first-child), .sheet-sl-talenttable__row--head div[class*=cell]:not(:first-child), .sheet-sl-conditiontable__row--head div[class*=cell]:not(:first-child), .sheet-sl-psychologytable__row--head div[class*=cell]:not(:first-child), .sheet-sl-corruptiontable__row--head div[class*=cell]:not(:first-child) {
+  text-align: center;
+}
+
+.sheet-sl-spelltable__cell--description, .sheet-sl-trappingtable__cell--description, .sheet-sl-armourtable__cell--description, .sheet-sl-criticaltable__cell--description, .sheet-sl-weapontable__cell--description, .sheet-sl-experiencetable__cell--description, .sheet-sl-careertable__cell--description, .sheet-sl-speciestable__cell--description, .sheet-sl-talenttable__cell--description, .sheet-sl-conditiontable__cell--description, .sheet-sl-psychologytable__cell--description, .sheet-sl-corruptiontable__cell--description {
+  grid-column: 1/-1;
+}
+
+.sheet-sl-chartable {
+  display: grid;
+  grid-template-columns: 2fr repeat(10, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-auto-flow: column;
+}
+.sheet-sl-chartable input[type=number],
+.sheet-sl-chartable .sheet-sl-chartable__cell,
+.sheet-sl-chartable .sheet-sl-chartable__cell--head {
+  text-align: center;
+}
+.sheet-sl-skills h1 {
+  grid-column: 1/-1;
+}
+.sheet-sl-skilltable__row, .sheet-sl-skilltable__row--grouped, .sheet-sl-skilltable__row--specialisation, .sheet-sl-skilltable__row--head {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr 3rem 2.5rem 2.5rem 2.5rem;
+  grid-column: 1/-1;
+}
+.sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--grouped, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--span2, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--nosettings, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--last {
+  text-align: center;
+}
+.sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell:first-child, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--grouped:first-child, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--span2:first-child, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--nosettings:first-child, .sheet-sl-skilltable__row--head .sheet-sl-skilltable__cell--last:first-child {
+  grid-column: span 2;
+  text-align: left;
+}
+.sheet-sl-skilltable__row--specialisation {
+  grid-column: 1/-1;
+  padding: 0;
+}
+.sheet-sl-skilltable__row--grouped {
+  grid-column: 1/-1;
+  padding: 0;
+}
+.sheet-sl-skilltable__cell, .sheet-sl-skilltable__cell--grouped, .sheet-sl-skilltable__cell--span2, .sheet-sl-skilltable__cell--nosettings, .sheet-sl-skilltable__cell--last {
+  height: 100%;
+  text-align: center;
+}
+.sheet-sl-skilltable__cell label, .sheet-sl-skilltable__cell--grouped label, .sheet-sl-skilltable__cell--span2 label, .sheet-sl-skilltable__cell--nosettings label, .sheet-sl-skilltable__cell--last label,
+.sheet-sl-skilltable__cell span[name*=attr],
+.sheet-sl-skilltable__cell--grouped span[name*=attr],
+.sheet-sl-skilltable__cell--span2 span[name*=attr],
+.sheet-sl-skilltable__cell--nosettings span[name*=attr],
+.sheet-sl-skilltable__cell--last span[name*=attr] {
+  padding: 1px;
+}
+.sheet-sl-skilltable__cell select, .sheet-sl-skilltable__cell--grouped select, .sheet-sl-skilltable__cell--span2 select, .sheet-sl-skilltable__cell--nosettings select, .sheet-sl-skilltable__cell--last select,
+.sheet-sl-skilltable__cell input[type=number],
+.sheet-sl-skilltable__cell--grouped input[type=number],
+.sheet-sl-skilltable__cell--span2 input[type=number],
+.sheet-sl-skilltable__cell--nosettings input[type=number],
+.sheet-sl-skilltable__cell--last input[type=number],
+.sheet-sl-skilltable__cell input[type=text],
+.sheet-sl-skilltable__cell--grouped input[type=text],
+.sheet-sl-skilltable__cell--span2 input[type=text],
+.sheet-sl-skilltable__cell--nosettings input[type=text],
+.sheet-sl-skilltable__cell--last input[type=text] {
+  height: 100%;
+  text-align: center !important;
+}
+.sheet-sl-skilltable__cell:nth-child(3), .sheet-sl-skilltable__cell--grouped:nth-child(3), .sheet-sl-skilltable__cell--span2:nth-child(3), .sheet-sl-skilltable__cell--nosettings:nth-child(3), .sheet-sl-skilltable__cell--last:nth-child(3) {
+  text-align: left;
+}
+.sheet-sl-skilltable__cell--nosettings {
+  grid-column: 2;
+  text-align: left;
+}
+.sheet-sl-skilltable__cell--span2 {
+  grid-column: span 2;
+}
+.sheet-sl-skilltable__cell--grouped {
+  grid-column-start: 1;
+  grid-column-end: -1;
+  padding-left: 1.5rem;
+}
+.sheet-sl-skilltable__cell--settingstoggle + .sheet-sl-skilltable__cell--grouped {
+  grid-column-start: 2;
+}
+.sheet-sl-skilltable__roll {
+  text-align: left !important;
+}
+.sheet-sl-skilltable__roll span {
+  text-align: left;
+}
+.sheet-sl-talenttable__cell--description span, .sheet-sl-conditiontable__cell--description span, .sheet-sl-psychologytable__cell--description span, .sheet-sl-corruptiontable__cell--description span {
+  text-align: left;
+}
+.sheet-sl-talenttable__cell--span2, .sheet-sl-conditiontable__cell--span2, .sheet-sl-psychologytable__cell--span2, .sheet-sl-corruptiontable__cell--span2 {
+  grid-column: span 2;
+}
+.sheet-sl-talenttable__cell--span3, .sheet-sl-conditiontable__cell--span3, .sheet-sl-psychologytable__cell--span3, .sheet-sl-corruptiontable__cell--span3 {
+  grid-column: span 3;
+}
+.sheet-sl-psychologytable__row--head, .sheet-sl-psychologytable__row {
+  grid-template-columns: 1.5rem 1fr 3rem;
+}
+.sheet-sl-corruptiontable__row--head, .sheet-sl-corruptiontable__row {
+  grid-template-columns: 1.5rem 1fr 3rem;
+}
+.sheet-sl-experiencetable__cell--description span, .sheet-sl-careertable__cell--description span, .sheet-sl-speciestable__cell--description span {
+  text-align: left;
+}
+.sheet-sl-experiencetable__cell--ltitle, .sheet-sl-careertable__cell--ltitle, .sheet-sl-speciestable__cell--ltitle {
+  text-align: left;
+}
+.sheet-sl-experiencetable__cell--span2, .sheet-sl-careertable__cell--span2, .sheet-sl-speciestable__cell--span2 {
+  grid-column: span 2;
+}
+.sheet-sl-experiencetable__cell--span3, .sheet-sl-careertable__cell--span3, .sheet-sl-speciestable__cell--span3 {
+  grid-column: span 3;
+}
+.sheet-sl-experiencetable__row--head div[class*=cell]:first-child {
+  grid-column: span 1;
+}
+.sheet-sl-careertable__row--head, .sheet-sl-careertable__row {
+  grid-template-columns: 1.5rem 0.75fr 0.75fr 0.5fr 0.5fr;
+}
+.sheet-sl-experiencetable__row--head, .sheet-sl-experiencetable__row {
+  grid-template-columns: 1fr 0.25fr;
+}
+.sheet-sl-spelltable__cell--description span, .sheet-sl-trappingtable__cell--description span, .sheet-sl-armourtable__cell--description span, .sheet-sl-criticaltable__cell--description span, .sheet-sl-weapontable__cell--description span {
+  text-align: left;
+}
+.sheet-sl-spelltable__cell--span2, .sheet-sl-trappingtable__cell--span2, .sheet-sl-armourtable__cell--span2, .sheet-sl-criticaltable__cell--span2, .sheet-sl-weapontable__cell--span2 {
+  grid-column: span 2;
+}
+.sheet-sl-spelltable__cell--span3, .sheet-sl-trappingtable__cell--span3, .sheet-sl-armourtable__cell--span3, .sheet-sl-criticaltable__cell--span3, .sheet-sl-weapontable__cell--span3 {
+  grid-column: span 3;
+}
+.sheet-sl-trappingtable__row--head, .sheet-sl-trappingtable__row {
+  grid-template-columns: 1.5rem 1fr 3rem 3rem;
+}
+.sheet-sl-trappingtable input[type=number] {
+  text-align: center !important;
+}
+.sheet-sl-armourtable__row--head, .sheet-sl-armourtable__row {
+  grid-template-columns: 1.5rem 1fr 0.75fr 3rem 1.25fr;
+}
+.sheet-sl-criticaltable__row--head, .sheet-sl-criticaltable__row {
+  grid-template-columns: 1.5rem 1fr 1fr 4rem;
+}
+.sheet-sl-weapontable__row--head, .sheet-sl-weapontable__row {
+  grid-template-columns: 1.5rem 1fr 0.75fr 0.33fr 0.5fr 0.5fr 1.25fr;
+}
+.sheet-sl-spelltable__row--head, .sheet-sl-spelltable__row {
+  grid-template-columns: 1.5rem 0.5fr 0.75fr 0.3fr 0.3fr 0.5fr 0.5fr 0.75fr;
+}
+.sheet-sl-spell__sin {
+  margin-left: 85%;
+}
+.sheet-sl-advancetable__row--head, .sheet-sl-advancetable__row {
+  grid-template-columns: 2fr 1fr;
+  gap: 0.25rem;
+}
+.sheet-sl-armour__row {
+  display: flex;
+  justify-content: space-between;
+  max-height: 8rem;
+}
+.sheet-sl-armour__block, .sheet-sl-armour__block--head, .sheet-sl-armour__block--leftarm, .sheet-sl-armour__block--rightarm, .sheet-sl-armour__block--body, .sheet-sl-armour__block--rightleg, .sheet-sl-armour__block--leftleg, .sheet-sl-armour__block--shield, .sheet-sl-armour__block--toughness {
+  flex-grow: 0;
+  flex-basis: 30%;
+  text-align: center;
+}
+.sheet-sl-armour__block--shield, .sheet-sl-armour__block--toughness {
+  margin-top: 1em;
+}
+.sheet-sl-armour__display {
+  display: inline-block;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.sheet-sl-field {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.sheet-sl-field__header {
+  flex-shrink: 0;
+}
+.sheet-sl-field__header--flex {
+  display: flex;
+  align-items: center;
+}
+.sheet-sl-field__header--flex > span {
+  flex-basis: 50%;
+}
+.sheet-sl-field__header--flex > button {
+  flex-basis: 25%;
+}
+.sheet-sl-field__header--flex > button[name*=brass_to_silver] {
+  margin-left: 25%;
+}
+.sheet-sl-field__input {
+  flex-grow: 1;
+  padding-right: 0.5em;
+  text-align: right;
+}
+.sheet-sl-field__span {
+  text-align: center;
+}
+.sheet-sl-field--grid1-2 {
+  display: grid;
+  grid-template-columns: minmax(33%, auto) 2fr;
+}
+.sheet-sl-field--grid1-25 {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+}
+.sheet-sl-field--grid1-3 {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+.sheet-sl-field--grid1-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.sheet-sl-field--grid2-1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.sheet-sl-textarea {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.sheet-sl-textarea__header {
+  flex-shrink: 0;
+}
+.sheet-sl-textarea__textarea {
+  flex-grow: 1;
+}
+.sheet-sl-textarea--grid1-2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.sheet-sl-textarea--grid1-25 {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+}
+.sheet-sl-textarea--grid1-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.sheet-sl-textarea--grid2-1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.sheet-sl-displaytoggle {
+  cursor: pointer;
+}
+.sheet-sl-displaytoggle__span {
+  opacity: 0.5;
+  font-family: pictos;
+}
+.sheet-sl-displaytoggle__span:hover {
+  opacity: 1;
+}
+.sheet-sl-displaytoggle input.sheet-sl-displaytoggle__hide[type=checkbox] {
+  display: none;
+}
+.sheet-sl-displaytoggle input.sheet-sl-displaytoggle__hide[type=checkbox]:checked ~ span {
+  opacity: 1;
+}
+
+button.sheet-sl-vocalise[type=roll] {
+  opacity: 0.5;
+  font-family: pictos;
+  text-align: center;
+}
+button.sheet-sl-vocalise[type=roll]:hover {
+  opacity: 1;
+}
+
+button.sheet-pictos[type=action]:hover {
+  color: red;
+}
+
+.sheet-sl-panel {
+  position: relative;
+  padding: 2px;
+}
+.sheet-sl-panel h1.sheet-sl-panel__header {
+  font-size: 1.2rem;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sheet-sl-wrapper .repcontainer {
+  grid-column: 1/-1;
+  margin: 0;
+  padding: 0;
+}
+.sheet-sl-wrapper .repcontainer.editmode .itemcontrol {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+.sheet-sl-wrapper .repcontrol {
+  grid-column: 1/-1;
+  display: flex;
+  flex-flow: row-reverse;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+.sheet-sl-wrapper .repcontrol button {
+  width: auto;
+}
+.sheet-sl-wrapper .itemcontrol {
+  position: relative;
+  z-index: 1000;
+}
+.sheet-sl-wrapper .itemcontrol button.repcontrol_del,
+.sheet-sl-wrapper .itemcontrol a.repcontrol_move {
+  z-index: 1000;
+  margin: 0;
+  padding: 0.15em;
+  height: 2rem;
+  width: 2rem;
+  line-height: 1;
+}
+.sheet-sl-wrapper .itemcontrol button.repcontrol_del {
+  margin-right: 0.25rem;
+  float: right;
+}
+.sheet-sl-wrapper .itemcontrol a.repcontrol_move {
+  margin-left: 0.25rem;
+  float: left;
+}
+.sheet-sl-wrapper .repcontrol {
+  background-color: transparent;
+  min-height: 1.5em;
+}
+.sheet-sl-wrapper .repcontrol button.repcontrol_add,
+.sheet-sl-wrapper .repcontrol button.repcontrol_edit {
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.sheet-sl-wrapper .repcontrol button.repcontrol_add:before,
+.sheet-sl-wrapper .repcontrol button.repcontrol_edit:before {
+  display: block;
+  margin: 0;
+  padding: 0.35em;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.sheet-sl-settings, .sheet-sl-settings--noborder, .sheet-sl-settings--large {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+.sheet-sl-settings h2, .sheet-sl-settings--noborder h2, .sheet-sl-settings--large h2 {
+  grid-column: 1/-1;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+}
+.sheet-sl-settings--large {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.sheet-sl-settings__row, .sheet-sl-settings__row--career_name, .sheet-sl-settings__row--talent, .sheet-sl-settings__row--skillinit, .sheet-sl-settings__row--talentinit, .sheet-sl-settings__row--speciesskill, .sheet-sl-settings__row--skill, .sheet-sl-settings__row--invert, .sheet-sl-settings__row--characteristics, .sheet-sl-settings__row--span {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  text-align: left;
+}
+.sheet-sl-settings__row--span {
+  grid-column: 1/-1;
+  grid-template-columns: 9rem 1fr;
+}
+.sheet-sl-settings__row--characteristics {
+  grid-column: 1/-1;
+  grid-template-columns: 1.5fr repeat(10, 1fr);
+}
+.sheet-sl-settings__row--characteristics > * {
+  display: grid;
+  grid-auto-rows: 2rem;
+  border-right: 1px solid #000;
+}
+.sheet-sl-settings__row--characteristics > *:last-child {
+  border: none;
+}
+.sheet-sl-settings__row--characteristics > * > div {
+  border-bottom: 1px solid #000;
+}
+.sheet-sl-settings__row--characteristics > * > div:last-child {
+  border: none;
+}
+.sheet-sl-settings__row--characteristics input[type=number],
+.sheet-sl-settings__row--characteristics input[type=text] {
+  border-radius: 0 !important;
+}
+.sheet-sl-settings__row--characteristics input[type=number]:last-child,
+.sheet-sl-settings__row--characteristics input[type=text]:last-child {
+  border: none;
+}
+.sheet-sl-settings__row--characteristics label {
+  border-bottom: 1px solid #000;
+}
+.sheet-sl-settings__row--invert {
+  grid-template-columns: 0.5fr 2fr;
+}
+.sheet-sl-settings__row--skill {
+  grid-template-columns: 1fr 0.35fr;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+.sheet-sl-settings__row--speciesskill {
+  grid-template-columns: 1fr 0.15fr 0.15fr 0.15fr;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+.sheet-sl-settings__row--speciesskill > button {
+  justify-self: center;
+  text-align: center;
+}
+.sheet-sl-settings__row--skillinit, .sheet-sl-settings__row--talentinit {
+  grid-template-columns: 1fr 0.45fr 0.45fr;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+.sheet-sl-settings__row--talent {
+  grid-template-columns: 1fr 0.35fr;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+.sheet-sl-settings__row--career_name {
+  grid-column: 1/-1;
+  grid-template-columns: 0.5fr 2fr;
+}
+.sheet-sl-settings__label--full {
+  grid-column: 1/-1;
+  text-align: left;
+}
+.sheet-sl-settings__item {
+  text-align: center;
+}
+.sheet-sl-settings__item input[type=checkbox] {
+  display: none;
+}
+.sheet-sl-settings__item input.sheet-sl-settings__input.sheet-sl-settings__input[type=number] {
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+.sheet-sl-settings__item input[type=hidden][value=on] ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type=number] {
+  pointer-events: auto;
+  background: rgba(44, 109, 155, 0.1);
+  color: #10151c;
+}
+.sheet-sl-settings__item input[type=hidden][value="1"] ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type=number] {
+  pointer-events: auto;
+  background: rgba(44, 109, 155, 0.1);
+  color: #10151c;
+}
+.sheet-sl-settings__item input[type=hidden][value="2"] ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type=number] {
+  pointer-events: auto;
+  background: rgba(184, 134, 11, 0.25);
+  color: #10151c;
+}
+.sheet-sl-settings__item input[type=hidden][value="3"] ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type=number] {
+  pointer-events: auto;
+  background: rgba(192, 192, 192, 0.25);
+  color: #10151c;
+}
+.sheet-sl-settings__item input[type=hidden][value="4"] ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type=number] {
+  pointer-events: auto;
+  background: rgba(255, 215, 0, 0.25);
+  color: #10151c;
+}
+.sheet-sl-settings__item label {
+  display: block;
+  cursor: pointer;
+  text-align: center;
+}
+.sheet-sl-settings__item label:hover {
+  color: red;
+}
+.sheet-sl-settings__split--2 {
+  display: grid;
+  grid-template-columns: 1fr 3em;
+}
+.sheet-sl-settings__textarea {
+  grid-column: 1/-1;
+}
+.sheet-sl-settings__titlewrap {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  align-items: center;
+}
+.sheet-sl-settings__titlewrap h2 {
+  grid-column: auto;
+  text-indent: -10rem;
+}
+.sheet-sl-settings__controlwrap span.sheet-sl-current_level--1, .sheet-sl-settings__controlwrap span.sheet-sl-current_level--2, .sheet-sl-settings__controlwrap span.sheet-sl-current_level--3, .sheet-sl-settings__controlwrap span.sheet-sl-current_level--4 {
+  display: none;
+  background: linear-gradient(180deg, #24935b, #1e7a4c);
+  border-radius: 2px;
+  color: #fff;
+  font-size: 9pt;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+.sheet-sl-settings__controlwrap button[type=action] {
+  background: linear-gradient(180deg, #262e39, #151a21);
+  border-radius: 2px;
+  color: #fff;
+  font-size: 9pt;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="1"] + button[name*="1"] {
+  display: none;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="1"] ~ span.sheet-sl-current_level--1 {
+  display: block;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="2"] + button[name*="2"] {
+  display: none;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="2"] ~ span.sheet-sl-current_level--2 {
+  display: block;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="3"] + button[name*="3"] {
+  display: none;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="3"] ~ span.sheet-sl-current_level--3 {
+  display: block;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="4"] + button[name*="4"] {
+  display: none;
+}
+.sheet-sl-settings__controlwrap input[name*=career_level_current][value="4"] ~ span.sheet-sl-current_level--4 {
+  display: block;
+}
+.sheet-sl-settingstable__row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0.25rem;
+  margin: 0.25rem;
+}
+
+.sheet-sl-wrapper input[type=text],
+.sheet-sl-wrapper input[type=number],
+.sheet-sl-wrapper textarea,
+.sheet-sl-wrapper select {
+  padding: 0 3px;
+  background: rgba(44, 109, 155, 0.1);
+  color: #10151c;
+  vertical-align: baseline;
+}
+.sheet-sl-wrapper input[type=text]:focus, .sheet-sl-wrapper input[type=text]:active, .sheet-sl-wrapper input[type=text]:hover,
+.sheet-sl-wrapper input[type=number]:focus,
+.sheet-sl-wrapper input[type=number]:active,
+.sheet-sl-wrapper input[type=number]:hover,
+.sheet-sl-wrapper textarea:focus,
+.sheet-sl-wrapper textarea:active,
+.sheet-sl-wrapper textarea:hover,
+.sheet-sl-wrapper select:focus,
+.sheet-sl-wrapper select:active,
+.sheet-sl-wrapper select:hover {
+  background: rgba(44, 109, 155, 0.18);
+  outline: 0;
+}
+.sheet-sl-wrapper input[type=text],
+.sheet-sl-wrapper textarea,
+.sheet-sl-wrapper select {
+  text-align: left;
+}
+.sheet-sl-wrapper input[type=number] {
+  text-align: center;
+}
+.sheet-sl-wrapper input[type=checkbox] {
+  margin: auto;
+  width: 1em;
+}
+.sheet-sl-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-overflow: "";
+  cursor: pointer;
+}
+.sheet-sl-wrapper button {
+  text-shadow: none;
+}
+.sheet-sl-wrapper button.sheet-sl-advancenotify__button {
+  display: block;
+  margin: 2px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: #f3c331;
+  color: #10151c;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 8pt;
+  font-weight: bold;
+  text-align: center;
+}
+
+.charsheet .sheet-sl-wrapper button[type=roll] {
+  margin: 0;
+}
+.charsheet .sheet-sl-wrapper button[type=roll]:hover {
+  color: #2c6d9b;
+}
+
+.sheet-sl-field,
+.sheet-sl-textarea {
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-field:last-child,
+.sheet-sl-textarea:last-child {
+  border-bottom: 0;
+}
+.sheet-sl-field--grid2-1, .sheet-sl-field--grid1-1, .sheet-sl-field--grid1-25, .sheet-sl-field--grid1-2,
+.sheet-sl-textarea--grid2-1,
+.sheet-sl-textarea--grid1-1,
+.sheet-sl-textarea--grid1-25,
+.sheet-sl-textarea--grid1-2 {
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-field--grid2-1:last-child, .sheet-sl-field--grid1-1:last-child, .sheet-sl-field--grid1-25:last-child, .sheet-sl-field--grid1-2:last-child,
+.sheet-sl-textarea--grid2-1:last-child,
+.sheet-sl-textarea--grid1-1:last-child,
+.sheet-sl-textarea--grid1-25:last-child,
+.sheet-sl-textarea--grid1-2:last-child {
+  border-bottom: 0;
+}
+.sheet-sl-field__span,
+.sheet-sl-textarea__span {
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+}
+.sheet-sl-field__wrapper,
+.sheet-sl-textarea__wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.sheet-sl-field__wrapper > *,
+.sheet-sl-textarea__wrapper > * {
+  border-bottom: 1px solid #000 !important;
+}
+.sheet-sl-field__wrapper > *:first-child,
+.sheet-sl-textarea__wrapper > *:first-child {
+  border-right: 1px solid #000;
+}
+
+.sheet-sl-woundstable__row, .sheet-sl-experiencetable__row, .sheet-sl-careertable__row, .sheet-sl-spelltable__row, .sheet-sl-weapontable__row, .sheet-sl-criticaltable__row, .sheet-sl-armourtable__row, .sheet-sl-trappingtable__row, .sheet-sl-corruptiontable__row, .sheet-sl-psychologytable__row, .sheet-sl-conditiontable__row, .sheet-sl-talenttable__row, .sheet-sl-skilltable__row, .sheet-sl-skilltable__row--specialisation, .sheet-sl-skilltable__row--grouped, .sheet-sl-field,
+.sheet-sl-textarea, .sheet-sl-npccharacteristic__cell--head, .sheet-sl-woundstable__row--head, .sheet-sl-experiencetable__row--head, .sheet-sl-careertable__row--head, .sheet-sl-spelltable__row--head, .sheet-sl-weapontable__row--head, .sheet-sl-criticaltable__row--head, .sheet-sl-armourtable__row--head, .sheet-sl-trappingtable__row--head, .sheet-sl-corruptiontable__row--head, .sheet-sl-psychologytable__row--head, .sheet-sl-conditiontable__row--head, .sheet-sl-talenttable__row--head, .sheet-sl-skilltable__row--head {
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+
+.sheet-sl-npccharacteristic__cell--head, .sheet-sl-woundstable__row--head, .sheet-sl-experiencetable__row--head, .sheet-sl-careertable__row--head, .sheet-sl-spelltable__row--head, .sheet-sl-weapontable__row--head, .sheet-sl-criticaltable__row--head, .sheet-sl-armourtable__row--head, .sheet-sl-trappingtable__row--head, .sheet-sl-corruptiontable__row--head, .sheet-sl-psychologytable__row--head, .sheet-sl-conditiontable__row--head, .sheet-sl-talenttable__row--head, .sheet-sl-skilltable__row--head {
+  color: #3c4857;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sheet-sl-npccharacteristic__cell, .sheet-sl-npccharacteristic__cell--head, .sheet-sl-woundstable__cell, .sheet-sl-experiencetable__cell, .sheet-sl-careertable__cell, .sheet-sl-spelltable__cell, .sheet-sl-weapontable__cell, .sheet-sl-criticaltable__cell, .sheet-sl-armourtable__cell, .sheet-sl-trappingtable__cell, .sheet-sl-corruptiontable__cell, .sheet-sl-psychologytable__cell, .sheet-sl-conditiontable__cell, .sheet-sl-talenttable__cell, .sheet-sl-skilltable__cell, .sheet-sl-skilltable__cell--last, .sheet-sl-skilltable__cell--nosettings, .sheet-sl-skilltable__cell--span2, .sheet-sl-skilltable__cell--grouped, .sheet-sl-field__header,
+.sheet-sl-field__input,
+.sheet-sl-textarea__header,
+.sheet-sl-textarea__input, .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell, .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell--head, .sheet-sl-woundstable__cell--last, .sheet-sl-experiencetable__cell--last, .sheet-sl-careertable__cell--last, .sheet-sl-spelltable__cell--last, .sheet-sl-weapontable__cell--last, .sheet-sl-criticaltable__cell--last, .sheet-sl-armourtable__cell--last, .sheet-sl-trappingtable__cell--last, .sheet-sl-corruptiontable__cell--last, .sheet-sl-psychologytable__cell--last, .sheet-sl-conditiontable__cell--last, .sheet-sl-talenttable__cell--last, .sheet-sl-skilltable__cell--last {
+  border-right: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-npccharacteristic__cell input[type=number], .sheet-sl-npccharacteristic__cell--head input[type=number], .sheet-sl-woundstable__cell input[type=number], .sheet-sl-experiencetable__cell input[type=number], .sheet-sl-careertable__cell input[type=number], .sheet-sl-spelltable__cell input[type=number], .sheet-sl-weapontable__cell input[type=number], .sheet-sl-criticaltable__cell input[type=number], .sheet-sl-armourtable__cell input[type=number], .sheet-sl-trappingtable__cell input[type=number], .sheet-sl-corruptiontable__cell input[type=number], .sheet-sl-psychologytable__cell input[type=number], .sheet-sl-conditiontable__cell input[type=number], .sheet-sl-talenttable__cell input[type=number], .sheet-sl-skilltable__cell input[type=number], .sheet-sl-skilltable__cell--last input[type=number], .sheet-sl-skilltable__cell--nosettings input[type=number], .sheet-sl-skilltable__cell--span2 input[type=number], .sheet-sl-skilltable__cell--grouped input[type=number], .sheet-sl-field__header input[type=number],
+.sheet-sl-field__input input[type=number],
+.sheet-sl-textarea__header input[type=number],
+.sheet-sl-textarea__input input[type=number], .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell input[type=number], .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell--head input[type=number], .sheet-sl-woundstable__cell--last input[type=number], .sheet-sl-experiencetable__cell--last input[type=number], .sheet-sl-careertable__cell--last input[type=number], .sheet-sl-spelltable__cell--last input[type=number], .sheet-sl-weapontable__cell--last input[type=number], .sheet-sl-criticaltable__cell--last input[type=number], .sheet-sl-armourtable__cell--last input[type=number], .sheet-sl-trappingtable__cell--last input[type=number], .sheet-sl-corruptiontable__cell--last input[type=number], .sheet-sl-psychologytable__cell--last input[type=number], .sheet-sl-conditiontable__cell--last input[type=number], .sheet-sl-talenttable__cell--last input[type=number] {
+  height: 100%;
+}
+.sheet-sl-npccharacteristic__cell > span[name*=attr], .sheet-sl-npccharacteristic__cell--head > span[name*=attr], .sheet-sl-woundstable__cell > span[name*=attr], .sheet-sl-experiencetable__cell > span[name*=attr], .sheet-sl-careertable__cell > span[name*=attr], .sheet-sl-spelltable__cell > span[name*=attr], .sheet-sl-weapontable__cell > span[name*=attr], .sheet-sl-criticaltable__cell > span[name*=attr], .sheet-sl-armourtable__cell > span[name*=attr], .sheet-sl-trappingtable__cell > span[name*=attr], .sheet-sl-corruptiontable__cell > span[name*=attr], .sheet-sl-psychologytable__cell > span[name*=attr], .sheet-sl-conditiontable__cell > span[name*=attr], .sheet-sl-talenttable__cell > span[name*=attr], .sheet-sl-skilltable__cell > span[name*=attr], .sheet-sl-skilltable__cell--last > span[name*=attr], .sheet-sl-skilltable__cell--nosettings > span[name*=attr], .sheet-sl-skilltable__cell--span2 > span[name*=attr], .sheet-sl-skilltable__cell--grouped > span[name*=attr], .sheet-sl-field__header > span[name*=attr],
+.sheet-sl-field__input > span[name*=attr],
+.sheet-sl-textarea__header > span[name*=attr],
+.sheet-sl-textarea__input > span[name*=attr], .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell > span[name*=attr], .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell--head > span[name*=attr], .sheet-sl-woundstable__cell--last > span[name*=attr], .sheet-sl-experiencetable__cell--last > span[name*=attr], .sheet-sl-careertable__cell--last > span[name*=attr], .sheet-sl-spelltable__cell--last > span[name*=attr], .sheet-sl-weapontable__cell--last > span[name*=attr], .sheet-sl-criticaltable__cell--last > span[name*=attr], .sheet-sl-armourtable__cell--last > span[name*=attr], .sheet-sl-trappingtable__cell--last > span[name*=attr], .sheet-sl-corruptiontable__cell--last > span[name*=attr], .sheet-sl-psychologytable__cell--last > span[name*=attr], .sheet-sl-conditiontable__cell--last > span[name*=attr], .sheet-sl-talenttable__cell--last > span[name*=attr] {
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+}
+
+.sheet-sl-skilltable__cell--grouped, .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell, .sheet-sl-npccharacteristic__col:last-child .sheet-sl-npccharacteristic__cell--head, .sheet-sl-woundstable__cell--last, .sheet-sl-experiencetable__cell--last, .sheet-sl-careertable__cell--last, .sheet-sl-spelltable__cell--last, .sheet-sl-weapontable__cell--last, .sheet-sl-criticaltable__cell--last, .sheet-sl-armourtable__cell--last, .sheet-sl-trappingtable__cell--last, .sheet-sl-corruptiontable__cell--last, .sheet-sl-psychologytable__cell--last, .sheet-sl-conditiontable__cell--last, .sheet-sl-talenttable__cell--last, .sheet-sl-skilltable__cell--last {
+  border-right: 0;
+}
+
+.sheet-sl-npccharacteristic__cell--highlight, .sheet-sl-woundstable__cell--highlight, .sheet-sl-experiencetable__cell--highlight, .sheet-sl-careertable__cell--highlight, .sheet-sl-spelltable__cell--highlight, .sheet-sl-weapontable__cell--highlight, .sheet-sl-criticaltable__cell--highlight, .sheet-sl-armourtable__cell--highlight, .sheet-sl-trappingtable__cell--highlight, .sheet-sl-corruptiontable__cell--highlight, .sheet-sl-psychologytable__cell--highlight, .sheet-sl-conditiontable__cell--highlight, .sheet-sl-talenttable__cell--highlight, .sheet-sl-skilltable__cell--highlight {
+  color: #1d4f73;
+  font-weight: bold;
+}
+
+.sheet-sl-npccharacteristic__cell--description, .sheet-sl-woundstable__cell--description, .sheet-sl-experiencetable__cell--description, .sheet-sl-careertable__cell--description, .sheet-sl-spelltable__cell--description, .sheet-sl-weapontable__cell--description, .sheet-sl-criticaltable__cell--description, .sheet-sl-armourtable__cell--description, .sheet-sl-trappingtable__cell--description, .sheet-sl-corruptiontable__cell--description, .sheet-sl-psychologytable__cell--description, .sheet-sl-conditiontable__cell--description, .sheet-sl-talenttable__cell--description, .sheet-sl-skilltable__cell--description {
+  border-top: 1px dotted rgba(60, 72, 87, 0.45);
+  font-size: 0.95em;
+  font-style: italic;
+}
+
+.sheet-sl-chartable__cell {
+  border-left: 1px solid rgba(60, 72, 87, 0.55);
+  border-top: 1px solid rgba(60, 72, 87, 0.55);
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+}
+.sheet-sl-chartable__cell--left {
+  font-weight: bold;
+  border-top: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-chartable__cell--head {
+  font-weight: bold;
+  border-left: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-chartable__cell--highlight {
+  font-weight: bold;
+}
+
+.sheet-sl-skilltable__row--grouped,
+.sheet-sl-skilltable__row--specialisation {
+  background: rgba(44, 109, 155, 0.09);
+}
+
+.sheet-sl-skilltable__cell--grouped {
+  padding-top: 1px;
+  color: #1d4f73;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: center !important;
+  text-indent: -1.5rem;
+  text-transform: uppercase;
+}
+
+.sheet-sl-armour__display {
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 14pt;
+  font-weight: bold;
+  line-height: 3.5rem;
+}
+
+.sheet-sl-header {
+  padding: 0;
+  overflow: hidden;
+}
+.sheet-sl-header__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(1px 1px at 12% 30%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.7) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 22%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 76% 64%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 89% 18%, rgba(255, 255, 255, 0.8) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 4% 82%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 47% 48%, rgba(255, 255, 255, 0.5) 50%, transparent 51%), radial-gradient(ellipse at 70% 120%, rgba(44, 109, 155, 0.45), transparent 60%), linear-gradient(180deg, #0b0f15, #18202b);
+  border-bottom: 3px solid #f3c331;
+}
+.sheet-sl-header__logo-title {
+  color: #f3c331;
+  font-family: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(243, 195, 49, 0.35);
+}
+.sheet-sl-header__logo-tagline {
+  margin-top: 4px;
+  color: #e6edf4;
+  font-family: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.55em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.sheet-sl-header__logo-subtitle {
+  margin-top: 8px;
+  color: #b9c7d6;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+}
+.sheet-sl-header__info {
+  padding-top: 0.5em;
+}
+.sheet-sl-header__portrait {
+  overflow: hidden;
+  border: 2px solid #f3c331;
+  border-radius: 3px;
+  background: radial-gradient(1px 1px at 12% 30%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.7) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 22%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 76% 64%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 89% 18%, rgba(255, 255, 255, 0.8) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 4% 82%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 47% 48%, rgba(255, 255, 255, 0.5) 50%, transparent 51%), radial-gradient(ellipse at 70% 120%, rgba(44, 109, 155, 0.45), transparent 60%), linear-gradient(180deg, #0b0f15, #18202b);
+  box-shadow: 0 0 0 1px #151a21, 0 0 10px rgba(243, 195, 49, 0.3);
+}
+.sheet-sl-header__portrait-empty {
+  color: #b9c7d6;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_path {
+  border: 0;
+  border-right: 1px solid rgba(60, 72, 87, 0.55);
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--status {
+  border: 0;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-header__item-wrapper--age, .sheet-sl-header__item-wrapper--height, .sheet-sl-header__item-wrapper--homeworld {
+  border: 0;
+  border-right: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-header__title {
+  padding: 0.25rem;
+  color: #3c4857;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.sheet-sl-header button[type=action].sheet-sl-header__hidecustom {
+  text-align: center;
+}
+
+.sheet-sl-wrapper .sheet-sl-panel {
+  background: linear-gradient(180deg, #f6f8f9, #edf0f3 40%, #dde3e9);
+  border: 1px solid #0a0d12;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+.sheet-sl-wrapper .sheet-sl-panel h1 {
+  padding: 3px 0 2px;
+  margin-bottom: 1px;
+  border-bottom: 2px solid #f3c331;
+  background: linear-gradient(90deg, #151a21, #262e39 50%, #151a21);
+  color: #f3c331;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+}
+
+.sheet-sl-wrapper .sheet-sl-armour__wrapper.sheet-sl-panel {
+  background: radial-gradient(circle at 50% 55%, transparent 0, transparent 58px, rgba(44, 109, 155, 0.25) 59px, rgba(44, 109, 155, 0.25) 60px, transparent 61px, transparent 100px, rgba(44, 109, 155, 0.18) 101px, rgba(44, 109, 155, 0.18) 102px, transparent 103px), linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% + 0.5px), transparent calc(50% + 0.5px)), linear-gradient(180deg, #f6f8f9, #dde3e9);
+}
+
+.sheet-sl-armour__display {
+  border: 1px solid #3c4857;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.75);
+  color: #1d4f73;
+}
+
+.sheet-sl-wrapper .sheet-sl-controls button[type=roll],
+.sheet-sl-wrapper .sheet-sl-controls button[type=action] {
+  padding: 3px 0;
+  border: 1px solid #3c4857;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #262e39, #151a21);
+  color: #e6edf4;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.sheet-sl-wrapper .sheet-sl-controls button[type=roll]:hover,
+.sheet-sl-wrapper .sheet-sl-controls button[type=action]:hover {
+  color: #f3c331;
+}
+.sheet-sl-wrapper .sheet-sl-advantage {
+  font-size: 16pt;
+}
+.sheet-sl-wrapper .sheet-sl-advantage__wrapper {
+  font-size: 16pt;
+  text-align: center;
+}
+.sheet-sl-wrapper .sheet-sl-advantage__wrapper input[type=number].sheet-sl-advantage__input {
+  border: 1px solid rgba(60, 72, 87, 0.55);
+  font-size: 16pt;
+}
+
+.sheet-sl-wrapper .sheet-sl-navigation.sheet-sl-panel {
+  background: linear-gradient(180deg, #262e39, #151a21);
+  border-color: #0a0d12;
+  color: #dfe7ef;
+}
+
+.sheet-sl-navigation__item input[type=checkbox]:checked + span, .sheet-sl-navigation__item--settings input[type=checkbox]:checked + span,
+.sheet-sl-navigation__item input[type=radio]:checked + span,
+.sheet-sl-navigation__item--settings input[type=radio]:checked + span {
+  border-color: #f3c331;
+  background: #f3c331;
+  color: #10151c;
+  box-shadow: 0 0 8px rgba(243, 195, 49, 0.45);
+}
+.sheet-sl-navigation__item span, .sheet-sl-navigation__item--settings span {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid rgba(223, 231, 239, 0.35);
+  border-radius: 2px;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.sheet-sl-navigation__item:hover span, .sheet-sl-navigation__item--settings:hover span {
+  border-color: #f3c331;
+}
+.sheet-sl-navigation__item--settings span {
+  font-family: "Pictos";
+  letter-spacing: 0;
+  text-transform: lowercase;
+}
+
+.sheet-sl-wrapper .repcontainer.editmode + .repcontrol .repcontrol_edit {
+  background: rgba(243, 195, 49, 0.6);
+}
+.sheet-sl-wrapper .itemcontrol button.repcontrol_del,
+.sheet-sl-wrapper .itemcontrol a.repcontrol_move {
+  border: 1px solid rgba(60, 72, 87, 0.55);
+  border-radius: 2px;
+  box-shadow: none;
+  font-family: "Pictos";
+  font-size: 12pt;
+  font-weight: normal;
+  text-align: center;
+  text-shadow: none;
+}
+.sheet-sl-wrapper .itemcontrol button.repcontrol_del {
+  background: #a5282c;
+  color: white;
+}
+.sheet-sl-wrapper .itemcontrol a.repcontrol_move {
+  background: #f6f8f9;
+}
+.sheet-sl-wrapper .repcontrol {
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+  background-color: transparent;
+}
+.sheet-sl-wrapper .repcontrol button.repcontrol_add,
+.sheet-sl-wrapper .repcontrol button.repcontrol_edit {
+  border: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 0;
+  line-height: 1;
+}
+.sheet-sl-wrapper .repcontrol button.repcontrol_add:before,
+.sheet-sl-wrapper .repcontrol button.repcontrol_edit:before {
+  border: 1px solid rgba(60, 72, 87, 0.55);
+  background: none;
+  box-shadow: none;
+  font-family: "Pictos";
+  font-size: 10pt;
+  font-weight: bold;
+}
+.sheet-sl-wrapper .repcontrol button.repcontrol_add:before {
+  content: "&";
+}
+.sheet-sl-wrapper .repcontrol button.repcontrol_edit:before {
+  content: "p";
+  right: 5px;
+}
+
+.sheet-sl-settings, .sheet-sl-settings--noborder, .sheet-sl-settings--large {
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(44, 109, 155, 0.6);
+  background: rgba(44, 109, 155, 0.06);
+}
+.sheet-sl-settings input.sheet-sl-settings__input[type=text], .sheet-sl-settings--noborder input.sheet-sl-settings__input[type=text], .sheet-sl-settings--large input.sheet-sl-settings__input[type=text],
+.sheet-sl-settings input.sheet-sl-settings__input[type=number],
+.sheet-sl-settings--noborder input.sheet-sl-settings__input[type=number],
+.sheet-sl-settings--large input.sheet-sl-settings__input[type=number],
+.sheet-sl-settings textarea.sheet-sl-settings__textarea,
+.sheet-sl-settings--noborder textarea.sheet-sl-settings__textarea,
+.sheet-sl-settings--large textarea.sheet-sl-settings__textarea,
+.sheet-sl-settings select.sheet-sl-settings__select,
+.sheet-sl-settings--noborder select.sheet-sl-settings__select,
+.sheet-sl-settings--large select.sheet-sl-settings__select {
+  background-color: rgba(44, 109, 155, 0.1);
+  color: #10151c;
+  border-radius: 3px;
+}
+.sheet-sl-settings--noborder {
+  border: 0;
+}
+.sheet-sl-settings__header {
+  margin-top: 0.5rem;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+  font-weight: bold;
+}
+.sheet-sl-settings__header:not(:first-child) {
+  text-align: center;
+}
+.sheet-sl-settings__label span {
+  display: block;
+}
+
+.sheet-sl-npcsettings__wrapper, .sheet-control__hide--npctalent_settings, .sheet-control__hide--npctrait_settings, .sheet-control__hide--npcattack_settings, .sheet-control__hide--Custom, .sheet-control__hide--skill, .sheet-control__hide--characteristic, .sheet-sl-criticaltable__row .sheet-sl-criticaltable__cell--description, .sheet-sl-corruptiontable__row .sheet-sl-corruptiontable__cell--description, .sheet-sl-psychologytable__row .sheet-sl-psychologytable__cell--description, .sheet-sl-conditiontable__row .sheet-sl-conditiontable__cell--description, .sheet-sl-talenttable__row .sheet-sl-talenttable__cell--description, .sheet-control__hide--spell_settings, .sheet-control__hide--weapon_settings, .sheet-control__hide--armour_settings, .sheet-control__hide--trappings_settings, .sheet-control__hide--species_settings, .sheet-control__hide--career_settings, .sheet-control__hide--critical_settings, .sheet-control__hide--corruption_settings, .sheet-control__hide--psychology_settings, .sheet-control__hide--condition_settings, .sheet-control__hide--talent_settings, .sheet-control__hide--custom, .sheet-control__hide--galactic_basic, .sheet-control__hide--alter, .sheet-control__hide--sense, .sheet-control__hide--control, .sheet-control__hide--throwing, .sheet-control__hide--explosives, .sheet-control__hide--entangling, .sheet-control__hide--exotic, .sheet-control__hide--gunnery, .sheet-control__hide--heavy, .sheet-control__hide--rifle, .sheet-control__hide--pistol, .sheet-control__hide--stun, .sheet-control__hide--two-handed, .sheet-control__hide--polearm, .sheet-control__hide--parry, .sheet-control__hide--vibroweapon, .sheet-control__hide--lightsaber, .sheet-control__hide--brawling, .sheet-control__hide--basic, .sheet-control__hide--custom_settings, .sheet-control__hide--galactic_basic_settings, .sheet-control__hide--alter_settings, .sheet-control__hide--sense_settings, .sheet-control__hide--control_settings, .sheet-control__hide--throwing_settings, .sheet-control__hide--explosives_settings, .sheet-control__hide--entangling_settings, .sheet-control__hide--exotic_settings, .sheet-control__hide--gunnery_settings, .sheet-control__hide--heavy_settings, .sheet-control__hide--rifle_settings, .sheet-control__hide--pistol_settings, .sheet-control__hide--stun_settings, .sheet-control__hide--two-handed_settings, .sheet-control__hide--polearm_settings, .sheet-control__hide--parry_settings, .sheet-control__hide--vibroweapon_settings, .sheet-control__hide--lightsaber_settings, .sheet-control__hide--brawling_settings, .sheet-control__hide--basic_settings, .sheet-control__hide--zero-g_settings, .sheet-control__hide--survival_settings, .sheet-control__hide--streetwise_settings, .sheet-control__hide--stealth_settings, .sheet-control__hide--ride_settings, .sheet-control__hide--perception_settings, .sheet-control__hide--navigation_settings, .sheet-control__hide--melee_settings, .sheet-control__hide--leadership_settings, .sheet-control__hide--intuition_settings, .sheet-control__hide--intimidate_settings, .sheet-control__hide--haggle_settings, .sheet-control__hide--gamble_settings, .sheet-control__hide--entertain_settings, .sheet-control__hide--endurance_settings, .sheet-control__hide--drive_settings, .sheet-control__hide--dodge_settings, .sheet-control__hide--cool_settings, .sheet-control__hide--climb_settings, .sheet-control__hide--charm_settings, .sheet-control__hide--carouse_settings, .sheet-control__hide--bribery_settings, .sheet-control__hide--athletics_settings, .sheet-control__hide--art_settings, .sheet-control__hide--animal-handling_settings, .sheet-control__hide--trade_settings, .sheet-control__hide--track_settings, .sheet-control__hide--tactics_settings, .sheet-control__hide--swim_settings, .sheet-control__hide--slicing_settings, .sheet-control__hide--sleight-of-hand_settings, .sheet-control__hide--security_settings, .sheet-control__hide--research_settings, .sheet-control__hide--ranged_settings, .sheet-control__hide--pilot_settings, .sheet-control__hide--perform_settings, .sheet-control__hide--medicine_settings, .sheet-control__hide--mechanics_settings, .sheet-control__hide--language_settings, .sheet-control__hide--knowledge_settings, .sheet-control__hide--force_settings, .sheet-control__hide--deceive_settings, .sheet-control__hide--demolitions_settings, .sheet-control__hide--computers_settings, .sheet-control__hide--settings, .sheet-control__hide--astrogation_settings, .sheet-control__hide--fellowship, .sheet-control__hide--willpower, .sheet-control__hide--intelligence, .sheet-control__hide--dexterity, .sheet-control__hide--agility, .sheet-control__hide--initiative, .sheet-control__hide--toughness, .sheet-control__hide--strength, .sheet-control__hide--ballistic_skill, .sheet-control__hide--weapon_skill {
+  display: none;
+}
+
+input[name*=characteristic][value=fellowship] ~ .sheet-control__hide--fellowship, input[name*=characteristic][value=willpower] ~ .sheet-control__hide--willpower, input[name*=characteristic][value=intelligence] ~ .sheet-control__hide--intelligence, input[name*=characteristic][value=dexterity] ~ .sheet-control__hide--dexterity, input[name*=characteristic][value=agility] ~ .sheet-control__hide--agility, input[name*=characteristic][value=initiative] ~ .sheet-control__hide--initiative, input[name*=characteristic][value=toughness] ~ .sheet-control__hide--toughness, input[name*=characteristic][value=strength] ~ .sheet-control__hide--strength, input[name*=characteristic][value=ballistic_skill] ~ .sheet-control__hide--ballistic_skill, input[name*=characteristic][value=weapon_skill] ~ .sheet-control__hide--weapon_skill {
+  display: block;
+}
+
+input[name*=npc_settings][value=on] + .sheet-sl-npcsettings__wrapper, input[name*=settings][value="1"] + div > .sheet-control__hide--npctalent_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npctrait_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npcattack_settings, input[name*=type][value=Custom] ~ .sheet-control__hide--Custom, input[name=attr_talent_test_type][value=skill] ~ .sheet-control__hide--skill, input[name=attr_talent_test_type][value=characteristic] ~ .sheet-control__hide--characteristic, .sheet-sl-criticaltable__row input[name=attr_critical_toggle][value="1"] + .sheet-sl-criticaltable__cell--description, .sheet-sl-corruptiontable__row input[name=attr_corruption_toggle][value="1"] + .sheet-sl-corruptiontable__cell--description, .sheet-sl-psychologytable__row input[name=attr_psychology_toggle][value="1"] + .sheet-sl-psychologytable__cell--description, .sheet-sl-conditiontable__row input[name=attr_condition_toggle][value="1"] + .sheet-sl-conditiontable__cell--description, .sheet-sl-talenttable__row input[name=attr_talent_toggle][value="1"] + .sheet-sl-talenttable__cell--description, input[name*=settings][value="1"] + div > .sheet-control__hide--spell_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--weapon_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--armour_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--trappings_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--species_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--career_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--critical_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--corruption_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--psychology_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--condition_settings, input[name*=settings][value="1"] + div > div[class*=settings], input[name*=settings][value="1"] + div > .sheet-control__hide--talent_settings, input[name*=control][value=on] + .sheet-control__hide--custom, input[name*=control][value=on] + .sheet-control__hide--galactic_basic, input[name*=control][value=on] + .sheet-control__hide--alter, input[name*=control][value=on] + .sheet-control__hide--sense, input[name*=control][value=on] + .sheet-control__hide--control, input[name*=control][value=on] + .sheet-control__hide--throwing, input[name*=control][value=on] + .sheet-control__hide--explosives, input[name*=control][value=on] + .sheet-control__hide--entangling, input[name*=control][value=on] + .sheet-control__hide--exotic, input[name*=control][value=on] + .sheet-control__hide--gunnery, input[name*=control][value=on] + .sheet-control__hide--heavy, input[name*=control][value=on] + .sheet-control__hide--rifle, input[name*=control][value=on] + .sheet-control__hide--pistol, input[name*=control][value=on] + .sheet-control__hide--stun, input[name*=control][value=on] + .sheet-control__hide--two-handed, input[name*=control][value=on] + .sheet-control__hide--polearm, input[name*=control][value=on] + .sheet-control__hide--parry, input[name*=control][value=on] + .sheet-control__hide--vibroweapon, input[name*=control][value=on] + .sheet-control__hide--lightsaber, input[name*=control][value=on] + .sheet-control__hide--brawling, input[name*=control][value=on] + .sheet-control__hide--basic, input[name*=settings][value="1"] ~ div > .sheet-control__hide--custom_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--galactic_basic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--alter_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sense_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--control_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--throwing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--explosives_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entangling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--exotic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gunnery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--heavy_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--rifle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pistol_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stun_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--two-handed_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--polearm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--parry_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--vibroweapon_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--lightsaber_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--brawling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--basic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--zero-g_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--survival_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--streetwise_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stealth_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ride_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perception_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--navigation_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--melee_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--leadership_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intuition_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intimidate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--haggle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gamble_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entertain_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--endurance_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--drive_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--dodge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--cool_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--climb_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--charm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--carouse_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--bribery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--athletics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--art_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--animal-handling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--trade_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--track_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--tactics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--swim_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--slicing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sleight-of-hand_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--security_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--research_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ranged_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pilot_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perform_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--medicine_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--mechanics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--language_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--knowledge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--force_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--deceive_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--demolitions_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--computers_settings, input[name*=settings][value="1"] ~ div > div[class*=settings], input[name*=settings][value="1"] ~ div > .sheet-control__hide--astrogation_settings {
+  display: grid;
+}
+
+.sheet-control__custom {
+  display: none;
+}
+
+input.sheet-control__custom[value*=Custom] {
+  display: none;
+}
+input.sheet-control__custom[value*=Custom] + select.sheet-control__custom {
+  display: none;
+}
+input.sheet-control__custom[value*=Custom] ~ .sheet-control__custom {
+  display: grid;
+  grid-template-columns: 1fr 2em;
+}
+
+input[name*=settings][value="1"] + div > .sheet-sl-talenttable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-conditiontable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-psychologytable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-corruptiontable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-criticaltable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-careertable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-speciestable__cell--description {
+  display: none !important;
+}
+
+input[name*=settings][value="1"] + div > .sheet-sl-trappingstable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-armourtable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-criticaltable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-weapontable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-spelltable__cell--description {
+  display: none !important;
+}
+
+label.sheet-sl-traittoggle {
+  text-align: left;
+  cursor: pointer;
+}
+
+input.sheet-sl-traittoggle__hide {
+  display: none;
+}
+
+.sheet-sl-traittoggle__span {
+  text-align: left;
+}
+
+input[name*=attack_damage_bonus] + span,
+input[name*=weapon_damage_bonus] + span {
+  display: none;
+}
+input[name*=attack_damage_bonus][value=on] + span,
+input[name*=weapon_damage_bonus][value=on] + span {
+  display: inline-block;
+}
+
+input[name*=setting_button_hide][value="2"] ~ * .repcontrol {
+  display: none;
+}
+
+input[name*=settings][value="1"] + div > .sheet-sl-npcattacktable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-npctraittable__cell--description {
+  display: none !important;
+}
+input[name*=settings][value="1"] + div > .sheet-sl-npctalenttable__cell--description {
+  display: none !important;
+}
+
+.sheet-sl-advancenotify {
+  display: none;
+}
+
+input[name*=advances_changed][value="1"] + .sheet-sl-advancenotify {
+  display: block;
+}
+
+.sheet-sl-npc__skills,
+.sheet-sl-npctrappings {
+  display: none;
+}
+
+input[name*=skill_flag][value=on] + .sheet-sl-npc__skills {
+  display: block;
+}
+
+input[name*=trapping_flag][value=on] + .sheet-sl-npctrappings {
+  display: block;
+}
+
+input[type=hidden][name*=species_disable3][value="1"] ~ * input[type=radio][value="3"]:not(:checked) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+input[type=hidden][name*=species_disable5][value="1"] ~ * input[type=radio][value="5"]:not(:checked) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.sheet-sl-wrapper .sheet-page__main,
+.sheet-sl-wrapper .sheet-page__advances,
+.sheet-sl-wrapper .sheet-page__combat,
+.sheet-sl-wrapper .sheet-page__force,
+.sheet-sl-wrapper .sheet-page__settings {
+  display: none;
+}
+.sheet-sl-wrapper .sheet-page__main--flex, .sheet-sl-wrapper .sheet-page__main--grid,
+.sheet-sl-wrapper .sheet-page__advances--flex,
+.sheet-sl-wrapper .sheet-page__advances--grid,
+.sheet-sl-wrapper .sheet-page__combat--flex,
+.sheet-sl-wrapper .sheet-page__combat--grid,
+.sheet-sl-wrapper .sheet-page__force--flex,
+.sheet-sl-wrapper .sheet-page__force--grid,
+.sheet-sl-wrapper .sheet-page__settings--flex,
+.sheet-sl-wrapper .sheet-page__settings--grid {
+  display: none;
+}
+
+input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat, input[type=hidden][name=attr_nav][value=force] ~ * .sheet-page__force, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings {
+  display: block;
+}
+input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main--flex, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances--flex, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat--flex, input[type=hidden][name=attr_nav][value=force] ~ * .sheet-page__force--flex, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings--flex {
+  display: flex;
+}
+input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main--grid, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances--grid, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat--grid, input[type=hidden][name=attr_nav][value=force] ~ * .sheet-page__force--grid, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings--grid {
+  display: grid;
+}
+
+.sheet-sl-wrapper .sheet-sl-pc,
+.sheet-sl-wrapper .sheet-sl-npc {
+  display: none;
+}
+.sheet-sl-wrapper .sheet-sl-pc--flex, .sheet-sl-wrapper .sheet-sl-pc--grid,
+.sheet-sl-wrapper .sheet-sl-npc--flex,
+.sheet-sl-wrapper .sheet-sl-npc--grid {
+  display: none;
+}
+
+input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sl-npc, input[type=hidden][name=attr_npc][value="0"] ~ * .sheet-sl-pc {
+  display: grid;
+}
+
+.sheet-sl-npc {
+  padding: 6px;
+  border: 2px solid #151a21;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #f6f8f9, #dde3e9);
+  color: #10151c;
+}
+.sheet-sl-npc__wrapper h1 {
+  font-size: 3rem;
+  font-variant: small-caps;
+}
+.sheet-sl-npcsettings__toggle {
+  margin: 1rem;
+}
+.sheet-sl-npcsettings__toggle input.sheet-sl-npcsettings__hide[type=checkbox] {
+  display: none;
+}
+.sheet-sl-npcsettings__toggle input.sheet-sl-npcsettings__hide[type=checkbox]:checked ~ span {
+  opacity: 1;
+}
+.sheet-sl-npcsettings__toggle span {
+  font-size: 1.2rem;
+  opacity: 0.5;
+}
+.sheet-sl-npcsettings__toggle:hover {
+  cursor: pointer;
+}
+.sheet-sl-npcsettings__toggle:hover span {
+  font-size: 1.2rem;
+  opacity: 1;
+}
+.sheet-sl-npcsettings__wrapper {
+  margin: auto;
+  padding: 0.5rem 10%;
+  border-bottom: 1px dashed rgba(44, 109, 155, 0.6);
+  background: rgba(195, 223, 241, 0.125);
+}
+.sheet-sl-npcsettings__wrapper h2 {
+  margin-top: 3rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f3c331;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+.sheet-sl-npcsettings__wrapper select.sheet-sl-npcsettings__select,
+.sheet-sl-npcsettings__wrapper input[type=number].sheet-sl-npcsettings__input,
+.sheet-sl-npcsettings__wrapper input[type=text].sheet-sl-npcsettings__input {
+  background: none;
+  border-bottom: 1px solid black;
+}
+.sheet-sl-npcsettings__wrapper textarea.sheet-sl-npcsettings__textarea {
+  height: 7em;
+  resize: vertical;
+  border-top: 1px solid rgba(36, 107, 131, 0.33);
+  border-bottom: 1px solid rgba(36, 107, 131, 0.33);
+}
+.sheet-sl-npcsettings__characteristics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+  margin: 0 auto;
+  max-width: 600px;
+}
+.sheet-sl-npcsettings__characteristic {
+  text-align: center;
+}
+.sheet-sl-npcsettings__characteristic:empty {
+  display: block;
+}
+.sheet-sl-npcsettings__label {
+  font-weight: bold;
+}
+.sheet-sl-npcsettings__skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem 2rem;
+  margin: 0 3rem;
+}
+.sheet-sl-npcsettings__skills--additional .repcontainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem 2rem;
+  margin: 0 3rem;
+}
+.sheet-sl-npcsettings__skills--additional .repcontrol {
+  margin-top: 0.5rem;
+}
+.sheet-sl-npcsettings__skill {
+  display: grid;
+  grid-template-columns: 1fr 3rem;
+  grid-gap: 0.25rem;
+}
+.sheet-sl-npcsettings__settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  margin: 0 3rem;
+}
+.sheet-sl-npcsettings__row {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+}
+.sheet-sl-npc__slash {
+  margin: 2rem 0;
+  padding: 1rem 2.5%;
+  background: radial-gradient(1px 1px at 12% 30%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.7) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 22%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 76% 64%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 89% 18%, rgba(255, 255, 255, 0.8) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 4% 82%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 47% 48%, rgba(255, 255, 255, 0.5) 50%, transparent 51%), radial-gradient(ellipse at 70% 120%, rgba(44, 109, 155, 0.45), transparent 60%), linear-gradient(180deg, #0b0f15, #18202b);
+  border-bottom: 3px solid #f3c331;
+  border-radius: 3px;
+  color: #f3c331;
+}
+.sheet-sl-npcskill {
+  display: grid;
+  grid-template-columns: 1fr 0.25fr;
+}
+.sheet-sl-npc__description {
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 14.4px;
+}
+.sheet-sl-npc__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 2rem auto;
+  max-width: 600px;
+  font-size: 1.65rem;
+}
+.sheet-sl-npccharacteristic__col {
+  text-align: center;
+}
+.sheet-sl-npccharacteristic__cell, .sheet-sl-npccharacteristic__cell--head {
+  min-height: 49%;
+}
+.sheet-sl-npccharacteristic__cell > span, .sheet-sl-npccharacteristic__cell--head > span {
+  font-size: 1.65rem !important;
+}
+.sheet-sl-npccharacteristic__cell:empty, .sheet-sl-npccharacteristic__cell--head:empty {
+  content: "";
+  height: 100%;
+}
+.sheet-sl-npc__skills input[type=hidden][value="0"] + button.sheet-sl-npcskill, .sheet-sl-npc__skills input[type=hidden][value=""] + button.sheet-sl-npcskill, .sheet-sl-npc__skills input[type=hidden]:not([value]) + button.sheet-sl-npcskill {
+  display: none;
+}
+.sheet-sl-npc button[type=roll].sheet-sl-npcskill {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  width: auto;
+  font-size: 14.95px;
+}
+.sheet-sl-npcskill__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+}
+.sheet-sl-npcskill__wrapper .repcontrol {
+  display: none;
+}
+.sheet-sl-npcskill__title {
+  display: inline;
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+.sheet-sl-npcskill__title:after {
+  display: inline;
+  content: ":";
+}
+.sheet-sl-npcskill__value {
+  display: inline;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+}
+.sheet-sl-npcskill__value:after {
+  display: inline;
+  content: ",";
+}
+.sheet-sl-npc__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin: 2rem;
+}
+.sheet-sl-npc__grid > div {
+  padding: 0 0.5rem;
+}
+.sheet-sl-npc__grid > div > div {
+  margin-bottom: 2rem;
+}
+.sheet-sl-npcadvantage {
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+  background: rgba(36, 107, 131, 0.075);
+  border-bottom: 1px solid rgba(36, 107, 131, 0.33);
+  border-top: 1px solid rgba(36, 107, 131, 0.33);
+}
+.sheet-sl-npcadvantage .sheet-sl-advantage__wrapper {
+  display: grid;
+  grid-template-columns: 1.5fr 3rem 3rem 1fr 3rem;
+  justify-items: center;
+  align-items: center;
+  width: 70%;
+  margin: auto;
+  font-size: 14.95px;
+  text-align: center;
+}
+.sheet-sl-npcadvantage .sheet-sl-advantage__label {
+  font-weight: bold;
+}
+.sheet-sl-npc h2.sheet-sl-npc__subtitle {
+  margin: auto;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f3c331;
+  font-size: 1.38rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+.sheet-sl-npccontrols__wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.25rem;
+  margin: 0.25rem;
+}
+.sheet-sl-npccontrols__button button[type=roll] {
+  background: rgba(60, 72, 87, 0.125);
+  text-align: center;
+}
+.sheet-sl-npctalent, .sheet-sl-npctrait, .sheet-sl-npcattack {
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+}
+.sheet-sl-npctalent .repitem:first-child .sheet-sl-npctalent__row,
+.sheet-sl-npctalent .repitem:first-child .sheet-sl-npctrait__row,
+.sheet-sl-npctalent .repitem:first-child .sheet-sl-npcattack__row, .sheet-sl-npctrait .repitem:first-child .sheet-sl-npctalent__row,
+.sheet-sl-npctrait .repitem:first-child .sheet-sl-npctrait__row,
+.sheet-sl-npctrait .repitem:first-child .sheet-sl-npcattack__row, .sheet-sl-npcattack .repitem:first-child .sheet-sl-npctalent__row,
+.sheet-sl-npcattack .repitem:first-child .sheet-sl-npctrait__row,
+.sheet-sl-npcattack .repitem:first-child .sheet-sl-npcattack__row {
+  padding-top: 0;
+}
+.sheet-sl-npctalent .repitem:nth-child(even), .sheet-sl-npctrait .repitem:nth-child(even), .sheet-sl-npcattack .repitem:nth-child(even) {
+  background: rgba(36, 107, 131, 0.075);
+}
+.sheet-sl-npctalent .repcontrol, .sheet-sl-npctrait .repcontrol, .sheet-sl-npcattack .repcontrol {
+  margin-top: 1rem;
+  border: 0;
+}
+.sheet-sl-npctalent__row, .sheet-sl-npctrait__row, .sheet-sl-npcattack__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1rem 0.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed black;
+}
+.sheet-sl-npctalent__row .sheet-sl-settings, .sheet-sl-npctalent__row .sheet-sl-settings--large, .sheet-sl-npctalent__row .sheet-sl-settings--noborder, .sheet-sl-npctrait__row .sheet-sl-settings, .sheet-sl-npctrait__row .sheet-sl-settings--large, .sheet-sl-npctrait__row .sheet-sl-settings--noborder, .sheet-sl-npcattack__row .sheet-sl-settings, .sheet-sl-npcattack__row .sheet-sl-settings--large, .sheet-sl-npcattack__row .sheet-sl-settings--noborder {
+  width: 100%;
+}
+.sheet-sl-npctalent__cell, .sheet-sl-npctrait__cell, .sheet-sl-npcattack__cell {
+  margin-right: 0.5rem;
+}
+.sheet-sl-npctalent__cell--settingstoggle, .sheet-sl-npctrait__cell--settingstoggle, .sheet-sl-npcattack__cell--settingstoggle {
+  margin-right: 0.25rem;
+}
+.sheet-sl-npctalent__cell--title, .sheet-sl-npctrait__cell--title, .sheet-sl-npcattack__cell--title {
+  width: 85%;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.sheet-sl-npctalent__cell--description, .sheet-sl-npctrait__cell--description, .sheet-sl-npcattack__cell--description {
+  width: 100%;
+}
+.sheet-sl-npctalent__ranks, .sheet-sl-npctrait__ranks, .sheet-sl-npcattack__ranks {
+  display: inline-flex;
+  flex-direction: row;
+  margin-left: 0.35em;
+}
+.sheet-sl-npctalent__ranks:not(:empty):before, .sheet-sl-npctalent__ranks:not(:empty):after, .sheet-sl-npctrait__ranks:not(:empty):before, .sheet-sl-npctrait__ranks:not(:empty):after, .sheet-sl-npcattack__ranks:not(:empty):before, .sheet-sl-npcattack__ranks:not(:empty):after {
+  display: block;
+}
+.sheet-sl-npctalent__ranks:not(:empty):before, .sheet-sl-npctrait__ranks:not(:empty):before, .sheet-sl-npcattack__ranks:not(:empty):before {
+  content: "(";
+}
+.sheet-sl-npctalent__ranks:not(:empty):after, .sheet-sl-npctrait__ranks:not(:empty):after, .sheet-sl-npcattack__ranks:not(:empty):after {
+  content: ")";
+}
+.sheet-sl-npctalent__label, .sheet-sl-npctrait__label, .sheet-sl-npcattack__label {
+  margin-right: 0.33rem;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-weight: bold;
+}
+.sheet-sl-npctrappings textarea.sheet-sl-npctrappings__textarea {
+  height: 10em;
+  resize: vertical;
+  border-top: 1px solid rgba(36, 107, 131, 0.33);
+  border-bottom: 1px solid rgba(36, 107, 131, 0.33);
+}
+
+.sheet-rolltemplate-sl {
+  overflow: hidden;
+  border: 1px solid #151a21;
+  border-radius: 4px;
+  background: #edf0f3;
+  color: #10151c;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+}
+.sheet-rolltemplate-sl h1, .sheet-rolltemplate-sl h2, .sheet-rolltemplate-sl h3 {
+  grid-column: 1/-1;
+  margin: 0;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  line-height: 1em;
+  text-align: center;
+}
+.sheet-rolltemplate-sl h1 {
+  padding: 0.5rem 0 0.25rem;
+  color: #10151c;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  letter-spacing: 0.06em;
+  font-size: 14pt;
+  font-weight: bold;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.sheet-rolltemplate-sl h2 {
+  color: #3c4857;
+  font-size: 10pt;
+}
+.sheet-rolltemplate-sl h3 {
+  font-size: 9pt;
+  text-transform: uppercase;
+  color: #3c4857;
+}
+.sheet-rolltemplate-sl > h3 {
+  padding: 4px 0;
+  background: radial-gradient(1px 1px at 12% 30%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.7) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 22%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 76% 64%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 89% 18%, rgba(255, 255, 255, 0.8) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 4% 82%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 47% 48%, rgba(255, 255, 255, 0.5) 50%, transparent 51%), radial-gradient(ellipse at 70% 120%, rgba(44, 109, 155, 0.45), transparent 60%), linear-gradient(180deg, #0b0f15, #18202b);
+  color: #b9c7d6;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  letter-spacing: 0.2em;
+}
+.sheet-rolltemplate-sl .importantroll,
+.sheet-rolltemplate-sl .fullcrit,
+.sheet-rolltemplate-sl .fullfail,
+.sheet-rolltemplate-sl .inlinerollresult {
+  border: none !important;
+  background: transparent;
+  font-family: inherit;
+  line-height: 1em;
+}
+.sheet-rolltemplate-sl .sheet-fullcrit,
+.sheet-rolltemplate-sl .fullcrit {
+  color: #1e7a4c;
+}
+.sheet-rolltemplate-sl .sheet-fullfail,
+.sheet-rolltemplate-sl .fullfail {
+  color: #a5282c;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem 1rem;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__divider {
+  width: 100%;
+  height: 2px;
+  margin: 0.25rem 0;
+  grid-column: 1/-1;
+  background: linear-gradient(90deg, transparent, #f3c331 20%, #f3c331 80%, transparent);
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__result {
+  grid-column: 1/-1;
+  color: #1d4f73;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 3.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__target {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 1fr 3em;
+  padding: 0.5rem;
+  border: 1px solid rgba(44, 109, 155, 0.5);
+  border-radius: 3px;
+  background: rgba(44, 109, 155, 0.1);
+  font-weight: bold;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__success, .sheet-rolltemplate-sl .sheet-sl-roll__fail {
+  grid-column: 1/-1;
+  padding: 0.5rem;
+  border-radius: 3px;
+  color: white;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__success > span:not(:last-child), .sheet-rolltemplate-sl .sheet-sl-roll__fail > span:not(:last-child) {
+  margin-right: 0.5rem;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__success {
+  background: linear-gradient(180deg, #24935b, #1e7a4c);
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__fail {
+  background: linear-gradient(180deg, #be2e33, #a5282c);
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__row, .sheet-rolltemplate-sl .sheet-sl-roll__row--full {
+  display: grid;
+  grid-template-columns: 0.75fr 1fr;
+  gap: 0.25rem;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__row--number {
+  grid-template-columns: 1fr 3rem;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__row--full {
+  grid-template-columns: 1fr;
+  grid-column: 1/-1;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__label {
+  color: #3c4857;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__value {
+  text-align: center;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__value .inlinerollresult {
+  font-weight: normal;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll_sl {
+  font-size: 0.9em;
+}
+.sheet-rolltemplate-sl .sheet-sl-roll__text {
+  max-height: 10em;
+  overflow: hidden auto;
+  padding: 0.25rem;
+  scrollbar-width: thin;
+}

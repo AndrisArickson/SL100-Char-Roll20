@@ -49,7 +49,7 @@
     grid-column: 1 / -1;
 }
 
-.sheet-sw {
+.sheet-sl {
 
     // CHARACTERISTICS
 
@@ -60,8 +60,8 @@
         grid-auto-flow: column;
 
         input[type=number],
-        .sheet-sw-chartable__cell,
-        .sheet-sw-chartable__cell--head {
+        .sheet-sl-chartable__cell,
+        .sheet-sl-chartable__cell--head {
             text-align: center;
         }
     }
@@ -81,9 +81,9 @@
             grid-column: 1 / -1;
 
             &--head {
-                @extend .sheet-sw-skilltable__row;
+                @extend .sheet-sl-skilltable__row;
 
-                .sheet-sw-skilltable__cell {
+                .sheet-sl-skilltable__cell {
                     text-align: center;
 
                     &:first-child {
@@ -95,13 +95,13 @@
             }
 
             &--specialisation {
-                @extend .sheet-sw-skilltable__row;
+                @extend .sheet-sl-skilltable__row;
                 grid-column: 1 / -1;
                 padding: 0; 
             }
 
             &--grouped {
-                @extend .sheet-sw-skilltable__row;
+                @extend .sheet-sl-skilltable__row;
                 grid-column: 1 / -1;
                 padding: 0; 
             }
@@ -130,23 +130,23 @@
             }
 
             &--last {
-                @extend .sheet-sw-skilltable__cell;
+                @extend .sheet-sl-skilltable__cell;
             }
 
             &--nosettings {
-                @extend .sheet-sw-skilltable__cell;
+                @extend .sheet-sl-skilltable__cell;
                 grid-column: 2;
 
                 text-align: left;
             }
 
             &--span2 {
-                @extend .sheet-sw-skilltable__cell;
+                @extend .sheet-sl-skilltable__cell;
                 grid-column: span 2;
             }
 
             &--grouped {
-                @extend .sheet-sw-skilltable__cell;
+                @extend .sheet-sl-skilltable__cell;
                 grid-column-start: 1;
                 grid-column-end: -1;
                 padding-left: 1.5rem;
@@ -439,7 +439,7 @@
             &--leftleg,
             &--shield,
             &--toughness {
-                @extend .sheet-sw-armour__block;
+                @extend .sheet-sl-armour__block;
             }
 
             &--shield, 

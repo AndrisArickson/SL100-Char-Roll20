@@ -1,4 +1,4 @@
-// Consistency checks for the SW100 sheet. Run after a build: `npm run check`.
+// Consistency checks for the SL100 sheet. Run after a build: `npm run check`.
 //
 // The skill lists live in three places (Pug data, sheetworkers, SCSS); Roll20
 // also needs a translation entry for every data-i18n key or the label renders
@@ -46,7 +46,7 @@ const pugForceSpecs = allSkills.find(skill => skill.name === "Force").specialisa
     .map(spec => spec.toLowerCase());
 
 // Sheetworkers: run the module with Roll20 globals stubbed out.
-const sw = (() => {
+const sl = (() => {
     const noop = () => {};
     const context = {
         on: noop, getAttrs: noop, setAttrs: noop, getSectionIDs: noop,
@@ -56,17 +56,17 @@ const sw = (() => {
     const source = ["sheetworkers.js", "helperfunctions.js"]
         .map(file => read(`src/js/${file}`))
         .join("\n");
-    vm.runInNewContext(`${source}\nthis.result = swModule.sw;`, context);
+    vm.runInNewContext(`${source}\nthis.result = slModule.sl;`, context);
     return context.result;
 })();
 
-sameSet("skills (pug vs sheetworkers)", pugSkills, sw.skills);
-sameSet("specialisations (pug vs sheetworkers)", pugSpecialisations, sw.specialisations);
-sameSet("repeating skills (pug vs sheetworkers)", pugRepeating, sw.repeating_skills);
-sameSet("weapon specialisations (pug vs sheetworkers)", pugWeaponSpecs, sw.weapon_specialisations);
-sameSet("force specialisations (pug vs sheetworkers)", pugForceSpecs, sw.force_specialisations);
+sameSet("skills (pug vs sheetworkers)", pugSkills, sl.skills);
+sameSet("specialisations (pug vs sheetworkers)", pugSpecialisations, sl.specialisations);
+sameSet("repeating skills (pug vs sheetworkers)", pugRepeating, sl.repeating_skills);
+sameSet("weapon specialisations (pug vs sheetworkers)", pugWeaponSpecs, sl.weapon_specialisations);
+sameSet("force specialisations (pug vs sheetworkers)", pugForceSpecs, sl.force_specialisations);
 sameSet("characteristics (pug vs sheetworkers)",
-    abstracts.characteristics.map(c => c.name.toLowerCase().replace(/ /g, "_")), sw.characteristics);
+    abstracts.characteristics.map(c => c.name.toLowerCase().replace(/ /g, "_")), sl.characteristics);
 
 // SCSS lists drive the show/hide rules for skill settings rows.
 const scss = read("src/scss/_abstracts.scss");
@@ -79,7 +79,7 @@ sameSet("specialisations (pug vs scss)", pugSpecialisations, scssList("specialis
 
 // Translations: every data-i18n key used in the HTML (and every key sheet.json
 // names for its user options) needs an entry.
-const html = read("sw100.html");
+const html = read("sl100.html");
 const translation = JSON.parse(read("translation.json"));
 const used = new Set();
 for (const match of html.matchAll(/data-i18n(?:-placeholder|-title)?="([^"]*)"/g)) {
@@ -97,9 +97,34 @@ if (missing.length) errors.push(`translation.json is missing ${missing.length} k
 const unused = Object.keys(translation).filter(key => !used.has(key));
 if (unused.length) warnings.push(`translation.json has ${unused.length} unused key(s): ${unused.join(" | ")}`);
 
+// Every HTML class must carry the sheet- prefix (see scripts/postbuild.js);
+// otherwise the CSS does not apply when Legacy Sanitization is off.
+{
+    const body = html.replace(/<script type="text\/worker">[\s\S]*?<\/script>/, "");
+    const bare = new Set();
+    for (const match of body.matchAll(/\sclass="([^"]*)"/g)) {
+        match[1].split(/\s+/).filter(name => name && !name.startsWith("sheet-") && !name.startsWith("repeating_")).forEach(name => bare.add(name));
+    }
+    const prefixedRepeating = body.match(/class="[^"]*sheet-repeating_/);
+    if (prefixedRepeating) errors.push("a repeating_ fieldset class was given the sheet- prefix; Roll20 will not treat it as a repeating section");
+    if (bare.size) errors.push(`sl100.html has classes without the sheet- prefix (run npm run build): ${[...bare].slice(0, 10).join(", ")}`);
+}
+
+// Roll20's CSS sanitizer can discard the whole stylesheet over unusual syntax
+// in url(); keep ';' and '@' out of them (e.g. Google Fonts css2 URLs).
+{
+    const css = read("sl100.css");
+    for (const match of css.matchAll(/url\(\s*["']?([^"')]*)/g)) {
+        if (/[;@]/.test(match[1])) errors.push(`sl100.css has a url() containing ';' or '@', which Roll20 may reject: ${match[1]}`);
+    }
+    // Modern Sass colour maths emits rgb(12.3%, ...) / hsl(...); stick to hex and rgba(r, g, b, a).
+    const modernColour = css.match(/rgba?\([^)]*%[^)]*\)|hsla?\([^)]*\)/);
+    if (modernColour) errors.push(`sl100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
+}
+
 // The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.
-const css = read("sw100.css");
-for (const [name, text] of [["sw100.css", css], ["sw100.html", html]]) {
+const css = read("sl100.css");
+for (const [name, text] of [["sl100.css", css], ["sl100.html", html]]) {
     const hits = text.match(/files\.d20\.io\/images\/[^"')\s]*/g);
     if (hits) errors.push(`${name} still references Roll20-hosted images: ${[...new Set(hits)].join(", ")}`);
 }

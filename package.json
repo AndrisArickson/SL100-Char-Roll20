@@ -1,7 +1,7 @@
 {
-  "name": "sw100-character-sheet",
+  "name": "sl100-character-sheet",
   "version": "1.0.0",
-  "description": "Roll20 character sheet for SW100, a Star Wars inspired d100 game. Layout and engine adapted from the Warhammer Fantasy Roleplay 4e Official sheet.",
+  "description": "Roll20 character sheet for Star Legends - Galactic Wars (SL100), a space-opera d100 game. Layout and engine adapted from the Warhammer Fantasy Roleplay 4e Official sheet.",
   "private": true,
   "dependencies": {
     "npm-run-all": "^4.1.5",
@@ -11,12 +11,12 @@
   },
   "scripts": {
     "build": "npm-run-all build:sass build:pug check",
-    "build:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions",
-    "build:pug": "pug src/pug/sw100.pug --out . -P",
+    "build:sass": "sass src/scss/sl100.scss sl100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions",
+    "build:pug": "pug src/pug/sl100.pug --out . -P && node scripts/postbuild.js",
     "check": "node scripts/check.js",
     "start": "npm-run-all --parallel watch:sass watch:pug",
-    "watch:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions --watch",
-    "watch:pug": "pug src/pug/sw100.pug --out . -P -w"
+    "watch:sass": "sass src/scss/sl100.scss sl100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions --watch",
+    "watch:pug": "pug src/pug/sl100.pug --out . -P -w"
   },
   "license": "MIT"
 }

@@ -2,23 +2,23 @@ mixin character-field(field)
     -
         const attr = (field.name === "Name") ? "character_name" : field.name.toLowerCase().replace(/ /g,"_");
     
-    .sw-header__item-wrapper(class=`sw-header__item-wrapper--${attr}`)
-        .sw-header__title(data-i18n=field.name)
+    .sl-header__item-wrapper(class=`sl-header__item-wrapper--${attr}`)
+        .sl-header__title(data-i18n=field.name)
         
         if (field.field === "select")
             input.sheet-control__custom(name=`attr_${attr}`, type="hidden")
-            select.sw-header__select.sheet-control__custom(name=`attr_${attr}`)
+            select.sl-header__select.sheet-control__custom(name=`attr_${attr}`)
                 each option in field.options
                     option(data-i18n=option, value=option)
                 option(data-i18n="Custom", value="Custom")
-            .sw-header__customwrapper.sheet-control__custom
-                input.sw-header__input(name=`attr_${attr}_custom`, type="text")
-                button.sw-header__hidecustom(name=`act_remove_custom_${attr}`, type="action") ╳
+            .sl-header__customwrapper.sheet-control__custom
+                input.sl-header__input(name=`attr_${attr}_custom`, type="text")
+                button.sl-header__hidecustom(name=`act_remove_custom_${attr}`, type="action") ╳
 
 
         else if (field.field === "hidden")
             input(name=`attr_${attr}`, type="hidden", value=field.placeholder)
-            span.sw-header__display.display(name=`attr_${attr}`)
+            span.sl-header__display.display(name=`attr_${attr}`)
         
         else
-            input.sw-header__input(name=`attr_${attr}`, type=field.field)
+            input.sl-header__input(name=`attr_${attr}`, type=field.field)

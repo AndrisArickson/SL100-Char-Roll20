@@ -1,39 +1,39 @@
 mixin skill-row(char)
     input(name=`attr_specialisation_settings`, type="hidden", value=1)
-    .sw-skilltable__row--specialisation
+    .sl-skilltable__row--specialisation
 
-        .sw-skilltable__cell--settingstoggle
+        .sl-skilltable__cell--settingstoggle
             +display-toggle(`specialisation_settings`, true)
 
-        .sw-skilltable__cell
-            button.sw-skilltable__roll(type="roll", value=rolls.repeating_skill)
+        .sl-skilltable__cell
+            button.sl-skilltable__roll(type="roll", value=rolls.repeating_skill)
                 span(name="attr_specialisation_name")
 
-        .sw-skilltable__cell
+        .sl-skilltable__cell
             +characteristic-select(char, `specialisation_characteristic`, true)
 
-        .sw-skilltable__cell(class=`control__hide--${c_attr}`)
+        .sl-skilltable__cell(class=`control__hide--${c_attr}`)
             input(name=`attr_specialisation_char`, type="hidden", value="0")
             span.display(name=`attr_specialisation_char`)
 
-        .sw-skilltable__cell
+        .sl-skilltable__cell
             input(name=`attr_specialisation_advances`, type="hidden", value=0)
             span.display(name=`attr_specialisation_advances`)
 
-        .sw-skilltable__cell--last.sw-skilltable__cell--highlight
+        .sl-skilltable__cell--last.sl-skilltable__cell--highlight
             input(name=`attr_specialisation`, type="hidden", value=0)
             span.display(name=`attr_specialisation`)
 
-        .sw-skilltable_row.sw-settings(class=`control__hide--settings`)
+        .sl-skilltable_row.sl-settings(class=`control__hide--settings`)
                 
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Name`) 
-                input.sw-settings__checkbox(data-i18n-placeholder="Specialisation Name", name=`attr_specialisation_name`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Name`) 
+                input.sl-settings__checkbox(data-i18n-placeholder="Specialisation Name", name=`attr_specialisation_name`, type="text")
                 
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Modifier`) 
-                input.sw-settings__checkbox(name=`attr_specialisation_modifier`, type="number", value=0)
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Modifier`) 
+                input.sl-settings__checkbox(name=`attr_specialisation_modifier`, type="number", value=0)
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Roll Notes`) 
-                input.sw-settings__input(name=`attr_specialisation_notes`, type="text") 
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Roll Notes`) 
+                input.sl-settings__input(name=`attr_specialisation_notes`, type="text") 

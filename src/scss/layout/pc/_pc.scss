@@ -1,16 +1,16 @@
-.sheet-sw-pc {
+.sheet-sl-pc {
     display: grid;
         grid-template-columns: repeat(6, 1fr);
   
     padding: 6px;
 
-    border: 2px solid $sw-frame;
+    border: 2px solid $sl-frame;
     border-radius: 6px;
     background:
-        repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 2px, transparent 2px 9px),
-        linear-gradient(180deg, $sw-frame-light, $sw-frame);
-    box-shadow: inset 0 0 0 1px rgba($sw-accent, .25);
-    color: $sw-ink;
+        repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0, rgba(255,255,255,.025) 2px, transparent 2px, transparent 9px),
+        linear-gradient(180deg, $sl-frame-light, $sl-frame);
+    box-shadow: inset 0 0 0 1px rgba($sl-accent, .25);
+    color: $sl-ink;
 
         grid-gap: 4px;
 
@@ -20,7 +20,7 @@
 
     // General PC Positioning
 
-    .sheet-sw {
+    .sheet-sl {
         &-header {
             grid-column: 1 / -1;
         }
@@ -81,7 +81,7 @@
             display: flex;
                 flex-direction: column;
 
-            .sheet-sw-panel {
+            .sheet-sl-panel {
                 flex-grow: 0;
 
                 &--trappings {
@@ -97,7 +97,7 @@
             display: flex;
                 flex-direction: column;
 
-            .sheet-sw-panel {
+            .sheet-sl-panel {
                 flex-grow: 0;
 
                 &--awards {
@@ -125,7 +125,7 @@
                 &--2,
                 &--3,
                 &--4 {
-                    @extend .sheet-sw-career__row;
+                    @extend .sheet-sl-career__row;
                 }
 
                 &--first {
@@ -144,25 +144,25 @@
             display: grid;
                 grid-template-rows: 1fr minmax(5rem, auto);
 
-            + .sheet-sw-experience {
+            + .sheet-sl-experience {
                 grid-column: span 2;
             }
 
             input[name*="first"][value="on"] + * {
 
-                & .sheet-sw-career__row--first {
+                & .sheet-sl-career__row--first {
                     display: grid;
                 }
 
-                & .sheet-sw-career__characteristic--first {
+                & .sheet-sl-career__characteristic--first {
                     display: grid;
                 }
 
-                & .sheet-sw-career__row--1 {
+                & .sheet-sl-career__row--1 {
                     display: none;
                 }
 
-                & .sheet-sw-career__row--1 {
+                & .sheet-sl-career__row--1 {
                     display: none;
                 }
 

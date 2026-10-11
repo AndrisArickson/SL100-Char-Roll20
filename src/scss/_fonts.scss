@@ -9,15 +9,18 @@ $font-alt-medium: 12px;
 $font-family-general: "Exo 2", "Segoe UI", Arial, sans-serif;
 $font-family-alt: "Exo 2", "Segoe UI", Arial, sans-serif;
 $font-family-display: "Orbitron", "Exo 2", Arial, sans-serif;
+// Game title in the header. Swap this (and the Google Fonts import in
+// sl100.scss) to change the title face without touching the rest.
+$font-family-title: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
 $font-family-pictos: "Pictos";
 
-.sheet-sw-wrapper .sheet-sw-pc,
-.sheet-sw-wrapper .sheet-sw-npc {
+.sheet-sl-wrapper .sheet-sl-pc,
+.sheet-sl-wrapper .sheet-sl-npc {
     font-family: $font-family-general;
     font-size: $font-general-medium;
 }
 
-.sheet-sw-wrapper {
+.sheet-sl-wrapper {
 
     input[type=text],
     input[type=number],

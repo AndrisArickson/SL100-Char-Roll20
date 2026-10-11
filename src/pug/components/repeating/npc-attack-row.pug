@@ -1,43 +1,43 @@
 mixin npc-attack-row()
     input(name=`attr_attack_settings`, type="hidden", value=1)
-    .sw-npcattack__row
+    .sl-npcattack__row
 
-        .sw-npcattack__cell--settingstoggle
+        .sl-npcattack__cell--settingstoggle
             +display-toggle(`attack_settings`, true)
 
-        .sw-npcattack__cell--title
+        .sl-npcattack__cell--title
             button(name=`roll_${attr}`, type="roll", value=rolls.npcattack)
                 span(name=`attr_attack_name`)
 
-        .sw-npcattack__cell
-            span.sw-npcattack__label(data-i18n="Attacks")
+        .sl-npcattack__cell
+            span.sl-npcattack__label(data-i18n="Attacks")
             span(name=`attr_attack_attacks`)
 
-        .sw-npcattack__cell
-            span.sw-npcattack__label(data-i18n="Target")
+        .sl-npcattack__cell
+            span.sl-npcattack__label(data-i18n="Target")
             span(name=`attr_attack_target`)
-            input.sw-settings__input(name=`attr_attack_target`, type="hidden", value="0")
+            input.sl-settings__input(name=`attr_attack_target`, type="hidden", value="0")
 
-        .sw-npcattack__cell
-            span.sw-npcattack__label(data-i18n="Range")
+        .sl-npcattack__cell
+            span.sl-npcattack__label(data-i18n="Range")
             span(name=`attr_attack_range`)
 
-        .sw-npcattack__cell
-            span.sw-npcattack__label(data-i18n="Damage")
+        .sl-npcattack__cell
+            span.sl-npcattack__label(data-i18n="Damage")
             span(name=`attr_attack_damage`)
 
-        .sw-npcattack__cell--description
+        .sl-npcattack__cell--description
             span(name=`attr_attack_description`)
             
-        .sw-settings.control__hide--npcattack_settings
+        .sl-settings.control__hide--npcattack_settings
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Name`) 
-                input.sw-settings__input(name=`attr_attack_name`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Name`) 
+                input.sl-settings__input(name=`attr_attack_name`, type="text")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Target`) 
-                select.sw-settings__input(name=`attr_attack_type`)
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Target`) 
+                select.sl-settings__input(name=`attr_attack_type`)
                     option(value="Weapon Skill", data-i18n="Weapon Skill")
                     option(value="Ballistic Skill", data-i18n="Ballistic Skill")
                     each skill_name in ["Melee", "Ranged"]
@@ -45,23 +45,23 @@ mixin npc-attack-row()
                             option(value=`${skill_name} (${specialisation})`, data-i18n=`${skill_name} (${specialisation})`)
                     option(value="Custom", data-i18n="Custom")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Range`) 
-                input.sw-settings__input(name=`attr_attack_range`, type="text", value="0")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Range`) 
+                input.sl-settings__input(name=`attr_attack_range`, type="text", value="0")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Attacks`) 
-                input.sw-settings__input(name=`attr_attack_attacks`, type="number", value="0")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Attacks`) 
+                input.sl-settings__input(name=`attr_attack_attacks`, type="number", value="0")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Damage`) 
-                input.sw-settings__input(name=`attr_attack_damage`, type="text", value="0")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Damage`) 
+                input.sl-settings__input(name=`attr_attack_damage`, type="text", value="0")
         
             input(name=`attr_attack_type`, type="hidden")
-            .sw-settings__row.control__hide--Custom
-                .sw-settings__label(data-i18n=`Custom`) 
-                input.sw-settings__input(name=`attr_attack_target`, type="number")
+            .sl-settings__row.control__hide--Custom
+                .sl-settings__label(data-i18n=`Custom`) 
+                input.sl-settings__input(name=`attr_attack_target`, type="number")
                             
-            .sw-settings__row--span
-                .sw-settings__label--full(data-i18n=`Description`) 
-                textarea.sw-settings__textarea(name=`attr_attack_description`)
+            .sl-settings__row--span
+                .sl-settings__label--full(data-i18n=`Description`) 
+                textarea.sl-settings__textarea(name=`attr_attack_description`)

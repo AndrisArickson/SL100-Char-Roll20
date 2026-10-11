@@ -1,36 +1,36 @@
 mixin trapping-row
     input(name=`attr_trappings_settings`, type="hidden", value=1)
-    .sw-trappingtable__row
+    .sl-trappingtable__row
 
-        .sw-trappingtable__cell--settingstoggle
+        .sl-trappingtable__cell--settingstoggle
             +display-toggle(`trappings_settings`, true)
 
-        .sw-trappingtable__cell
+        .sl-trappingtable__cell
             span(name=`attr_trappings_name`)
 
-        .sw-trappingtable__cell
-            input.sw-settings__input(name=`attr_trappings_amount`, type="number")
+        .sl-trappingtable__cell
+            input.sl-settings__input(name=`attr_trappings_amount`, type="number")
 
-        .sw-trappingtable__cell--last
-            input.sw-settings__input(name=`attr_trappings_enc`, type="number")
+        .sl-trappingtable__cell--last
+            input.sl-settings__input(name=`attr_trappings_enc`, type="number")
             
-        .sw-trappingtable__row.sw-settings.control__hide--trappings_settings
+        .sl-trappingtable__row.sl-settings.control__hide--trappings_settings
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Name`) 
-                input.sw-settings__input(name=`attr_trappings_name`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Name`) 
+                input.sl-settings__input(name=`attr_trappings_name`, type="text")
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Modifiers`) 
-                input.sw-settings__input(name=`attr_trappings_mods`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Modifiers`) 
+                input.sl-settings__input(name=`attr_trappings_mods`, type="text")
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Traits`) 
-                input.sw-settings__input(name=`attr_trappings_traits`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Traits`) 
+                input.sl-settings__input(name=`attr_trappings_traits`, type="text")
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Type`) 
-                select.sw-settings__select(name=`attr_trappings_type`)
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Type`) 
+                select.sl-settings__select(name=`attr_trappings_type`)
                     option(data-i18n="Choose", value="0")
                     option(data-i18n="Ammunition", value="1")
                     option(data-i18n="Pack/Container", value="2")
@@ -44,17 +44,17 @@ mixin trapping-row
                     option(data-i18n="Prosthetic", value="10")
                     option(data-i18n="Miscellaneous", value="11")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Count Enc.`) 
-                input.sw-settings__input(name=`attr_trappings_inenc`, type="checkbox")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Count Enc.`) 
+                input.sl-settings__input(name=`attr_trappings_inenc`, type="checkbox")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Worn`) 
-                input.sw-settings__input(name=`attr_trappings_worn`, type="checkbox")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Worn`) 
+                input.sl-settings__input(name=`attr_trappings_worn`, type="checkbox")
                             
-            .sw-settings__row--span
-                .sw-settings__label--full(data-i18n=`Description`) 
-                textarea.sw-settings__textarea(name=`attr_trappings_description`)
+            .sl-settings__row--span
+                .sl-settings__label--full(data-i18n=`Description`) 
+                textarea.sl-settings__textarea(name=`attr_trappings_description`)
     
     
 

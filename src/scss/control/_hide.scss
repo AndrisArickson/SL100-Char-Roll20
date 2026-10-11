@@ -121,7 +121,7 @@ input[name*="settings"] {
         &[value="1"] + div > div[class*="settings"] {
             @extend %show-grid;
         }
-        &[value="1"] + div > .sheet-sw-#{$block}table__cell--description {
+        &[value="1"] + div > .sheet-sl-#{$block}table__cell--description {
             display: none !important;
         }
     }
@@ -146,7 +146,7 @@ input[name*="settings"] {
         &[value="1"] + div > div[class*="settings"] {
             @extend %show-grid;
         }
-        &[value="1"] + div > .sheet-sw-#{$block}table__cell--description {
+        &[value="1"] + div > .sheet-sl-#{$block}table__cell--description {
             display: none !important;
         }
     }
@@ -154,7 +154,7 @@ input[name*="settings"] {
 
 // Trait Toggle 
 
-.sheet-sw-traittoggle {
+.sheet-sl-traittoggle {
 
     @at-root label#{&} {
         text-align: left;
@@ -173,15 +173,15 @@ input[name*="settings"] {
 
 @each $trait in "talent","condition","psychology","corruption", "critical" {
     
-    .sheet-sw-#{$trait}table__row {
+    .sheet-sl-#{$trait}table__row {
         
-        .sheet-sw-#{$trait}table__cell--description {
+        .sheet-sl-#{$trait}table__cell--description {
             @extend %hide;
         }
     
         input[name="attr_#{$trait}_toggle"][value="1"]
         { 
-            & + .sheet-sw-#{$trait}table__cell--description {
+            & + .sheet-sl-#{$trait}table__cell--description {
                 @extend %show-grid;
             }
         }
@@ -258,7 +258,7 @@ input[name*="settings"] {
         &[value="1"] + div > div[class*="settings"] {
             @extend %show-grid;
         }
-        &[value="1"] + div > .sheet-sw-#{$block}table__cell--description {
+        &[value="1"] + div > .sheet-sl-#{$block}table__cell--description {
             display: none !important;
         }
     }
@@ -266,40 +266,40 @@ input[name*="settings"] {
 
 // Update Advances Control
 
-.sheet-sw-advancenotify {
+.sheet-sl-advancenotify {
     display: none;
 }
 
 input[name*="advances_changed"] {
-    &[value="1"] + .sheet-sw-advancenotify {
+    &[value="1"] + .sheet-sl-advancenotify {
         display: block;
     }
 }
 
 // NPC Settings Control
 
-.sheet-sw-npcsettings__wrapper {
+.sheet-sl-npcsettings__wrapper {
     @extend %hide;
 }
 
 input[name*="npc_settings"] {
-    &[value="on"] + .sheet-sw-npcsettings__wrapper {
+    &[value="on"] + .sheet-sl-npcsettings__wrapper {
         @extend %show-grid;
     }
 }
 
 // NPC Block Control
 
-.sheet-sw-npc__skills,
-.sheet-sw-npctrappings {
+.sheet-sl-npc__skills,
+.sheet-sl-npctrappings {
     display: none;
 }
 
-input[name*="skill_flag"][value="on"] + .sheet-sw-npc__skills {
+input[name*="skill_flag"][value="on"] + .sheet-sl-npc__skills {
     display: block;
 }
 
-input[name*="trapping_flag"][value="on"] + .sheet-sw-npctrappings {
+input[name*="trapping_flag"][value="on"] + .sheet-sl-npctrappings {
     display: block;
 }
 

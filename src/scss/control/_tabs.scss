@@ -1,4 +1,4 @@
-.sheet-sw-wrapper {
+.sheet-sl-wrapper {
 
     .sheet-page__main,
     .sheet-page__advances,
@@ -35,10 +35,10 @@ input[type="hidden"][name="attr_nav"] {
 
 }
 
-.sheet-sw-wrapper {
+.sheet-sl-wrapper {
 
-    .sheet-sw-pc,
-    .sheet-sw-npc {
+    .sheet-sl-pc,
+    .sheet-sl-npc {
         display: none;
 
         &--flex,
@@ -51,8 +51,8 @@ input[type="hidden"][name="attr_nav"] {
 
 input[type="hidden"][name="attr_npc"] {
 
-    &[value="on"] ~ * .sheet-sw-npc,
-    &[value="0"] ~ * .sheet-sw-pc {
+    &[value="on"] ~ * .sheet-sl-npc,
+    &[value="0"] ~ * .sheet-sl-pc {
         display: grid;
     }
 

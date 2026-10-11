@@ -1,4 +1,4 @@
-.sheet-sw {
+.sheet-sl {
 
     &-settings {
         grid-column: 1 / -1;
@@ -17,7 +17,7 @@
         }
 
         &--large {
-            @extend .sheet-sw-settings;
+            @extend .sheet-sl-settings;
 
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         }
@@ -29,7 +29,7 @@
                 text-align: left;
 
             &--span {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
 
                 grid-column: 1 / -1;
 
@@ -37,7 +37,7 @@
             }
 
             &--characteristics {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
                 grid-column: 1 / -1;
                 
                 grid-template-columns: 1.5fr repeat(10, 1fr);
@@ -76,13 +76,13 @@
             }
 
             &--invert {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
 
                 grid-template-columns: .5fr 2fr;
             }
 
             &--skill {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
 
                 grid-template-columns: 1fr .35fr;
                 gap: 3px;
@@ -90,7 +90,7 @@
             }
 
             &--speciesskill {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
 
                 grid-template-columns: 1fr .15fr .15fr .15fr;
                 gap: 3px;
@@ -104,7 +104,7 @@
 
             &--skillinit,
             &--talentinit {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
 
                 grid-template-columns: 1fr .45fr .45fr;
                 gap: 3px;
@@ -112,7 +112,7 @@
             }
 
             &--talent {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
 
                 grid-template-columns: 1fr .35fr;
                 gap: 3px;
@@ -120,7 +120,7 @@
             }
 
             &--career_name {
-                @extend .sheet-sw-settings__row;
+                @extend .sheet-sl-settings__row;
                 grid-column: 1 / -1;
                 grid-template-columns: .5fr 2fr;
             }
@@ -142,7 +142,7 @@
                 display: none;
             }
 
-            input.sheet-sw-settings__input.sheet-sw-settings__input[type="number"] {
+            input.sheet-sl-settings__input.sheet-sl-settings__input[type="number"] {
                 pointer-events: none;
 
                 background: transparent;
@@ -151,7 +151,7 @@
 
             input[type="hidden"][value="on"] {
 
-                & ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type="number"] {
+                & ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type="number"] {
                     pointer-events: auto;
 
                     background: $form-input-background; 
@@ -162,7 +162,7 @@
 
             input[type="hidden"][value="1"] {
 
-                & ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type="number"] {
+                & ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type="number"] {
                     pointer-events: auto;
 
                     background: $form-input-background; 
@@ -173,7 +173,7 @@
 
             input[type="hidden"][value="2"] {
 
-                & ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type="number"] {
+                & ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type="number"] {
                     pointer-events: auto;
 
                     background: rgba(darkgoldenrod, 0.25);
@@ -184,7 +184,7 @@
 
             input[type="hidden"][value="3"] {
 
-                & ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type="number"] {
+                & ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type="number"] {
                     pointer-events: auto;
 
                     background: rgba(silver, 0.25); 
@@ -195,7 +195,7 @@
 
             input[type="hidden"][value="4"] {
 
-                & ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type="number"] {
+                & ~ * input.sheet-sl-settings__input.sheet-sl-settings__input[type="number"] {
                     pointer-events: auto;
 
                     background: rgba(gold, 0.25); 
@@ -243,11 +243,11 @@
         }
 
         &__controlwrap {
-            span.sheet-sw-current_level {
+            span.sheet-sl-current_level {
                 &--1, &--2, &--3, &--4 {
                     display: none;
 
-                    background: linear-gradient(180deg, lighten($sw-success, 6%), $sw-success);
+                    background: linear-gradient(180deg, $sl-success-light, $sl-success);
                     border-radius: 2px;
                     color: #fff;
 
@@ -260,7 +260,7 @@
             }
 
             button[type="action"] {
-                background: linear-gradient(180deg, $sw-frame-light, $sw-frame);
+                background: linear-gradient(180deg, $sl-frame-light, $sl-frame);
                 border-radius: 2px;
                 color: #fff;
 
@@ -278,7 +278,7 @@
                             display: none;
                         }
     
-                        & ~ span.sheet-sw-current_level--#{$level} {
+                        & ~ span.sheet-sl-current_level--#{$level} {
                             display: block;
                         }
     

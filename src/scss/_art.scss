@@ -1,0 +1,28 @@
+// Artwork hooks.
+//
+// The sheet is drawn entirely in CSS by default. Set any of these to an image
+// URL (in quotes) and run `npm run build`; leave as null to keep the CSS look.
+// For Roll20, use an https URL (e.g. an image uploaded to your Roll20 art
+// library or a raw GitHub link). A relative path such as "art/logo.png" only
+// works in the local preview (scripts/preview.js). See docs/ARTWORK.md.
+
+// Title image shown in place of the "Star Legends / Galactic Wars" text. Transparent PNG, ~600x150.
+$sl-art-logo: null;
+
+// Backdrop behind the title, replacing the CSS starfield. ~840x110.
+$sl-art-header-background: null;
+
+// Tileable texture for the dark frame around the panels. ~256x256.
+$sl-art-frame-background: null;
+
+// Tileable texture for the light panels; keep it pale so text stays legible. ~512x512.
+$sl-art-panel-background: null;
+
+// Figure drawn behind the hit-location blocks on the Combat tab. Transparent PNG, ~230x330.
+$sl-art-armour-figure: null;
+
+// Banner behind the NPC name and characteristics, replacing the starfield. ~840x200.
+$sl-art-npc-banner: null;
+
+// Strip behind the character name at the top of roll cards. ~300x40.
+$sl-art-rollcard-banner: null;

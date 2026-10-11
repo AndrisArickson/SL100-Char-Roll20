@@ -1,9 +1,9 @@
 mixin generic-display(field, type="text", box_type="flex")
     -
         const attr = field.attr || field.name.toLowerCase().replace(/ /g,"_");
-        const box = (box_type === "flex") ? "sw-field" : `sw-field--grid${box_type}`;
+        const box = (box_type === "flex") ? "sl-field" : `sl-field--grid${box_type}`;
 
     div(class=box)
-        span.sw-field__header(data-i18n=field.name)
-        span.sw-field__span(name=`attr_${attr}`)
+        span.sl-field__header(data-i18n=field.name)
+        span.sl-field__span(name=`attr_${attr}`)
         input(name=`attr_${attr}`, type="hidden")

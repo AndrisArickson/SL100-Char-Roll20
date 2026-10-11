@@ -10,7 +10,7 @@
 %grid-row-head {
     @extend %grid-row;
 
-    color: $sw-steel;
+    color: $sl-steel;
 
     font-family: $font-family-display;
     font-size: 9px;
@@ -38,7 +38,7 @@
 }
 
 %grid-cell--highlight {
-    color: $sw-holo-dark;
+    color: $sl-holo-dark;
     font-weight: bold;
 }
 
@@ -49,19 +49,19 @@
     font-style: italic;
 }
     
-.sheet-sw-field,
-.sheet-sw-textarea {
+.sheet-sl-field,
+.sheet-sl-textarea {
     @extend %grid-row;
 }
 
-.sheet-sw-field__header,
-.sheet-sw-field__input,
-.sheet-sw-textarea__header,
-.sheet-sw-textarea__input {
+.sheet-sl-field__header,
+.sheet-sl-field__input,
+.sheet-sl-textarea__header,
+.sheet-sl-textarea__input {
     @extend %grid-cell;
 }
 
-.sheet-sw-chartable__cell {
+.sheet-sl-chartable__cell {
     border-left: $grid-border;
     border-top: $grid-border;
 
@@ -84,64 +84,64 @@
 
 @each $table in "skill", "talent", "condition", "psychology", "corruption", "trapping", "armour", "critical", "weapon", "spell", "career", "experience", "wounds" {
 
-    .sheet-sw-#{$table}table__row--head {
+    .sheet-sl-#{$table}table__row--head {
         @extend %grid-row-head;
     }
 
-    .sheet-sw-#{$table}table__row {
+    .sheet-sl-#{$table}table__row {
         @extend %grid-row;
     }
 
-    .sheet-sw-#{$table}table__cell {
+    .sheet-sl-#{$table}table__cell {
         @extend %grid-cell;
     }
 
-    .sheet-sw-#{$table}table__cell--description {
+    .sheet-sl-#{$table}table__cell--description {
         @extend %grid-cell--description;
     }
 
-    .sheet-sw-#{$table}table__cell--last {
+    .sheet-sl-#{$table}table__cell--last {
         @extend %grid-cell--last;
     }
 
-    .sheet-sw-#{$table}table__cell--highlight {
+    .sheet-sl-#{$table}table__cell--highlight {
         @extend %grid-cell--highlight;
     }
 }
 
 @each $table in "npccharacteristic" {
 
-    .sheet-sw-#{$table}__cell--head {
+    .sheet-sl-#{$table}__cell--head {
         @extend %grid-row-head;
     }
 
-    .sheet-sw-#{$table}__cell {
+    .sheet-sl-#{$table}__cell {
         @extend %grid-cell;
     }
 
-    .sheet-sw-#{$table}__cell--description {
+    .sheet-sl-#{$table}__cell--description {
         @extend %grid-cell--description;
     }
 
-    .sheet-sw-#{$table}__col:last-child .sheet-sw-#{$table}__cell {
+    .sheet-sl-#{$table}__col:last-child .sheet-sl-#{$table}__cell {
         @extend %grid-cell--last;
     }
 
-    .sheet-sw-#{$table}__cell--highlight {
+    .sheet-sl-#{$table}__cell--highlight {
         @extend %grid-cell--highlight;
     }
 }
 
-.sheet-sw-skilltable__row--grouped,
-.sheet-sw-skilltable__row--specialisation {
-    background: rgba($sw-holo, 0.09);
+.sheet-sl-skilltable__row--grouped,
+.sheet-sl-skilltable__row--specialisation {
+    background: rgba($sl-holo, 0.09);
 }
 
-.sheet-sw-skilltable__cell--grouped {
+.sheet-sl-skilltable__cell--grouped {
     @extend %grid-cell--last;
     padding-top: 1px;
 
-    color: $sw-holo-dark;
+    color: $sl-holo-dark;
 
     font-family: $font-family-display;
     font-size: 10px;
@@ -152,7 +152,7 @@
     text-transform: uppercase;
 }
 
-.sheet-sw-armour__display {
+.sheet-sl-armour__display {
     font-family: $font-family-alt;
     font-size: 14pt;
     font-weight: bold;

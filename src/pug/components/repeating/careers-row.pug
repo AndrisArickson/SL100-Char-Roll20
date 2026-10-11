@@ -1,138 +1,138 @@
 mixin career-level(level, first)
-    .sw-settings__titlewrap
-        .sw-settings__controlwrap
+    .sl-settings__titlewrap
+        .sl-settings__controlwrap
             input(name=`attr_career_level_current`, type="hidden", value="1")
             button(data-i18n="Switch", name=`act_newcareerlevel-${level}`, type="action")
-            span(data-i18n="Current" class=`sw-current_level--${level}`) 
+            span(data-i18n="Current" class=`sl-current_level--${level}`) 
         h2(data-i18n=`Level ${level}`) 
 
-    .sw-settings__row--invert
-        .sw-settings__label(data-i18n=`Name`)
-        input.sw-settings__input(name=`attr_career_level${level}_name`, type="text")
+    .sl-settings__row--invert
+        .sl-settings__label(data-i18n=`Name`)
+        input.sl-settings__input(name=`attr_career_level${level}_name`, type="text")
 
-    .sw-settings__row--invert
-        .sw-settings__label(data-i18n=`Status`) 
-        input.sw-settings__input(name=`attr_career_level${level}_status`, type="text")
+    .sl-settings__row--invert
+        .sl-settings__label(data-i18n=`Status`) 
+        input.sl-settings__input(name=`attr_career_level${level}_status`, type="text")
 
-    .sw-settings__col
+    .sl-settings__col
         if (level === 1 && first === true)
-            .sw-settings__row--skillinit
-                .sw-settings__header(data-i18n="Skill Name")
-                .sw-settings__header(data-i18n="Initial")
-                .sw-settings__header(data-i18n="Advances")
+            .sl-settings__row--skillinit
+                .sl-settings__header(data-i18n="Skill Name")
+                .sl-settings__header(data-i18n="Initial")
+                .sl-settings__header(data-i18n="Advances")
         else 
-            .sw-settings__row--skill
-                .sw-settings__header(data-i18n="Skill Name")
-                .sw-settings__header(data-i18n="Advances")
+            .sl-settings__row--skill
+                .sl-settings__header(data-i18n="Skill Name")
+                .sl-settings__header(data-i18n="Advances")
             
         each skill in [1,2,3,4,5,6,7,8,9,10]
 
             if (level === 1 && first === true)
 
-                .sw-settings__row--skillinit
-                    input.sw-settings__input(data-i18n-placeholder=`Skill ${skill}`, name=`attr_career_skill_${level}_${skill}_name`, type="text")
-                    input.sw-settings__input--init(name=`attr_career_skill_${level}_${skill}_init`, type="number")
-                    input.sw-settings__input(name=`attr_career_skill_${level}_${skill}_advances`, type="number")
+                .sl-settings__row--skillinit
+                    input.sl-settings__input(data-i18n-placeholder=`Skill ${skill}`, name=`attr_career_skill_${level}_${skill}_name`, type="text")
+                    input.sl-settings__input--init(name=`attr_career_skill_${level}_${skill}_init`, type="number")
+                    input.sl-settings__input(name=`attr_career_skill_${level}_${skill}_advances`, type="number")
 
             else
 
-                .sw-settings__row--skill
-                    input.sw-settings__input(data-i18n-placeholder=`Skill ${skill}`, name=`attr_career_skill_${level}_${skill}_name`, type="text")
-                    input.sw-settings__input(name=`attr_career_skill_${level}_${skill}_advances`, type="number")
+                .sl-settings__row--skill
+                    input.sl-settings__input(data-i18n-placeholder=`Skill ${skill}`, name=`attr_career_skill_${level}_${skill}_name`, type="text")
+                    input.sl-settings__input(name=`attr_career_skill_${level}_${skill}_advances`, type="number")
 
-    .sw-settings__col
+    .sl-settings__col
 
         if (level === 1 && first === true)
-            .sw-settings__row--talentinit
-                .sw-settings__header(data-i18n="Talent Name")
-                .sw-settings__header(data-i18n="Initial")
-                .sw-settings__header(data-i18n="Advances")
+            .sl-settings__row--talentinit
+                .sl-settings__header(data-i18n="Talent Name")
+                .sl-settings__header(data-i18n="Initial")
+                .sl-settings__header(data-i18n="Advances")
         else 
-            .sw-settings__row--talent
-                .sw-settings__header(data-i18n="Talent Name")
-                .sw-settings__header(data-i18n="Advances")
+            .sl-settings__row--talent
+                .sl-settings__header(data-i18n="Talent Name")
+                .sl-settings__header(data-i18n="Advances")
 
         each talent in [1,2,3,4,5]
 
             if (level === 1 && first === true)
 
-                .sw-settings__row--talentinit
+                .sl-settings__row--talentinit
                 
-                    input.sw-settings__input(data-i18n-placeholder=`Talent ${talent}`, name=`attr_career_talent_${level}_${talent}_name`, type="text")
-                    input.sw-settings__input(name=`attr_career_talent_${level}_${talent}_init`, type="number")
-                    input.sw-settings__input(name=`attr_career_talent_${level}_${talent}_advances`, type="number")
+                    input.sl-settings__input(data-i18n-placeholder=`Talent ${talent}`, name=`attr_career_talent_${level}_${talent}_name`, type="text")
+                    input.sl-settings__input(name=`attr_career_talent_${level}_${talent}_init`, type="number")
+                    input.sl-settings__input(name=`attr_career_talent_${level}_${talent}_advances`, type="number")
 
             else
 
-                .sw-settings__row--talent
+                .sl-settings__row--talent
                 
-                    input.sw-settings__input(data-i18n-placeholder=`Talent ${talent}`, name=`attr_career_talent_${level}_${talent}_name`, type="text")
-                    input.sw-settings__input(name=`attr_career_talent_${level}_${talent}_advances`, type="number")
+                    input.sl-settings__input(data-i18n-placeholder=`Talent ${talent}`, name=`attr_career_talent_${level}_${talent}_name`, type="text")
+                    input.sl-settings__input(name=`attr_career_talent_${level}_${talent}_advances`, type="number")
         
-        .sw-settings__row
-            .sw-settings__label--full(data-i18n=`Trappings`) 
-            textarea.sw-settings__textarea(name=`attr_career_${level}_trappings`)
+        .sl-settings__row
+            .sl-settings__label--full(data-i18n=`Trappings`) 
+            textarea.sl-settings__textarea(name=`attr_career_${level}_trappings`)
 
 mixin careers-row
     input(name=`attr_career_settings`, type="hidden", value=1)
-    input.sw-settings__input(name=`attr_career_first`, type="hidden")
+    input.sl-settings__input(name=`attr_career_first`, type="hidden")
 
-    .sw-careertable__row
+    .sl-careertable__row
 
-        .sw-careertable__cell--settingstoggle
+        .sl-careertable__cell--settingstoggle
             +display-toggle(`career_settings`, true)
 
-        .sw-careertable__cell
+        .sl-careertable__cell
             span(name=`attr_career_name`)
 
-        .sw-careertable__cell
+        .sl-careertable__cell
             span(name=`attr_career_level`)
 
-        .sw-careertable__cell
+        .sl-careertable__cell
             span(name=`attr_career_status`)
             input(name=`attr_career_status`, type="hidden")
 
-        .sw-careertable__cell--last
+        .sl-careertable__cell--last
             span(name=`attr_career_advances`)
             
-        .sw-careertable__row.sw-settings.control__hide--career_settings
+        .sl-careertable__row.sl-settings.control__hide--career_settings
         
-            .sw-settings__row--career_name
-                input.sw-settings__checkbox(name=`attr_career_current`, type="hidden")
-                .sw-settings__label(data-i18n=`Name`)
-                input.sw-settings__input(name=`attr_career_name`, type="text")
+            .sl-settings__row--career_name
+                input.sl-settings__checkbox(name=`attr_career_current`, type="hidden")
+                .sl-settings__label(data-i18n=`Name`)
+                input.sl-settings__input(name=`attr_career_name`, type="text")
 
-            .sw-settings__row--span
-                .sw-settings__label--full(data-i18n=`Notes`) 
-                textarea.sw-settings__textarea(name=`attr_career_notes`)
+            .sl-settings__row--span
+                .sl-settings__label--full(data-i18n=`Notes`) 
+                textarea.sl-settings__textarea(name=`attr_career_notes`)
 
             h2(data-i18n="Characteristic Advances")
 
-            .sw-settings__row--characteristics
+            .sl-settings__row--characteristics
                     
-                .sw-settings__item
-                    .sw_settings__title
-                    .sw_settings__title.sw-career__characteristic--first(data-i18n="Initial")
-                    .sw_settings__title(data-i18n="Advances")
+                .sl-settings__item
+                    .sl_settings__title
+                    .sl_settings__title.sl-career__characteristic--first(data-i18n="Initial")
+                    .sl_settings__title(data-i18n="Advances")
         
                 each characteristic in characteristics
                     -
                         const attr = characteristic.name.toLowerCase().replace(/ /g,"_");
                     
-                    .sw-settings__item
+                    .sl-settings__item
                         input(name=`attr_career_${attr}`, type="hidden")
-                        label.sw-settings__label
-                            input.sw-settings__checkbox(name=`attr_career_${attr}`, type="checkbox")
+                        label.sl-settings__label
+                            input.sl-settings__checkbox(name=`attr_career_${attr}`, type="checkbox")
                             span(data-i18n=characteristic.abbreviation)
-                        div.sw-career__characteristic--first
-                            input.sw-settings__input(name=`attr_career_${attr}_init`, type="number")
-                        div.sw-career__characteristic
-                            input.sw-settings__input(name=`attr_career_${attr}_advances`, type="number")
+                        div.sl-career__characteristic--first
+                            input.sl-settings__input(name=`attr_career_${attr}_init`, type="number")
+                        div.sl-career__characteristic
+                            input.sl-settings__input(name=`attr_career_${attr}_advances`, type="number")
 
             
-            .sw-settings__row--span(class=`sw-career__row--first`)
+            .sl-settings__row--span(class=`sl-career__row--first`)
                 +career-level(1, true)
                 
             each level in [1,2,3,4]
-                .sw-settings__row--span(class=`sw-career__row--${level}`)
+                .sl-settings__row--span(class=`sl-career__row--${level}`)
                     +career-level(level)

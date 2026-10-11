@@ -1,11 +1,11 @@
-# SW100 Character Sheet for Roll20
+# Star Legends – Galactic Wars (SL100) Character Sheet for Roll20
 
-A Roll20 character sheet for **SW100**, a Star Wars inspired d100 roleplaying game.
+A Roll20 character sheet for **Star Legends – Galactic Wars** (**SL100**), a space-opera d100 roleplaying game.
 
 The layout, panel structure and sheetworker engine come from the
 [Warhammer Fantasy Roleplay 4e Official sheet](https://github.com/Roll20/roll20-character-sheets/tree/master/Warhammer%20Fantasy%20Roleplay%204e%20Official).
 The game content and visual theme have been replaced: it uses a gunmetal console frame,
-datapad panels, Orbitron and Exo 2 type, and a signal-yellow accent. None of the
+datapad panels, Bruno Ace SC for the title, Orbitron and Exo 2 type, and a signal-yellow accent. None of the
 WFRP artwork is used.
 
 ![Sheet preview](preview.png)
@@ -14,7 +14,7 @@ WFRP artwork is used.
 
 | Tab | Contents |
 | --- | --- |
-| **Main** | Characteristics, Resilience/Resolve, Destiny & Force Points, Movement, Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
+| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics, Resilience/Resolve, Destiny & Force Points, Movement, Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
 | **Combat** | Gear, Encumbrance, Wealth (Credits / Bank / Debt), d100 hit-location Armour Points, quick-roll Controls, Advantage, Wounds, Critical Wounds, Armour, Weapons |
 | **Force** | Force Powers (rolled against Force: Control, Sense or Alter) and Conflict |
 | **Advances** | Careers with four levels, species skills and talents, XP awards and spends |
@@ -25,9 +25,9 @@ Rolls use the d100 roll-under engine from the WFRP sheet: difficulty query, bonu
 Advantage, Success Levels, automatic success and failure, and hit locations. All of
 this goes to a themed roll template.
 
-### How WFRP 4e maps to SW100
+### How WFRP 4e maps to SL100
 
-| WFRP 4e | SW100 | Attribute (for macros) |
+| WFRP 4e | SL100 | Attribute (for macros) |
 | --- | --- | --- |
 | Fate / Fortune | Destiny / Force Points | `fate` / `fortune` |
 | Corruption & Mutations | Dark Side Points & taints | `corruption_points`, `repeating_corruption` |
@@ -57,11 +57,11 @@ talents. These presets are placeholders. Edit `species_presets` in
 `src/js/sheetworkers.js` to match your rules.
 
 The WFRP sheet loaded species and talent data from the WFRP compendium.
-SW100 has no compendium, so that drag-and-drop code has been removed.
+SL100 has no compendium, so that drag-and-drop code has been removed.
 
 ## Building
 
-The sheet is written in Pug and SCSS and compiled to `sw100.html` and `sw100.css`.
+The sheet is written in Pug and SCSS and compiled to `sl100.html` and `sl100.css`.
 Upload those two files to Roll20, along with `translation.json`.
 
 ```bash
@@ -74,7 +74,7 @@ npm start         # watch mode while editing
 
 - the skill and specialisation lists, which live in three places:
   - `src/pug/abstracts.pug`
-  - `src/js/sheetworkers.js` (the `sw` object)
+  - `src/js/sheetworkers.js` (the `sl` object)
   - `src/scss/_abstracts.scss`
 - the `data-i18n` keys used in the HTML and the entries in `translation.json`. Roll20
   shows a blank label for any key that has no translation.
@@ -83,6 +83,25 @@ It also fails if any Roll20-hosted WFRP artwork is referenced.
 
 To add or rename a skill, update all three lists and add the label to
 `translation.json`. Then run `npm run build`.
+
+### Installing in Roll20
+
+Custom sheets need a Pro subscription on the game creator's account.
+
+1. Run `npm run build`. Upload the **generated** files, not anything in `src/`.
+2. In the game, open **Settings → Game Settings**, set **Character Sheet Template**
+   to **Custom**, and paste:
+   - the whole of `sl100.html` into the **HTML Layout** tab
+   - the whole of `sl100.css` into the **CSS Styling** tab
+   - the whole of `translation.json` into the **Translation** tab
+3. Click **Save Changes**, then close and reopen any open character sheets.
+
+The build writes the `sheet-` class prefix and fallback label text into the
+HTML, so the sheet styles correctly whether **Legacy Sanitization** is on or
+off. If it still looks unstyled, check that the CSS tab contains `sl100.css`
+starting with `@import url("https://fonts.googleapis.com/...")`, and that the
+HTML tab contains `sl100.html` (its first line is a hidden `attr_sheet_version`
+input).
 
 ### Previewing without Roll20
 
@@ -95,25 +114,53 @@ The preview script mimics how Roll20 renders a sheet: it adds the `sheet-` class
 prefix, fills in translations and expands repeating sections. Sheetworkers do not
 run, so derived values come from sample data. It needs Playwright with Chromium.
 
+## Adding your own artwork
+
+The theme is pure CSS by default. You can add images without touching the
+layout code: set any variable in `src/scss/_art.scss` to an image URL in quotes,
+then run `npm run build`. Variables left as `null` keep the CSS look.
+
+| Variable | Where it shows | Suggested size |
+| --- | --- | --- |
+| `$sl-art-logo` | Title image; replaces the "Star Legends / Galactic Wars" text | 600×150 transparent PNG |
+| `$sl-art-header-background` | Backdrop behind the title | 840×110 |
+| `$sl-art-frame-background` | Texture for the dark frame | 256×256, tileable |
+| `$sl-art-panel-background` | Texture for the light panels (keep it pale) | 512×512, tileable |
+| `$sl-art-armour-figure` | Figure behind the hit locations on the Combat tab | 230×330 transparent PNG |
+| `$sl-art-npc-banner` | Banner behind the NPC name and stats | 840×200 |
+| `$sl-art-rollcard-banner` | Strip at the top of roll cards | 300×40 |
+
+A relative path such as `"art/logo.png"` (relative to the repo root) works in
+`scripts/preview.js`. Use that while designing. Roll20 can't read files from
+your computer, so before uploading the CSS, switch each value to an `https://`
+URL: an image uploaded to your Roll20 art library, or a raw GitHub link.
+
 ## Source layout
 
 ```
-src/pug/sw100.pug          entry point (hidden attributes, layout includes, roll templates, workers)
+src/pug/sl100.pug          entry point (hidden attributes, layout includes, roll templates, workers)
 src/pug/abstracts.pug      game data: header fields, characteristics, skills, wealth
 src/pug/layout/            pc.pug, npc.pug, settings.pug
 src/pug/components/        mixins for skills, characteristic columns and repeating rows
 src/pug/rolls.pug          roll macro builders
-src/pug/rolltemplates.pug  the sw roll template
+src/pug/rolltemplates.pug  the sl roll template
 src/scss/_abstracts.scss   colour tokens and the skill lists used by show/hide rules
 src/scss/styling/          theme (panels, header, navigation, grids)
 src/js/sheetworkers.js     calculations: characteristics, skills, careers, XP, armour, Force powers
 scripts/                   build check and preview tooling
 ```
 
+### Internal names
+
+CSS classes use the `sl-` prefix (`sheet-sl-…` once built). The roll template
+is `sl`, so macros call it with `&{template:sl}`. The sheet-worker module is
+`slModule`. Attribute names that store character data don't use the prefix,
+so characters keep their values across the rename.
+
 ## Licence
 
 The original material in this repository is released under CC0 (see `LICENSE`).
 The code adapted from the Roll20 WFRP 4e Official sheet is MIT-licensed (see
-`THIRD_PARTY_LICENSE.md`). Star Wars is a trademark of Lucasfilm. This is an
-unofficial fan project and is not affiliated with or endorsed by Lucasfilm,
-Cubicle 7 or Games Workshop.
+`THIRD_PARTY_LICENSE.md`). The sheet's layout derives from a Warhammer Fantasy
+Roleplay sheet; this project is not affiliated with or endorsed by Cubicle 7 or
+Games Workshop.

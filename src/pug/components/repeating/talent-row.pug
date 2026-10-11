@@ -1,48 +1,48 @@
 mixin talent-row
     input(name=`attr_talent_settings`, type="hidden", value=1)
-    .sw-talenttable__row
+    .sl-talenttable__row
 
-        .sw-talenttable__cell--settingstoggle
+        .sl-talenttable__cell--settingstoggle
             +display-toggle(`talent_settings`, true)
 
-        .sw-talenttable__cell
+        .sl-talenttable__cell
             +trait-toggle(`talent`, `attr_talent_name`)
 
-        .sw-talenttable__cell
+        .sl-talenttable__cell
             span(name=`attr_talent_ranks`)
 
-        .sw-talenttable__cell--vocalise
-            button.sw-vocalise(type="roll", value=rolls.repeating.talent) w
+        .sl-talenttable__cell--vocalise
+            button.sl-vocalise(type="roll", value=rolls.repeating.talent) w
             
         input(name="attr_talent_toggle", type="hidden")
-        .sw-talenttable__cell--description
+        .sl-talenttable__cell--description
             span(name=`attr_talent_description`)
             
-        .sw-talenttable__row.sw-settings.control__hide--talent_settings
+        .sl-talenttable__row.sl-settings.control__hide--talent_settings
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Name`) 
-                input.sw-settings__input(name=`attr_talent_name`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Name`) 
+                input.sl-settings__input(name=`attr_talent_name`, type="text")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Ranks`) 
-                input.sw-settings__input(name=`attr_talent_ranks`, type="number")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Ranks`) 
+                input.sl-settings__input(name=`attr_talent_ranks`, type="number")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Max`) 
-                input.sw-settings__input(name=`attr_talent_ranks_max`, type="number")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Max`) 
+                input.sl-settings__input(name=`attr_talent_ranks_max`, type="number")
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Modifiers`) 
-                input.sw-settings__input(name=`attr_talent_mods`, type="text") 
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Modifiers`) 
+                input.sl-settings__input(name=`attr_talent_mods`, type="text") 
 
-            .sw-settings__row--span.control__hide--skill
-                .sw-settings__label(data-i18n=`Skill`) 
-                select.sw-settings__select.control__select(name="attr_talent_test_skill")
+            .sl-settings__row--span.control__hide--skill
+                .sl-settings__label(data-i18n=`Skill`) 
+                select.sl-settings__select.control__select(name="attr_talent_test_skill")
                     option(data-i18n="None", value="none") 
                     each skill in [...skills.basic, ...skills.advanced]
                         option(data-i18n=skill.name, value=skill.name.toLowerCase().replace(/ /g,"_"))
                             
-            .sw-settings__row--span
-                .sw-settings__label--full(data-i18n=`Description`) 
-                textarea.sw-settings__textarea(name=`attr_talent_description`)     
+            .sl-settings__row--span
+                .sl-settings__label--full(data-i18n=`Description`) 
+                textarea.sl-settings__textarea(name=`attr_talent_description`)     

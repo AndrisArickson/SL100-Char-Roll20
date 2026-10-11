@@ -1,10 +1,10 @@
-.sheet-sw-wrapper .sheet-sw-navigation.sheet-sw-panel {
-    background: linear-gradient(180deg, $sw-frame-light, $sw-frame);
+.sheet-sl-wrapper .sheet-sl-navigation.sheet-sl-panel {
+    background: linear-gradient(180deg, $sl-frame-light, $sl-frame);
     border-color: #0a0d12;
     color: #dfe7ef;
 }
 
-.sheet-sw-navigation {
+.sheet-sl-navigation {
 
     &__item {
      
@@ -12,10 +12,10 @@
         input[type="radio"] {
 
             &:checked + span {
-                border-color: $sw-accent;
-                background: $sw-accent;
-                color: $sw-ink;
-                box-shadow: 0 0 8px rgba($sw-accent, .45);
+                border-color: $sl-accent;
+                background: $sl-accent;
+                color: $sl-ink;
+                box-shadow: 0 0 8px rgba($sl-accent, .45);
             }
         }
 
@@ -36,11 +36,11 @@
         }
 
         &:hover span {
-            border-color: $sw-accent;
+            border-color: $sl-accent;
         }
 
         &--settings {
-            @extend .sheet-sw-navigation__item;
+            @extend .sheet-sl-navigation__item;
 
             span {
                 font-family: "Pictos";

@@ -1,10 +1,10 @@
 {
-  "html": "sw100.html",
-  "css": "sw100.css",
-  "authors": "SW100 contributors (layout and engine adapted from the Warhammer Fantasy Roleplay 4e Official sheet by Cubicle 7 / Nic B.)",
+  "html": "sl100.html",
+  "css": "sl100.css",
+  "authors": "SL100 contributors (layout and engine adapted from the Warhammer Fantasy Roleplay 4e Official sheet by Cubicle 7 / Nic B.)",
   "roll20userid": "",
   "preview": "preview.png",
-  "instructions": "A Roll20 character sheet for SW100, a Star Wars inspired d100 roleplaying game. PC and NPC views, d100 skill tests with Success Levels, Force powers, careers, experience tracking and hit-location armour.",
+  "instructions": "A Roll20 character sheet for Star Legends - Galactic Wars (SL100), a space-opera d100 roleplaying game. PC and NPC views, d100 skill tests with Success Levels, Force powers, careers, experience tracking and hit-location armour.",
   "useroptions": [
     {
       "attribute": "npc",

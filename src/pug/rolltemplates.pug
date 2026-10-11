@@ -92,21 +92,21 @@ mixin roll()
     +tags(success_isnot_array)
         each crit in crit_array
             +tags([`rollTotal() roll ${crit}`])
-                .sw-roll__result.fullcrit {{roll}}
+                .sl-roll__result.fullcrit {{roll}}
         +tags(crit_isnot_array)
-            .sw-roll__result {{roll}}
+            .sl-roll__result {{roll}}
 
     +tags(fail_isnot_array)
         each crit in crit_array
             +tags([`rollTotal() roll ${crit}`])
-                .sw-roll__result.fullfail {{roll}}
+                .sl-roll__result.fullfail {{roll}}
         +tags(crit_isnot_array)
-            .sw-roll__result {{roll}}
+            .sl-roll__result {{roll}}
 
 mixin success-fail()
 
     +tags(success_isnot_array)
-        .sw-roll__success
+        .sl-roll__success
         
             +tags(crit_isnot_array)
                 each level in [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]            
@@ -138,7 +138,7 @@ mixin success-fail()
                             span (#{out})
 
     +tags(fail_isnot_array)
-        .sw-roll__fail
+        .sl-roll__fail
         
             +tags(crit_isnot_array)
                 each level in [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]            
@@ -177,9 +177,9 @@ mixin success-level()
                 each result in [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
                     - const out = (((level - result) / 10) <= 0) ? (level - result) / 10 : `+${(level - result) / 10}`;
                         +tags([`rollBetween() roll ${result} ${result+9}`])
-                            .sw-roll__sl
-                                .sw-roll__label(data-i18n="Success Level")
-                                .sw-roll__value=out
+                            .sl-roll__sl
+                                .sl-roll__label(data-i18n="Success Level")
+                                .sl-roll__value=out
     
     +tags(fail_isnot_array)
         
@@ -189,17 +189,17 @@ mixin success-level()
                 each result in [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
                     - const out = (((level - result) / 10) < 0) ? (level - result) / 10 : `+${(level - result) / 10}`;
                         +tags([`rollBetween() roll ${result} ${result+9}`])
-                            .sw-roll__sl
-                                .sw-roll__label(data-i18n="Success Level")
-                                .sw-roll__value=out
+                            .sl-roll__sl
+                                .sl-roll__label(data-i18n="Success Level")
+                                .sl-roll__value=out
 
 
 
 mixin simple-row(label, value, array)
     +tags(array)
-        .sw-roll__row
-            .sw-roll__label(data-i18n=label)
-            .sw-roll__value {{#{value}}}
+        .sl-roll__row
+            .sl-roll__label(data-i18n=label)
+            .sl-roll__value {{#{value}}}
 
 mixin hit-location()
 
@@ -207,7 +207,7 @@ mixin hit-location()
         each location in locations
             each target in location.targets
                 +tags([`rollTotal() roll ${target}`])
-                    .sw-roll__value(data-i18n=location.name)
+                    .sl-roll__value(data-i18n=location.name)
 
 
     each crit in crit_is_array
@@ -215,7 +215,7 @@ mixin hit-location()
             each location in locations
                 each target in location.targets
                     +tags([`rollTotal() roll_crit_location ${target}`])
-                        .sw-roll__value
+                        .sl-roll__value
                             span(data-i18n=location.name)
                             span &nbsp;({{roll_crit_location}})
         
@@ -243,9 +243,9 @@ mixin difficulty()
             span(data-i18n="Very Easy (+60)")
 
 
-rolltemplate.sheet-rolltemplate-sw
+rolltemplate.sheet-rolltemplate-sl
     h3 {{name}}
-    .sw-roll
+    .sl-roll
         
         h1 {{roll_name}}
         h2 {{roll_type}} 
@@ -253,38 +253,38 @@ rolltemplate.sheet-rolltemplate-sw
             h2
                 +difficulty()
         
-        .sw-roll__divider
+        .sl-roll__divider
         
         +tags(["roll"])
             +roll()
 
         +tags(["init"])
-            .sw-roll__result {{init}}
+            .sl-roll__result {{init}}
         
         +tags(["target"])
-            .sw-roll__target
-                .sw-roll__label(data-i18n="Target Number")
-                .sw-roll__value {{target}}
+            .sl-roll__target
+                .sl-roll__label(data-i18n="Target Number")
+                .sl-roll__value {{target}}
         
         +success-fail()
 
         each field in roll_fields
-            - const className = (field.type) ? `sheet-sw-roll__row--${field.type}` : ``;
+            - const className = (field.type) ? `sheet-sl-roll__row--${field.type}` : ``;
 
             +tags([field.value])
-                .sw-roll__row(class=className)
-                    .sw-roll__label(data-i18n=field.label)
-                    .sw-roll__value {{#{field.value}}}
+                .sl-roll__row(class=className)
+                    .sl-roll__label(data-i18n=field.label)
+                    .sl-roll__value {{#{field.value}}}
                     
         +tags(["roll_hit_location"])
-            .sw-roll__row
-                .sw-roll__label(data-i18n="Hit Location")
+            .sl-roll__row
+                .sl-roll__label(data-i18n="Hit Location")
                 +hit-location
 
         +tags(["roll_notes"])
-            .sw-roll__row--full
-                .sw-roll__text {{roll_notes}}
+            .sl-roll__row--full
+                .sl-roll__text {{roll_notes}}
 
         +tags(["roll_text"])
-            .sw-roll__row--full
-                .sw-roll__text {{roll_text}}
+            .sl-roll__row--full
+                .sl-roll__text {{roll_text}}

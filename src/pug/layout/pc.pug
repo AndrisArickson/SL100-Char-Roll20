@@ -1,22 +1,29 @@
 input(name="attr_setting_button_hide", type="hidden")
 
-.sw-header.sw-panel
-    .sw-header__logo
-        span.sw-header__logo-title SW100
-        span.sw-header__logo-subtitle(data-i18n="Galactic Character Record")
-    .sw-header__info
-        each field in character 
-            +character-field(field)
+.sl-header.sl-panel
+    .sl-header__logo
+        span.sl-header__logo-title(data-i18n="Star Legends")
+        span.sl-header__logo-tagline(data-i18n="Galactic Wars")
+        span.sl-header__logo-subtitle(data-i18n="SL100 Character Record")
+    .sl-header__body
+        //- Roll20's read-only avatar pseudo-attribute: shows the image set on
+        //- the Bio & Info tab. Only displayed on the Main tab.
+        .sl-header__portrait.page__main
+            span.sl-header__portrait-empty(data-i18n="Set a portrait in Bio & Info")
+            img.sl-header__portrait-img(name="attr_character_avatar")
+        .sl-header__info
+            each field in character 
+                +character-field(field)
 
-.sw-navigation.sw-panel
-    .sw-navigation__roll
-        label.sw-navigation__item
+.sl-navigation.sl-panel
+    .sl-navigation__roll
+        label.sl-navigation__item
             input(name="attr_setting_whisper", type="checkbox", value="2")
             span(data-i18n="Whisper to GM")
-    .sw-navigation__items
+    .sl-navigation__items
         each item in navigation 
             - 
-                const settings = (item === "settings") ? "sw-navigation__item--settings" : "sw-navigation__item";
+                const settings = (item === "settings") ? "sl-navigation__item--settings" : "sl-navigation__item";
 
             label(class=settings)
                 input(name="attr_nav", type="radio", value=item)
@@ -25,306 +32,306 @@ input(name="attr_setting_button_hide", type="hidden")
                 else 
                     span(data-i18n=item)
 
-.sw-characteristics.sw-panel.page__main
+.sl-characteristics.sl-panel.page__main
     input(name="attr_control_hide--characteristics", type="hidden")
-    h1.sw-panel__header(data-i18n="Characteristics")
-    .sw-chartable
-        .sw-chartable__cell--noborder &nbsp;
-        .sw-chartable__cell--left(data-i18n="Initial")
-        .sw-chartable__cell--left(data-i18n="Advances")
-        .sw-chartable__cell--left(data-i18n="Modifier")
-        .sw-chartable__cell--left(data-i18n="Current")
-        .sw-chartable__cell--left(data-i18n="Bonus")
+    h1.sl-panel__header(data-i18n="Characteristics")
+    .sl-chartable
+        .sl-chartable__cell--noborder &nbsp;
+        .sl-chartable__cell--left(data-i18n="Initial")
+        .sl-chartable__cell--left(data-i18n="Advances")
+        .sl-chartable__cell--left(data-i18n="Modifier")
+        .sl-chartable__cell--left(data-i18n="Current")
+        .sl-chartable__cell--left(data-i18n="Bonus")
         each characteristic in characteristics
             +characteristic-col(characteristic)
 
-.sw-resilience.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Resilience")
-    .sw-field__wrapper
+.sl-resilience.sl-panel.page__main
+    h1.sl-panel__header(data-i18n="Resilience")
+    .sl-field__wrapper
         +generic-field(resilience[0], "text", "2-1")
         +generic-field(resilience[1], "text", "2-1")
     +generic-field(resilience[2], "text", "1-2")
 
-.sw-fate.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Destiny")
+.sl-fate.sl-panel.page__main
+    h1.sl-panel__header(data-i18n="Destiny")
     each field in fate 
         +generic-field(field, "number", "1-1")
 
-.sw-movement.sw-panel.page__main
+.sl-movement.sl-panel.page__main
     input(name="attr_movement_mod", type="hidden")
-    h1.sw-panel__header(data-i18n="Movement")
+    h1.sl-panel__header(data-i18n="Movement")
     each field in movement 
         +generic-field(field, "text", "1-2")
 
-.sw-experience.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Experience")
+.sl-experience.sl-panel.page__main
+    h1.sl-panel__header(data-i18n="Experience")
     each field in experience 
         +generic-display(field, "text", "1-1")
 
-.sw-skills.sw-panel.page__main
-    .sw-skilltable
-        h1.sw-panel__header(data-i18n="Basic Skills")
-        .sw-skilltable__row--head
-            .sw-skilltable__cell(data-i18n="Name")
-            .sw-skilltable__cell.sw-skilltable__cell--span2(data-i18n="Char.")
-            .sw-skilltable__cell(data-i18n="Adv.")
-            .sw-skilltable__cell--last(data-i18n="Total")
+.sl-skills.sl-panel.page__main
+    .sl-skilltable
+        h1.sl-panel__header(data-i18n="Basic Skills")
+        .sl-skilltable__row--head
+            .sl-skilltable__cell(data-i18n="Name")
+            .sl-skilltable__cell.sl-skilltable__cell--span2(data-i18n="Char.")
+            .sl-skilltable__cell(data-i18n="Adv.")
+            .sl-skilltable__cell--last(data-i18n="Total")
         each skill in skills.basic
             if skill.grouped === true
                 +skill-grouped(skill)
             else 
                 +skill(skill)
 
-.sw-skills.sw-panel.page__main
-    .sw-skilltable
-        h1.sw-panel__header(data-i18n="Advanced Skills")
-        .sw-skilltable__row--head
-            .sw-skilltable__cell(data-i18n="Name")
-            .sw-skilltable__cell.sw-skilltable__cell--span2(data-i18n="Char.")
-            .sw-skilltable__cell(data-i18n="Adv.")
-            .sw-skilltable__cell--last(data-i18n="Total")
+.sl-skills.sl-panel.page__main
+    .sl-skilltable
+        h1.sl-panel__header(data-i18n="Advanced Skills")
+        .sl-skilltable__row--head
+            .sl-skilltable__cell(data-i18n="Name")
+            .sl-skilltable__cell.sl-skilltable__cell--span2(data-i18n="Char.")
+            .sl-skilltable__cell(data-i18n="Adv.")
+            .sl-skilltable__cell--last(data-i18n="Total")
         each skill in skills.advanced
             if skill.grouped === true
                 +skill-grouped(skill)
             else 
                 +skill(skill)
 
-.sw-talents.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Talents")
-    .sw-talenttable
-        .sw-talenttable__row--head
-            .sw-talenttable__cell(data-i18n="Name")
-            .sw-talenttable__cell(data-i18n="Ranks")
-            .sw-talenttable__cell--last
+.sl-talents.sl-panel.page__main
+    h1.sl-panel__header(data-i18n="Talents")
+    .sl-talenttable
+        .sl-talenttable__row--head
+            .sl-talenttable__cell(data-i18n="Name")
+            .sl-talenttable__cell(data-i18n="Ranks")
+            .sl-talenttable__cell--last
         +repeating-section("talent","talent-row")
 
-.sw-conditions.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Conditions")
-    .sw-conditiontable
-        .sw-conditiontable__row--head
-            .sw-conditiontable__cell(data-i18n="Name")
-            .sw-conditiontable__cell(data-i18n="Ranks")
-            .sw-conditiontable__cell--last
+.sl-conditions.sl-panel.page__main
+    h1.sl-panel__header(data-i18n="Conditions")
+    .sl-conditiontable
+        .sl-conditiontable__row--head
+            .sl-conditiontable__cell(data-i18n="Name")
+            .sl-conditiontable__cell(data-i18n="Ranks")
+            .sl-conditiontable__cell--last
         +repeating-section("conditions","condition-row")
 
-.sw-psychology.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Psychology")
-    .sw-psychologytable
-        .sw-psychologytable__row--head
-            .sw-psychologytable__cell(data-i18n="Name")
-            .sw-psychologytable__cell--last
+.sl-psychology.sl-panel.page__main
+    h1.sl-panel__header(data-i18n="Psychology")
+    .sl-psychologytable
+        .sl-psychologytable__row--head
+            .sl-psychologytable__cell(data-i18n="Name")
+            .sl-psychologytable__cell--last
         +repeating-section("psychology","psychology-row")
 
-.sw-corruption.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Dark Side")
+.sl-corruption.sl-panel.page__main
+    h1.sl-panel__header(data-i18n="Dark Side")
     +generic-field(corruption[0],"number","2-1")
-    .sw-corruptiontable
-        .sw-corruptiontable__row--head
-            .sw-corruptiontable__cell(data-i18n="Name")
-            .sw-corruptiontable__cell--last
+    .sl-corruptiontable
+        .sl-corruptiontable__row--head
+            .sl-corruptiontable__cell(data-i18n="Name")
+            .sl-corruptiontable__cell--last
         +repeating-section("corruption","corruption-row")
 
-.sw-ambitions.sw-panel.page__main--grid
-    h1.sw-panel__header(data-i18n="Ambitions")
+.sl-ambitions.sl-panel.page__main--grid
+    h1.sl-panel__header(data-i18n="Ambitions")
     each ambition in ambitions 
         +generic-textarea(ambition.name, "1-25", ambition.attr)
 
-.sw-party.sw-panel.page__main--grid
-    h1.sw-panel__header(data-i18n="Party")
+.sl-party.sl-panel.page__main--grid
+    h1.sl-panel__header(data-i18n="Party")
     each ambition in party
         if (ambition.field === "text") 
             +generic-field(ambition, "text", "1-25", ambition.attr)
         else 
             +generic-textarea(ambition.name, "1-25", ambition.attr)
 
-.sw-trappings.page__combat--flex
-    .sw-panel.sw-panel--trappings
-        h1.sw-panel__header(data-i18n="Gear")
-        .sw-trappingtable
-            .sw-trappingtable__row--head
-                .sw-trappingtable__cell(data-i18n="Name")
-                .sw-trappingtable__cell #
-                .sw-trappingtable__cell--last(data-i18n="Enc.")
+.sl-trappings.page__combat--flex
+    .sl-panel.sl-panel--trappings
+        h1.sl-panel__header(data-i18n="Gear")
+        .sl-trappingtable
+            .sl-trappingtable__row--head
+                .sl-trappingtable__cell(data-i18n="Name")
+                .sl-trappingtable__cell #
+                .sl-trappingtable__cell--last(data-i18n="Enc.")
             +repeating-section("trappings","trapping-row")
 
-    .sw-encwealth
+    .sl-encwealth
 
-        .sw-panel
-            h1.sw-panel__header(data-i18n="Enc.")
+        .sl-panel
+            h1.sl-panel__header(data-i18n="Enc.")
             input(name="attr_encumbrance_bonus", type="hidden", value=0)
             +generic-display({name:"Current Enc.", attr:"encumbrance"}, "number", "2-1")
             +generic-display({name:"Max Enc.", attr:"encumbrance_max"}, "number", "2-1")
 
-        .sw-panel
-            h1.sw-panel__header(data-i18n="Wealth")
+        .sl-panel
+            h1.sl-panel__header(data-i18n="Wealth")
             each field in wealth
                 +generic-field(field, "number", "1-1")
 
-.sw-armour__wrapper.sw-panel.page__combat
-    h1.sw-panel__header(data-i18n="Armour Points")
+.sl-armour__wrapper.sl-panel.page__combat
+    h1.sl-panel__header(data-i18n="Armour Points")
 
-    .sw-armour__row
-        .sw-armour__block--head
-            .sw-armour__roll 01-09
-            span.sw-armour__display(name="attr_armour_head") 
-            .sw-armour__location(data-i18n="Head")
+    .sl-armour__row
+        .sl-armour__block--head
+            .sl-armour__roll 01-09
+            span.sl-armour__display(name="attr_armour_head") 
+            .sl-armour__location(data-i18n="Head")
 
-        .sw-armour__block--leftarm 
-            .sw-armour__roll 10-24
-            span.sw-armour__display(name="attr_armour_leftarm") 
-            .sw-armour__location(data-i18n="Left Arm")
+        .sl-armour__block--leftarm 
+            .sl-armour__roll 10-24
+            span.sl-armour__display(name="attr_armour_leftarm") 
+            .sl-armour__location(data-i18n="Left Arm")
 
-    .sw-armour__row
-        .sw-armour__block--rightarm
-            .sw-armour__roll 25-44
-            span.sw-armour__display(name="attr_armour_rightarm") 
-            .sw-armour__location(data-i18n="Right Arm")
+    .sl-armour__row
+        .sl-armour__block--rightarm
+            .sl-armour__roll 25-44
+            span.sl-armour__display(name="attr_armour_rightarm") 
+            .sl-armour__location(data-i18n="Right Arm")
 
-        .sw-armour__block--body
-            .sw-armour__roll 45-79
-            span.sw-armour__display(name="attr_armour_body") 
-            .sw-armour__location(data-i18n="Body")
+        .sl-armour__block--body
+            .sl-armour__roll 45-79
+            span.sl-armour__display(name="attr_armour_body") 
+            .sl-armour__location(data-i18n="Body")
 
-    .sw-armour__row
-        .sw-armour__block--rightleg
-            .sw-armour__roll 90-00
-            span.sw-armour__display(name="attr_armour_rightleg") 
-            .sw-armour__location(data-i18n="Right Leg")
+    .sl-armour__row
+        .sl-armour__block--rightleg
+            .sl-armour__roll 90-00
+            span.sl-armour__display(name="attr_armour_rightleg") 
+            .sl-armour__location(data-i18n="Right Leg")
 
-        .sw-armour__block--leftleg 
-            .sw-armour__roll 80-89
-            span.sw-armour__display(name="attr_armour_leftleg") 
-            .sw-armour__location(data-i18n="Left Leg")
+        .sl-armour__block--leftleg 
+            .sl-armour__roll 80-89
+            span.sl-armour__display(name="attr_armour_leftleg") 
+            .sl-armour__location(data-i18n="Left Leg")
 
-    .sw-armour__row
-        .sw-armour__block--shield
-            span.sw-armour__display(name="attr_armour_shield") 
-            .sw-armour__location(data-i18n="Shield")
+    .sl-armour__row
+        .sl-armour__block--shield
+            span.sl-armour__display(name="attr_armour_shield") 
+            .sl-armour__location(data-i18n="Shield")
 
-        .sw-armour__block--toughness 
-            .sw-armour__roll 
-            span.sw-armour__display(name="attr_toughness_bonus") 
-            .sw-armour__location(data-i18n="TB")
+        .sl-armour__block--toughness 
+            .sl-armour__roll 
+            span.sl-armour__display(name="attr_toughness_bonus") 
+            .sl-armour__location(data-i18n="TB")
 
-.sw-controls.sw-panel.page__combat
-    h1.sw-panel__header(data-i18n="Controls")
-    .sw-controls__wrapper
-        .sw-controls__button
-            button(data-i18n="Initiative", type="roll", value=`&{template:sw} {{name=@{character_name}}} {{roll_name=Initiative}} @{roll_init}`)
-        .sw-controls__button
+.sl-controls.sl-panel.page__combat
+    h1.sl-panel__header(data-i18n="Controls")
+    .sl-controls__wrapper
+        .sl-controls__button
+            button(data-i18n="Initiative", type="roll", value=`&{template:sl} {{name=@{character_name}}} {{roll_name=Initiative}} @{roll_init}`)
+        .sl-controls__button
             button(data-i18n="Dodge", type="roll", value=rolls.combat.dodge)
-        .sw-controls__button
+        .sl-controls__button
             button(data-i18n="Endurance", type="roll", value=rolls.combat.endurance)
-        .sw-controls__button
+        .sl-controls__button
             button(data-i18n="Intuition", type="roll", value=rolls.combat.intuition)
-        .sw-controls__button
+        .sl-controls__button
             button(data-i18n="Perception", type="roll", value=rolls.combat.perception)
-        .sw-controls__button
+        .sl-controls__button
             button(data-i18n="Cool", type="roll", value=rolls.combat.cool)
-        //.sw-controls__button
+        //.sl-controls__button
             button(data-i18n="Critical Hit", type="roll", value=rolls.crit)
-        //.sw-controls__button
+        //.sl-controls__button
             button(data-i18n="Fumble", type="roll", value=rolls.fumble)
 
-.sw-advantage.sw-panel.page__combat
-    h1.sw-panel__header(data-i18n="Advantage")
+.sl-advantage.sl-panel.page__combat
+    h1.sl-panel__header(data-i18n="Advantage")
     +advantage()
 
-.sw-wounds.sw-panel.page__combat
-    h1.sw-panel__header(data-i18n="Wounds")
+.sl-wounds.sl-panel.page__combat
+    h1.sl-panel__header(data-i18n="Wounds")
     input(name="attr_wounds_mod", type="hidden")
     +generic-field({name:"Current Wounds", attr:"wounds"},"number","2-1")
     +generic-display({name:"Max Wounds", attr:"wounds_max"}, "number", "2-1")
         
-.sw-wounds.sw-panel.page__combat
-    h1.sw-panel__header(data-i18n="Critical Wounds")
-    .sw-criticaltable__row--head
-        .sw-criticaltable__cell(data-i18n="Name")
-        .sw-criticaltable__cell(data-i18n="Location")
-        .sw-criticaltable__cell--last #
-    .sw-woundtable
+.sl-wounds.sl-panel.page__combat
+    h1.sl-panel__header(data-i18n="Critical Wounds")
+    .sl-criticaltable__row--head
+        .sl-criticaltable__cell(data-i18n="Name")
+        .sl-criticaltable__cell(data-i18n="Location")
+        .sl-criticaltable__cell--last #
+    .sl-woundtable
         +repeating-section("criticals","critical-row")
 
-.sw-armour.sw-panel.page__combat
-    h1.sw-panel__header(data-i18n="Armour")
-    .sw-armourtable
-        .sw-armourtable__row--head
-            .sw-armourtable__cell(data-i18n="Name")
-            .sw-armourtable__cell(data-i18n="Locations")
-            .sw-armourtable__cell(data-i18n="AP")
-            .sw-armourtable__cell--last(data-i18n="Qualities")
+.sl-armour.sl-panel.page__combat
+    h1.sl-panel__header(data-i18n="Armour")
+    .sl-armourtable
+        .sl-armourtable__row--head
+            .sl-armourtable__cell(data-i18n="Name")
+            .sl-armourtable__cell(data-i18n="Locations")
+            .sl-armourtable__cell(data-i18n="AP")
+            .sl-armourtable__cell--last(data-i18n="Qualities")
         +repeating-section("armour","armour-row")
 
-.sw-weapons.sw-panel.page__combat
-    h1.sw-panel__header(data-i18n="Weapons")
-    .sw-weapontable
-        .sw-weapontable__row--head
-            .sw-weapontable__cell(data-i18n="Name")
-            .sw-weapontable__cell(data-i18n="Group")
-            .sw-weapontable__cell(data-i18n="Total")
-            .sw-weapontable__cell(data-i18n="Range")
-            .sw-weapontable__cell(data-i18n="Damage")
-            .sw-weapontable__cell--last(data-i18n="Qualities")
-    .sw-weapontable
+.sl-weapons.sl-panel.page__combat
+    h1.sl-panel__header(data-i18n="Weapons")
+    .sl-weapontable
+        .sl-weapontable__row--head
+            .sl-weapontable__cell(data-i18n="Name")
+            .sl-weapontable__cell(data-i18n="Group")
+            .sl-weapontable__cell(data-i18n="Total")
+            .sl-weapontable__cell(data-i18n="Range")
+            .sl-weapontable__cell(data-i18n="Damage")
+            .sl-weapontable__cell--last(data-i18n="Qualities")
+    .sl-weapontable
         +repeating-section("weapons","weapon-row")
 
-.sw-spells.sw-panel.page__force
-    h1.sw-panel__header(data-i18n="Force Powers")
-    .sw-spelltable
-        .sw-spelltable__row--head
-            .sw-spelltable__cell(data-i18n="Name")
-            .sw-spelltable__cell(data-i18n="Discipline")
-            .sw-spelltable__cell(data-i18n="Total")
-            .sw-spelltable__cell(data-i18n="DN")
-            .sw-spelltable__cell(data-i18n="Range")
-            .sw-spelltable__cell(data-i18n="Target")
-            .sw-spelltable__cell--last(data-i18n="Duration")
-    .sw-spelltable
+.sl-spells.sl-panel.page__force
+    h1.sl-panel__header(data-i18n="Force Powers")
+    .sl-spelltable
+        .sl-spelltable__row--head
+            .sl-spelltable__cell(data-i18n="Name")
+            .sl-spelltable__cell(data-i18n="Discipline")
+            .sl-spelltable__cell(data-i18n="Total")
+            .sl-spelltable__cell(data-i18n="DN")
+            .sl-spelltable__cell(data-i18n="Range")
+            .sl-spelltable__cell(data-i18n="Target")
+            .sl-spelltable__cell--last(data-i18n="Duration")
+    .sl-spelltable
         +repeating-section("spells","spell-row")
-    .sw-spell__sin
+    .sl-spell__sin
         +generic-field({name:"Conflict", attr:"sin"}, "number", "1-1")
 
-.sw-careers.page__advances--grid
-    .sw-panel
+.sl-careers.page__advances--grid
+    .sl-panel
         input(name="attr_control_hide--characteristics", type="hidden")
-        h1.sw-panel__header(data-i18n="Careers")
-        .sw-careertable__row--head
-            .sw-careertable__cell(data-i18n="Career")
-            .sw-careertable__cell(data-i18n="Level")
-            .sw-careertable__cell(data-i18n="Status")
-            .sw-careertable__cell--last(data-i18n="Advances")
+        h1.sl-panel__header(data-i18n="Careers")
+        .sl-careertable__row--head
+            .sl-careertable__cell(data-i18n="Career")
+            .sl-careertable__cell(data-i18n="Level")
+            .sl-careertable__cell(data-i18n="Status")
+            .sl-careertable__cell--last(data-i18n="Advances")
         +repeating-section("careers","careers-row")
 
-    .sw-panel
+    .sl-panel
         input(name="attr_control_hide--characteristics", type="hidden")
-        h1.sw-panel__header(data-i18n="Species")
+        h1.sl-panel__header(data-i18n="Species")
         +species("spells","spell-row")
 
-.sw-experience--alt.page__advances--flex
+.sl-experience--alt.page__advances--flex
 
     input(name="attr_advances_changed", type="hidden")
-    .sw-panel.sw-advancenotify
-        span.sw-advancenotify__message(data-i18n="This sheet has pending advance changes. Click below to save these changes.")
-        button.sw-advancenotify__button(data-i18n="Update", name="act_update_advances", type="action") 
+    .sl-panel.sl-advancenotify
+        span.sl-advancenotify__message(data-i18n="This sheet has pending advance changes. Click below to save these changes.")
+        button.sl-advancenotify__button(data-i18n="Update", name="act_update_advances", type="action") 
             
-    .sw-panel
-        h1.sw-panel__header(data-i18n="Experience")
+    .sl-panel
+        h1.sl-panel__header(data-i18n="Experience")
         each field in experience 
             +generic-display(field, "text", "2-1")
 
-    .sw-panel.sw-panel--awards.page__advances
-        h1.sw-panel__header(data-i18n="Experience Awards")
-        .sw-experiencetable__row--head
-            .sw-experiencetable__cell(data-i18n="Source")
-            .sw-experiencetable__cell--last(data-i18n="XP")
+    .sl-panel.sl-panel--awards.page__advances
+        h1.sl-panel__header(data-i18n="Experience Awards")
+        .sl-experiencetable__row--head
+            .sl-experiencetable__cell(data-i18n="Source")
+            .sl-experiencetable__cell--last(data-i18n="XP")
         +repeating-section("experience","experience-row")
-        .sw-panel__footer.sw-controls
-            .sw-controls__button
+        .sl-panel__footer.sl-controls
+            .sl-controls__button
                 button(data-i18n="Consolidate Rewards", name="act_combinexp", type="action") 
-        h1.sw-panel__header(data-i18n="Experience Spends")
-        .sw-experiencetable__row--head
-            .sw-experiencetable__cell(data-i18n="Use")
-            .sw-experiencetable__cell--last(data-i18n="XP")
+        h1.sl-panel__header(data-i18n="Experience Spends")
+        .sl-experiencetable__row--head
+            .sl-experiencetable__cell(data-i18n="Use")
+            .sl-experiencetable__cell--last(data-i18n="XP")
         +repeating-section("experiencespent","experience-row")
 
 include settings.pug

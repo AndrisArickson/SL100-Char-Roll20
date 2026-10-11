@@ -10,6 +10,8 @@ WFRP artwork is used.
 
 ![Sheet preview](preview.png)
 
+See [ROADMAP.md](ROADMAP.md) for what is done and what comes next.
+
 ## What's on the sheet
 
 | Tab | Contents |

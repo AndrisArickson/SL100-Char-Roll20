@@ -95,6 +95,27 @@ The preview script mimics how Roll20 renders a sheet: it adds the `sheet-` class
 prefix, fills in translations and expands repeating sections. Sheetworkers do not
 run, so derived values come from sample data. It needs Playwright with Chromium.
 
+## Adding your own artwork
+
+The theme is pure CSS by default. You can add images without touching the
+layout code: set any variable in `src/scss/_art.scss` to an image URL in quotes,
+then run `npm run build`. Variables left as `null` keep the CSS look.
+
+| Variable | Where it shows | Suggested size |
+| --- | --- | --- |
+| `$sw-art-logo` | Title image; replaces the "SW100" text | 600×150 transparent PNG |
+| `$sw-art-header-background` | Backdrop behind the title | 840×110 |
+| `$sw-art-frame-background` | Texture for the dark frame | 256×256, tileable |
+| `$sw-art-panel-background` | Texture for the light panels (keep it pale) | 512×512, tileable |
+| `$sw-art-armour-figure` | Figure behind the hit locations on the Combat tab | 230×330 transparent PNG |
+| `$sw-art-npc-banner` | Banner behind the NPC name and stats | 840×200 |
+| `$sw-art-rollcard-banner` | Strip at the top of roll cards | 300×40 |
+
+A relative path such as `"art/logo.png"` (relative to the repo root) works in
+`scripts/preview.js`. Use that while designing. Roll20 can't read files from
+your computer, so before uploading the CSS, switch each value to an `https://`
+URL: an image uploaded to your Roll20 art library, or a raw GitHub link.
+
 ## Source layout
 
 ```

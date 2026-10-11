@@ -4,6 +4,8 @@
 
 @import "abstracts";
 
+@import "art";
+
 @import "fonts";
 
 @import "layout/pc/pc";
@@ -35,3 +37,6 @@
 @import "layout/npc";
 
 @import "rolltemplates";
+
+// Optional images; last so they override the CSS theme.
+@import "styling/artwork";

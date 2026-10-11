@@ -1,0 +1,56 @@
+// Applies the optional images from _art.scss. Each block only compiles when
+// its variable is set, so the default build is pure CSS.
+
+@if $sw-art-logo or $sw-art-header-background {
+    .sheet-sw-header__logo {
+        $layers: ();
+        @if $sw-art-logo {
+            $layers: append($layers, url($sw-art-logo) center / contain no-repeat, comma);
+        }
+        @if $sw-art-header-background {
+            $layers: append($layers, url($sw-art-header-background) center / cover no-repeat, comma);
+        } @else {
+            $layers: join($layers, $sw-starfield, comma);
+        }
+        background: $layers;
+    }
+}
+
+@if $sw-art-logo {
+    .sheet-sw-header__logo-title,
+    .sheet-sw-header__logo-subtitle {
+        visibility: hidden;
+    }
+}
+
+@if $sw-art-frame-background {
+    .sheet-sw-pc {
+        background: url($sw-art-frame-background) repeat, $sw-frame;
+    }
+}
+
+@if $sw-art-panel-background {
+    .sheet-sw-wrapper .sheet-sw-panel {
+        background: url($sw-art-panel-background) repeat, $sw-panel;
+    }
+}
+
+@if $sw-art-armour-figure {
+    .sheet-sw-wrapper .sheet-sw-armour__wrapper.sheet-sw-panel {
+        background:
+            url($sw-art-armour-figure) 50% 3.5rem / auto 75% no-repeat,
+            linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel-shade);
+    }
+}
+
+@if $sw-art-npc-banner {
+    .sheet-sw-npc__slash {
+        background: url($sw-art-npc-banner) center / cover no-repeat, $sw-frame;
+    }
+}
+
+@if $sw-art-rollcard-banner {
+    .sheet-rolltemplate-sw > h3 {
+        background: url($sw-art-rollcard-banner) center / cover no-repeat, $sw-frame;
+    }
+}

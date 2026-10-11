@@ -24,7 +24,8 @@
 
 .sheet-sw-armour {
     
-    &__wrapper {
+    // Qualified with .sheet-sw-panel so it outranks the generic panel background.
+    @at-root .sheet-sw-wrapper &__wrapper.sheet-sw-panel {
         // Targeting reticle behind the hit-location blocks.
         background:
             radial-gradient(circle at 50% 55%, transparent 0 58px, rgba($sw-holo, .25) 59px 60px, transparent 61px 100px, rgba($sw-holo, .18) 101px 102px, transparent 103px),

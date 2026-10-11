@@ -10,7 +10,9 @@
 // workers do not run, so derived values come from the sample data below.
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
+const { pathToFileURL } = require("url");
 
 const resolvePlaywright = () => {
     const candidates = ["playwright", "/opt/node-tools/node_modules/playwright"];
@@ -132,6 +134,7 @@ const buildPage = (state) => {
     html = html.replace(/<rolltemplate[\s\S]*?<\/rolltemplate>/g, "");
 
     return `<!doctype html><html><head><meta charset="utf-8">
+<base href="${pathToFileURL(root).href}/">
 <style>
   body { margin: 0; padding: 16px; background: #6b6f75; font-family: sans-serif; }
   .charsheet { width: 840px; margin: 0 auto; background: #fff; }
@@ -239,7 +242,11 @@ const main = async () => {
     const shoot = async (state, file, selector = "#sheet") => {
         const page = await browser.newPage({ viewport: { width: 900, height: 1200 }, deviceScaleFactor: 1 });
         page.on("pageerror", error => console.error(`page error: ${error.message}`));
-        await page.setContent(buildPage(state), { waitUntil: "networkidle" }).catch(() => page.setContent(buildPage(state)));
+        // Loaded from a file (not setContent) so local art paths like "art/logo.png" resolve.
+        const pageFile = path.join(os.tmpdir(), `sw100-preview-${process.pid}.html`);
+        fs.writeFileSync(pageFile, buildPage(state));
+        await page.goto(pathToFileURL(pageFile).href, { waitUntil: "networkidle" }).catch(() => {});
+        fs.unlinkSync(pageFile);
         await page.waitForTimeout(300);
         await page.locator(selector).screenshot({ path: file });
         await page.close();

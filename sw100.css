@@ -1282,9 +1282,10 @@ button.sheet-pictos[type=action]:hover {
   text-align: center;
 }
 
-.sheet-sw-armour__wrapper {
+.sheet-sw-wrapper .sheet-sw-armour__wrapper.sheet-sw-panel {
   background: radial-gradient(circle at 50% 55%, transparent 0 58px, rgba(44, 109, 155, 0.25) 59px 60px, transparent 61px 100px, rgba(44, 109, 155, 0.18) 101px 102px, transparent 103px), linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)), linear-gradient(180deg, rgb(96.5411764706%, 97.1176470588%, 97.6941176471%), #dde3e9);
 }
+
 .sheet-sw-armour__display {
   border: 1px solid #3c4857;
   border-radius: 3px;

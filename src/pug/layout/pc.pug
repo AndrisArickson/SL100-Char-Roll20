@@ -2,7 +2,11 @@ input(name="attr_setting_button_hide", type="hidden")
 
 .sl-header.sl-panel
     .sl-header__logo
-        span.sl-header__logo-title(data-i18n="Star Legends")
+        //- Two stacked copies of the title: the back one draws the yellow edge,
+        //- the front one thickens the dark letterform (see styling/_header.scss).
+        span.sl-header__logo-title
+            span.sl-header__logo-title-edge(data-i18n="Star Legends")
+            span.sl-header__logo-title-fill(data-i18n="Star Legends")
         span.sl-header__logo-tagline(data-i18n="Galactic Wars")
         span.sl-header__logo-subtitle(data-i18n="SL100 Character Record")
     .sl-header__body

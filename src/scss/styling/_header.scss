@@ -12,27 +12,58 @@
         border-bottom: 3px solid $sl-accent;
     }
 
+    // Heavy outlined title. Two copies of the text sit in the same grid cell:
+    // the back copy has a wide yellow stroke, the front copy a narrower dark
+    // stroke that thickens the letters. The result is a bolder letterform
+    // with a black interior and a clean yellow rim. If a sanitizer drops
+    // -webkit-text-stroke, the text-shadow ring on the back copy still gives
+    // a yellow edge around the dark text.
     &__logo-title {
-        color: $sl-accent;
+        display: grid;
+            justify-items: center;
 
         font-family: $font-family-title;
         font-size: 38px;
         font-weight: 400;
-        letter-spacing: .14em;
-        line-height: 1;
+        letter-spacing: .08em;
+        line-height: 1.15;
         text-transform: uppercase;
-        text-shadow: 0 0 12px rgba($sl-accent, .35);
+        white-space: nowrap;
+    }
+
+    &__logo-title-edge,
+    &__logo-title-fill {
+        grid-area: 1 / 1;
+    }
+
+    &__logo-title-edge {
+        color: $sl-accent;
+        -webkit-text-stroke: ($title-thicken + $title-edge) $sl-accent;
+        text-shadow:
+            3px 0 0 $sl-accent,
+            -3px 0 0 $sl-accent,
+            0 3px 0 $sl-accent,
+            0 -3px 0 $sl-accent,
+            2px 2px 0 $sl-accent,
+            -2px -2px 0 $sl-accent,
+            2px -2px 0 $sl-accent,
+            -2px 2px 0 $sl-accent;
+    }
+
+    &__logo-title-fill {
+        color: $sl-frame;
+        -webkit-text-stroke: $title-thicken $sl-frame;
     }
 
     &__logo-tagline {
         margin-top: 4px;
 
-        color: #e6edf4;
+        color: $sl-accent;
 
         font-family: $font-family-title;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 400;
-        letter-spacing: .55em;
+        letter-spacing: .5em;
         line-height: 1;
         text-transform: uppercase;
     }

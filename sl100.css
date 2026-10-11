@@ -1253,22 +1253,35 @@ button.sheet-pictos[type=action]:hover {
   border-bottom: 3px solid #f3c331;
 }
 .sheet-sl-header__logo-title {
-  color: #f3c331;
+  display: grid;
+  justify-items: center;
   font-family: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
   font-size: 38px;
   font-weight: 400;
-  letter-spacing: 0.14em;
-  line-height: 1;
+  letter-spacing: 0.08em;
+  line-height: 1.15;
   text-transform: uppercase;
-  text-shadow: 0 0 12px rgba(243, 195, 49, 0.35);
+  white-space: nowrap;
+}
+.sheet-sl-header__logo-title-edge, .sheet-sl-header__logo-title-fill {
+  grid-area: 1/1;
+}
+.sheet-sl-header__logo-title-edge {
+  color: #f3c331;
+  -webkit-text-stroke: 10px #f3c331;
+  text-shadow: 3px 0 0 #f3c331, -3px 0 0 #f3c331, 0 3px 0 #f3c331, 0 -3px 0 #f3c331, 2px 2px 0 #f3c331, -2px -2px 0 #f3c331, 2px -2px 0 #f3c331, -2px 2px 0 #f3c331;
+}
+.sheet-sl-header__logo-title-fill {
+  color: #151a21;
+  -webkit-text-stroke: 6px #151a21;
 }
 .sheet-sl-header__logo-tagline {
   margin-top: 4px;
-  color: #e6edf4;
+  color: #f3c331;
   font-family: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
-  letter-spacing: 0.55em;
+  letter-spacing: 0.5em;
   line-height: 1;
   text-transform: uppercase;
 }

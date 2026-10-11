@@ -97,6 +97,19 @@ if (missing.length) errors.push(`translation.json is missing ${missing.length} k
 const unused = Object.keys(translation).filter(key => !used.has(key));
 if (unused.length) warnings.push(`translation.json has ${unused.length} unused key(s): ${unused.join(" | ")}`);
 
+// Every HTML class must carry the sheet- prefix (see scripts/postbuild.js);
+// otherwise the CSS does not apply when Legacy Sanitization is off.
+{
+    const body = html.replace(/<script type="text\/worker">[\s\S]*?<\/script>/, "");
+    const bare = new Set();
+    for (const match of body.matchAll(/\sclass="([^"]*)"/g)) {
+        match[1].split(/\s+/).filter(name => name && !name.startsWith("sheet-") && !name.startsWith("repeating_")).forEach(name => bare.add(name));
+    }
+    const prefixedRepeating = body.match(/class="[^"]*sheet-repeating_/);
+    if (prefixedRepeating) errors.push("a repeating_ fieldset class was given the sheet- prefix; Roll20 will not treat it as a repeating section");
+    if (bare.size) errors.push(`sw100.html has classes without the sheet- prefix (run npm run build): ${[...bare].slice(0, 10).join(", ")}`);
+}
+
 // The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.
 const css = read("sw100.css");
 for (const [name, text] of [["sw100.css", css], ["sw100.html", html]]) {

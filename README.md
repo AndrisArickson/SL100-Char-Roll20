@@ -84,6 +84,25 @@ It also fails if any Roll20-hosted WFRP artwork is referenced.
 To add or rename a skill, update all three lists and add the label to
 `translation.json`. Then run `npm run build`.
 
+### Installing in Roll20
+
+Custom sheets need a Pro subscription on the game creator's account.
+
+1. Run `npm run build`. Upload the **generated** files, not anything in `src/`.
+2. In the game, open **Settings → Game Settings**, set **Character Sheet Template**
+   to **Custom**, and paste:
+   - the whole of `sw100.html` into the **HTML Layout** tab
+   - the whole of `sw100.css` into the **CSS Styling** tab
+   - the whole of `translation.json` into the **Translation** tab
+3. Click **Save Changes**, then close and reopen any open character sheets.
+
+The build writes the `sheet-` class prefix and fallback label text into the
+HTML, so the sheet styles correctly whether **Legacy Sanitization** is on or
+off. If it still looks unstyled, check that the CSS tab contains `sw100.css`
+starting with `@import url("https://fonts.googleapis.com/...")`, and that the
+HTML tab contains `sw100.html` (its first line is a hidden `attr_sheet_version`
+input).
+
 ### Previewing without Roll20
 
 ```bash

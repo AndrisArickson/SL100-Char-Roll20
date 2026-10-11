@@ -12,7 +12,7 @@
   "scripts": {
     "build": "npm-run-all build:sass build:pug check",
     "build:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions",
-    "build:pug": "pug src/pug/sw100.pug --out . -P",
+    "build:pug": "pug src/pug/sw100.pug --out . -P && node scripts/postbuild.js",
     "check": "node scripts/check.js",
     "start": "npm-run-all --parallel watch:sass watch:pug",
     "watch:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions --watch",

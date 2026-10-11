@@ -1,0 +1,8 @@
+mixin advantage()
+    .sw-advantage__wrapper
+        if block
+            block
+        button.sw-advantage__reset.pictos(name="act_reset_advantage", type="action") 1
+        button.sw-advantage__decrement.pictos(name="act_decrement_advantage", type="action") -
+        input.sw-advantage__input(name="attr_advantage", type="number", value="0")
+        button.sw-advantage__increment.pictos(name="act_increment_advantage", type="action") +

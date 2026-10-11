@@ -1,0 +1,327 @@
+%hide {
+    display: none;
+}
+
+%show {
+    display: block;
+}
+
+%show-grid {
+    display: grid;
+}
+
+// Attribute Settings
+
+@each $attribute in $attributes {
+    .sheet-control__hide--#{$attribute} {
+        @extend %hide;
+    }
+}
+
+input[name*="characteristic"] {
+    @each $attribute in $attributes {
+        &[value="#{$attribute}"] ~ .sheet-control__hide--#{$attribute} {
+            @extend %show;
+        }    
+    }
+}
+
+// Skill Settings
+
+@each $skill in $skills {
+    .sheet-control__hide--#{$skill}_settings {
+        @extend %hide;
+    }
+    .sheet-control__hide--settings {
+        @extend %hide;
+    }
+}
+
+@each $skill in $specialisations {
+    .sheet-control__hide--#{$skill}_settings {
+        @extend %hide;
+    }
+    .sheet-control__hide--settings {
+        @extend %hide;
+    }
+}
+
+input[name*="settings"] {
+    @each $skill in $skills {
+        &[value="1"] ~ div > .sheet-control__hide--#{$skill}_settings {
+            @extend %show-grid;
+        }
+        &[value="1"] ~ div > div[class*="settings"] {
+            @extend %show-grid;
+        }
+    }
+
+    @each $skill in $specialisations {
+        &[value="1"] ~ div > .sheet-control__hide--#{$skill}_settings {
+            @extend %show-grid;
+        }
+        &[value="1"] ~ div > div[class*="settings"] {
+            @extend %show-grid;
+        }
+    }
+}
+
+// Specialisation Rows
+
+@each $specialisation in $specialisations {
+
+    .sheet-control__hide--#{$specialisation} {
+        @extend %hide;
+    }
+}
+
+input[name*="control"] {
+    @each $specialisation in $specialisations {
+        &[value="on"] + .sheet-control__hide--#{$specialisation} {
+            @extend %show-grid;
+        }
+    }
+}
+
+// Custom Selections
+
+.sheet-control__custom {
+    display: none;
+}
+
+input.sheet-control__custom[value*=Custom] {
+    display: none; 
+
+    & + select.sheet-control__custom {
+        display: none;
+    }
+
+    & ~ .sheet-control__custom {
+        display: grid;
+            grid-template-columns: 1fr 2em;
+    }
+}
+
+// Talent Setting Control
+
+@each $block in "talent", "condition", "psychology", "corruption", "critical", "career", "species" {
+    .sheet-control__hide--#{$block}_settings {
+        @extend %hide;
+    }
+    .sheet-control__hide--settings {
+        @extend %hide;
+    }
+}
+
+input[name*="settings"] {
+    @each $block in "talent", "condition", "psychology", "corruption", "critical", "career", "species" {
+        &[value="1"] + div > .sheet-control__hide--#{$block}_settings {
+            @extend %show-grid;
+        }
+        &[value="1"] + div > div[class*="settings"] {
+            @extend %show-grid;
+        }
+        &[value="1"] + div > .sheet-sw-#{$block}table__cell--description {
+            display: none !important;
+        }
+    }
+}
+
+// Combat Settings Setting Control
+
+@each $block in "trappings", "armour", "critical", "weapon", "spell" {
+    .sheet-control__hide--#{$block}_settings {
+        @extend %hide;
+    }
+    .sheet-control__hide--settings {
+        @extend %hide;
+    }
+}
+
+input[name*="settings"] {
+    @each $block in "trappings", "armour", "critical", "weapon", "spell" {
+        &[value="1"] + div > .sheet-control__hide--#{$block}_settings {
+            @extend %show-grid;
+        }
+        &[value="1"] + div > div[class*="settings"] {
+            @extend %show-grid;
+        }
+        &[value="1"] + div > .sheet-sw-#{$block}table__cell--description {
+            display: none !important;
+        }
+    }
+}
+
+// Trait Toggle 
+
+.sheet-sw-traittoggle {
+
+    @at-root label#{&} {
+        text-align: left;
+    
+        cursor: pointer;
+    }
+
+    @at-root input#{&}__hide {
+        display: none;
+    }
+
+    &__span {
+        text-align: left;
+    }
+}
+
+@each $trait in "talent","condition","psychology","corruption", "critical" {
+    
+    .sheet-sw-#{$trait}table__row {
+        
+        .sheet-sw-#{$trait}table__cell--description {
+            @extend %hide;
+        }
+    
+        input[name="attr_#{$trait}_toggle"][value="1"]
+        { 
+            & + .sheet-sw-#{$trait}table__cell--description {
+                @extend %show-grid;
+            }
+        }
+    } 
+}
+
+
+// Talent Test Control
+
+@each $element in "characteristic", "skill" {
+
+    .sheet-control__hide--#{$element} {
+        @extend %hide;
+    }
+}
+
+input[name="attr_talent_test_type"] {
+    @each $element in "characteristic", "skill" {
+        &[value="#{$element}"] ~ .sheet-control__hide--#{$element} {
+            @extend %show-grid;
+        }
+    }
+}
+
+// Custom Type Control
+
+@each $type in "Custom" {
+    .sheet-control__hide--#{$type} {
+        @extend %hide;
+    }
+}
+
+input[name*="type"] {
+    @each $type in "Custom" {
+        &[value="#{$type}"] ~ .sheet-control__hide--#{$type} {
+            @extend %show-grid;
+        }
+    }
+}
+
+input[name*=attack_damage_bonus],
+input[name*=weapon_damage_bonus] {
+    + span {
+        display: none;
+    }
+
+    &[value="on"] + span {
+        display: inline-block;
+    }
+}
+
+input[name*=setting_button_hide] {
+    &[value="2"] ~ * .repcontrol {
+        display: none;
+    }
+}
+
+// NPC Settings Control
+
+@each $block in "npcattack", "npctrait", "npctalent" {
+    .sheet-control__hide--#{$block}_settings {
+        @extend %hide;
+    }
+    .sheet-control__hide--settings {
+        @extend %hide;
+    }
+}
+
+input[name*="settings"] {
+    @each $block in "npcattack", "npctrait", "npctalent" {
+        &[value="1"] + div > .sheet-control__hide--#{$block}_settings {
+            @extend %show-grid;
+        }
+        &[value="1"] + div > div[class*="settings"] {
+            @extend %show-grid;
+        }
+        &[value="1"] + div > .sheet-sw-#{$block}table__cell--description {
+            display: none !important;
+        }
+    }
+}
+
+// Update Advances Control
+
+.sheet-sw-advancenotify {
+    display: none;
+}
+
+input[name*="advances_changed"] {
+    &[value="1"] + .sheet-sw-advancenotify {
+        display: block;
+    }
+}
+
+// NPC Settings Control
+
+.sheet-sw-npcsettings__wrapper {
+    @extend %hide;
+}
+
+input[name*="npc_settings"] {
+    &[value="on"] + .sheet-sw-npcsettings__wrapper {
+        @extend %show-grid;
+    }
+}
+
+// NPC Block Control
+
+.sheet-sw-npc__skills,
+.sheet-sw-npctrappings {
+    display: none;
+}
+
+input[name*="skill_flag"][value="on"] + .sheet-sw-npc__skills {
+    display: block;
+}
+
+input[name*="trapping_flag"][value="on"] + .sheet-sw-npctrappings {
+    display: block;
+}
+
+
+input[type="hidden"][name*="species_disable3"]{
+
+    &[value="1"] {
+
+        & ~ * input[type="radio"][value="3"]:not(:checked) {
+            pointer-events: none;
+            opacity: .5;
+        }
+    }
+}
+
+input[type="hidden"][name*="species_disable5"]{
+
+    &[value="1"] {
+
+        & ~ * input[type="radio"][value="5"]:not(:checked) {
+            pointer-events: none;
+            opacity: .5;
+        }
+    }
+}

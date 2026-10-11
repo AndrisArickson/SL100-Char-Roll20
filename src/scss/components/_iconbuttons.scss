@@ -1,0 +1,48 @@
+.sheet {
+
+    &-sw {
+
+        // Settings Cog
+
+        &-displaytoggle {
+            cursor: pointer;
+
+            &__span {
+                opacity: .5;
+                font-family: pictos;
+
+                &:hover {
+                    opacity: 1
+                }
+            }
+
+            input.sheet-sw-displaytoggle__hide[type="checkbox"] {
+                display: none;
+
+                &:checked ~ span {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+// Vocalise Button
+
+button.sheet-sw-vocalise[type="roll"] {
+    opacity: .5;
+
+    font-family: pictos;
+    text-align: center;
+
+    &:hover {
+        opacity: 1
+    }
+}
+
+button.sheet-pictos[type="action"] {
+
+    &:hover {
+        color: red;
+    }
+}

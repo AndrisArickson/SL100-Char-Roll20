@@ -1,0 +1,126 @@
+
+$margin-small: .25rem;
+$margin-general: .5rem;
+$margin-large: 1rem;
+
+// SW100 palette: a gunmetal console frame, pale datapad panels, hologram-blue
+// inputs and a signal-yellow accent.
+$sw-frame: #151a21;
+$sw-frame-light: #262e39;
+$sw-steel: #3c4857;
+$sw-ink: #10151c;
+$sw-panel: #edf0f3;
+$sw-panel-shade: #dde3e9;
+$sw-holo: #2c6d9b;
+$sw-holo-dark: #1d4f73;
+$sw-accent: #f3c331;
+$sw-accent-dark: #a77b06;
+$sw-success: #1e7a4c;
+$sw-fail: #a5282c;
+
+$border-color: rgba($sw-steel, .55);
+$border-color-recessed: rgba($sw-steel, .45);
+
+$form-input-foreground: $sw-ink;
+$form-input-background: rgba($sw-holo, 0.10);
+$form-input-border: 1px solid rgba($sw-holo, .45);
+$form-active: rgba($sw-holo, .18);
+$form-button-background: $sw-steel;
+
+$grid-border: 1px solid $border-color;
+$grid-border-description: 1px dotted $border-color-recessed;
+$grid-border-settings: 1px dashed rgba($sw-holo, .6);
+
+// Starfield used behind the header and NPC title bars.
+$sw-starfield:
+    radial-gradient(1px 1px at 12% 30%, rgba(255,255,255,.9) 50%, transparent 51%),
+    radial-gradient(1px 1px at 33% 72%, rgba(255,255,255,.7) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 22%, rgba(255,255,255,.9) 50%, transparent 51%),
+    radial-gradient(1px 1px at 76% 64%, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 89% 18%, rgba(255,255,255,.8) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 4% 82%, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 47% 48%, rgba(255,255,255,.5) 50%, transparent 51%),
+    radial-gradient(ellipse at 70% 120%, rgba($sw-holo, .45), transparent 60%),
+    linear-gradient(180deg, #0b0f15, #18202b);
+
+$attributes: 
+    "weapon_skill",
+    "ballistic_skill",
+    "strength",
+    "toughness",
+    "initiative",
+    "agility",
+    "dexterity",
+    "intelligence",
+    "willpower",
+    "fellowship";
+
+$skills: 
+    "astrogation",
+    "computers",
+    "demolitions",
+    "deceive",
+    "force",
+    "knowledge",
+    "language",
+    "mechanics",
+    "medicine",
+    "perform",
+    "pilot",
+    "ranged",
+    "research",
+    "security",
+    "sleight-of-hand",
+    "slicing",
+    "swim",
+    "tactics",
+    "track",
+    "trade",
+    "animal-handling",
+    "art",
+    "athletics",
+    "bribery",
+    "carouse",
+    "charm",
+    "climb",
+    "cool",
+    "dodge",
+    "drive",
+    "endurance",
+    "entertain",
+    "gamble",
+    "haggle",
+    "intimidate",
+    "intuition",
+    "leadership",
+    "melee",
+    "navigation",
+    "perception",
+    "ride",
+    "stealth",
+    "streetwise",
+    "survival",
+    "zero-g";
+
+$specialisations: 
+    "basic",
+    "brawling",
+    "lightsaber",
+    "vibroweapon",
+    "parry",
+    "polearm",
+    "two-handed",
+    "stun",
+    "pistol",
+    "rifle",
+    "heavy",
+    "gunnery",
+    "exotic",
+    "entangling",
+    "explosives",
+    "throwing",
+    "control",
+    "sense",
+    "alter",
+    "galactic_basic",
+    "custom";

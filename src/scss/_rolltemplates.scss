@@ -1,0 +1,191 @@
+.sheet-rolltemplate-sw {
+    overflow: hidden;
+
+    border: 1px solid $sw-frame;
+    border-radius: 4px;
+    background: $sw-panel;
+    color: $sw-ink;
+
+    font-family: $font-family-alt;
+
+    h1, h2, h3 {
+        grid-column: 1 / -1;
+        margin: 0;
+
+        font-family: $font-family-alt;
+        line-height: 1em;
+        text-align: center;
+    }
+
+    h1 {
+        padding: .5rem 0 .25rem;
+
+        color: $sw-ink;
+
+        font-family: $font-family-display;
+        letter-spacing: .06em;
+        font-size: 14pt;
+        font-weight: bold;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        color: $sw-steel;
+
+        font-size: 10pt;
+    }
+
+    h3 {
+        font-size: 9pt; 
+        text-transform: uppercase;
+        color: $sw-steel;
+    }
+
+    > h3 {
+        padding: 4px 0;
+
+        background: $sw-starfield;
+        color: #b9c7d6;
+
+        font-family: $font-family-display;
+        letter-spacing: .2em;
+    }
+    
+        
+    .importantroll,
+    .fullcrit,
+    .fullfail,
+    .inlinerollresult {
+        border: none !important;
+        background: transparent;
+
+        font-family: inherit;
+        line-height: 1em;
+    }
+
+    .sheet-fullcrit,
+    .fullcrit {
+        color: $sw-success;
+    }
+
+    .sheet-fullfail,
+    .fullfail {
+        color: $sw-fail;
+    }
+
+    .sheet-sw-roll {
+        display: grid;
+            gap: .25rem;
+        padding: .5rem 1rem 1rem;
+    
+        &__divider {
+            width: 100%;
+            height: 2px;
+            margin: .25rem 0;
+            grid-column: 1/-1;
+
+            background: linear-gradient(90deg, transparent, $sw-accent 20%, $sw-accent 80%, transparent);
+        }
+
+        &__result {
+            grid-column: 1 / -1;
+
+            color: $sw-holo-dark;
+
+            font-family: $font-family-display;
+            font-size: 3.25rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        &__target {
+            grid-column: 1 / -1;
+
+            display: grid;
+            grid-template-columns: 1fr 3em;
+            padding: .5rem;
+
+            border: 1px solid rgba($sw-holo, .5);
+            border-radius: 3px;
+            background: rgba($sw-holo, .1);
+
+            font-weight: bold;
+        }
+
+        &__success, 
+        &__fail {
+            grid-column: 1 / -1;
+            padding: .5rem;
+            
+            border-radius: 3px;
+            color: white;
+
+            font-family: $font-family-display;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-align: center;
+            text-transform: uppercase;
+
+            > span:not(:last-child) {
+                margin-right: .5rem;
+            }
+        }
+
+        &__success {
+            background: linear-gradient(180deg, lighten($sw-success, 6%), $sw-success);
+        }
+
+        &__fail {
+            background: linear-gradient(180deg, lighten($sw-fail, 6%), $sw-fail);
+        }
+
+        &__row {
+            display: grid;
+                grid-template-columns: .75fr 1fr;
+                gap: .25rem;
+
+            &--number {
+                grid-template-columns: 1fr 3rem;
+            }
+
+            &--full {
+                @extend .sheet-sw-roll__row;
+                grid-template-columns: 1fr;
+
+                grid-column: 1 / -1;
+            }
+        }
+
+        &__label {
+            color: $sw-steel;
+
+            font-family: $font-family-display;
+            font-size: .8em;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-align: left;
+            text-transform: uppercase;
+        }
+
+        &__value {
+            text-align: center;
+
+            .inlinerollresult {
+                font-weight: normal;
+            }
+        }
+
+        &_sl {
+            font-size: 0.9em;
+        }
+
+        &__text {
+            max-height: 10em;
+            overflow: hidden auto;
+            padding: .25rem;
+            scrollbar-width: thin;
+        }
+    }
+}

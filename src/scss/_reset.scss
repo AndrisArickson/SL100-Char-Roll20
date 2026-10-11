@@ -1,0 +1,107 @@
+// General Reset
+//
+// Neutralises Roll20's default form styling inside the sheet. Values are
+// explicit rather than `unset`, and `display` is never touched here, so the
+// show/hide rules in control/ always win regardless of selector weight.
+
+.charsheet .sheet-sw-wrapper {
+
+    position: relative;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        line-height: 1.2;
+    }
+
+    input,
+    input[type=number],
+    textarea,
+    select,
+    button,
+    button[type="roll"] {
+        width: 100%;
+    }
+
+    p,
+    input,
+    input[type=number],
+    textarea,
+    select,
+    button,
+    button[type="roll"],
+    label {
+        min-width: 0;
+
+        color: inherit;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        text-align: inherit;
+        line-height: inherit;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        width: auto;
+    }
+
+    button {
+        padding: 0;
+    }
+
+    button[type="roll"] {
+        &:before {
+            display: none;
+        }
+    }
+
+    input[disabled],
+    select[disabled],
+    textarea[disabled],
+    input[readonly],
+    select[readonly],
+    textarea[readonly] {
+        background-color: transparent;
+        border-color: transparent;
+    }
+}
+
+// Charsheet Reset
+
+.charsheet {
+
+    * {
+        font-size: 1em;
+        box-sizing: border-box;
+        font-family: inherit;
+        min-width: 0;
+    }
+
+    fieldset {
+        background: transparent;
+    }
+
+    span {
+        word-break: break-word;
+    }
+}
+
+//Firefox
+
+input[type=number] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+}

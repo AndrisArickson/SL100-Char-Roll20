@@ -1,0 +1,52 @@
+.sheet-sw-wrapper .sheet-sw-navigation.sheet-sw-panel {
+    background: linear-gradient(180deg, $sw-frame-light, $sw-frame);
+    border-color: #0a0d12;
+    color: #dfe7ef;
+}
+
+.sheet-sw-navigation {
+
+    &__item {
+     
+        input[type="checkbox"],
+        input[type="radio"] {
+
+            &:checked + span {
+                border-color: $sw-accent;
+                background: $sw-accent;
+                color: $sw-ink;
+                box-shadow: 0 0 8px rgba($sw-accent, .45);
+            }
+        }
+
+        span {
+            display: inline-block;
+            padding: 3px 10px;
+
+            border: 1px solid rgba(#dfe7ef, .35);
+                border-radius: 2px;
+
+            font-family: $font-family-display;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            line-height: 1.5;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        &:hover span {
+            border-color: $sw-accent;
+        }
+
+        &--settings {
+            @extend .sheet-sw-navigation__item;
+
+            span {
+                font-family: "Pictos";
+                letter-spacing: 0;
+                text-transform: lowercase;
+            }
+        }
+    }
+}

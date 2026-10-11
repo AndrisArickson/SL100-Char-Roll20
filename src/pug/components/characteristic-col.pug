@@ -1,0 +1,21 @@
+mixin characteristic-col(characteristic)
+    -
+        const attr = characteristic.name.toLowerCase().replace(/ /g,"_");
+
+    .sw-chartable__cell--head
+        button(data-i18n=characteristic.abbreviation, name=`roll_${attr}`, type="roll", value=rolls.characteristic[attr])
+    .sw-chartable__cell
+        input(name=`attr_${attr}_initial`, type="number", value="0")
+    .sw-chartable__cell
+        input(name=`attr_${attr}_advances`, type="hidden", value="0")
+        span.display(name=`attr_${attr}_advances`)
+    .sw-chartable__cell
+        input(name=`attr_${attr}_modifier`, type="hidden", value="0")
+        span.display(name=`attr_${attr}_modifier`)
+    .sw-chartable__cell.sw-chartable__cell--highlight
+        input(name=`attr_${attr}`, type="hidden", value="0")
+        span.display(name=`attr_${attr}`)
+    .sw-chartable__cell
+        input(name=`attr_${attr}_bonusmod`, type="hidden", value="0")
+        input(name=`attr_${attr}_bonus`, type="hidden", value="0")
+        span.display(name=`attr_${attr}_bonus`)

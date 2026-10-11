@@ -1,0 +1,60 @@
+mixin species
+    input(name=`attr_species_settings`, type="hidden", value=1)
+
+    .sw-speciestable__row
+
+        .sw-speciestable__cell--settingstoggle
+            +display-toggle(`species_settings`, true)
+
+        .sw-speciestable__cell--title
+            span(name=`attr_species`)
+
+        .sw-speciestable__row.sw-settings.control__hide--species_settings
+
+            .sw-settings__row--span
+                
+                .sw-settings__label(data-i18n=`Name`)
+                
+                .sw-settings__wrapper
+                    input.sheet-control__custom(name=`attr_species`, type="hidden")
+                    
+                    select.sw-settings__select.sheet-control__custom(name=`attr_species`)
+                        each option in character[1].options
+                            option(data-i18n=option, value=option)
+                        option(data-i18n="Custom", value="Custom")
+                    
+                    .sw-header__customwrapper.sheet-control__custom
+                        input.sw-header__input(name=`attr_species_custom`, type="text")
+
+                        button.sw-header__hidecustom(name=`act_remove_custom_species`, type="action") ╳
+
+            .sw-settings__col
+                input(name="attr_species_disable3", type="hidden", value="0")
+                input(name="attr_species_disable5", type="hidden", value="0")
+                    
+                .sw-settings__row--speciesskill
+                    .sw-settings__header(data-i18n="Skill Name")
+                    .sw-settings__header +3
+                    .sw-settings__header +5
+                    .sw-settings__header x
+                    
+                each skill in [1,2,3,4,5,6,7,8,9,10,11,12]
+
+                        .sw-settings__row--speciesskill
+                            input.sw-settings__input(data-i18n-placeholder=`Skill ${skill}`, name=`attr_species_skill_${skill}_name`, type="text")
+                            input(name=`attr_species_skill_${skill}_advances`, type="radio", value=3)
+                            input(name=`attr_species_skill_${skill}_advances`, type="radio", value=5)
+                            button.sw-header__hidecustom(name=`act_remove_skill_${skill}`, type="action") ╳
+
+            .sw-settings__col
+
+                .sw-settings__row--talent
+                    .sw-settings__header(data-i18n="Talent Name")
+                    .sw-settings__header(data-i18n="Taken")
+
+                each talent in [1,2,3,4,5,6,7,8,9,10]
+
+                    .sw-settings__row--talent
+                    
+                        input.sw-settings__input(data-i18n-placeholder=`Talent ${talent}`, name=`attr_species_talent_${talent}_name`, type="text")
+                        input.sw-settings__input(name=`attr_species_talent_${talent}_advances`, type="checkbox", value="1")

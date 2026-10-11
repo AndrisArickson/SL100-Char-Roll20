@@ -1,0 +1,74 @@
+mixin weapon-row 
+    input(name=`attr_weapon_settings`, type="hidden", value=1)
+    .sw-weapontable__row
+
+        .sw-weapontable__cell--settingstoggle
+            +display-toggle(`weapon_settings`, true)
+
+        .sw-weapontable__cell
+            button(name=`roll_${attr}`, type="roll", value=rolls.attack)
+                span(name=`attr_weapon_name`)
+
+        .sw-weapontable__cell
+            span(name=`attr_weapon_group`)
+
+        .sw-weapontable__cell
+            span(name=`attr_weapon_target_display`)
+            input.sw-settings__input(name=`attr_weapon_target_display`, type="hidden", value="0")
+            input.sw-settings__input(name=`attr_weapon_target`, type="hidden", value="@{basic}")
+
+        .sw-weapontable__cell
+            span(name=`attr_weapon_range`)
+
+        .sw-weapontable__cell
+            span(name=`attr_weapon_damage_flat`)
+            input(name=`attr_weapon_damage_bonus`, type="hidden")
+            span(data-i18n="+SB")
+
+        .sw-weapontable__cell--last
+            span(name=`attr_weapon_qualities`)
+            
+        .sw-weapontable__row.sw-settings.control__hide--weapon_settings
+        
+            .sw-settings__row--span
+                .sw-settings__label(data-i18n=`Name`) 
+                input.sw-settings__input(name=`attr_weapon_name`, type="text")
+        
+            .sw-settings__row
+                .sw-settings__label(data-i18n=`Group`) 
+                select.sw-settings__input(name=`attr_weapon_group`)
+                    - 
+                        const all_specs = [...findSkill("Melee").specialisations, ...findSkill("Ranged").specialisations]
+                    each specialisation in all_specs
+                        option(value=specialisation, data-i18n=specialisation)
+        
+            .sw-settings__row
+                .sw-settings__label(data-i18n=`Range`) 
+                input.sw-settings__input(name=`attr_weapon_range`, type="text")
+        
+            .sw-settings__row
+                .sw-settings__label(data-i18n=`Damage`) 
+                .sw-settings__split--2
+                    input.sw-settings__input(name=`attr_weapon_damage_flat`, type="text")
+                    input.sw-settings__input(name=`attr_weapon_damage_bonus`, type="checkbox")
+                    input.sw-settings__input(name=`attr_weapon_damage`, type="hidden")
+        
+            .sw-settings__row
+                .sw-settings__label(data-i18n=`Modifiers`) 
+                input.sw-settings__input(name=`attr_weapon_mods`, type="text")
+        
+            .sw-settings__row--span
+                .sw-settings__label(data-i18n=`Qualities`) 
+                input.sw-settings__input(name=`attr_weapon_qualities`, type="text")
+        
+            .sw-settings__row
+                .sw-settings__label(data-i18n=`Enc.`) 
+                input.sw-settings__input(name=`attr_weapon_enc`, type="number")
+        
+            .sw-settings__row--span
+                .sw-settings__label(data-i18n=`Notes`) 
+                input.sw-settings__input(name=`attr_weapon_notes`, type="text")
+                            
+            .sw-settings__row--span
+                .sw-settings__label--full(data-i18n=`Description`) 
+                textarea.sw-settings__textarea(name=`attr_weapon_description`)

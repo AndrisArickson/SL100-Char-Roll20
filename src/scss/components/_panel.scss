@@ -1,0 +1,11 @@
+.sheet-sw-panel {
+    position: relative;
+    padding: 2px;
+
+    h1.sheet-sw-panel__header {
+        font-size: $h1-size;
+        font-weight: normal; 
+        text-align: center;
+        text-transform: uppercase;
+    }
+}

@@ -1,0 +1,13 @@
+mixin npc-additional-skill()    
+    .sw-npcsettings__skill
+        input.sw-npcsettings__input(data-i18n-placeholder="Skill Name (Specialisation)", name=`attr_npc_skillname`, type="text")
+        input.sw-npcsettings__input(name=`attr_npc_skill`, type="number")
+
+mixin npc-additional-skill-display() 
+        button.sw-npcskill(type="roll", value=rolls.npc_repeating_skill)
+            input(name=`attr_npc_skill`, type="hidden")
+            input(name=`attr_npc_skillname`, type="hidden")
+            .sw-npcskill__title
+                span(name=`attr_npc_skillname`)
+            .sw-npcskill__value
+                span(name=`attr_npc_skill`)

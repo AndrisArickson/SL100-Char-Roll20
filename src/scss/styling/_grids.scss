@@ -1,0 +1,160 @@
+%grid-row {
+    border-bottom: $grid-border;
+}
+
+%grid-row--inverted {    
+    border-bottom: 0;
+    border-top: $grid-border;
+}
+
+%grid-row-head {
+    @extend %grid-row;
+
+    color: $sw-steel;
+
+    font-family: $font-family-display;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+%grid-cell {
+    border-right: $grid-border;
+
+    input[type="number"] {
+        height: 100%;
+    }
+
+    > span[name*="attr"] {
+        font-family: $font-family-alt;
+        font-size: 13px;
+    }
+}
+
+%grid-cell--last {
+    @extend %grid-cell;
+    border-right: 0;
+}
+
+%grid-cell--highlight {
+    color: $sw-holo-dark;
+    font-weight: bold;
+}
+
+%grid-cell--description {
+    border-top: $grid-border-description;
+
+    font-size: 0.95em;
+    font-style: italic;
+}
+    
+.sheet-sw-field,
+.sheet-sw-textarea {
+    @extend %grid-row;
+}
+
+.sheet-sw-field__header,
+.sheet-sw-field__input,
+.sheet-sw-textarea__header,
+.sheet-sw-textarea__input {
+    @extend %grid-cell;
+}
+
+.sheet-sw-chartable__cell {
+    border-left: $grid-border;
+    border-top: $grid-border;
+
+    font-family: $font-family-alt;
+
+    &--left {
+        font-weight: bold;
+        border-top: $grid-border;    
+    }
+
+    &--head {
+        font-weight: bold;
+        border-left: $grid-border;    
+    }
+
+    &--highlight {
+        font-weight: bold;
+    }
+}
+
+@each $table in "skill", "talent", "condition", "psychology", "corruption", "trapping", "armour", "critical", "weapon", "spell", "career", "experience", "wounds" {
+
+    .sheet-sw-#{$table}table__row--head {
+        @extend %grid-row-head;
+    }
+
+    .sheet-sw-#{$table}table__row {
+        @extend %grid-row;
+    }
+
+    .sheet-sw-#{$table}table__cell {
+        @extend %grid-cell;
+    }
+
+    .sheet-sw-#{$table}table__cell--description {
+        @extend %grid-cell--description;
+    }
+
+    .sheet-sw-#{$table}table__cell--last {
+        @extend %grid-cell--last;
+    }
+
+    .sheet-sw-#{$table}table__cell--highlight {
+        @extend %grid-cell--highlight;
+    }
+}
+
+@each $table in "npccharacteristic" {
+
+    .sheet-sw-#{$table}__cell--head {
+        @extend %grid-row-head;
+    }
+
+    .sheet-sw-#{$table}__cell {
+        @extend %grid-cell;
+    }
+
+    .sheet-sw-#{$table}__cell--description {
+        @extend %grid-cell--description;
+    }
+
+    .sheet-sw-#{$table}__col:last-child .sheet-sw-#{$table}__cell {
+        @extend %grid-cell--last;
+    }
+
+    .sheet-sw-#{$table}__cell--highlight {
+        @extend %grid-cell--highlight;
+    }
+}
+
+.sheet-sw-skilltable__row--grouped,
+.sheet-sw-skilltable__row--specialisation {
+    background: rgba($sw-holo, 0.09);
+}
+
+.sheet-sw-skilltable__cell--grouped {
+    @extend %grid-cell--last;
+    padding-top: 1px;
+
+    color: $sw-holo-dark;
+
+    font-family: $font-family-display;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-align: center !important;
+    text-indent: -1.5rem;
+    text-transform: uppercase;
+}
+
+.sheet-sw-armour__display {
+    font-family: $font-family-alt;
+    font-size: 14pt;
+    font-weight: bold;
+    line-height: 3.5rem;
+}

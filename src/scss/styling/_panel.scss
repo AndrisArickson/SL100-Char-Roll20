@@ -1,0 +1,81 @@
+.sheet-sw-wrapper .sheet-sw-panel {
+    background: linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel 40%, $sw-panel-shade);
+
+    border: 1px solid #0a0d12;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.7);
+    
+    h1 {
+        padding: 3px 0 2px;
+        margin-bottom: 1px;
+
+        border-bottom: 2px solid $sw-accent;
+        background: linear-gradient(90deg, $sw-frame, $sw-frame-light 50%, $sw-frame);
+        color: $sw-accent;
+
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .16em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: center;
+    }
+}
+
+.sheet-sw-armour {
+    
+    &__wrapper {
+        // Targeting reticle behind the hit-location blocks.
+        background:
+            radial-gradient(circle at 50% 55%, transparent 0 58px, rgba($sw-holo, .25) 59px 60px, transparent 61px 100px, rgba($sw-holo, .18) 101px 102px, transparent 103px),
+            linear-gradient(90deg, transparent calc(50% - .5px), rgba($sw-holo, .18) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px)),
+            linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel-shade);
+    }
+
+    &__display {
+        border: 1px solid $sw-steel;
+        border-radius: 3px;
+        background: rgba(255,255,255,.75);
+        color: $sw-holo-dark;
+    }
+}
+
+.sheet-sw-wrapper {
+
+    .sheet-sw-controls {
+
+        button[type="roll"],
+        button[type="action"] {
+            padding: 3px 0;
+
+            border: 1px solid $sw-steel;
+            border-radius: 3px;
+            background: linear-gradient(180deg, $sw-frame-light, $sw-frame);
+            color: #e6edf4;
+
+            font-family: $font-family-display;
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-align: center;
+            text-transform: uppercase;
+
+            &:hover {
+                color: $sw-accent;
+            }
+        }
+    }
+
+    .sheet-sw-advantage {
+        font-size: 16pt;
+
+        &__wrapper {
+            font-size: 16pt;
+            text-align: center; 
+    
+            input[type="number"].sheet-sw-advantage__input {
+                border: $grid-border;
+                font-size: 16pt;
+            }
+        }
+    }
+}

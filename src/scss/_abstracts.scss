@@ -6,7 +6,7 @@ $margin-large: 1rem;
 // Colours are plain hex on purpose: Sass colour functions (lighten etc.)
 // emit percentage rgb()/hsl() values that Roll20's CSS sanitizer may reject.
 //
-// SW100 palette: a gunmetal console frame, pale datapad panels, hologram-blue
+// SL100 palette: a gunmetal console frame, pale datapad panels, hologram-blue
 // inputs and a signal-yellow accent.
 $sw-frame: #151a21;
 $sw-frame-light: #262e39;

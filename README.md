@@ -1,6 +1,6 @@
-# SW100 Character Sheet for Roll20
+# Star Legends – Galactic Wars (SL100) Character Sheet for Roll20
 
-A Roll20 character sheet for **SW100**, a Star Wars inspired d100 roleplaying game.
+A Roll20 character sheet for **Star Legends – Galactic Wars** (**SL100**), a space-opera d100 roleplaying game.
 
 The layout, panel structure and sheetworker engine come from the
 [Warhammer Fantasy Roleplay 4e Official sheet](https://github.com/Roll20/roll20-character-sheets/tree/master/Warhammer%20Fantasy%20Roleplay%204e%20Official).
@@ -25,9 +25,9 @@ Rolls use the d100 roll-under engine from the WFRP sheet: difficulty query, bonu
 Advantage, Success Levels, automatic success and failure, and hit locations. All of
 this goes to a themed roll template.
 
-### How WFRP 4e maps to SW100
+### How WFRP 4e maps to SL100
 
-| WFRP 4e | SW100 | Attribute (for macros) |
+| WFRP 4e | SL100 | Attribute (for macros) |
 | --- | --- | --- |
 | Fate / Fortune | Destiny / Force Points | `fate` / `fortune` |
 | Corruption & Mutations | Dark Side Points & taints | `corruption_points`, `repeating_corruption` |
@@ -57,11 +57,11 @@ talents. These presets are placeholders. Edit `species_presets` in
 `src/js/sheetworkers.js` to match your rules.
 
 The WFRP sheet loaded species and talent data from the WFRP compendium.
-SW100 has no compendium, so that drag-and-drop code has been removed.
+SL100 has no compendium, so that drag-and-drop code has been removed.
 
 ## Building
 
-The sheet is written in Pug and SCSS and compiled to `sw100.html` and `sw100.css`.
+The sheet is written in Pug and SCSS and compiled to `sl100.html` and `sl100.css`.
 Upload those two files to Roll20, along with `translation.json`.
 
 ```bash
@@ -91,16 +91,16 @@ Custom sheets need a Pro subscription on the game creator's account.
 1. Run `npm run build`. Upload the **generated** files, not anything in `src/`.
 2. In the game, open **Settings → Game Settings**, set **Character Sheet Template**
    to **Custom**, and paste:
-   - the whole of `sw100.html` into the **HTML Layout** tab
-   - the whole of `sw100.css` into the **CSS Styling** tab
+   - the whole of `sl100.html` into the **HTML Layout** tab
+   - the whole of `sl100.css` into the **CSS Styling** tab
    - the whole of `translation.json` into the **Translation** tab
 3. Click **Save Changes**, then close and reopen any open character sheets.
 
 The build writes the `sheet-` class prefix and fallback label text into the
 HTML, so the sheet styles correctly whether **Legacy Sanitization** is on or
-off. If it still looks unstyled, check that the CSS tab contains `sw100.css`
+off. If it still looks unstyled, check that the CSS tab contains `sl100.css`
 starting with `@import url("https://fonts.googleapis.com/...")`, and that the
-HTML tab contains `sw100.html` (its first line is a hidden `attr_sheet_version`
+HTML tab contains `sl100.html` (its first line is a hidden `attr_sheet_version`
 input).
 
 ### Previewing without Roll20
@@ -122,7 +122,7 @@ then run `npm run build`. Variables left as `null` keep the CSS look.
 
 | Variable | Where it shows | Suggested size |
 | --- | --- | --- |
-| `$sw-art-logo` | Title image; replaces the "SW100" text | 600×150 transparent PNG |
+| `$sw-art-logo` | Title image; replaces the "Star Legends / Galactic Wars" text | 600×150 transparent PNG |
 | `$sw-art-header-background` | Backdrop behind the title | 840×110 |
 | `$sw-art-frame-background` | Texture for the dark frame | 256×256, tileable |
 | `$sw-art-panel-background` | Texture for the light panels (keep it pale) | 512×512, tileable |
@@ -138,7 +138,7 @@ URL: an image uploaded to your Roll20 art library, or a raw GitHub link.
 ## Source layout
 
 ```
-src/pug/sw100.pug          entry point (hidden attributes, layout includes, roll templates, workers)
+src/pug/sl100.pug          entry point (hidden attributes, layout includes, roll templates, workers)
 src/pug/abstracts.pug      game data: header fields, characteristics, skills, wealth
 src/pug/layout/            pc.pug, npc.pug, settings.pug
 src/pug/components/        mixins for skills, characteristic columns and repeating rows
@@ -150,10 +150,17 @@ src/js/sheetworkers.js     calculations: characteristics, skills, careers, XP, a
 scripts/                   build check and preview tooling
 ```
 
+### Internal names
+
+CSS classes (`sw-…`), the roll template name (`sw`) and the sheet-worker module
+(`swModule`) keep their original `sw` prefix. Players never see these names, and
+the attribute names that store character data are unchanged, so existing
+characters keep all their values.
+
 ## Licence
 
 The original material in this repository is released under CC0 (see `LICENSE`).
 The code adapted from the Roll20 WFRP 4e Official sheet is MIT-licensed (see
-`THIRD_PARTY_LICENSE.md`). Star Wars is a trademark of Lucasfilm. This is an
-unofficial fan project and is not affiliated with or endorsed by Lucasfilm,
-Cubicle 7 or Games Workshop.
+`THIRD_PARTY_LICENSE.md`). The sheet's layout derives from a Warhammer Fantasy
+Roleplay sheet; this project is not affiliated with or endorsed by Cubicle 7 or
+Games Workshop.

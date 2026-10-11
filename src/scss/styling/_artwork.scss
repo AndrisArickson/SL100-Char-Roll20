@@ -18,6 +18,7 @@
 
 @if $sw-art-logo {
     .sheet-sw-header__logo-title,
+    .sheet-sw-header__logo-tagline,
     .sheet-sw-header__logo-subtitle {
         visibility: hidden;
     }

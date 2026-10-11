@@ -1,4 +1,4 @@
-// Consistency checks for the SW100 sheet. Run after a build: `npm run check`.
+// Consistency checks for the SL100 sheet. Run after a build: `npm run check`.
 //
 // The skill lists live in three places (Pug data, sheetworkers, SCSS); Roll20
 // also needs a translation entry for every data-i18n key or the label renders
@@ -79,7 +79,7 @@ sameSet("specialisations (pug vs scss)", pugSpecialisations, scssList("specialis
 
 // Translations: every data-i18n key used in the HTML (and every key sheet.json
 // names for its user options) needs an entry.
-const html = read("sw100.html");
+const html = read("sl100.html");
 const translation = JSON.parse(read("translation.json"));
 const used = new Set();
 for (const match of html.matchAll(/data-i18n(?:-placeholder|-title)?="([^"]*)"/g)) {
@@ -107,24 +107,24 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     }
     const prefixedRepeating = body.match(/class="[^"]*sheet-repeating_/);
     if (prefixedRepeating) errors.push("a repeating_ fieldset class was given the sheet- prefix; Roll20 will not treat it as a repeating section");
-    if (bare.size) errors.push(`sw100.html has classes without the sheet- prefix (run npm run build): ${[...bare].slice(0, 10).join(", ")}`);
+    if (bare.size) errors.push(`sl100.html has classes without the sheet- prefix (run npm run build): ${[...bare].slice(0, 10).join(", ")}`);
 }
 
 // Roll20's CSS sanitizer can discard the whole stylesheet over unusual syntax
 // in url(); keep ';' and '@' out of them (e.g. Google Fonts css2 URLs).
 {
-    const css = read("sw100.css");
+    const css = read("sl100.css");
     for (const match of css.matchAll(/url\(\s*["']?([^"')]*)/g)) {
-        if (/[;@]/.test(match[1])) errors.push(`sw100.css has a url() containing ';' or '@', which Roll20 may reject: ${match[1]}`);
+        if (/[;@]/.test(match[1])) errors.push(`sl100.css has a url() containing ';' or '@', which Roll20 may reject: ${match[1]}`);
     }
     // Modern Sass colour maths emits rgb(12.3%, ...) / hsl(...); stick to hex and rgba(r, g, b, a).
     const modernColour = css.match(/rgba?\([^)]*%[^)]*\)|hsla?\([^)]*\)/);
-    if (modernColour) errors.push(`sw100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
+    if (modernColour) errors.push(`sl100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
 }
 
 // The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.
-const css = read("sw100.css");
-for (const [name, text] of [["sw100.css", css], ["sw100.html", html]]) {
+const css = read("sl100.css");
+for (const [name, text] of [["sl100.css", css], ["sl100.html", html]]) {
     const hits = text.match(/files\.d20\.io\/images\/[^"')\s]*/g);
     if (hits) errors.push(`${name} still references Roll20-hosted images: ${[...new Set(hits)].join(", ")}`);
 }

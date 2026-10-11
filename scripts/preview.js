@@ -26,10 +26,10 @@ const root = path.join(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
 const sample = {
-    character_name: "Kessa Varn", species: "Twi'lek", class: "Scoundrel", career: "Smuggler",
+    character_name: "Kessa Varn", species: "Human", class: "Scoundrel", career: "Smuggler",
     career_level: "Freighter Captain", career_path: "Spacer ⟶ Smuggler", status: "Silver 3",
-    age: "31", height: "1.72m", homeworld: "Ryloth", eyes: "Amber",
-    fate: 2, fortune: 2, resilience: 1, resolve: 1, motivation: "Never owe the Hutts again",
+    age: "31", height: "1.72m", homeworld: "Corvane Prime", eyes: "Amber",
+    fate: 2, fortune: 2, resilience: 1, resolve: 1, motivation: "Never owe the syndicate again",
     movement: 4, walk: 8, run: 16, current_xp: 340, spent_xp: 1260, total_xp: 1600,
     wounds: 11, wounds_max: 13, advantage: 2, encumbrance: 6, encumbrance_max: 7,
     credits: 2450, bank: 800, debt: 12000, corruption_points: 1, sin: 0,
@@ -61,7 +61,7 @@ for (const [char, [initial, adv]] of Object.entries(chars)) {
 const rows = {
     talent: [{ talent_name: "Fast Talker", talent_ranks: 1 }, { talent_name: "Sure Shot", talent_ranks: 2 }, { talent_name: "Lucky", talent_ranks: 1 }],
     conditions: [{ condition_name: "Fatigued", condition_ranks: 1 }],
-    psychology: [{ psychology_name: "Hatred (Hutt Cartel)" }],
+    psychology: [{ psychology_name: "Hatred (Syndicate)" }],
     corruption: [{ corruption_name: "Flash of Anger" }],
     trappings: [
         { trappings_name: "Comlink", trappings_amount: 1, trappings_enc: 0 },
@@ -70,18 +70,18 @@ const rows = {
     ],
     armour: [{ armour_name: "Padded Flight Suit", armour_locations_display: "Arms, Body, Legs", armour_points: 1, armour_qualities: "Flexible" }],
     weapons: [
-        { weapon_name: "DL-44 Heavy Blaster Pistol", weapon_group: "Pistol", weapon_target_display: 54, weapon_range: "30", weapon_damage_flat: "+6", weapon_qualities: "Stun, Penetrating" },
+        { weapon_name: "Heavy Blaster Pistol", weapon_group: "Pistol", weapon_target_display: 54, weapon_range: "30", weapon_damage_flat: "+6", weapon_qualities: "Stun, Penetrating" },
         { weapon_name: "Vibroknife", weapon_group: "Vibroweapon", weapon_target_display: 36, weapon_range: "Very Short", weapon_damage_flat: "+3", weapon_qualities: "Fast" },
     ],
     criticals: [{ critical_name: "Blaster Burn", critical_location: "Left Arm", critical_wounds: 3 }],
     spells: [{ spell_name: "Sense Danger", spell_lore: "Universal", spell_display: 37, spell_cn: 3, spell_range: "Self", spell_target: "Self", spell_duration: "1 hour" }],
     careers: [{ career_name: "Smuggler", career_level: "Freighter Captain", career_status: "Silver 3" }],
-    experience: [{ experience_desc: "Escaped the Imperial blockade", experience_amount: 150 }],
+    experience: [{ experience_desc: "Escaped the orbital blockade", experience_amount: 150 }],
     experiencespent: [{ experience_desc: "Ranged (Pistol) +5", experience_amount: 50 }],
-    knowledge: [{ specialisation_name: "Outer Rim", specialisation: 41 }],
+    knowledge: [{ specialisation_name: "Frontier Worlds", specialisation: 41 }],
     pilot: [{ specialisation_name: "Freighter", specialisation: 60 }],
-    language: [{ specialisation_name: "Ryl", specialisation: 41 }],
-    attacks: [{ attack_name: "E-11 Blaster Rifle", attack_attacks: 1, attack_target: 40, attack_range: "100", attack_damage: "+7" }],
+    language: [{ specialisation_name: "Trade Cant", specialisation: 41 }],
+    attacks: [{ attack_name: "Blaster Rifle", attack_attacks: 1, attack_target: 40, attack_range: "100", attack_damage: "+7" }],
     "npc-traits": [{ trait_name: "Armour 3" }],
 };
 
@@ -133,8 +133,8 @@ const renderTemplate = (template, values) => {
 
 const buildPage = (state) => {
     const translation = JSON.parse(read("translation.json"));
-    let html = read("sw100.html");
-    const css = read("sw100.css");
+    let html = read("sl100.html");
+    const css = read("sl100.css");
 
     // Strip sheet workers and roll templates; they are not rendered in the sheet body.
     html = html.replace(/<script type="text\/worker">[\s\S]*?<\/script>/, "");
@@ -253,7 +253,7 @@ const main = async () => {
         const page = await browser.newPage({ viewport: { width: 900, height: 1200 }, deviceScaleFactor: 1 });
         page.on("pageerror", error => console.error(`page error: ${error.message}`));
         // Loaded from a file (not setContent) so local art paths like "art/logo.png" resolve.
-        const pageFile = path.join(os.tmpdir(), `sw100-preview-${process.pid}.html`);
+        const pageFile = path.join(os.tmpdir(), `sl100-preview-${process.pid}.html`);
         fs.writeFileSync(pageFile, buildPage(state));
         await page.goto(pathToFileURL(pageFile).href, { waitUntil: "networkidle" }).catch(() => {});
         fs.unlinkSync(pageFile);

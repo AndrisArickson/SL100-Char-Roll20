@@ -1,4 +1,4 @@
-// Post-processes the compiled sw100.html so it works under either Roll20
+// Post-processes the compiled sl100.html so it works under either Roll20
 // sanitizer:
 //
 // 1. Class prefixes. The CSS targets `.sheet-*` classes. Roll20's legacy
@@ -19,7 +19,7 @@ const fs = require("fs");
 const path = require("path");
 
 const root = path.join(__dirname, "..");
-const htmlPath = path.join(root, "sw100.html");
+const htmlPath = path.join(root, "sl100.html");
 const translation = JSON.parse(fs.readFileSync(path.join(root, "translation.json"), "utf8"));
 
 const escapeHtml = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

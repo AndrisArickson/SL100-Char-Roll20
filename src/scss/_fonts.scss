@@ -11,7 +11,12 @@ $font-family-alt: "Exo 2", "Segoe UI", Arial, sans-serif;
 $font-family-display: "Orbitron", "Exo 2", Arial, sans-serif;
 // Game title in the header. Swap this (and the Google Fonts import in
 // sl100.scss) to change the title face without touching the rest.
-$font-family-title: "Krona One", "Orbitron", Arial, sans-serif;
+$font-family-title: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
+// Bruno Ace SC ships one weight; the header title is made heavier with
+// layered strokes instead. Stroke widths are centred on the letter edge, so
+// half of each width shows outside the glyph.
+$title-thicken: 6px;   // dark stroke on the front copy: letters gain 3px per side
+$title-edge: 4px;      // extra yellow stroke on the back copy: a 2px yellow rim
 $font-family-pictos: "Pictos";
 
 .sheet-sl-wrapper .sheet-sl-pc,

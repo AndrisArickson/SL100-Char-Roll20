@@ -12,29 +12,47 @@
         border-bottom: 3px solid $sl-accent;
     }
 
-    // Outlined title: dark fill with a yellow outline. The outline is drawn
-    // twice: -webkit-text-stroke gives the clean edge, and the ring of 1px
-    // text-shadows keeps an outline visible if a sanitizer drops the stroke.
+    // Heavy outlined title. Two copies of the text sit in the same grid cell:
+    // the back copy has a wide yellow stroke, the front copy a narrower dark
+    // stroke that thickens the letters. The result is a bolder letterform
+    // with a black interior and a clean yellow rim. If a sanitizer drops
+    // -webkit-text-stroke, the text-shadow ring on the back copy still gives
+    // a yellow edge around the dark text.
     &__logo-title {
-        color: $sl-frame;
-        -webkit-text-stroke: 1.5px $sl-accent;
+        display: grid;
+            justify-items: center;
 
         font-family: $font-family-title;
-        font-size: 40px;
+        font-size: 38px;
         font-weight: 400;
-        letter-spacing: .06em;
-        line-height: 1.05;
+        letter-spacing: .08em;
+        line-height: 1.15;
         text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    &__logo-title-edge,
+    &__logo-title-fill {
+        grid-area: 1 / 1;
+    }
+
+    &__logo-title-edge {
+        color: $sl-accent;
+        -webkit-text-stroke: ($title-thicken + $title-edge) $sl-accent;
         text-shadow:
-            1px 0 0 $sl-accent,
-            -1px 0 0 $sl-accent,
-            0 1px 0 $sl-accent,
-            0 -1px 0 $sl-accent,
-            1px 1px 0 $sl-accent,
-            -1px -1px 0 $sl-accent,
-            1px -1px 0 $sl-accent,
-            -1px 1px 0 $sl-accent,
-            0 0 14px rgba($sl-accent, .45);
+            3px 0 0 $sl-accent,
+            -3px 0 0 $sl-accent,
+            0 3px 0 $sl-accent,
+            0 -3px 0 $sl-accent,
+            2px 2px 0 $sl-accent,
+            -2px -2px 0 $sl-accent,
+            2px -2px 0 $sl-accent,
+            -2px 2px 0 $sl-accent;
+    }
+
+    &__logo-title-fill {
+        color: $sl-frame;
+        -webkit-text-stroke: $title-thicken $sl-frame;
     }
 
     &__logo-tagline {

@@ -12,27 +12,40 @@
         border-bottom: 3px solid $sl-accent;
     }
 
+    // Outlined title: dark fill with a yellow outline. The outline is drawn
+    // twice: -webkit-text-stroke gives the clean edge, and the ring of 1px
+    // text-shadows keeps an outline visible if a sanitizer drops the stroke.
     &__logo-title {
-        color: $sl-accent;
+        color: $sl-frame;
+        -webkit-text-stroke: 1.5px $sl-accent;
 
         font-family: $font-family-title;
-        font-size: 38px;
+        font-size: 40px;
         font-weight: 400;
-        letter-spacing: .14em;
-        line-height: 1;
+        letter-spacing: .06em;
+        line-height: 1.05;
         text-transform: uppercase;
-        text-shadow: 0 0 12px rgba($sl-accent, .35);
+        text-shadow:
+            1px 0 0 $sl-accent,
+            -1px 0 0 $sl-accent,
+            0 1px 0 $sl-accent,
+            0 -1px 0 $sl-accent,
+            1px 1px 0 $sl-accent,
+            -1px -1px 0 $sl-accent,
+            1px -1px 0 $sl-accent,
+            -1px 1px 0 $sl-accent,
+            0 0 14px rgba($sl-accent, .45);
     }
 
     &__logo-tagline {
         margin-top: 4px;
 
-        color: #e6edf4;
+        color: $sl-accent;
 
         font-family: $font-family-title;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 400;
-        letter-spacing: .55em;
+        letter-spacing: .5em;
         line-height: 1;
         text-transform: uppercase;
     }

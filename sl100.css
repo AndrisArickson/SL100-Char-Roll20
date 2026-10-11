@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Orbitron:500,700,900|Exo+2:400,400i,600,700|Bruno+Ace+SC&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Orbitron:500,700,900|Exo+2:400,400i,600,700|Krona+One&display=swap");
 .charsheet .sheet-sl-wrapper {
   position: relative;
 }
@@ -1253,22 +1253,23 @@ button.sheet-pictos[type=action]:hover {
   border-bottom: 3px solid #f3c331;
 }
 .sheet-sl-header__logo-title {
-  color: #f3c331;
-  font-family: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
-  font-size: 38px;
+  color: #151a21;
+  -webkit-text-stroke: 1.5px #f3c331;
+  font-family: "Krona One", "Orbitron", Arial, sans-serif;
+  font-size: 40px;
   font-weight: 400;
-  letter-spacing: 0.14em;
-  line-height: 1;
+  letter-spacing: 0.06em;
+  line-height: 1.05;
   text-transform: uppercase;
-  text-shadow: 0 0 12px rgba(243, 195, 49, 0.35);
+  text-shadow: 1px 0 0 #f3c331, -1px 0 0 #f3c331, 0 1px 0 #f3c331, 0 -1px 0 #f3c331, 1px 1px 0 #f3c331, -1px -1px 0 #f3c331, 1px -1px 0 #f3c331, -1px 1px 0 #f3c331, 0 0 14px rgba(243, 195, 49, 0.45);
 }
 .sheet-sl-header__logo-tagline {
   margin-top: 4px;
-  color: #e6edf4;
-  font-family: "Bruno Ace SC", "Orbitron", Arial, sans-serif;
-  font-size: 15px;
+  color: #f3c331;
+  font-family: "Krona One", "Orbitron", Arial, sans-serif;
+  font-size: 13px;
   font-weight: 400;
-  letter-spacing: 0.55em;
+  letter-spacing: 0.5em;
   line-height: 1;
   text-transform: uppercase;
 }

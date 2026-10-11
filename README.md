@@ -5,7 +5,7 @@ A Roll20 character sheet for **Star Legends – Galactic Wars** (**SL100**), a s
 The layout, panel structure and sheetworker engine come from the
 [Warhammer Fantasy Roleplay 4e Official sheet](https://github.com/Roll20/roll20-character-sheets/tree/master/Warhammer%20Fantasy%20Roleplay%204e%20Official).
 The game content and visual theme have been replaced: it uses a gunmetal console frame,
-datapad panels, Bruno Ace SC for the title, Orbitron and Exo 2 type, and a signal-yellow accent. None of the
+datapad panels, Krona One (outlined) for the title, Orbitron and Exo 2 type, and a signal-yellow accent. None of the
 WFRP artwork is used.
 
 ![Sheet preview](preview.png)

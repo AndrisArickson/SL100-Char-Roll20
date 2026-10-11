@@ -1,0 +1,11 @@
+.charsheet .sheet-sw-wrapper {
+
+    button[type=roll] {
+        margin: 0;
+
+        &:hover {
+            color: red;
+        }
+    }
+
+}

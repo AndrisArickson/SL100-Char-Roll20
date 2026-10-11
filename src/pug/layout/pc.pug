@@ -1,0 +1,345 @@
+input(name="attr_setting_button_hide", type="hidden")
+
+.sw-header.sw-panel
+    .sw-header__logo
+    .sw-header__info
+        each field in character 
+            +character-field(field)
+
+.sw-navigation.sw-panel
+    .sw-navigation__roll
+        label.sw-navigation__item
+            input(name="attr_setting_whisper", type="checkbox", value="2")
+            span(data-i18n="Whisper to GM")
+    .sw-navigation__items
+        each item in navigation 
+            - 
+                const settings = (item === "settings") ? "sw-navigation__item--settings" : "sw-navigation__item";
+
+            label(class=settings)
+                input(name="attr_nav", type="radio", value=item)
+                if (item === "settings")
+                    span y
+                else 
+                    span(data-i18n=item)
+
+.sw-characteristics.sw-panel.page__main
+    input(name="attr_control_hide--characteristics", type="hidden")
+    h1.sw-panel__header(data-i18n="Characteristics")
+    .sw-chartable
+        .sw-chartable__cell--noborder &nbsp;
+        .sw-chartable__cell--left(data-i18n="Initial")
+        .sw-chartable__cell--left(data-i18n="Advances")
+        .sw-chartable__cell--left(data-i18n="Modifier")
+        .sw-chartable__cell--left(data-i18n="Current")
+        .sw-chartable__cell--left(data-i18n="Bonus")
+        each characteristic in characteristics
+            +characteristic-col(characteristic)
+
+.sw-resilience.sw-panel.page__main
+    h1.sw-panel__header(data-i18n="Resilience")
+    .sw-field__wrapper
+        +generic-field(resilience[0], "text", "2-1")
+        +generic-field(resilience[1], "text", "2-1")
+    +generic-field(resilience[2], "text", "1-2")
+
+.sw-fate.sw-panel.page__main
+    h1.sw-panel__header(data-i18n="Fate")
+    each field in fate 
+        +generic-field(field, "number", "1-1")
+
+.sw-movement.sw-panel.page__main
+    input(name="attr_movement_mod", type="hidden")
+    h1.sw-panel__header(data-i18n="Movement")
+    each field in movement 
+        +generic-field(field, "text", "1-2")
+
+.sw-experience.sw-panel.page__main
+    h1.sw-panel__header(data-i18n="Experience")
+    each field in experience 
+        +generic-display(field, "text", "1-1")
+
+.sw-skills.sw-panel.page__main
+    .sw-skilltable
+        h1.sw-panel__header(data-i18n="Basic Skills")
+        .sw-skilltable__row--head
+            .sw-skilltable__cell(data-i18n="Name")
+            .sw-skilltable__cell.sw-skilltable__cell--span2(data-i18n="Char.")
+            .sw-skilltable__cell(data-i18n="Adv.")
+            .sw-skilltable__cell--last(data-i18n="Total")
+        each skill in skills.basic
+            if skill.grouped === true
+                +skill-grouped(skill)
+            else 
+                +skill(skill)
+
+.sw-skills.sw-panel.page__main
+    .sw-skilltable
+        h1.sw-panel__header(data-i18n="Advanced Skills")
+        .sw-skilltable__row--head
+            .sw-skilltable__cell(data-i18n="Name")
+            .sw-skilltable__cell.sw-skilltable__cell--span2(data-i18n="Char.")
+            .sw-skilltable__cell(data-i18n="Adv.")
+            .sw-skilltable__cell--last(data-i18n="Total")
+        each skill in skills.advanced
+            if skill.grouped === true
+                +skill-grouped(skill)
+            else 
+                +skill(skill)
+
+.sw-talents.sw-panel.page__main
+    h1.sw-panel__header(data-i18n="Talents")
+    .sw-talenttable
+        .sw-talenttable__row--head
+            .sw-talenttable__cell(data-i18n="Name")
+            .sw-talenttable__cell(data-i18n="Ranks")
+            .sw-talenttable__cell--last
+        +repeating-section("talent","talent-row")
+
+.sw-conditions.sw-panel.page__main
+    h1.sw-panel__header(data-i18n="Conditions")
+    .sw-conditiontable
+        .sw-conditiontable__row--head
+            .sw-conditiontable__cell(data-i18n="Name")
+            .sw-conditiontable__cell(data-i18n="Ranks")
+            .sw-conditiontable__cell--last
+        +repeating-section("conditions","condition-row")
+
+.sw-psychology.sw-panel.page__main
+    h1.sw-panel__header(data-i18n="Psychology")
+    .sw-psychologytable
+        .sw-psychologytable__row--head
+            .sw-psychologytable__cell(data-i18n="Name")
+            .sw-psychologytable__cell--last
+        +repeating-section("psychology","psychology-row")
+
+.sw-corruption.sw-panel.page__main
+    h1.sw-panel__header(data-i18n="Corruption & Mutations")
+    +generic-field(corruption[0],"number","2-1")
+    .sw-corruptiontable
+        .sw-corruptiontable__row--head
+            .sw-corruptiontable__cell(data-i18n="Name")
+            .sw-corruptiontable__cell--last
+        +repeating-section("corruption","corruption-row")
+
+.sw-ambitions.sw-panel.page__main--grid
+    h1.sw-panel__header(data-i18n="Ambitions")
+    each ambition in ambitions 
+        +generic-textarea(ambition.name, "1-25", ambition.attr)
+
+.sw-party.sw-panel.page__main--grid
+    h1.sw-panel__header(data-i18n="Party")
+    each ambition in party
+        if (ambition.field === "text") 
+            +generic-field(ambition, "text", "1-25", ambition.attr)
+        else 
+            +generic-textarea(ambition.name, "1-25", ambition.attr)
+
+.sw-trappings.page__combat--flex
+    .sw-panel.sw-panel--trappings
+        h1.sw-panel__header(data-i18n="Trappings")
+        .sw-trappingtable
+            .sw-trappingtable__row--head
+                .sw-trappingtable__cell(data-i18n="Name")
+                .sw-trappingtable__cell #
+                .sw-trappingtable__cell--last(data-i18n="Enc.")
+            +repeating-section("trappings","trapping-row")
+
+    .sw-encwealth
+
+        .sw-panel
+            h1.sw-panel__header(data-i18n="Enc.")
+            input(name="attr_encumbrance_bonus", type="hidden", value=0)
+            +generic-display({name:"Current Enc.", attr:"encumbrance"}, "number", "2-1")
+            +generic-display({name:"Max Enc.", attr:"encumbrance_max"}, "number", "2-1")
+
+        .sw-panel
+            h1.sw-panel__header(data-i18n="Wealth")
+
+            .sw-field--grid1-1
+                span.sw-field__header--flex
+                    span(data-i18n="GC")
+                    button.pictos(name="act_gold_to_silver", type="action") }
+                input.sw-field__input(name=`attr_gold`, type="number", value="0")
+
+            .sw-field--grid1-1
+                span.sw-field__header--flex
+                    span(data-i18n="SS")
+                    button.pictos(name="act_silver_to_brass", type="action") }
+                    button.pictos(name="act_silver_to_gold", type="action") {
+                input.sw-field__input(name=`attr_silver`, type="number", value="0")
+
+            .sw-field--grid1-1
+                span.sw-field__header--flex
+                    span(data-i18n="BP")
+                    button.pictos(name="act_brass_to_silver", type="action") {
+                input.sw-field__input(name=`attr_brass`, type="number", value="0")
+
+.sw-armour__wrapper.sw-panel.page__combat
+    h1.sw-panel__header(data-i18n="Armour Points")
+
+    .sw-armour__row
+        .sw-armour__block--head
+            .sw-armour__roll 01-09
+            span.sw-armour__display(name="attr_armour_head") 
+            .sw-armour__location(data-i18n="Head")
+
+        .sw-armour__block--leftarm 
+            .sw-armour__roll 10-24
+            span.sw-armour__display(name="attr_armour_leftarm") 
+            .sw-armour__location(data-i18n="Left Arm")
+
+    .sw-armour__row
+        .sw-armour__block--rightarm
+            .sw-armour__roll 25-44
+            span.sw-armour__display(name="attr_armour_rightarm") 
+            .sw-armour__location(data-i18n="Right Arm")
+
+        .sw-armour__block--body
+            .sw-armour__roll 45-79
+            span.sw-armour__display(name="attr_armour_body") 
+            .sw-armour__location(data-i18n="Body")
+
+    .sw-armour__row
+        .sw-armour__block--rightleg
+            .sw-armour__roll 90-00
+            span.sw-armour__display(name="attr_armour_rightleg") 
+            .sw-armour__location(data-i18n="Right Leg")
+
+        .sw-armour__block--leftleg 
+            .sw-armour__roll 80-89
+            span.sw-armour__display(name="attr_armour_leftleg") 
+            .sw-armour__location(data-i18n="Left Leg")
+
+    .sw-armour__row
+        .sw-armour__block--shield
+            span.sw-armour__display(name="attr_armour_shield") 
+            .sw-armour__location(data-i18n="Shield")
+
+        .sw-armour__block--toughness 
+            .sw-armour__roll 
+            span.sw-armour__display(name="attr_toughness_bonus") 
+            .sw-armour__location(data-i18n="TB")
+
+.sw-controls.sw-panel.page__combat
+    h1.sw-panel__header(data-i18n="Controls")
+    .sw-controls__wrapper
+        .sw-controls__button
+            button(data-i18n="Initiative", type="roll", value=`&{template:sw} {{name=@{character_name}}} {{roll_name=Initiative}} @{roll_init}`)
+        .sw-controls__button
+            button(data-i18n="Dodge", type="roll", value=rolls.combat.dodge)
+        .sw-controls__button
+            button(data-i18n="Endurance", type="roll", value=rolls.combat.endurance)
+        .sw-controls__button
+            button(data-i18n="Intuition", type="roll", value=rolls.combat.intuition)
+        .sw-controls__button
+            button(data-i18n="Perception", type="roll", value=rolls.combat.perception)
+        .sw-controls__button
+            button(data-i18n="Cool", type="roll", value=rolls.combat.cool)
+        //.sw-controls__button
+            button(data-i18n="Critical Hit", type="roll", value=rolls.crit)
+        //.sw-controls__button
+            button(data-i18n="Fumble", type="roll", value=rolls.fumble)
+
+.sw-advantage.sw-panel.page__combat
+    h1.sw-panel__header(data-i18n="Advantage")
+    +advantage()
+
+.sw-wounds.sw-panel.page__combat
+    h1.sw-panel__header(data-i18n="Wounds")
+    input(name="attr_wounds_mod", type="hidden")
+    +generic-field({name:"Current Wounds", attr:"wounds"},"number","2-1")
+    +generic-display({name:"Max Wounds", attr:"wounds_max"}, "number", "2-1")
+        
+.sw-wounds.sw-panel.page__combat
+    h1.sw-panel__header(data-i18n="Critical Wounds")
+    .sw-criticaltable__row--head
+        .sw-criticaltable__cell(data-i18n="Name")
+        .sw-criticaltable__cell(data-i18n="Location")
+        .sw-criticaltable__cell--last #
+    .sw-woundtable
+        +repeating-section("criticals","critical-row")
+
+.sw-armour.sw-panel.page__combat
+    h1.sw-panel__header(data-i18n="Armour")
+    .sw-armourtable
+        .sw-armourtable__row--head
+            .sw-armourtable__cell(data-i18n="Name")
+            .sw-armourtable__cell(data-i18n="Locations")
+            .sw-armourtable__cell(data-i18n="AP")
+            .sw-armourtable__cell--last(data-i18n="Qualities")
+        +repeating-section("armour","armour-row")
+
+.sw-weapons.sw-panel.page__combat
+    h1.sw-panel__header(data-i18n="Weapons")
+    .sw-weapontable
+        .sw-weapontable__row--head
+            .sw-weapontable__cell(data-i18n="Name")
+            .sw-weapontable__cell(data-i18n="Group")
+            .sw-weapontable__cell(data-i18n="Total")
+            .sw-weapontable__cell(data-i18n="Range")
+            .sw-weapontable__cell(data-i18n="Damage")
+            .sw-weapontable__cell--last(data-i18n="Qualities")
+    .sw-weapontable
+        +repeating-section("weapons","weapon-row")
+
+.sw-spells.sw-panel.page__magic
+    h1.sw-panel__header(data-i18n="Spells & Prayers")
+    .sw-spelltable
+        .sw-spelltable__row--head
+            .sw-spelltable__cell(data-i18n="Name")
+            .sw-spelltable__cell(data-i18n="School / Deity")
+            .sw-spelltable__cell(data-i18n="Total")
+            .sw-spelltable__cell(data-i18n="CN")
+            .sw-spelltable__cell(data-i18n="Range")
+            .sw-spelltable__cell(data-i18n="Target")
+            .sw-spelltable__cell--last(data-i18n="Duration")
+    .sw-spelltable
+        +repeating-section("spells","spell-row")
+    .sw-spell__sin
+        +generic-field({name:"Sin", attr:"sin"}, "number", "1-1")
+
+.sw-careers.page__advances--grid
+    .sw-panel
+        input(name="attr_control_hide--characteristics", type="hidden")
+        h1.sw-panel__header(data-i18n="Careers")
+        .sw-careertable__row--head
+            .sw-careertable__cell(data-i18n="Career")
+            .sw-careertable__cell(data-i18n="Level")
+            .sw-careertable__cell(data-i18n="Status")
+            .sw-careertable__cell--last(data-i18n="Advances")
+        +repeating-section("careers","careers-row")
+
+    .sw-panel
+        input(name="attr_control_hide--characteristics", type="hidden")
+        h1.sw-panel__header(data-i18n="Species")
+        +species("spells","spell-row")
+
+.sw-experience--alt.page__advances--flex
+
+    input(name="attr_advances_changed", type="hidden")
+    .sw-panel.sw-advancenotify
+        span.sw-advancenotify__message(data-i18n="This sheet has pending advance changes. Click below to save these changes.")
+        button.sw-advancenotify__button(data-i18n="Update", name="act_update_advances", type="action") 
+            
+    .sw-panel
+        h1.sw-panel__header(data-i18n="Experience")
+        each field in experience 
+            +generic-display(field, "text", "2-1")
+
+    .sw-panel.sw-panel--awards.page__advances
+        h1.sw-panel__header(data-i18n="Experience Awards")
+        .sw-experiencetable__row--head
+            .sw-experiencetable__cell(data-i18n="Source")
+            .sw-experiencetable__cell--last(data-i18n="XP")
+        +repeating-section("experience","experience-row")
+        .sw-panel__footer.sw-controls
+            .sw-controls__button
+                button(data-i18n="Consolidate Rewards", name="act_combinexp", type="action") 
+        h1.sw-panel__header(data-i18n="Experience Spends")
+        .sw-experiencetable__row--head
+            .sw-experiencetable__cell(data-i18n="Use")
+            .sw-experiencetable__cell--last(data-i18n="XP")
+        +repeating-section("experiencespent","experience-row")
+
+include settings.pug

@@ -1,0 +1,22 @@
+{
+  "name": "sw100-character-sheet",
+  "version": "1.0.0",
+  "description": "Roll20 character sheet for SW100, a Star Wars inspired d100 game. Layout and engine adapted from the Warhammer Fantasy Roleplay 4e Official sheet.",
+  "private": true,
+  "dependencies": {
+    "npm-run-all": "^4.1.5",
+    "pug": "^3.0.0",
+    "pug-cli": "^1.0.0-alpha6",
+    "sass": "^1.32.7"
+  },
+  "scripts": {
+    "build": "npm-run-all build:sass build:pug check",
+    "build:sass": "sass src/scss/sw100.scss sw100.css --no-source-map",
+    "build:pug": "pug src/pug/sw100.pug --out . -P",
+    "check": "node scripts/check.js",
+    "start": "npm-run-all --parallel watch:sass watch:pug",
+    "watch:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --watch",
+    "watch:pug": "pug src/pug/sw100.pug --out . -P -w"
+  },
+  "license": "MIT"
+}

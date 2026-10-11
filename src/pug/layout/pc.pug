@@ -4,9 +4,15 @@ input(name="attr_setting_button_hide", type="hidden")
     .sw-header__logo
         span.sw-header__logo-title SW100
         span.sw-header__logo-subtitle(data-i18n="Galactic Character Record")
-    .sw-header__info
-        each field in character 
-            +character-field(field)
+    .sw-header__body
+        //- Roll20's read-only avatar pseudo-attribute: shows the image set on
+        //- the Bio & Info tab. Only displayed on the Main tab.
+        .sw-header__portrait.page__main
+            span.sw-header__portrait-empty(data-i18n="Set a portrait in Bio & Info")
+            img.sw-header__portrait-img(name="attr_character_avatar")
+        .sw-header__info
+            each field in character 
+                +character-field(field)
 
 .sw-navigation.sw-panel
     .sw-navigation__roll

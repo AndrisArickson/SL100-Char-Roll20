@@ -14,7 +14,7 @@ WFRP artwork is used.
 
 | Tab | Contents |
 | --- | --- |
-| **Main** | Characteristics, Resilience/Resolve, Destiny & Force Points, Movement, Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
+| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics, Resilience/Resolve, Destiny & Force Points, Movement, Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
 | **Combat** | Gear, Encumbrance, Wealth (Credits / Bank / Debt), d100 hit-location Armour Points, quick-roll Controls, Advantage, Wounds, Critical Wounds, Armour, Weapons |
 | **Force** | Force Powers (rolled against Force: Control, Sense or Alter) and Conflict |
 | **Advances** | Careers with four levels, species skills and talents, XP awards and spends |

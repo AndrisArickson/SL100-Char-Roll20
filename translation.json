@@ -373,5 +373,6 @@
   "settings_bar3_link": "BAR 3 LINK",
   "settings_bar3_link_desc": "On Default Tokens created by doing a drop onto the virtual table top, link the Bar 3's value to this attribute. If set this will override all other bar settings.",
   "settings_maxadvantage_desc": "Sets the maximum advantage possible.",
-  "Galactic Character Record": "Galactic Character Record"
+  "Galactic Character Record": "Galactic Character Record",
+  "Set a portrait in Bio & Info": "Set a portrait in Bio & Info"
 }

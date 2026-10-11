@@ -39,6 +39,25 @@
         padding-top: .5em;
     }
 
+    &__portrait {
+        overflow: hidden;
+
+        border: 2px solid $sw-accent;
+        border-radius: 3px;
+        background: $sw-starfield;
+        box-shadow: 0 0 0 1px $sw-frame, 0 0 10px rgba($sw-accent, .3);
+    }
+
+    &__portrait-empty {
+        color: #b9c7d6;
+
+        font-family: $font-family-display;
+        font-size: 9px;
+        letter-spacing: .08em;
+        line-height: 1.4;
+        text-transform: uppercase;
+    }
+
     &__item-wrapper {
         
         &--character_name,

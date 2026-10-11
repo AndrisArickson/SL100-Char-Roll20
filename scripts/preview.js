@@ -35,6 +35,14 @@ const sample = {
     credits: 2450, bank: 800, debt: 12000, corruption_points: 1, sin: 0,
     armour_head: 0, armour_leftarm: 1, armour_rightarm: 1, armour_body: 3,
     armour_leftleg: 1, armour_rightleg: 1, armour_shield: 0, toughness_bonus: 3,
+    // Stand-in for the avatar Roll20 supplies from the Bio & Info tab.
+    character_avatar: "data:image/svg+xml," + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">' +
+        '<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b5d7a"/><stop offset="1" stop-color="#16202b"/></linearGradient></defs>' +
+        '<rect width="120" height="120" fill="url(#g)"/>' +
+        '<path d="M60 22c-14 0-22 10-22 24 0 12 6 22 14 26l-24 10c-8 4-12 12-12 22v16h88v-16c0-10-4-18-12-22l-24-10c8-4 14-14 14-26 0-14-8-24-22-24z" fill="#5fb3c9"/>' +
+        '<path d="M44 40c-6 6-8 30 0 52M76 40c6 6 8 30 0 52" stroke="#5fb3c9" stroke-width="9" fill="none" stroke-linecap="round"/>' +
+        '</svg>'),
 };
 
 const chars = {
@@ -172,7 +180,9 @@ const prefix = (scope) => scope.querySelectorAll("[class]").forEach(el => {
 
 const setValue = (scope, name, value) => {
     scope.querySelectorAll('[name="attr_' + name + '"]').forEach(el => {
-        if (el.tagName === "INPUT" && (el.type === "radio" || el.type === "checkbox")) {
+        if (el.tagName === "IMG") {
+            if (value) el.setAttribute("src", value); else el.removeAttribute("src");
+        } else if (el.tagName === "INPUT" && (el.type === "radio" || el.type === "checkbox")) {
             el.checked = (el.value == value);
         } else if (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA") {
             el.value = value;

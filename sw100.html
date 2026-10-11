@@ -25,84 +25,87 @@
     <input name="attr_setting_button_hide" type="hidden"/>
     <div class="sheet-sw-header sheet-sw-panel">
       <div class="sheet-sw-header__logo"><span class="sheet-sw-header__logo-title">SW100</span><span class="sheet-sw-header__logo-subtitle" data-i18n="Galactic Character Record">Galactic Character Record</span></div>
-      <div class="sheet-sw-header__info">
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--character_name">
-          <div class="sheet-sw-header__title" data-i18n="Name">Name</div>
-          <input class="sheet-sw-header__input" name="attr_character_name" type="text"/>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--species">
-          <div class="sheet-sw-header__title" data-i18n="Species">Species</div>
-          <input class="sheet-control__custom" name="attr_species" type="hidden"/>
-          <select class="sheet-sw-header__select sheet-control__custom" name="attr_species">
-            <option data-i18n="" value=""></option>
-            <option data-i18n="Human" value="Human">Human</option>
-            <option data-i18n="Bothan" value="Bothan">Bothan</option>
-            <option data-i18n="Duros" value="Duros">Duros</option>
-            <option data-i18n="Mon Calamari" value="Mon Calamari">Mon Calamari</option>
-            <option data-i18n="Rodian" value="Rodian">Rodian</option>
-            <option data-i18n="Trandoshan" value="Trandoshan">Trandoshan</option>
-            <option data-i18n="Twi'lek" value="Twi'lek">Twi'lek</option>
-            <option data-i18n="Wookiee" value="Wookiee">Wookiee</option>
-            <option data-i18n="Zabrak" value="Zabrak">Zabrak</option>
-            <option data-i18n="Droid" value="Droid">Droid</option>
-            <option data-i18n="Custom" value="Custom">Custom</option>
-          </select>
-          <div class="sheet-sw-header__customwrapper sheet-control__custom">
-            <input class="sheet-sw-header__input" name="attr_species_custom" type="text"/>
-            <button class="sheet-sw-header__hidecustom" name="act_remove_custom_species" type="action">╳</button>
+      <div class="sheet-sw-header__body">
+        <div class="sheet-sw-header__portrait sheet-page__main"><span class="sheet-sw-header__portrait-empty" data-i18n="Set a portrait in Bio &amp; Info">Set a portrait in Bio &amp; Info</span><img class="sheet-sw-header__portrait-img" name="attr_character_avatar"/></div>
+        <div class="sheet-sw-header__info">
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--character_name">
+            <div class="sheet-sw-header__title" data-i18n="Name">Name</div>
+            <input class="sheet-sw-header__input" name="attr_character_name" type="text"/>
           </div>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--class">
-          <div class="sheet-sw-header__title" data-i18n="Class">Class</div>
-          <input class="sheet-control__custom" name="attr_class" type="hidden"/>
-          <select class="sheet-sw-header__select sheet-control__custom" name="attr_class">
-            <option data-i18n="Fringer" value="Fringer">Fringer</option>
-            <option data-i18n="Scoundrel" value="Scoundrel">Scoundrel</option>
-            <option data-i18n="Soldier" value="Soldier">Soldier</option>
-            <option data-i18n="Pilot" value="Pilot">Pilot</option>
-            <option data-i18n="Technician" value="Technician">Technician</option>
-            <option data-i18n="Noble" value="Noble">Noble</option>
-            <option data-i18n="Diplomat" value="Diplomat">Diplomat</option>
-            <option data-i18n="Bounty Hunter" value="Bounty Hunter">Bounty Hunter</option>
-            <option data-i18n="Force Adept" value="Force Adept">Force Adept</option>
-            <option data-i18n="Custom" value="Custom">Custom</option>
-          </select>
-          <div class="sheet-sw-header__customwrapper sheet-control__custom">
-            <input class="sheet-sw-header__input" name="attr_class_custom" type="text"/>
-            <button class="sheet-sw-header__hidecustom" name="act_remove_custom_class" type="action">╳</button>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--species">
+            <div class="sheet-sw-header__title" data-i18n="Species">Species</div>
+            <input class="sheet-control__custom" name="attr_species" type="hidden"/>
+            <select class="sheet-sw-header__select sheet-control__custom" name="attr_species">
+              <option data-i18n="" value=""></option>
+              <option data-i18n="Human" value="Human">Human</option>
+              <option data-i18n="Bothan" value="Bothan">Bothan</option>
+              <option data-i18n="Duros" value="Duros">Duros</option>
+              <option data-i18n="Mon Calamari" value="Mon Calamari">Mon Calamari</option>
+              <option data-i18n="Rodian" value="Rodian">Rodian</option>
+              <option data-i18n="Trandoshan" value="Trandoshan">Trandoshan</option>
+              <option data-i18n="Twi'lek" value="Twi'lek">Twi'lek</option>
+              <option data-i18n="Wookiee" value="Wookiee">Wookiee</option>
+              <option data-i18n="Zabrak" value="Zabrak">Zabrak</option>
+              <option data-i18n="Droid" value="Droid">Droid</option>
+              <option data-i18n="Custom" value="Custom">Custom</option>
+            </select>
+            <div class="sheet-sw-header__customwrapper sheet-control__custom">
+              <input class="sheet-sw-header__input" name="attr_species_custom" type="text"/>
+              <button class="sheet-sw-header__hidecustom" name="act_remove_custom_species" type="action">╳</button>
+            </div>
           </div>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--career">
-          <div class="sheet-sw-header__title" data-i18n="Career">Career</div>
-          <input name="attr_career" type="hidden" value="Input your first career on the career tab"/><span class="sheet-sw-header__display sheet-display" name="attr_career"></span>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--career_level">
-          <div class="sheet-sw-header__title" data-i18n="Career Level">Career Level</div>
-          <input name="attr_career_level" type="hidden"/><span class="sheet-sw-header__display sheet-display" name="attr_career_level"></span>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--career_path">
-          <div class="sheet-sw-header__title" data-i18n="Career Path">Career Path</div>
-          <input name="attr_career_path" type="hidden"/><span class="sheet-sw-header__display sheet-display" name="attr_career_path"></span>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--status">
-          <div class="sheet-sw-header__title" data-i18n="Status">Status</div>
-          <input name="attr_status" type="hidden"/><span class="sheet-sw-header__display sheet-display" name="attr_status"></span>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--age">
-          <div class="sheet-sw-header__title" data-i18n="Age">Age</div>
-          <input class="sheet-sw-header__input" name="attr_age" type="text"/>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--height">
-          <div class="sheet-sw-header__title" data-i18n="Height">Height</div>
-          <input class="sheet-sw-header__input" name="attr_height" type="text"/>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--homeworld">
-          <div class="sheet-sw-header__title" data-i18n="Homeworld">Homeworld</div>
-          <input class="sheet-sw-header__input" name="attr_homeworld" type="text"/>
-        </div>
-        <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--eyes">
-          <div class="sheet-sw-header__title" data-i18n="Eyes">Eyes</div>
-          <input class="sheet-sw-header__input" name="attr_eyes" type="text"/>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--class">
+            <div class="sheet-sw-header__title" data-i18n="Class">Class</div>
+            <input class="sheet-control__custom" name="attr_class" type="hidden"/>
+            <select class="sheet-sw-header__select sheet-control__custom" name="attr_class">
+              <option data-i18n="Fringer" value="Fringer">Fringer</option>
+              <option data-i18n="Scoundrel" value="Scoundrel">Scoundrel</option>
+              <option data-i18n="Soldier" value="Soldier">Soldier</option>
+              <option data-i18n="Pilot" value="Pilot">Pilot</option>
+              <option data-i18n="Technician" value="Technician">Technician</option>
+              <option data-i18n="Noble" value="Noble">Noble</option>
+              <option data-i18n="Diplomat" value="Diplomat">Diplomat</option>
+              <option data-i18n="Bounty Hunter" value="Bounty Hunter">Bounty Hunter</option>
+              <option data-i18n="Force Adept" value="Force Adept">Force Adept</option>
+              <option data-i18n="Custom" value="Custom">Custom</option>
+            </select>
+            <div class="sheet-sw-header__customwrapper sheet-control__custom">
+              <input class="sheet-sw-header__input" name="attr_class_custom" type="text"/>
+              <button class="sheet-sw-header__hidecustom" name="act_remove_custom_class" type="action">╳</button>
+            </div>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--career">
+            <div class="sheet-sw-header__title" data-i18n="Career">Career</div>
+            <input name="attr_career" type="hidden" value="Input your first career on the career tab"/><span class="sheet-sw-header__display sheet-display" name="attr_career"></span>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--career_level">
+            <div class="sheet-sw-header__title" data-i18n="Career Level">Career Level</div>
+            <input name="attr_career_level" type="hidden"/><span class="sheet-sw-header__display sheet-display" name="attr_career_level"></span>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--career_path">
+            <div class="sheet-sw-header__title" data-i18n="Career Path">Career Path</div>
+            <input name="attr_career_path" type="hidden"/><span class="sheet-sw-header__display sheet-display" name="attr_career_path"></span>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--status">
+            <div class="sheet-sw-header__title" data-i18n="Status">Status</div>
+            <input name="attr_status" type="hidden"/><span class="sheet-sw-header__display sheet-display" name="attr_status"></span>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--age">
+            <div class="sheet-sw-header__title" data-i18n="Age">Age</div>
+            <input class="sheet-sw-header__input" name="attr_age" type="text"/>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--height">
+            <div class="sheet-sw-header__title" data-i18n="Height">Height</div>
+            <input class="sheet-sw-header__input" name="attr_height" type="text"/>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--homeworld">
+            <div class="sheet-sw-header__title" data-i18n="Homeworld">Homeworld</div>
+            <input class="sheet-sw-header__input" name="attr_homeworld" type="text"/>
+          </div>
+          <div class="sheet-sw-header__item-wrapper sheet-sw-header__item-wrapper--eyes">
+            <div class="sheet-sw-header__title" data-i18n="Eyes">Eyes</div>
+            <input class="sheet-sw-header__input" name="attr_eyes" type="text"/>
+          </div>
         </div>
       </div>
     </div>

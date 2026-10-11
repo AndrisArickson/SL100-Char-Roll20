@@ -28,8 +28,8 @@
     @at-root .sheet-sw-wrapper &__wrapper.sheet-sw-panel {
         // Targeting reticle behind the hit-location blocks.
         background:
-            radial-gradient(circle at 50% 55%, transparent 0 58px, rgba($sw-holo, .25) 59px 60px, transparent 61px 100px, rgba($sw-holo, .18) 101px 102px, transparent 103px),
-            linear-gradient(90deg, transparent calc(50% - .5px), rgba($sw-holo, .18) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px)),
+            radial-gradient(circle at 50% 55%, transparent 0, transparent 58px, rgba($sw-holo, .25) 59px, rgba($sw-holo, .25) 60px, transparent 61px, transparent 100px, rgba($sw-holo, .18) 101px, rgba($sw-holo, .18) 102px, transparent 103px),
+            linear-gradient(90deg, transparent calc(50% - .5px), rgba($sw-holo, .18) calc(50% - .5px), rgba($sw-holo, .18) calc(50% + .5px), transparent calc(50% + .5px)),
             linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel-shade);
     }
 

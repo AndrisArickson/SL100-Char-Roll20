@@ -7,7 +7,7 @@
     border: 2px solid $sw-frame;
     border-radius: 6px;
     background:
-        repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 2px, transparent 2px 9px),
+        repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0, rgba(255,255,255,.025) 2px, transparent 2px, transparent 9px),
         linear-gradient(180deg, $sw-frame-light, $sw-frame);
     box-shadow: inset 0 0 0 1px rgba($sw-accent, .25);
     color: $sw-ink;

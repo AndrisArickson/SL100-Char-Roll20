@@ -110,6 +110,15 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     if (bare.size) errors.push(`sw100.html has classes without the sheet- prefix (run npm run build): ${[...bare].slice(0, 10).join(", ")}`);
 }
 
+// Roll20's CSS sanitizer can discard the whole stylesheet over unusual syntax
+// in url(); keep ';' and '@' out of them (e.g. Google Fonts css2 URLs).
+{
+    const css = read("sw100.css");
+    for (const match of css.matchAll(/url\(\s*["']?([^"')]*)/g)) {
+        if (/[;@]/.test(match[1])) errors.push(`sw100.css has a url() containing ';' or '@', which Roll20 may reject: ${match[1]}`);
+    }
+}
+
 // The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.
 const css = read("sw100.css");
 for (const [name, text] of [["sw100.css", css], ["sw100.html", html]]) {

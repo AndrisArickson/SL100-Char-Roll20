@@ -11,11 +11,11 @@
   },
   "scripts": {
     "build": "npm-run-all build:sass build:pug check",
-    "build:sass": "sass src/scss/sw100.scss sw100.css --no-source-map",
+    "build:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions",
     "build:pug": "pug src/pug/sw100.pug --out . -P",
     "check": "node scripts/check.js",
     "start": "npm-run-all --parallel watch:sass watch:pug",
-    "watch:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --watch",
+    "watch:sass": "sass src/scss/sw100.scss sw100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions --watch",
     "watch:pug": "pug src/pug/sw100.pug --out . -P -w"
   },
   "license": "MIT"

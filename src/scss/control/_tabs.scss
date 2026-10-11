@@ -3,7 +3,7 @@
     .sheet-page__main,
     .sheet-page__advances,
     .sheet-page__combat,
-    .sheet-page__magic,
+    .sheet-page__force,
     .sheet-page__settings {
         display: none;
 
@@ -20,7 +20,7 @@ input[type="hidden"][name="attr_nav"] {
     &[value="main"] ~ * .sheet-page__main,
     &[value="advances"] ~ * .sheet-page__advances,
     &[value="combat"] ~ * .sheet-page__combat,
-    &[value="magic"] ~ * .sheet-page__magic,
+    &[value="force"] ~ * .sheet-page__force,
     &[value="settings"] ~ * .sheet-page__settings {
         display: block;
 

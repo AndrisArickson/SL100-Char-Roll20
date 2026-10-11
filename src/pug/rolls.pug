@@ -72,7 +72,7 @@
 
     });
 
-    [skills.basic[18], skills.advanced[2], skills.advanced[5], skills.advanced[11]].forEach(skill => {
+    specialised_skills.forEach(skill => {
 
         skill.specialisations.forEach(specialisation => {
 
@@ -170,7 +170,7 @@
             roll_target: `@{spell_target}`,
             roll_duration: `@{spell_duration}`,
             roll_range: `@{spell_range}`,
-            roll_cn: `[[@{spell_cn}-?{Channeling|0}]]`,
+            roll_cn: `[[@{spell_cn}-?{Focus|0}]]`,
             roll_text: `@{spell_description}`,
             roll_spell: 1,
         }

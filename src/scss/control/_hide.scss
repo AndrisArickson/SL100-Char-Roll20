@@ -206,16 +206,16 @@ input[name="attr_talent_test_type"] {
     }
 }
 
-// Spell Control
+// Custom Type Control
 
-@each $type in "Spell", "Prayer", "Custom" {
+@each $type in "Custom" {
     .sheet-control__hide--#{$type} {
         @extend %hide;
     }
 }
 
 input[name*="type"] {
-    @each $type in "Spell", "Prayer", "Custom" {
+    @each $type in "Custom" {
         &[value="#{$type}"] ~ .sheet-control__hide--#{$type} {
             @extend %show-grid;
         }
@@ -303,44 +303,6 @@ input[name*="trapping_flag"][value="on"] + .sheet-sw-npctrappings {
     display: block;
 }
 
-
-.sheet-sw-compendium_warning {
-    display: none;
-
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 10000;
-
-    background-color: rgba(0,0,0,.6);
-
-    &_inside {
-        display: block;
-        position: sticky;
-        top: 50%;
-        width: 50%;
-        margin: 5em auto;
-        padding: $margin-general * 4;
-        
-        background: #eff2f1;
-        background: url('https://s3.amazonaws.com/files.d20.io/images/144589463/lqxlbyKEgMXnVw8VajQTCQ/max.png') #eff2f1 center/cover;
-        border: 15px solid transparent;
-        border-image: url("https://s3.amazonaws.com/files.d20.io/images/149238777/ywxEJDLgdNlQGlSSRbjpmw/max.png?1594320939") 30 round;
-
-        font-family: $font-family-general;
-        font-size: $h2-size;
-        text-align: center;
-        text-transform: uppercase;
-    }
-}
-
-.sheet-sw-wrapper.active-drop-target.dropping .sheet-sw-compendium_warning {
-    display: block;
-}
 
 input[type="hidden"][name*="species_disable3"]{
 

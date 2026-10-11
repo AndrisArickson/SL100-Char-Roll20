@@ -1,0 +1,112 @@
+// Consistency checks for the SW100 sheet. Run after a build: `npm run check`.
+//
+// The skill lists live in three places (Pug data, sheetworkers, SCSS); Roll20
+// also needs a translation entry for every data-i18n key or the label renders
+// blank. This script fails the build if any of those drift apart.
+
+const fs = require("fs");
+const path = require("path");
+const vm = require("vm");
+
+const root = path.join(__dirname, "..");
+const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
+
+const errors = [];
+const warnings = [];
+
+const sameSet = (label, a, b) => {
+    const missingFromB = a.filter(item => !b.includes(item));
+    const missingFromA = b.filter(item => !a.includes(item));
+    if (missingFromB.length || missingFromA.length) {
+        errors.push(`${label}: only in first [${missingFromB.join(", ")}], only in second [${missingFromA.join(", ")}]`);
+    }
+};
+
+// Pug data: the abstracts file is a single unbuffered code block.
+const abstracts = (() => {
+    const source = read("src/pug/abstracts.pug").replace(/^-\s*\n/, "");
+    const context = {};
+    vm.runInNewContext(`${source}\nthis.result = {skills, characteristics};`, context);
+    return context.result;
+})();
+
+const allSkills = [...abstracts.skills.basic, ...abstracts.skills.advanced];
+const pugSkills = allSkills.map(skill => skill.name.toLowerCase().replace(/ /g, "-"));
+const pugSpecialisations = allSkills
+    .flatMap(skill => skill.specialisations || [])
+    .map(spec => spec.toLowerCase().replace(/ /g, "_"));
+const pugRepeating = allSkills
+    .filter(skill => skill.grouped && (!skill.specialisations || skill.forced === 1))
+    .map(skill => skill.name.toLowerCase().replace(/ /g, "-"));
+const pugWeaponSpecs = ["Melee", "Ranged"]
+    .flatMap(name => allSkills.find(skill => skill.name === name).specialisations)
+    .map(spec => spec.toLowerCase().replace(/ /g, "_"));
+const pugForceSpecs = allSkills.find(skill => skill.name === "Force").specialisations
+    .filter(spec => spec !== "Custom")
+    .map(spec => spec.toLowerCase());
+
+// Sheetworkers: run the module with Roll20 globals stubbed out.
+const sw = (() => {
+    const noop = () => {};
+    const context = {
+        on: noop, getAttrs: noop, setAttrs: noop, getSectionIDs: noop,
+        generateRowID: () => "", removeRepeatingRow: noop, getTranslationByKey: noop,
+        console,
+    };
+    const source = ["sheetworkers.js", "helperfunctions.js"]
+        .map(file => read(`src/js/${file}`))
+        .join("\n");
+    vm.runInNewContext(`${source}\nthis.result = swModule.sw;`, context);
+    return context.result;
+})();
+
+sameSet("skills (pug vs sheetworkers)", pugSkills, sw.skills);
+sameSet("specialisations (pug vs sheetworkers)", pugSpecialisations, sw.specialisations);
+sameSet("repeating skills (pug vs sheetworkers)", pugRepeating, sw.repeating_skills);
+sameSet("weapon specialisations (pug vs sheetworkers)", pugWeaponSpecs, sw.weapon_specialisations);
+sameSet("force specialisations (pug vs sheetworkers)", pugForceSpecs, sw.force_specialisations);
+sameSet("characteristics (pug vs sheetworkers)",
+    abstracts.characteristics.map(c => c.name.toLowerCase().replace(/ /g, "_")), sw.characteristics);
+
+// SCSS lists drive the show/hide rules for skill settings rows.
+const scss = read("src/scss/_abstracts.scss");
+const scssList = (name) => {
+    const match = scss.match(new RegExp(`\\$${name}:([^;]*);`));
+    return match ? [...match[1].matchAll(/"([^"]+)"/g)].map(m => m[1]) : [];
+};
+sameSet("skills (pug vs scss)", pugSkills, scssList("skills"));
+sameSet("specialisations (pug vs scss)", pugSpecialisations, scssList("specialisations"));
+
+// Translations: every data-i18n key used in the HTML (and every key sheet.json
+// names for its user options) needs an entry.
+const html = read("sw100.html");
+const translation = JSON.parse(read("translation.json"));
+const used = new Set();
+for (const match of html.matchAll(/data-i18n(?:-placeholder|-title)?="([^"]*)"/g)) {
+    used.add(match[1].replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'"));
+}
+const sheetJson = JSON.parse(read("sheet.json"));
+for (const option of sheetJson.useroptions || []) {
+    for (const key of [option.displaytranslationkey, option.descriptiontranslationkey, ...(option.optiontranslationkeys || [])]) {
+        if (key) used.add(key);
+    }
+}
+
+const missing = [...used].filter(key => !(key in translation));
+if (missing.length) errors.push(`translation.json is missing ${missing.length} key(s): ${missing.join(" | ")}`);
+const unused = Object.keys(translation).filter(key => !used.has(key));
+if (unused.length) warnings.push(`translation.json has ${unused.length} unused key(s): ${unused.join(" | ")}`);
+
+// The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.
+const css = read("sw100.css");
+for (const [name, text] of [["sw100.css", css], ["sw100.html", html]]) {
+    const hits = text.match(/files\.d20\.io\/images\/[^"')\s]*/g);
+    if (hits) errors.push(`${name} still references Roll20-hosted images: ${[...new Set(hits)].join(", ")}`);
+}
+
+warnings.forEach(message => console.warn(`warning: ${message}`));
+if (errors.length) {
+    errors.forEach(message => console.error(`error: ${message}`));
+    process.exit(1);
+}
+console.log(`check passed: ${pugSkills.length} skills, ${pugSpecialisations.length} specialisations, ${used.size} translation keys`);

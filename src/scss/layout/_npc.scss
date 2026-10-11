@@ -1,6 +1,11 @@
 .sheet-sw-npc {
 
-    background: url("https://s3.amazonaws.com/files.d20.io/images/160727772/3ooM_wEx6-v_u4EaT9mBPg/max.png") repeat;
+    padding: 6px;
+
+    border: 2px solid $sw-frame;
+    border-radius: 6px;
+    background: linear-gradient(180deg, lighten($sw-panel, 3%), $sw-panel-shade);
+    color: $sw-ink;
 
     &__wrapper {
 
@@ -52,7 +57,7 @@
                 padding-bottom: $margin-general;
                 margin-bottom: $margin-large;
 
-                background: url("https://s3.amazonaws.com/files.d20.io/images/151167682/MU4qaf0sjSe1o3s318ZhKA/max.png") no-repeat calc(50% + 10px) 100%/90% 15px;
+                border-bottom: 2px solid $sw-accent;
 
                 font-size: $h1-size * 1.25;
                 text-transform: uppercase;
@@ -142,7 +147,10 @@
     &__slash {
         margin: $margin-large*2 0;
         padding: $margin-large 2.5%;
-        background: url("https://s3.amazonaws.com/files.d20.io/images/160723383/I0S4DZJH5fDt80oHEHXiiw/max.png") no-repeat 50% 50% / 100% 100%;
+        background: $sw-starfield;
+        border-bottom: 3px solid $sw-accent;
+        border-radius: 3px;
+        color: $sw-accent;
     }
 
     &skill {
@@ -298,7 +306,7 @@
             margin-bottom: $margin-large;
         padding-bottom: $margin-general;
 
-        background: url("https://s3.amazonaws.com/files.d20.io/images/151167682/MU4qaf0sjSe1o3s318ZhKA/max.png") no-repeat calc(50% + 10px) 100%/100% 15px;
+        border-bottom: 2px solid $sw-accent;
 
         font-size: $h1-size * 1.15;
         text-transform: uppercase;

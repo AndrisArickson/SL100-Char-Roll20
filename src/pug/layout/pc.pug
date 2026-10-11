@@ -2,6 +2,8 @@ input(name="attr_setting_button_hide", type="hidden")
 
 .sw-header.sw-panel
     .sw-header__logo
+        span.sw-header__logo-title SW100
+        span.sw-header__logo-subtitle(data-i18n="Galactic Character Record")
     .sw-header__info
         each field in character 
             +character-field(field)
@@ -44,7 +46,7 @@ input(name="attr_setting_button_hide", type="hidden")
     +generic-field(resilience[2], "text", "1-2")
 
 .sw-fate.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Fate")
+    h1.sw-panel__header(data-i18n="Destiny")
     each field in fate 
         +generic-field(field, "number", "1-1")
 
@@ -114,7 +116,7 @@ input(name="attr_setting_button_hide", type="hidden")
         +repeating-section("psychology","psychology-row")
 
 .sw-corruption.sw-panel.page__main
-    h1.sw-panel__header(data-i18n="Corruption & Mutations")
+    h1.sw-panel__header(data-i18n="Dark Side")
     +generic-field(corruption[0],"number","2-1")
     .sw-corruptiontable
         .sw-corruptiontable__row--head
@@ -137,7 +139,7 @@ input(name="attr_setting_button_hide", type="hidden")
 
 .sw-trappings.page__combat--flex
     .sw-panel.sw-panel--trappings
-        h1.sw-panel__header(data-i18n="Trappings")
+        h1.sw-panel__header(data-i18n="Gear")
         .sw-trappingtable
             .sw-trappingtable__row--head
                 .sw-trappingtable__cell(data-i18n="Name")
@@ -155,25 +157,8 @@ input(name="attr_setting_button_hide", type="hidden")
 
         .sw-panel
             h1.sw-panel__header(data-i18n="Wealth")
-
-            .sw-field--grid1-1
-                span.sw-field__header--flex
-                    span(data-i18n="GC")
-                    button.pictos(name="act_gold_to_silver", type="action") }
-                input.sw-field__input(name=`attr_gold`, type="number", value="0")
-
-            .sw-field--grid1-1
-                span.sw-field__header--flex
-                    span(data-i18n="SS")
-                    button.pictos(name="act_silver_to_brass", type="action") }
-                    button.pictos(name="act_silver_to_gold", type="action") {
-                input.sw-field__input(name=`attr_silver`, type="number", value="0")
-
-            .sw-field--grid1-1
-                span.sw-field__header--flex
-                    span(data-i18n="BP")
-                    button.pictos(name="act_brass_to_silver", type="action") {
-                input.sw-field__input(name=`attr_brass`, type="number", value="0")
+            each field in wealth
+                +generic-field(field, "number", "1-1")
 
 .sw-armour__wrapper.sw-panel.page__combat
     h1.sw-panel__header(data-i18n="Armour Points")
@@ -283,21 +268,21 @@ input(name="attr_setting_button_hide", type="hidden")
     .sw-weapontable
         +repeating-section("weapons","weapon-row")
 
-.sw-spells.sw-panel.page__magic
-    h1.sw-panel__header(data-i18n="Spells & Prayers")
+.sw-spells.sw-panel.page__force
+    h1.sw-panel__header(data-i18n="Force Powers")
     .sw-spelltable
         .sw-spelltable__row--head
             .sw-spelltable__cell(data-i18n="Name")
-            .sw-spelltable__cell(data-i18n="School / Deity")
+            .sw-spelltable__cell(data-i18n="Discipline")
             .sw-spelltable__cell(data-i18n="Total")
-            .sw-spelltable__cell(data-i18n="CN")
+            .sw-spelltable__cell(data-i18n="DN")
             .sw-spelltable__cell(data-i18n="Range")
             .sw-spelltable__cell(data-i18n="Target")
             .sw-spelltable__cell--last(data-i18n="Duration")
     .sw-spelltable
         +repeating-section("spells","spell-row")
     .sw-spell__sin
-        +generic-field({name:"Sin", attr:"sin"}, "number", "1-1")
+        +generic-field({name:"Conflict", attr:"sin"}, "number", "1-1")
 
 .sw-careers.page__advances--grid
     .sw-panel

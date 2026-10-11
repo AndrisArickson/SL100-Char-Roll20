@@ -4,7 +4,7 @@
         padding-top: $margin-general;
 
         border-top: $grid-border-settings;
-        background: rgba(195, 223, 241, 0.125);
+        background: rgba($sw-holo, 0.06);
 
         input.sheet-sw-settings__input[type="text"],
         input.sheet-sw-settings__input[type="number"],

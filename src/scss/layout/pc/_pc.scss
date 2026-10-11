@@ -2,10 +2,17 @@
     display: grid;
         grid-template-columns: repeat(6, 1fr);
   
-    border: 30px solid transparent;
-    border-image: url("https://s3.amazonaws.com/files.d20.io/images/149238777/ywxEJDLgdNlQGlSSRbjpmw/max.png?1594320939") 30 round;
+    padding: 6px;
 
-        grid-gap: 0px;
+    border: 2px solid $sw-frame;
+    border-radius: 6px;
+    background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 2px, transparent 2px 9px),
+        linear-gradient(180deg, $sw-frame-light, $sw-frame);
+    box-shadow: inset 0 0 0 1px rgba($sw-accent, .25);
+    color: $sw-ink;
+
+        grid-gap: 4px;
 
         > * {
             min-width: 100px;

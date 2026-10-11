@@ -1,11 +1,10 @@
 {
-  "html": "wfrp4.html",
-  "css": "wfrp4.css",
-  "authors": "Cubicle 7, Nic B.",
-  "roll20userid": "45398",
+  "html": "sw100.html",
+  "css": "sw100.css",
+  "authors": "SW100 contributors (layout and engine adapted from the Warhammer Fantasy Roleplay 4e Official sheet by Cubicle 7 / Nic B.)",
+  "roll20userid": "",
   "preview": "preview.png",
-  "compendium": "WFRP",
-  "instructions": "",
+  "instructions": "A Roll20 character sheet for SW100, a Star Wars inspired d100 roleplaying game. PC and NPC views, d100 skill tests with Success Levels, Force powers, careers, experience tracking and hit-location armour.",
   "useroptions": [
     {
       "attribute": "npc",
@@ -108,7 +107,7 @@
       "type": "text",
       "default": "",
       "description": "Sets the maximum advantage possible.",
-      "descriptiontranslationkey": "settings_bar1_value_desc"
+      "descriptiontranslationkey": "settings_maxadvantage_desc"
     },
     {
       "attribute": "bar1_v",

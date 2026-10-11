@@ -60,10 +60,10 @@
 
         border-radius: 5px;
 
-        background-color: #28a745;
-        color: #fff;
+        background-color: $sw-accent;
+        color: $sw-ink;
 
-        font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        font-family: $font-family-display;
         font-size: 8pt;
         font-weight: bold;
         text-align: center;

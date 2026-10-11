@@ -1,23 +1,8 @@
-//General Reset
-
-.ui-dialog .charsheet * {
-    display: unset;
-    width: unset;
-    height: unset;
-    padding: unset;
-    margin-bottom: unset;
-
-    font-family: unset;
-    font-size: unset;
-    font-weight: unset;
-    line-height: unset;
-
-    color: unset;
-    border: unset;
-    border-radius: unset;
-    background: unset;
-    background-color: unset;
-}
+// General Reset
+//
+// Neutralises Roll20's default form styling inside the sheet. Values are
+// explicit rather than `unset`, and `display` is never touched here, so the
+// show/hide rules in control/ always win regardless of selector weight.
 
 .charsheet .sheet-sw-wrapper {
 
@@ -28,10 +13,16 @@
     h3,
     h4,
     h5 {
-        font-size: unset;
-        line-height: unset;
+        line-height: 1.2;
+    }
 
-        color: unset;
+    input,
+    input[type=number],
+    textarea,
+    select,
+    button,
+    button[type="roll"] {
+        width: 100%;
     }
 
     p,
@@ -42,25 +33,28 @@
     button,
     button[type="roll"],
     label {
-        display: unset;
-        width: 100%;
         min-width: 0;
-        height: unset;
-        padding: unset;
-        margin-bottom: unset;
 
-        color: unset;
-        border: unset;
-        border-radius: unset;
-        background: unset;
-        background-color: unset;
-        box-shadow: unset;
+        color: inherit;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
 
-        font-family: unset;
-        font-size: unset;
-        font-weight: unset;
-        text-align: unset;
-        line-height: unset;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        text-align: inherit;
+        line-height: inherit;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        width: auto;
+    }
+
+    button {
+        padding: 0;
     }
 
     button[type="roll"] {
@@ -75,8 +69,8 @@
     input[readonly],
     select[readonly],
     textarea[readonly] {
-        background-color: unset;
-        border-color: unset;
+        background-color: transparent;
+        border-color: transparent;
     }
 }
 

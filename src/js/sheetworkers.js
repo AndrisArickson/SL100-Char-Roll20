@@ -3,7 +3,7 @@ const swModule = ( () => {
     // Global Variables
 
     const sw = {
-        sheet_version: "1.0.4",
+        sheet_version: "1.0.0",
 
         characteristics: [
             "weapon_skill",
@@ -32,80 +32,101 @@ const swModule = ( () => {
         ],
 
         skills: [
-            "animal-care",
-            "animal-training",
-            "channelling",
-            "evaluate",
-            "heal",
+            "astrogation",
+            "computers",
+            "demolitions",
+            "deceive",
+            "force",
+            "knowledge",
             "language",
-            "lore",
+            "mechanics",
+            "medicine",
             "perform",
-            "pick-lock",
-            "play",
-            "pray",
+            "pilot",
             "ranged",
             "research",
-            "sail",
-            "secret-signs",
-            "set-trap",
+            "security",
             "sleight-of-hand",
+            "slicing",
             "swim",
+            "tactics",
             "track",
             "trade",
+            "animal-handling",
             "art",
             "athletics",
             "bribery",
+            "carouse",
             "charm",
-            "charm-animal",
             "climb",
-            "consume-alcohol",
             "cool",
             "dodge",
             "drive",
             "endurance",
             "entertain",
             "gamble",
-            "gossip",
             "haggle",
             "intimidate",
             "intuition",
             "leadership",
             "melee",
             "navigation",
-            "outdoor-survival",
             "perception",
             "ride",
-            "row",
-            "stealth"
+            "stealth",
+            "streetwise",
+            "survival",
+            "zero-g"
+        ],
+
+        // Weapon groups: the Melee and Ranged specialisations.
+        weapon_specialisations: [
+            "basic",
+            "brawling",
+            "lightsaber",
+            "vibroweapon",
+            "parry",
+            "polearm",
+            "two-handed",
+            "stun",
+            "pistol",
+            "rifle",
+            "heavy",
+            "gunnery",
+            "exotic",
+            "entangling",
+            "explosives",
+            "throwing"
+        ],
+
+        // Force specialisations a Force power can be rolled against.
+        force_specialisations: [
+            "control",
+            "sense",
+            "alter"
         ],
 
         specialisations: [
             "basic",
             "brawling",
-            "cavalry",
-            "fencing",
-            "flail",
+            "lightsaber",
+            "vibroweapon",
             "parry",
             "polearm",
             "two-handed",
-            "blackpowder",
-            "bow",
-            "crossbow",
-            "engineering",
+            "stun",
+            "pistol",
+            "rifle",
+            "heavy",
+            "gunnery",
+            "exotic",
             "entangling",
             "explosives",
-            "sling",
             "throwing",
-            "azyr",
-            "aqshy",
-            "chamon",
-            "dhar",
-            "ghur",
-            "ghyran",
-            "hysh",
-            "shyish",
-            "ulgu",
-            "magick",
+            "control",
+            "sense",
+            "alter",
+            "galactic_basic",
             "custom"
         ],
 
@@ -114,13 +135,10 @@ const swModule = ( () => {
             "entertain",
             "ride",
             "stealth",
-            "animal-training",
+            "knowledge",
             "language",
-            "lore",
             "perform",
-            "play",
-            "sail",
-            "secret-signs",
+            "pilot",
             "trade"
         ],
 
@@ -362,109 +380,58 @@ const swModule = ( () => {
 
     // Species Controls
 
+    // Species presets. Selecting a species sets Destiny (fate), Resilience,
+    // Movement and Size, and fills the species skill and talent lists on the
+    // Advances tab. Edit this table to match your game.
+    const species_presets = {
+        "human":        {fate: 2, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Cool", "Gamble", "Haggle", "Leadership", "Navigation", "Perception", "Streetwise", "Knowledge (Galaxy)", "Language (Galactic Basic)", "Melee (Basic)", "Ranged (Pistol)"], talents: ["Savvy, Sharp", "Lucky"]},
+        "bothan":       {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Deceive", "Gamble", "Intuition", "Perception", "Research", "Slicing", "Stealth (Urban)", "Streetwise", "Knowledge (Politics)", "Language (Bothese)", "Language (Galactic Basic)"], talents: ["Read/Write", "Suave, Schemer"]},
+        "duros":        {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Astrogation", "Computers", "Cool", "Mechanics", "Navigation", "Perception", "Pilot (Freighter)", "Pilot (Starfighter)", "Research", "Knowledge (Hyperspace Routes)", "Language (Durese)", "Language (Galactic Basic)"], talents: ["Night Vision", "Coolheaded, Savvy"]},
+        "mon calamari": {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Astrogation", "Computers", "Cool", "Leadership", "Mechanics", "Perception", "Pilot (Capital Ship)", "Swim", "Tactics", "Knowledge (Engineering)", "Language (Mon Calamarian)", "Language (Galactic Basic)"], talents: ["Amphibious", "Night Vision"]},
+        "rodian":       {fate: 1, resilience: 2, movement: 4, size: "average", skills: ["Cool", "Dodge", "Intimidate", "Perception", "Ranged (Rifle)", "Ranged (Pistol)", "Stealth (Rural)", "Streetwise", "Survival", "Track", "Language (Rodese)", "Language (Galactic Basic)"], talents: ["Acute Sense (Smell)", "Marksman, Rover"]},
+        "trandoshan":   {fate: 0, resilience: 2, movement: 4, size: "average", skills: ["Athletics", "Climb", "Cool", "Endurance", "Intimidate", "Melee (Brawling)", "Perception", "Ranged (Heavy)", "Survival", "Track", "Language (Dosh)", "Language (Galactic Basic)"], talents: ["Regenerate", "Claws", "Strong-minded, Hardy"]},
+        "twi'lek":      {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Deceive", "Dodge", "Entertain (Dance)", "Gamble", "Haggle", "Intuition", "Perception", "Sleight of Hand", "Streetwise", "Language (Ryl)", "Language (Galactic Basic)"], talents: ["Attractive", "Etiquette (Criminals), Suave"]},
+        "wookiee":      {fate: 0, resilience: 2, movement: 4, size: "large", skills: ["Athletics", "Climb", "Cool", "Endurance", "Intimidate", "Mechanics", "Melee (Brawling)", "Melee (Two-Handed)", "Perception", "Survival", "Language (Shyriiwook)", "Language (Galactic Basic)"], talents: ["Very Strong", "Very Resilient", "Night Vision"]},
+        "zabrak":       {fate: 1, resilience: 2, movement: 4, size: "average", skills: ["Athletics", "Cool", "Dodge", "Endurance", "Intimidate", "Melee (Basic)", "Perception", "Ranged (Pistol)", "Survival", "Tactics", "Language (Zabraki)", "Language (Galactic Basic)"], talents: ["Strong-minded", "Hardy, Resolute"]},
+        "droid":        {fate: 0, resilience: 0, movement: 3, size: "average", skills: ["Computers", "Cool", "Mechanics", "Perception", "Research", "Security", "Slicing", "Knowledge (Technology)", "Language (Binary)", "Language (Galactic Basic)"], talents: ["Inorganic", "Programmed Specialist"]},
+    };
+
     const changeSpecies = (new_value) => {
         
-        new_value = new_value.toLowerCase();
-
-        const update = {
-            fate: 0,
-            resilience: 0,
-            movement: 0,
-            size: 0
-        }
+        new_value = (new_value || "").toLowerCase();
 
         if (new_value === "") {
             return;
         }
-        if (new_value === "human") {
-            update["fate"] = 2;
-            update["resilience"] = 1;
-            update["movement"] = 4;
-            update["size"] = "average";
-        }
-        if (new_value === "dwarf") {
-            update["fate"] = 0;
-            update["resilience"] = 2;
-            update["movement"] = 3;
-            update["size"] = "average";
-        }
-        if (new_value === "halfling") {
-            update["fate"] = 0;
-            update["resilience"] = 2;
-            update["movement"] = 3;
-            update["size"] = "small";
-        }
-        if (new_value === "wood elf") {
-            update["fate"] = 0;
-            update["resilience"] = 0;
-            update["movement"] = 4;
-            update["size"] = "average";
-        }
-        if (new_value === "high elf") {
-            update["fate"] = 0;
-            update["resilience"] = 0;
-            update["movement"] = 5;
-            update["size"] = "average";
-        }
-        if (new_value === "gnome") {
-            update["fate"] = 2;
-            update["resilience"] = 0;
-            update["movement"] = 3;
-            update["size"] = "small";
+
+        const preset = species_presets[new_value];
+
+        if (!preset) {
+            return;
         }
 
-        if (new_value !== "custom") {
+        const update = {
+            fate: preset.fate,
+            resilience: preset.resilience,
+            movement: preset.movement,
+            size: preset.size
+        };
 
-            getCompendiumPage(`Species:${new_value}`, page => {
-                const skills = helperFunctions.parseJSON(page.data.Skills);
-                const talents = helperFunctions.parseJSON(page.data.Talents);
-    
-                const skills_fixed = skills.Fixed.split(",").map(item=>item.trim()) || [];
-                const talents_fixed = talents.Fixed.split(",").map(item=>item.trim()) || [];
-    
-                let talents_choices = [];
-    
-                let skill_index = 1;
-                let talent_index = 1;
-                
-                if (talents.Choices) talents.Choices.forEach(choice => talents_choices = [...talents_choices, ...choice]);
-    
-                for (let index = 1; index <= 12; index++) {
-                    update[`species_skill_${index}_name`] = "";
-                    update[`species_skill_${index}_advances`] = "0";
-                }
-    
-                for (let index = 1; index <= 10; index++) {
-                    update[`species_talent_${index}_name`] = "";
-                    update[`species_talent_${index}_advances`] = "0";
-                }
-    
-                for (const skill of skills_fixed) {
-                    update[`species_skill_${skill_index}_name`] = skill;
-                    update[`species_talent_${skill_index}_advances`] = "0";
-                    skill_index++;
-                }
-    
-                for (const talent of talents_fixed) {
-                    update[`species_talent_${talent_index}_name`] = talent;
-                    update[`species_talent_${talent_index}_advances`] = "1";
-                    talent_index++;
-                }
-    
-                for (const talent of talents_choices) {
-                    update[`species_talent_${talent_index}_name`] = talent;
-                    update[`species_talent_${talent_index}_advances`] = "0";
-                    talent_index++;
-                }
-
-                update["advances_changed"] = 1;
-    
-                setAttrs(update, {silent:true});
-            });
-
-        } else {
-            setAttrs(update);
+        for (let index = 1; index <= 12; index++) {
+            update[`species_skill_${index}_name`] = preset.skills[index - 1] || "";
+            update[`species_skill_${index}_advances`] = "0";
         }
+
+        // A talent entry of "A, B" is a choice between talents, so it starts unticked.
+        for (let index = 1; index <= 10; index++) {
+            const talent = preset.talents[index - 1] || "";
+            update[`species_talent_${index}_name`] = talent;
+            update[`species_talent_${index}_advances`] = (talent && !talent.includes(",")) ? "1" : "0";
+        }
+
+        update["advances_changed"] = 1;
+
+        setAttrs(update, {silent:true});
     }
 
     const checkSpeciesAdvances = () => {
@@ -1371,24 +1338,13 @@ const swModule = ( () => {
                                     
                                     updateAttrs[new_key] = value;
                                 } else if (value > 0) {
+                                    const new_id = generateRowID();
 
-                                    getCompendiumPage(`Talents:${page_name}`, page => {
-                                        
-                                        if (page.expansion !== 0 && page.expansion) {
-
-                                            swDragAndDrop.handleDrop({drop_name:page.name, drop_content:page.content, drop_data:page.data}, key);
-                                        
-                                        } else {
-                                            const new_id = generateRowID();
-
-                                            updateAttrs[`repeating_talent_${new_id}_talent_name`] = key;
-                                            updateAttrs[`repeating_talent_${new_id}_talent_ranks`] = value;
-
-                                            setAttrs(updateAttrs);
-                                        }
-
-                                    });
+                                    updateAttrs[`repeating_talent_${new_id}_talent_name`] = key;
+                                    updateAttrs[`repeating_talent_${new_id}_talent_ranks`] = value;
                                 }
+
+                                setAttrs(updateAttrs);
                                 
                             });
                         });
@@ -1691,68 +1647,20 @@ const swModule = ( () => {
         });
     }
 
-    const currencyConversion = (conversion) => {
-
-        getAttrs(["gold","silver","brass"], values => {
-
-            const gold = parseInt(values.gold) || 0;
-            const silver = parseInt(values.silver) || 0;
-            const brass = parseInt(values.brass) || 0;
-
-            if (conversion === "gold_to_silver") {
-                if (gold >= 1) {                    
-                    setAttrs({
-                        gold: gold-1,
-                        silver: silver+20
-                    });
-                }
-            } else if (conversion === "silver_to_gold") {
-                if (silver >= 20) {                    
-                    setAttrs({
-                        gold: gold+1,
-                        silver: silver-20
-                    });
-                }
-            } else if (conversion === "silver_to_brass") {
-                if (silver >= 1) {                    
-                    setAttrs({
-                        silver: silver-1,
-                        brass: brass+12
-                    });
-                }
-            } else if (conversion === "brass_to_silver") {
-                if (brass >= 12) {                    
-                    setAttrs({
-                        silver: silver+1,
-                        brass: brass-12
-                    });
-                }
-            }
-
-        });
-
-    };
-
-    // Spells & Prayers Functions    
+    // Force Power Functions
 
     const calculateSpellValue = (attribute) => {
         const section = "spells";   
         const repeating_id = helperFunctions.extractRepeatingId(attribute, section);
         
-        getAttrs(["magick","pray",`${repeating_id}_spell_type`], values => {
+        getAttrs([...sw.force_specialisations, `${repeating_id}_spell_type`], values => {
 
-            const new_value = values[`${repeating_id}_spell_type`];
-
-            const target = (new_value === "Spell") ? "@{magick}" : 
-                                                     "@{pray}";
-            const clear = (new_value === "Spell") ? "deity" :
-                                                    "lore";
-            
-            const display = (new_value === "Spell") ? values["magick"] : values["pray"];
+            const chosen = (values[`${repeating_id}_spell_type`] || "").toLowerCase();
+            const skill = (sw.force_specialisations.includes(chosen)) ? chosen : "alter";
 
             setAttrs({
-                [`${repeating_id}_spell_total`]:target, 
-                [`${repeating_id}_spell_display`]:display
+                [`${repeating_id}_spell_total`]:`@{${skill}}`, 
+                [`${repeating_id}_spell_display`]:values[skill] || 0
             });
 
         });
@@ -1768,22 +1676,7 @@ const swModule = ( () => {
             `${repeating_id}_attack_type`,
             "weapon_skill",
             "ballistic_skill",
-            "basic",
-            "brawling",
-            "cavalry",
-            "fencing",
-            "flail",
-            "parry",
-            "polearm",
-            "two-handed",
-            "blackpowder",
-            "bow",
-            "crossbow",
-            "engineering",
-            "entangling",
-            "explosives",
-            "sling",
-            "throwing"
+            ...sw.weapon_specialisations
         ];
 
         getAttrs(request, values => {
@@ -1816,22 +1709,7 @@ const swModule = ( () => {
             const attrs = [
                 "weapon_skill",
                 "ballistic_skill",
-                "basic",
-                "brawling",
-                "cavalry",
-                "fencing",
-                "flail",
-                "parry",
-                "polearm",
-                "two-handed",
-                "blackpowder",
-                "bow",
-                "crossbow",
-                "engineering",
-                "entangling",
-                "explosives",
-                "sling",
-                "throwing"
+                ...sw.weapon_specialisations
             ];
             
             for (const id of ids) {
@@ -1970,14 +1848,13 @@ const swModule = ( () => {
         calculateMaxEncumbrance:calculateMaxEncumbrance,
         updateWeaponDamage:updateWeaponDamage,
         updateWeaponTarget:updateWeaponTarget,
-        currencyConversion:currencyConversion,
 
         // Combat Functions
         incrementAdvantage:incrementAdvantage,
         decrementAdvantage:decrementAdvantage,
         calculateMaxWounds:calculateMaxWounds,
 
-        // Spells & Prayers Functions
+        // Force Power Functions
         calculateSpellValue:calculateSpellValue,
 
         // NPC Functions
@@ -2063,7 +1940,7 @@ swModule.sw.repeating_skills.forEach(section => {
     on(`change:repeating_${section}`, eventInfo => swModule.recalculateRepeatingSkill(eventInfo.sourceAttribute, section));
 });
 
-[...swModule.sw.specialisations, ...["magick", "pray"]].forEach(skill => on(`change:${skill}`, eventInfo => swModule.cascadeSkillChanges(skill)));
+swModule.sw.specialisations.forEach(skill => on(`change:${skill}`, eventInfo => swModule.cascadeSkillChanges(skill)));
 
 // CAREERS CHANGES
 
@@ -2153,7 +2030,6 @@ on(`change:repeating_weapons:weapon_group`, eventInfo => swModule.updateWeaponTa
 
 on(`change:strength_bonus change:toughness_bonus change:encumbrance_bonus change:encumbrance_mod`, eventInfo => swModule.calculateMaxEncumbrance());
 
-["gold_to_silver", "silver_to_gold", "silver_to_brass", "brass_to_silver"].forEach(conversion => on(`clicked:${conversion}`, eventInfo => swModule.currencyConversion(conversion)));
 
 // COMBAT FUNCTIONS 
 
@@ -2169,7 +2045,7 @@ on(`clicked:reset_advantage`, eventInfo => setAttrs({advantage:0}));
 
 // SPELL FUNCTIONS
 
-on(`change:repeating_spells:spell_type change:repeating_spells:spell_lore change:repeating_spells:spell_deity`, eventInfo => swModule.calculateSpellValue(eventInfo.sourceAttribute));
+on(`change:repeating_spells:spell_type`, eventInfo => swModule.calculateSpellValue(eventInfo.sourceAttribute));
 
 // NPC FUNCTIONS
 

@@ -48,7 +48,7 @@
                             .sw-npcsettings__label(data-i18n=skill.name)
                             input.sw-npcsettings__input(name=`attr_${attr}`, type="number")
                             
-                    if (skill.name === "Melee" || skill.name === "Ranged" || skill.name === "Channelling" || skill.name === "Language")
+                    if (skill.name === "Melee" || skill.name === "Ranged" || skill.name === "Force" || skill.name === "Language")
                         each specialism in skill.specialisations
                             .sw-npcsettings__skill
                                 .sw-npcsettings__label(data-i18n=`${skill.name} (${specialism})`) 

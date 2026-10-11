@@ -9,8 +9,14 @@
 
 %grid-row-head {
     @extend %grid-row;
-    
-    font-weight: bold;
+
+    color: $sw-steel;
+
+    font-family: $font-family-display;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
 }
 
 %grid-cell {
@@ -22,7 +28,7 @@
 
     > span[name*="attr"] {
         font-family: $font-family-alt;
-        font-size: 1.25rem;
+        font-size: 13px;
     }
 }
 
@@ -32,6 +38,7 @@
 }
 
 %grid-cell--highlight {
+    color: $sw-holo-dark;
     font-weight: bold;
 }
 
@@ -127,14 +134,19 @@
 
 .sheet-sw-skilltable__row--grouped,
 .sheet-sw-skilltable__row--specialisation {
-    background: rgb(36, 107, 131, 0.1);
+    background: rgba($sw-holo, 0.09);
 }
 
 .sheet-sw-skilltable__cell--grouped {
     @extend %grid-cell--last;
     padding-top: 1px;
 
-    font-weight: bold;
+    color: $sw-holo-dark;
+
+    font-family: $font-family-display;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
     text-align: center !important;
     text-indent: -1.5rem;
     text-transform: uppercase;

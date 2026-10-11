@@ -1,6 +1,12 @@
 .sheet-rolltemplate-sw {
+    overflow: hidden;
+
+    border: 1px solid $sw-frame;
+    border-radius: 4px;
+    background: $sw-panel;
+    color: $sw-ink;
+
     font-family: $font-family-alt;
-    color: black;
 
     h1, h2, h3 {
         grid-column: 1 / -1;
@@ -12,11 +18,12 @@
     }
 
     h1 {
-        padding: .5rem 0;
+        padding: .5rem 0 .25rem;
 
-        color: black;
+        color: $sw-ink;
 
-        font-family: $font-family-general;
+        font-family: $font-family-display;
+        letter-spacing: .06em;
         font-size: 14pt;
         font-weight: bold;
         line-height: 1;
@@ -24,14 +31,27 @@
     }
 
     h2 {
-        font-size: 12pt; 
+        color: $sw-steel;
+
+        font-size: 10pt;
     }
 
     h3 {
         font-size: 9pt; 
         text-transform: uppercase;
-        color: lighten(black,20%)
-    }    
+        color: $sw-steel;
+    }
+
+    > h3 {
+        padding: 4px 0;
+
+        background: $sw-starfield;
+        color: #b9c7d6;
+
+        font-family: $font-family-display;
+        letter-spacing: .2em;
+    }
+    
         
     .importantroll,
     .fullcrit,
@@ -46,33 +66,36 @@
 
     .sheet-fullcrit,
     .fullcrit {
-        color: darkgreen;
+        color: $sw-success;
     }
 
     .sheet-fullfail,
     .fullfail {
-        color: darkred;
+        color: $sw-fail;
     }
 
     .sheet-sw-roll {
         display: grid;
             gap: .25rem;
-        padding: 1rem 1.5rem;
-        
-        background: url("https://s3.amazonaws.com/files.d20.io/images/151442442/WL3whxtgGLSL18KI8cvGQw/max.png?1595121884") no-repeat center/100% 100%;
+        padding: .5rem 1rem 1rem;
     
         &__divider {
             width: 100%;
-            height: 10px; 
+            height: 2px;
+            margin: .25rem 0;
             grid-column: 1/-1;
 
-            background: url("https://s3.amazonaws.com/files.d20.io/images/151167682/MU4qaf0sjSe1o3s318ZhKA/max.png?1595036126") no-repeat center/100% 100%;
+            background: linear-gradient(90deg, transparent, $sw-accent 20%, $sw-accent 80%, transparent);
         }
 
         &__result {
             grid-column: 1 / -1;
 
-            font-size: 4rem;
+            color: $sw-holo-dark;
+
+            font-family: $font-family-display;
+            font-size: 3.25rem;
+            font-weight: 700;
             text-align: center;
         }
 
@@ -83,7 +106,9 @@
             grid-template-columns: 1fr 3em;
             padding: .5rem;
 
-            background: url("https://s3.amazonaws.com/files.d20.io/images/152053989/T4Qj08IjX22oQyaJ5_I9hA/max.png?1595356909") no-repeat center/100% 100%;
+            border: 1px solid rgba($sw-holo, .5);
+            border-radius: 3px;
+            background: rgba($sw-holo, .1);
 
             font-weight: bold;
         }
@@ -93,9 +118,11 @@
             grid-column: 1 / -1;
             padding: .5rem;
             
+            border-radius: 3px;
             color: white;
 
-            font-size: 1.25rem;
+            font-family: $font-family-display;
+            font-size: 1rem;
             font-weight: bold;
             letter-spacing: 1px;
             text-align: center;
@@ -107,13 +134,11 @@
         }
 
         &__success {
-            background: #073;
-            background: url("https://s3.amazonaws.com/files.d20.io/images/152053987/hoKLlnb8gZzQDMW6zEUewQ/max.png?1595356908") no-repeat center/100% 100%;
+            background: linear-gradient(180deg, lighten($sw-success, 6%), $sw-success);
         }
 
         &__fail {
-            background: #900;
-            background: url("https://s3.amazonaws.com/files.d20.io/images/152053988/NMX6iU7S6buq5KDq8l9NlQ/max.png?1595356908") no-repeat center/100% 100%;
+            background: linear-gradient(180deg, lighten($sw-fail, 6%), $sw-fail);
         }
 
         &__row {
@@ -134,8 +159,14 @@
         }
 
         &__label {
-            font-weight: bold;
+            color: $sw-steel;
+
+            font-family: $font-family-display;
+            font-size: .8em;
+            font-weight: 700;
+            letter-spacing: .06em;
             text-align: left;
+            text-transform: uppercase;
         }
 
         &__value {

@@ -247,7 +247,8 @@
                 &--1, &--2, &--3, &--4 {
                     display: none;
 
-                    background: url("https://s3.amazonaws.com/files.d20.io/images/152053987/hoKLlnb8gZzQDMW6zEUewQ/max.png?1595356908") no-repeat center/100% 100%;
+                    background: linear-gradient(180deg, lighten($sw-success, 6%), $sw-success);
+                    border-radius: 2px;
                     color: #fff;
 
                     font-size: 9pt;
@@ -259,7 +260,8 @@
             }
 
             button[type="action"] {
-                background: url("https://s3.amazonaws.com/files.d20.io/images/152053988/NMX6iU7S6buq5KDq8l9NlQ/max.png?1595356908") no-repeat center/100% 100%;
+                background: linear-gradient(180deg, $sw-frame-light, $sw-frame);
+                border-radius: 2px;
                 color: #fff;
 
                 font-size: 9pt;

@@ -10,7 +10,6 @@ mixin spell-row
                 span(name=`attr_spell_name`)
 
         .sw-spelltable__cell
-            span(name=`attr_spell_deity`)
             span(name=`attr_spell_lore`)
 
         .sw-spelltable__cell
@@ -36,23 +35,19 @@ mixin spell-row
                 .sw-settings__label(data-i18n=`Name`) 
                 input.sw-settings__input(name=`attr_spell_name`, type="text")
         
-            input(name=`attr_spell_type`, type="hidden", value="Spell")
+            input(name=`attr_spell_type`, type="hidden", value="Alter")
             .sw-settings__row
-                .sw-settings__label(data-i18n=`Type`) 
+                .sw-settings__label(data-i18n=`Skill`) 
                 select.sw-settings__input(name=`attr_spell_type`)
-                    option(value="Spell", data-i18n="Spell")
-                    option(value="Prayer", data-i18n="Prayer")
+                    each specialisation in findSkill("Force").specialisations.filter(spec => spec !== "Custom")
+                        option(value=specialisation, data-i18n=specialisation)
         
-            .sw-settings__row.control__hide--Spell
-                .sw-settings__label(data-i18n=`Lore`) 
+            .sw-settings__row
+                .sw-settings__label(data-i18n=`Discipline`) 
                 input.sw-settings__input(name=`attr_spell_lore`, type="text")
         
-            .sw-settings__row.control__hide--Prayer
-                .sw-settings__label(data-i18n=`Deity`) 
-                input.sw-settings__input(name=`attr_spell_deity`, type="text")
-        
             .sw-settings__row
-                .sw-settings__label(data-i18n=`CN`) 
+                .sw-settings__label(data-i18n=`DN`) 
                 input.sw-settings__input(name=`attr_spell_cn`, type="number")
         
             .sw-settings__row

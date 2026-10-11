@@ -10,25 +10,30 @@
             "options":[
                 "",
                 "Human",
-                "Halfling",
-                "Dwarf",
-                "High Elf",
-                "Wood Elf",
-                "Gnome",
+                "Bothan",
+                "Duros",
+                "Mon Calamari",
+                "Rodian",
+                "Trandoshan",
+                "Twi'lek",
+                "Wookiee",
+                "Zabrak",
+                "Droid",
             ]
         },
         {
             "name":"Class",
             "field":"select",
             "options":[
-                "Academic",
-                "Burgher",
-                "Courtier",
-                "Peasant",
-                "Ranger",
-                "Riverfolk",
-                "Rogue",
-                "Warrior",
+                "Fringer",
+                "Scoundrel",
+                "Soldier",
+                "Pilot",
+                "Technician",
+                "Noble",
+                "Diplomat",
+                "Bounty Hunter",
+                "Force Adept",
             ]
         },
         {
@@ -57,7 +62,7 @@
             "field":"text",
         },
         {
-            "name":"Hair",
+            "name":"Homeworld",
             "field":"text",
         },
         {
@@ -69,7 +74,7 @@
     const navigation = [
         "main",
         "combat",
-        "magic",
+        "force",
         "advances",
         "settings",
     ]
@@ -146,11 +151,13 @@
 
     const fate = [
         {
-            "name": "Fate",
+            "name": "Destiny",
+            "attr": "fate",
             "field": "number"
         },
         {
-            "name": "Fortune",
+            "name": "Force Points",
+            "attr": "fortune",
             "field": "number"
         },
     ]
@@ -185,52 +192,72 @@
         },
     ]
 
+    // Skill lists. "shown" lists the specialisations displayed on a new sheet;
+    // players toggle the rest from the skill's settings cog.
+    // The attribute for each skill is its name in lower case with
+    // spaces replaced by "-" (specialisations use "_"). Any change here must be
+    // mirrored in src/js/sheetworkers.js (sw.skills / sw.specialisations /
+    // sw.repeating_skills) and src/scss/_abstracts.scss ($skills /
+    // $specialisations); `npm run check` verifies that they agree.
     const skills = {
         advanced: [
             {
-                "name":"Animal Care",
+                "name":"Astrogation",
                 "characteristic":"intelligence",
                 "type":"advanced",
                 "grouped":false,
             },
             {
-                "name":"Animal Training",
+                "name":"Computers",
                 "characteristic":"intelligence",
                 "type":"advanced",
-                "grouped":true
+                "grouped":false,
             },
             {
-                "name":"Channelling",
+                "name":"Demolitions",
+                "characteristic":"dexterity",
+                "type":"advanced",
+                "grouped":false,
+            },
+            {
+                "name":"Deceive",
+                "characteristic":"fellowship",
+                "type":"advanced",
+                "grouped":false,
+            },
+            {
+                "name":"Force",
                 "characteristic":"willpower",
                 "type":"advanced",
                 "grouped":true,
-                "specialisations":["Azyr","Aqshy","Chamon","Dhar","Ghur","Ghyran","Hysh","Shyish","Ulgu","Custom"],
+                "specialisations":["Control","Sense","Alter","Custom"],
             },
             {
-                "name":"Evaluate",
+                "name":"Knowledge",
                 "characteristic":"intelligence",
                 "type":"advanced",
-                "grouped":false,
-            },
-            {
-                "name":"Heal",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false,
+                "grouped":true
             },
             {
                 "name":"Language",
                 "characteristic":"intelligence",
                 "type":"advanced",
                 "grouped":true,
-                "specialisations":["Magick"],
+                "specialisations":["Galactic Basic"],
+                "shown":["Galactic Basic"],
                 "forced":1
             },
             {
-                "name":"Lore",
+                "name":"Mechanics",
                 "characteristic":"intelligence",
                 "type":"advanced",
-                "grouped":true
+                "grouped":false,
+            },
+            {
+                "name":"Medicine",
+                "characteristic":"intelligence",
+                "type":"advanced",
+                "grouped":false,
             },
             {
                 "name":"Perform",
@@ -239,29 +266,18 @@
                 "grouped":true
             },
             {
-                "name":"Pick Lock",
-                "characteristic":"dexterity",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Play",
-                "characteristic":"dexterity",
+                "name":"Pilot",
+                "characteristic":"agility",
                 "type":"advanced",
                 "grouped":true
-            },
-            {
-                "name":"Pray",
-                "characteristic":"fellowship",
-                "type":"advanced",
-                "grouped":false
             },
             {
                 "name":"Ranged",
                 "characteristic":"ballistic skill",
                 "type":"advanced",
                 "grouped":true,
-                "specialisations":["Blackpowder", "Bow", "Crossbow", "Engineering", "Entangling", "Explosives", "Sling", "Throwing"],
+                "specialisations":["Pistol", "Rifle", "Heavy", "Gunnery", "Exotic", "Entangling", "Explosives", "Throwing"],
+                "shown":["Pistol", "Rifle"],
             },
             {
                 "name":"Research",
@@ -270,19 +286,7 @@
                 "grouped":false
             },
             {
-                "name":"Sail",
-                "characteristic":"agility",
-                "type":"advanced",
-                "grouped":true
-            },
-            {
-                "name":"Secret Signs",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":true
-            },
-            {
-                "name":"Set Trap",
+                "name":"Security",
                 "characteristic":"dexterity",
                 "type":"advanced",
                 "grouped":false
@@ -294,8 +298,20 @@
                 "grouped":false
             },
             {
+                "name":"Slicing",
+                "characteristic":"intelligence",
+                "type":"advanced",
+                "grouped":false
+            },
+            {
                 "name":"Swim",
                 "characteristic":"strength",
+                "type":"advanced",
+                "grouped":false
+            },
+            {
+                "name":"Tactics",
+                "characteristic":"intelligence",
                 "type":"advanced",
                 "grouped":false
             },
@@ -304,16 +320,21 @@
                 "characteristic":"initiative",
                 "type":"advanced",
                 "grouped":false
-            }, 
+            },
             {
                 "name":"Trade",
                 "characteristic":"dexterity",
                 "type":"advanced",
                 "grouped":true
-            }, 
-
+            },
         ],
         basic: [
+            {
+                "name":"Animal Handling",
+                "characteristic":"willpower",
+                "type":"basic",
+                "grouped":false,
+            },
             {
                 "name":"Art",
                 "characteristic":"dexterity",
@@ -333,26 +354,20 @@
                 "grouped":false,
             },
             {
+                "name":"Carouse",
+                "characteristic":"toughness",
+                "type":"basic",
+                "grouped":false,
+            },
+            {
                 "name":"Charm",
                 "characteristic":"fellowship",
                 "type":"basic",
                 "grouped":false,
             },
             {
-                "name":"Charm Animal",
-                "characteristic":"willpower",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
                 "name":"Climb",
                 "characteristic":"strength",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Consume Alcohol",
-                "characteristic":"toughness",
                 "type":"basic",
                 "grouped":false,
             },
@@ -393,12 +408,6 @@
                 "grouped":false,
             },
             {
-                "name":"Gossip",
-                "characteristic":"fellowship",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
                 "name":"Haggle",
                 "characteristic":"fellowship",
                 "type":"basic",
@@ -427,17 +436,12 @@
                 "characteristic":"weapon skill",
                 "type":"basic",
                 "grouped":true,
-                "specialisations":["Basic","Brawling","Cavalry","Fencing","Flail","Parry","Polearm","Two-Handed"],
+                "specialisations":["Basic","Brawling","Lightsaber","Vibroweapon","Parry","Polearm","Two-Handed","Stun"],
+                "shown":["Basic","Brawling"],
             },
             {
                 "name":"Navigation",
                 "characteristic":"initiative",
-                "type":"basic",
-                "grouped":false
-            },
-            {
-                "name":"Outdoor Survival",
-                "characteristic":"intelligence",
                 "type":"basic",
                 "grouped":false
             },
@@ -454,19 +458,35 @@
                 "grouped":true
             },
             {
-                "name":"Row",
-                "characteristic":"strength",
-                "type":"basic",
-                "grouped":false
-            },
-            {
                 "name":"Stealth",
                 "characteristic":"agility",
                 "type":"basic",
                 "grouped":true
-            },   
+            },
+            {
+                "name":"Streetwise",
+                "characteristic":"fellowship",
+                "type":"basic",
+                "grouped":false,
+            },
+            {
+                "name":"Survival",
+                "characteristic":"intelligence",
+                "type":"basic",
+                "grouped":false
+            },
+            {
+                "name":"Zero-G",
+                "characteristic":"agility",
+                "type":"basic",
+                "grouped":false
+            },
         ]
     };
+
+    // Skills that carry fixed specialisation rows (Melee, Ranged, Force, Language).
+    const specialised_skills = [...skills.basic, ...skills.advanced].filter(skill => skill.specialisations);
+    const findSkill = (name) => [...skills.basic, ...skills.advanced].find(skill => skill.name === name);
 
     const ambitions = [
         {
@@ -499,25 +519,25 @@
 
     const corruption = [
         {
-            "name": "Corruption Points",
+            "name": "Dark Side Points",
+            "attr": "corruption_points",
             "field": "number"
         },
     ]
 
     const wealth = [
         {
-            "name": "GC",
+            "name": "Credits",
             "field": "number"
         },
         {
-            "name": "SS",
+            "name": "Bank",
             "field": "number"
         },
         {
-            "name": "BP",
+            "name": "Debt",
             "field": "number"
         },
-
     ]
 
     const convertChar = (char) => {

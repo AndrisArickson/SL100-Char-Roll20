@@ -1,13 +1,42 @@
 .sheet-sw-header {
     padding: 0;
+    overflow: hidden;
 
     &__logo {
-       background: url("https://s3.amazonaws.com/files.d20.io/images/149231620/nbGaZuoDxh1Xl6o7isShjQ/max.png?1594318848") center/cover; 
-    }
-    
-    &__info {
-        
+        display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
+        background: $sw-starfield;
+        border-bottom: 3px solid $sw-accent;
+    }
+
+    &__logo-title {
+        color: $sw-accent;
+
+        font-family: $font-family-display;
+        font-size: 44px;
+        font-weight: 900;
+        letter-spacing: .18em;
+        line-height: 1;
+        text-shadow: 0 0 12px rgba($sw-accent, .35);
+    }
+
+    &__logo-subtitle {
+        margin-top: 6px;
+
+        color: #b9c7d6;
+
+        font-family: $font-family-display;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: .45em;
+        text-transform: uppercase;
+    }
+
+    &__info {
+        padding-top: .5em;
     }
 
     &__item-wrapper {
@@ -30,7 +59,7 @@
 
         &--age,
         &--height,
-        &--hair {
+        &--homeworld {
             border: 0;
                 border-right: $grid-border;
         }
@@ -38,6 +67,14 @@
 
     &__title {
         padding: $margin-small;
+
+        color: $sw-steel;
+
+        font-family: $font-family-display;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .1em;
+        text-transform: uppercase;
     }
 
     button[type="action"]#{&}__hidecustom {

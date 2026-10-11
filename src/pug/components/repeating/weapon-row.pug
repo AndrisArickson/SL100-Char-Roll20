@@ -38,7 +38,7 @@ mixin weapon-row
                 .sw-settings__label(data-i18n=`Group`) 
                 select.sw-settings__input(name=`attr_weapon_group`)
                     - 
-                        const all_specs = [...skills.basic[18].specialisations, ...skills.advanced[11].specialisations]
+                        const all_specs = [...findSkill("Melee").specialisations, ...findSkill("Ranged").specialisations]
                     each specialisation in all_specs
                         option(value=specialisation, data-i18n=specialisation)
         

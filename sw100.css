@@ -1,21 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=IM+Fell+DW+Pica:400|Lusitana:400:700&display=swap");
-.ui-dialog .charsheet * {
-  display: unset;
-  width: unset;
-  height: unset;
-  padding: unset;
-  margin-bottom: unset;
-  font-family: unset;
-  font-size: unset;
-  font-weight: unset;
-  line-height: unset;
-  color: unset;
-  border: unset;
-  border-radius: unset;
-  background: unset;
-  background-color: unset;
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Exo+2:ital,wght@0,400;0,600;0,700;1,400&display=swap");
 .charsheet .sheet-sw-wrapper {
   position: relative;
 }
@@ -24,9 +7,15 @@
 .charsheet .sheet-sw-wrapper h3,
 .charsheet .sheet-sw-wrapper h4,
 .charsheet .sheet-sw-wrapper h5 {
-  font-size: unset;
-  line-height: unset;
-  color: unset;
+  line-height: 1.2;
+}
+.charsheet .sheet-sw-wrapper input,
+.charsheet .sheet-sw-wrapper input[type=number],
+.charsheet .sheet-sw-wrapper textarea,
+.charsheet .sheet-sw-wrapper select,
+.charsheet .sheet-sw-wrapper button,
+.charsheet .sheet-sw-wrapper button[type=roll] {
+  width: 100%;
 }
 .charsheet .sheet-sw-wrapper p,
 .charsheet .sheet-sw-wrapper input,
@@ -36,23 +25,24 @@
 .charsheet .sheet-sw-wrapper button,
 .charsheet .sheet-sw-wrapper button[type=roll],
 .charsheet .sheet-sw-wrapper label {
-  display: unset;
-  width: 100%;
   min-width: 0;
-  height: unset;
-  padding: unset;
-  margin-bottom: unset;
-  color: unset;
-  border: unset;
-  border-radius: unset;
-  background: unset;
-  background-color: unset;
-  box-shadow: unset;
-  font-family: unset;
-  font-size: unset;
-  font-weight: unset;
-  text-align: unset;
-  line-height: unset;
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: inherit;
+  line-height: inherit;
+}
+.charsheet .sheet-sw-wrapper input[type=checkbox],
+.charsheet .sheet-sw-wrapper input[type=radio] {
+  width: auto;
+}
+.charsheet .sheet-sw-wrapper button {
+  padding: 0;
 }
 .charsheet .sheet-sw-wrapper button[type=roll]:before {
   display: none;
@@ -63,8 +53,8 @@
 .charsheet .sheet-sw-wrapper input[readonly],
 .charsheet .sheet-sw-wrapper select[readonly],
 .charsheet .sheet-sw-wrapper textarea[readonly] {
-  background-color: unset;
-  border-color: unset;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .charsheet * {
@@ -90,8 +80,8 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 
 .sheet-sw-wrapper .sheet-sw-pc,
 .sheet-sw-wrapper .sheet-sw-npc {
-  font-family: "IM Fell DW Pica", serif;
-  font-size: 1.4rem;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
 }
 
 .sheet-sw-wrapper input[type=text],
@@ -100,22 +90,24 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .sheet-sw-wrapper option,
 .sheet-sw-wrapper textarea,
 .sheet-sw-wrapper span.sheet-display {
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
   font-size: 10pt;
 }
 .sheet-sw-wrapper h1, .sheet-sw-wrapper h2, .sheet-sw-wrapper h3 {
   margin: 0;
   padding: 0;
-  font-family: "IM Fell DW Pica", serif;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .sheet-sw-wrapper h1 {
-  font-size: 1.65rem;
+  font-size: 1.2rem;
 }
 .sheet-sw-wrapper h2 {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 }
 .sheet-sw-wrapper h3 {
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 .sheet-sw-wrapper .sheet-pictos {
   font-family: Pictos;
@@ -124,9 +116,13 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .sheet-sw-pc {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  border: 30px solid transparent;
-  border-image: url("https://s3.amazonaws.com/files.d20.io/images/149238777/ywxEJDLgdNlQGlSSRbjpmw/max.png?1594320939") 30 round;
-  grid-gap: 0px;
+  padding: 6px;
+  border: 2px solid #151a21;
+  border-radius: 6px;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 9px), linear-gradient(180deg, #262e39, #151a21);
+  box-shadow: inset 0 0 0 1px rgba(243, 195, 49, 0.25);
+  color: #10151c;
+  grid-gap: 4px;
 }
 .sheet-sw-pc > * {
   min-width: 100px;
@@ -277,7 +273,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
   width: auto;
   padding: 0 1.5em 0.5em;
 }
-.sheet-sw-header__item-wrapper, .sheet-sw-header__item-wrapper--character_name, .sheet-sw-header__item-wrapper--species, .sheet-sw-header__item-wrapper--class, .sheet-sw-header__item-wrapper--career, .sheet-sw-header__item-wrapper--career_level, .sheet-sw-header__item-wrapper--career_path, .sheet-sw-header__item-wrapper--age, .sheet-sw-header__item-wrapper--height, .sheet-sw-header__item-wrapper--hair, .sheet-sw-header__item-wrapper--eyes {
+.sheet-sw-header__item-wrapper, .sheet-sw-header__item-wrapper--character_name, .sheet-sw-header__item-wrapper--species, .sheet-sw-header__item-wrapper--class, .sheet-sw-header__item-wrapper--career, .sheet-sw-header__item-wrapper--career_level, .sheet-sw-header__item-wrapper--career_path, .sheet-sw-header__item-wrapper--age, .sheet-sw-header__item-wrapper--height, .sheet-sw-header__item-wrapper--homeworld, .sheet-sw-header__item-wrapper--eyes {
   display: flex;
   flex-flow: row nowrap;
   align-items: baseline;
@@ -477,7 +473,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 }
 .sheet-sw-skilltable__row, .sheet-sw-skilltable__row--grouped, .sheet-sw-skilltable__row--specialisation, .sheet-sw-skilltable__row--head {
   display: grid;
-  grid-template-columns: 1.5rem 1fr 4rem 2.75rem 2.75rem 2.75rem;
+  grid-template-columns: 1.5rem 1fr 3rem 2.5rem 2.5rem 2.5rem;
   grid-column: 1/-1;
 }
 .sheet-sw-skilltable__row--head .sheet-sw-skilltable__cell, .sheet-sw-skilltable__row--head .sheet-sw-skilltable__cell--grouped, .sheet-sw-skilltable__row--head .sheet-sw-skilltable__cell--span2, .sheet-sw-skilltable__row--head .sheet-sw-skilltable__cell--nosettings, .sheet-sw-skilltable__row--head .sheet-sw-skilltable__cell--last {
@@ -745,7 +741,7 @@ button.sheet-pictos[type=action]:hover {
   padding: 2px;
 }
 .sheet-sw-panel h1.sheet-sw-panel__header {
-  font-size: 1.65rem;
+  font-size: 1.2rem;
   font-weight: normal;
   text-align: center;
   text-transform: uppercase;
@@ -823,7 +819,7 @@ button.sheet-pictos[type=action]:hover {
   grid-column: 1/-1;
   text-align: center;
   text-transform: uppercase;
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
 }
 .sheet-sw-settings--large {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -914,28 +910,28 @@ button.sheet-pictos[type=action]:hover {
 }
 .sheet-sw-settings__item input[type=hidden][value=on] ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type=number] {
   pointer-events: auto;
-  background: rgba(36, 107, 131, 0.125);
-  color: #000;
+  background: rgba(44, 109, 155, 0.1);
+  color: #10151c;
 }
 .sheet-sw-settings__item input[type=hidden][value="1"] ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type=number] {
   pointer-events: auto;
-  background: rgba(36, 107, 131, 0.125);
-  color: #000;
+  background: rgba(44, 109, 155, 0.1);
+  color: #10151c;
 }
 .sheet-sw-settings__item input[type=hidden][value="2"] ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type=number] {
   pointer-events: auto;
   background: rgba(184, 134, 11, 0.25);
-  color: #000;
+  color: #10151c;
 }
 .sheet-sw-settings__item input[type=hidden][value="3"] ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type=number] {
   pointer-events: auto;
   background: rgba(192, 192, 192, 0.25);
-  color: #000;
+  color: #10151c;
 }
 .sheet-sw-settings__item input[type=hidden][value="4"] ~ * input.sheet-sw-settings__input.sheet-sw-settings__input[type=number] {
   pointer-events: auto;
   background: rgba(255, 215, 0, 0.25);
-  color: #000;
+  color: #10151c;
 }
 .sheet-sw-settings__item label {
   display: block;
@@ -964,19 +960,21 @@ button.sheet-pictos[type=action]:hover {
 }
 .sheet-sw-settings__controlwrap span.sheet-sw-current_level--1, .sheet-sw-settings__controlwrap span.sheet-sw-current_level--2, .sheet-sw-settings__controlwrap span.sheet-sw-current_level--3, .sheet-sw-settings__controlwrap span.sheet-sw-current_level--4 {
   display: none;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/152053987/hoKLlnb8gZzQDMW6zEUewQ/max.png?1595356908") no-repeat center/100% 100%;
+  background: linear-gradient(180deg, rgb(14.133126935%, 57.4747162023%, 35.8039215686%), #1e7a4c);
+  border-radius: 2px;
   color: #fff;
   font-size: 9pt;
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
 }
 .sheet-sw-settings__controlwrap button[type=action] {
-  background: url("https://s3.amazonaws.com/files.d20.io/images/152053988/NMX6iU7S6buq5KDq8l9NlQ/max.png?1595356908") no-repeat center/100% 100%;
+  background: linear-gradient(180deg, #262e39, #151a21);
+  border-radius: 2px;
   color: #fff;
   font-size: 9pt;
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
@@ -1017,8 +1015,8 @@ button.sheet-pictos[type=action]:hover {
 .sheet-sw-wrapper textarea,
 .sheet-sw-wrapper select {
   padding: 0 3px;
-  background: rgba(36, 107, 131, 0.125);
-  color: #000;
+  background: rgba(44, 109, 155, 0.1);
+  color: #10151c;
   vertical-align: baseline;
 }
 .sheet-sw-wrapper input[type=text]:focus, .sheet-sw-wrapper input[type=text]:active, .sheet-sw-wrapper input[type=text]:hover,
@@ -1031,7 +1029,7 @@ button.sheet-pictos[type=action]:hover {
 .sheet-sw-wrapper select:focus,
 .sheet-sw-wrapper select:active,
 .sheet-sw-wrapper select:hover {
-  background: rgba(51, 129, 155, 0.125);
+  background: rgba(44, 109, 155, 0.18);
   outline: 0;
 }
 .sheet-sw-wrapper input[type=text],
@@ -1060,9 +1058,9 @@ button.sheet-pictos[type=action]:hover {
   margin: 2px;
   padding: 0.5rem;
   border-radius: 5px;
-  background-color: #28a745;
-  color: #fff;
-  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f3c331;
+  color: #10151c;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
   font-size: 8pt;
   font-weight: bold;
   text-align: center;
@@ -1072,12 +1070,12 @@ button.sheet-pictos[type=action]:hover {
   margin: 0;
 }
 .charsheet .sheet-sw-wrapper button[type=roll]:hover {
-  color: red;
+  color: #2c6d9b;
 }
 
 .sheet-sw-field,
 .sheet-sw-textarea {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
 .sheet-sw-field:last-child,
 .sheet-sw-textarea:last-child {
@@ -1088,7 +1086,7 @@ button.sheet-pictos[type=action]:hover {
 .sheet-sw-textarea--grid1-1,
 .sheet-sw-textarea--grid1-25,
 .sheet-sw-textarea--grid1-2 {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
 .sheet-sw-field--grid2-1:last-child, .sheet-sw-field--grid1-1:last-child, .sheet-sw-field--grid1-25:last-child, .sheet-sw-field--grid1-2:last-child,
 .sheet-sw-textarea--grid2-1:last-child,
@@ -1099,7 +1097,7 @@ button.sheet-pictos[type=action]:hover {
 }
 .sheet-sw-field__span,
 .sheet-sw-textarea__span {
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
 }
 .sheet-sw-field__wrapper,
 .sheet-sw-textarea__wrapper {
@@ -1117,18 +1115,23 @@ button.sheet-pictos[type=action]:hover {
 
 .sheet-sw-woundstable__row, .sheet-sw-experiencetable__row, .sheet-sw-careertable__row, .sheet-sw-spelltable__row, .sheet-sw-weapontable__row, .sheet-sw-criticaltable__row, .sheet-sw-armourtable__row, .sheet-sw-trappingtable__row, .sheet-sw-corruptiontable__row, .sheet-sw-psychologytable__row, .sheet-sw-conditiontable__row, .sheet-sw-talenttable__row, .sheet-sw-skilltable__row, .sheet-sw-skilltable__row--specialisation, .sheet-sw-skilltable__row--grouped, .sheet-sw-field,
 .sheet-sw-textarea, .sheet-sw-npccharacteristic__cell--head, .sheet-sw-woundstable__row--head, .sheet-sw-experiencetable__row--head, .sheet-sw-careertable__row--head, .sheet-sw-spelltable__row--head, .sheet-sw-weapontable__row--head, .sheet-sw-criticaltable__row--head, .sheet-sw-armourtable__row--head, .sheet-sw-trappingtable__row--head, .sheet-sw-corruptiontable__row--head, .sheet-sw-psychologytable__row--head, .sheet-sw-conditiontable__row--head, .sheet-sw-talenttable__row--head, .sheet-sw-skilltable__row--head {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
 
 .sheet-sw-npccharacteristic__cell--head, .sheet-sw-woundstable__row--head, .sheet-sw-experiencetable__row--head, .sheet-sw-careertable__row--head, .sheet-sw-spelltable__row--head, .sheet-sw-weapontable__row--head, .sheet-sw-criticaltable__row--head, .sheet-sw-armourtable__row--head, .sheet-sw-trappingtable__row--head, .sheet-sw-corruptiontable__row--head, .sheet-sw-psychologytable__row--head, .sheet-sw-conditiontable__row--head, .sheet-sw-talenttable__row--head, .sheet-sw-skilltable__row--head {
-  font-weight: bold;
+  color: #3c4857;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .sheet-sw-npccharacteristic__cell, .sheet-sw-npccharacteristic__cell--head, .sheet-sw-woundstable__cell, .sheet-sw-experiencetable__cell, .sheet-sw-careertable__cell, .sheet-sw-spelltable__cell, .sheet-sw-weapontable__cell, .sheet-sw-criticaltable__cell, .sheet-sw-armourtable__cell, .sheet-sw-trappingtable__cell, .sheet-sw-corruptiontable__cell, .sheet-sw-psychologytable__cell, .sheet-sw-conditiontable__cell, .sheet-sw-talenttable__cell, .sheet-sw-skilltable__cell, .sheet-sw-skilltable__cell--last, .sheet-sw-skilltable__cell--nosettings, .sheet-sw-skilltable__cell--span2, .sheet-sw-skilltable__cell--grouped, .sheet-sw-field__header,
 .sheet-sw-field__input,
 .sheet-sw-textarea__header,
 .sheet-sw-textarea__input, .sheet-sw-npccharacteristic__col:last-child .sheet-sw-npccharacteristic__cell, .sheet-sw-npccharacteristic__col:last-child .sheet-sw-npccharacteristic__cell--head, .sheet-sw-woundstable__cell--last, .sheet-sw-experiencetable__cell--last, .sheet-sw-careertable__cell--last, .sheet-sw-spelltable__cell--last, .sheet-sw-weapontable__cell--last, .sheet-sw-criticaltable__cell--last, .sheet-sw-armourtable__cell--last, .sheet-sw-trappingtable__cell--last, .sheet-sw-corruptiontable__cell--last, .sheet-sw-psychologytable__cell--last, .sheet-sw-conditiontable__cell--last, .sheet-sw-talenttable__cell--last, .sheet-sw-skilltable__cell--last {
-  border-right: 1px solid black;
+  border-right: 1px solid rgba(60, 72, 87, 0.55);
 }
 .sheet-sw-npccharacteristic__cell input[type=number], .sheet-sw-npccharacteristic__cell--head input[type=number], .sheet-sw-woundstable__cell input[type=number], .sheet-sw-experiencetable__cell input[type=number], .sheet-sw-careertable__cell input[type=number], .sheet-sw-spelltable__cell input[type=number], .sheet-sw-weapontable__cell input[type=number], .sheet-sw-criticaltable__cell input[type=number], .sheet-sw-armourtable__cell input[type=number], .sheet-sw-trappingtable__cell input[type=number], .sheet-sw-corruptiontable__cell input[type=number], .sheet-sw-psychologytable__cell input[type=number], .sheet-sw-conditiontable__cell input[type=number], .sheet-sw-talenttable__cell input[type=number], .sheet-sw-skilltable__cell input[type=number], .sheet-sw-skilltable__cell--last input[type=number], .sheet-sw-skilltable__cell--nosettings input[type=number], .sheet-sw-skilltable__cell--span2 input[type=number], .sheet-sw-skilltable__cell--grouped input[type=number], .sheet-sw-field__header input[type=number],
 .sheet-sw-field__input input[type=number],
@@ -1140,8 +1143,8 @@ button.sheet-pictos[type=action]:hover {
 .sheet-sw-field__input > span[name*=attr],
 .sheet-sw-textarea__header > span[name*=attr],
 .sheet-sw-textarea__input > span[name*=attr], .sheet-sw-npccharacteristic__col:last-child .sheet-sw-npccharacteristic__cell > span[name*=attr], .sheet-sw-npccharacteristic__col:last-child .sheet-sw-npccharacteristic__cell--head > span[name*=attr], .sheet-sw-woundstable__cell--last > span[name*=attr], .sheet-sw-experiencetable__cell--last > span[name*=attr], .sheet-sw-careertable__cell--last > span[name*=attr], .sheet-sw-spelltable__cell--last > span[name*=attr], .sheet-sw-weapontable__cell--last > span[name*=attr], .sheet-sw-criticaltable__cell--last > span[name*=attr], .sheet-sw-armourtable__cell--last > span[name*=attr], .sheet-sw-trappingtable__cell--last > span[name*=attr], .sheet-sw-corruptiontable__cell--last > span[name*=attr], .sheet-sw-psychologytable__cell--last > span[name*=attr], .sheet-sw-conditiontable__cell--last > span[name*=attr], .sheet-sw-talenttable__cell--last > span[name*=attr] {
-  font-family: "Lusitana", serif;
-  font-size: 1.25rem;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
 }
 
 .sheet-sw-skilltable__cell--grouped, .sheet-sw-npccharacteristic__col:last-child .sheet-sw-npccharacteristic__cell, .sheet-sw-npccharacteristic__col:last-child .sheet-sw-npccharacteristic__cell--head, .sheet-sw-woundstable__cell--last, .sheet-sw-experiencetable__cell--last, .sheet-sw-careertable__cell--last, .sheet-sw-spelltable__cell--last, .sheet-sw-weapontable__cell--last, .sheet-sw-criticaltable__cell--last, .sheet-sw-armourtable__cell--last, .sheet-sw-trappingtable__cell--last, .sheet-sw-corruptiontable__cell--last, .sheet-sw-psychologytable__cell--last, .sheet-sw-conditiontable__cell--last, .sheet-sw-talenttable__cell--last, .sheet-sw-skilltable__cell--last {
@@ -1149,27 +1152,28 @@ button.sheet-pictos[type=action]:hover {
 }
 
 .sheet-sw-npccharacteristic__cell--highlight, .sheet-sw-woundstable__cell--highlight, .sheet-sw-experiencetable__cell--highlight, .sheet-sw-careertable__cell--highlight, .sheet-sw-spelltable__cell--highlight, .sheet-sw-weapontable__cell--highlight, .sheet-sw-criticaltable__cell--highlight, .sheet-sw-armourtable__cell--highlight, .sheet-sw-trappingtable__cell--highlight, .sheet-sw-corruptiontable__cell--highlight, .sheet-sw-psychologytable__cell--highlight, .sheet-sw-conditiontable__cell--highlight, .sheet-sw-talenttable__cell--highlight, .sheet-sw-skilltable__cell--highlight {
+  color: #1d4f73;
   font-weight: bold;
 }
 
 .sheet-sw-npccharacteristic__cell--description, .sheet-sw-woundstable__cell--description, .sheet-sw-experiencetable__cell--description, .sheet-sw-careertable__cell--description, .sheet-sw-spelltable__cell--description, .sheet-sw-weapontable__cell--description, .sheet-sw-criticaltable__cell--description, .sheet-sw-armourtable__cell--description, .sheet-sw-trappingtable__cell--description, .sheet-sw-corruptiontable__cell--description, .sheet-sw-psychologytable__cell--description, .sheet-sw-conditiontable__cell--description, .sheet-sw-talenttable__cell--description, .sheet-sw-skilltable__cell--description {
-  border-top: 1px dotted dimgrey;
+  border-top: 1px dotted rgba(60, 72, 87, 0.45);
   font-size: 0.95em;
   font-style: italic;
 }
 
 .sheet-sw-chartable__cell {
-  border-left: 1px solid black;
-  border-top: 1px solid black;
-  font-family: "Lusitana", serif;
+  border-left: 1px solid rgba(60, 72, 87, 0.55);
+  border-top: 1px solid rgba(60, 72, 87, 0.55);
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
 }
 .sheet-sw-chartable__cell--left {
   font-weight: bold;
-  border-top: 1px solid black;
+  border-top: 1px solid rgba(60, 72, 87, 0.55);
 }
 .sheet-sw-chartable__cell--head {
   font-weight: bold;
-  border-left: 1px solid black;
+  border-left: 1px solid rgba(60, 72, 87, 0.55);
 }
 .sheet-sw-chartable__cell--highlight {
   font-weight: bold;
@@ -1177,19 +1181,23 @@ button.sheet-pictos[type=action]:hover {
 
 .sheet-sw-skilltable__row--grouped,
 .sheet-sw-skilltable__row--specialisation {
-  background: rgba(36, 107, 131, 0.1);
+  background: rgba(44, 109, 155, 0.09);
 }
 
 .sheet-sw-skilltable__cell--grouped {
   padding-top: 1px;
-  font-weight: bold;
+  color: #1d4f73;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-align: center !important;
   text-indent: -1.5rem;
   text-transform: uppercase;
 }
 
 .sheet-sw-armour__display {
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
   font-size: 14pt;
   font-weight: bold;
   line-height: 3.5rem;
@@ -1197,49 +1205,109 @@ button.sheet-pictos[type=action]:hover {
 
 .sheet-sw-header {
   padding: 0;
+  overflow: hidden;
 }
 .sheet-sw-header__logo {
-  background: url("https://s3.amazonaws.com/files.d20.io/images/149231620/nbGaZuoDxh1Xl6o7isShjQ/max.png?1594318848") center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(1px 1px at 12% 30%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.7) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 22%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 76% 64%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 89% 18%, rgba(255, 255, 255, 0.8) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 4% 82%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 47% 48%, rgba(255, 255, 255, 0.5) 50%, transparent 51%), radial-gradient(ellipse at 70% 120%, rgba(44, 109, 155, 0.45), transparent 60%), linear-gradient(180deg, #0b0f15, #18202b);
+  border-bottom: 3px solid #f3c331;
+}
+.sheet-sw-header__logo-title {
+  color: #f3c331;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(243, 195, 49, 0.35);
+}
+.sheet-sw-header__logo-subtitle {
+  margin-top: 6px;
+  color: #b9c7d6;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+}
+.sheet-sw-header__info {
+  padding-top: 0.5em;
 }
 .sheet-sw-header__item-wrapper--character_name, .sheet-sw-header__item-wrapper--species, .sheet-sw-header__item-wrapper--career, .sheet-sw-header__item-wrapper--career_path {
   border: 0;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  border-right: 1px solid rgba(60, 72, 87, 0.55);
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
 .sheet-sw-header__item-wrapper--class, .sheet-sw-header__item-wrapper--career_level, .sheet-sw-header__item-wrapper--status {
   border: 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
-.sheet-sw-header__item-wrapper--age, .sheet-sw-header__item-wrapper--height, .sheet-sw-header__item-wrapper--hair {
+.sheet-sw-header__item-wrapper--age, .sheet-sw-header__item-wrapper--height, .sheet-sw-header__item-wrapper--homeworld {
   border: 0;
-  border-right: 1px solid black;
+  border-right: 1px solid rgba(60, 72, 87, 0.55);
 }
 .sheet-sw-header__title {
   padding: 0.25rem;
+  color: #3c4857;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 .sheet-sw-header button[type=action].sheet-sw-header__hidecustom {
   text-align: center;
 }
 
-.sheet-sw-panel {
-  background: url("https://s3.amazonaws.com/files.d20.io/images/144589463/lqxlbyKEgMXnVw8VajQTCQ/max.png?1592586044") #eff2f1 center/cover;
-  border: 3px solid transparent;
-  border-image: url("https://s3.amazonaws.com/files.d20.io/images/144604966/Zs6TlxfYvUa6o0tD1DmW2Q/max.png?1592590034") 8/2/0 repeat;
+.sheet-sw-wrapper .sheet-sw-panel {
+  background: linear-gradient(180deg, rgb(96.5411764706%, 97.1176470588%, 97.6941176471%), #edf0f3 40%, #dde3e9);
+  border: 1px solid #0a0d12;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
 }
-.sheet-sw-panel h1 {
-  border-bottom: 1px solid black;
+.sheet-sw-wrapper .sheet-sw-panel h1 {
+  padding: 3px 0 2px;
+  margin-bottom: 1px;
+  border-bottom: 2px solid #f3c331;
+  background: linear-gradient(90deg, #151a21, #262e39 50%, #151a21);
+  color: #f3c331;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
 }
 
 .sheet-sw-armour__wrapper {
-  background: url("https://s3.amazonaws.com/files.d20.io/images/149241161/EDyX-ElHM2YXQDCqP95rhg/max.png?1594321614") 60% 5rem/115px no-repeat, url("https://s3.amazonaws.com/files.d20.io/images/144589463/lqxlbyKEgMXnVw8VajQTCQ/max.png?1592586044") center/cover;
+  background: radial-gradient(circle at 50% 55%, transparent 0 58px, rgba(44, 109, 155, 0.25) 59px 60px, transparent 61px 100px, rgba(44, 109, 155, 0.18) 101px 102px, transparent 103px), linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(44, 109, 155, 0.18) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)), linear-gradient(180deg, rgb(96.5411764706%, 97.1176470588%, 97.6941176471%), #dde3e9);
 }
 .sheet-sw-armour__display {
-  border: 1px solid black;
+  border: 1px solid #3c4857;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.75);
+  color: #1d4f73;
 }
 
-.sheet-sw-wrapper .sheet-sw-controls button {
-  background: rgba(44, 76, 87, 0.125);
+.sheet-sw-wrapper .sheet-sw-controls button[type=roll],
+.sheet-sw-wrapper .sheet-sw-controls button[type=action] {
+  padding: 3px 0;
+  border: 1px solid #3c4857;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #262e39, #151a21);
+  color: #e6edf4;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
   text-align: center;
+  text-transform: uppercase;
+}
+.sheet-sw-wrapper .sheet-sw-controls button[type=roll]:hover,
+.sheet-sw-wrapper .sheet-sw-controls button[type=action]:hover {
+  color: #f3c331;
 }
 .sheet-sw-wrapper .sheet-sw-advantage {
   font-size: 16pt;
@@ -1249,34 +1317,52 @@ button.sheet-pictos[type=action]:hover {
   text-align: center;
 }
 .sheet-sw-wrapper .sheet-sw-advantage__wrapper input[type=number].sheet-sw-advantage__input {
-  border: 1px solid black;
+  border: 1px solid rgba(60, 72, 87, 0.55);
   font-size: 16pt;
+}
+
+.sheet-sw-wrapper .sheet-sw-navigation.sheet-sw-panel {
+  background: linear-gradient(180deg, #262e39, #151a21);
+  border-color: #0a0d12;
+  color: #dfe7ef;
 }
 
 .sheet-sw-navigation__item input[type=checkbox]:checked + span, .sheet-sw-navigation__item--settings input[type=checkbox]:checked + span,
 .sheet-sw-navigation__item input[type=radio]:checked + span,
 .sheet-sw-navigation__item--settings input[type=radio]:checked + span {
-  background: rgba(36, 107, 131, 0.125);
-  border: 1px solid rgba(7.6505811906%, 22.7392274275%, 27.8396148879%, 0.125);
+  border-color: #f3c331;
+  background: #f3c331;
+  color: #10151c;
+  box-shadow: 0 0 8px rgba(243, 195, 49, 0.45);
 }
 .sheet-sw-navigation__item span, .sheet-sw-navigation__item--settings span {
-  padding: 0.25rem 0.5rem;
-  border: 1px solid rgba(36, 107, 131, 0.125);
-  border-radius: 5px;
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid rgba(223, 231, 239, 0.35);
+  border-radius: 2px;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   line-height: 1.5;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+.sheet-sw-navigation__item:hover span, .sheet-sw-navigation__item--settings:hover span {
+  border-color: #f3c331;
 }
 .sheet-sw-navigation__item--settings span {
   font-family: "Pictos";
+  letter-spacing: 0;
   text-transform: lowercase;
 }
 
 .sheet-sw-wrapper .repcontainer.editmode + .repcontrol .repcontrol_edit {
-  background: rgba(255, 255, 0, 0.5);
+  background: rgba(243, 195, 49, 0.6);
 }
 .sheet-sw-wrapper .itemcontrol button.repcontrol_del,
 .sheet-sw-wrapper .itemcontrol a.repcontrol_move {
-  border: 1px solid black;
+  border: 1px solid rgba(60, 72, 87, 0.55);
   border-radius: 2px;
   box-shadow: none;
   font-family: "Pictos";
@@ -1286,14 +1372,14 @@ button.sheet-pictos[type=action]:hover {
   text-shadow: none;
 }
 .sheet-sw-wrapper .itemcontrol button.repcontrol_del {
-  background: #900;
+  background: #a5282c;
   color: white;
 }
 .sheet-sw-wrapper .itemcontrol a.repcontrol_move {
-  background: azure;
+  background: rgb(96.5411764706%, 97.1176470588%, 97.6941176471%);
 }
 .sheet-sw-wrapper .repcontrol {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
   background-color: transparent;
 }
 .sheet-sw-wrapper .repcontrol button.repcontrol_add,
@@ -1306,7 +1392,7 @@ button.sheet-pictos[type=action]:hover {
 }
 .sheet-sw-wrapper .repcontrol button.repcontrol_add:before,
 .sheet-sw-wrapper .repcontrol button.repcontrol_edit:before {
-  border: 1px solid black;
+  border: 1px solid rgba(60, 72, 87, 0.55);
   background: none;
   box-shadow: none;
   font-family: "Pictos";
@@ -1323,8 +1409,8 @@ button.sheet-pictos[type=action]:hover {
 
 .sheet-sw-settings, .sheet-sw-settings--noborder, .sheet-sw-settings--large {
   padding-top: 0.5rem;
-  border-top: 2px dashed #404040;
-  background: rgba(195, 223, 241, 0.125);
+  border-top: 1px dashed rgba(44, 109, 155, 0.6);
+  background: rgba(44, 109, 155, 0.06);
 }
 .sheet-sw-settings input.sheet-sw-settings__input[type=text], .sheet-sw-settings--noborder input.sheet-sw-settings__input[type=text], .sheet-sw-settings--large input.sheet-sw-settings__input[type=text],
 .sheet-sw-settings input.sheet-sw-settings__input[type=number],
@@ -1336,8 +1422,8 @@ button.sheet-pictos[type=action]:hover {
 .sheet-sw-settings select.sheet-sw-settings__select,
 .sheet-sw-settings--noborder select.sheet-sw-settings__select,
 .sheet-sw-settings--large select.sheet-sw-settings__select {
-  background-color: rgba(36, 107, 131, 0.125);
-  color: #000;
+  background-color: rgba(44, 109, 155, 0.1);
+  color: #10151c;
   border-radius: 3px;
 }
 .sheet-sw-settings--noborder {
@@ -1345,7 +1431,7 @@ button.sheet-pictos[type=action]:hover {
 }
 .sheet-sw-settings__header {
   margin-top: 0.5rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
   font-weight: bold;
 }
 .sheet-sw-settings__header:not(:first-child) {
@@ -1355,7 +1441,7 @@ button.sheet-pictos[type=action]:hover {
   display: block;
 }
 
-.sheet-sw-npcsettings__wrapper, .sheet-control__hide--npctalent_settings, .sheet-control__hide--npctrait_settings, .sheet-control__hide--npcattack_settings, .sheet-control__hide--Custom, .sheet-control__hide--Prayer, .sheet-control__hide--Spell, .sheet-control__hide--skill, .sheet-control__hide--characteristic, .sheet-sw-criticaltable__row .sheet-sw-criticaltable__cell--description, .sheet-sw-corruptiontable__row .sheet-sw-corruptiontable__cell--description, .sheet-sw-psychologytable__row .sheet-sw-psychologytable__cell--description, .sheet-sw-conditiontable__row .sheet-sw-conditiontable__cell--description, .sheet-sw-talenttable__row .sheet-sw-talenttable__cell--description, .sheet-control__hide--spell_settings, .sheet-control__hide--weapon_settings, .sheet-control__hide--armour_settings, .sheet-control__hide--trappings_settings, .sheet-control__hide--species_settings, .sheet-control__hide--career_settings, .sheet-control__hide--critical_settings, .sheet-control__hide--corruption_settings, .sheet-control__hide--psychology_settings, .sheet-control__hide--condition_settings, .sheet-control__hide--talent_settings, .sheet-control__hide--custom, .sheet-control__hide--magick, .sheet-control__hide--ulgu, .sheet-control__hide--shyish, .sheet-control__hide--hysh, .sheet-control__hide--ghyran, .sheet-control__hide--ghur, .sheet-control__hide--dhar, .sheet-control__hide--chamon, .sheet-control__hide--aqshy, .sheet-control__hide--azyr, .sheet-control__hide--throwing, .sheet-control__hide--sling, .sheet-control__hide--explosives, .sheet-control__hide--entangling, .sheet-control__hide--engineering, .sheet-control__hide--crossbow, .sheet-control__hide--bow, .sheet-control__hide--blackpowder, .sheet-control__hide--two-handed, .sheet-control__hide--polearm, .sheet-control__hide--parry, .sheet-control__hide--flail, .sheet-control__hide--fencing, .sheet-control__hide--cavalry, .sheet-control__hide--brawling, .sheet-control__hide--basic, .sheet-control__hide--custom_settings, .sheet-control__hide--magick_settings, .sheet-control__hide--ulgu_settings, .sheet-control__hide--shyish_settings, .sheet-control__hide--hysh_settings, .sheet-control__hide--ghyran_settings, .sheet-control__hide--ghur_settings, .sheet-control__hide--dhar_settings, .sheet-control__hide--chamon_settings, .sheet-control__hide--aqshy_settings, .sheet-control__hide--azyr_settings, .sheet-control__hide--throwing_settings, .sheet-control__hide--sling_settings, .sheet-control__hide--explosives_settings, .sheet-control__hide--entangling_settings, .sheet-control__hide--engineering_settings, .sheet-control__hide--crossbow_settings, .sheet-control__hide--bow_settings, .sheet-control__hide--blackpowder_settings, .sheet-control__hide--two-handed_settings, .sheet-control__hide--polearm_settings, .sheet-control__hide--parry_settings, .sheet-control__hide--flail_settings, .sheet-control__hide--fencing_settings, .sheet-control__hide--cavalry_settings, .sheet-control__hide--brawling_settings, .sheet-control__hide--basic_settings, .sheet-control__hide--stealth_settings, .sheet-control__hide--row_settings, .sheet-control__hide--ride_settings, .sheet-control__hide--perception_settings, .sheet-control__hide--outdoor-survival_settings, .sheet-control__hide--navigation_settings, .sheet-control__hide--melee_settings, .sheet-control__hide--leadership_settings, .sheet-control__hide--intuition_settings, .sheet-control__hide--intimidate_settings, .sheet-control__hide--haggle_settings, .sheet-control__hide--gossip_settings, .sheet-control__hide--gamble_settings, .sheet-control__hide--entertain_settings, .sheet-control__hide--endurance_settings, .sheet-control__hide--drive_settings, .sheet-control__hide--dodge_settings, .sheet-control__hide--cool_settings, .sheet-control__hide--consume-alcohol_settings, .sheet-control__hide--climb_settings, .sheet-control__hide--charm-animal_settings, .sheet-control__hide--charm_settings, .sheet-control__hide--bribery_settings, .sheet-control__hide--athletics_settings, .sheet-control__hide--art_settings, .sheet-control__hide--trade_settings, .sheet-control__hide--track_settings, .sheet-control__hide--swim_settings, .sheet-control__hide--sleight-of-hand_settings, .sheet-control__hide--set-trap_settings, .sheet-control__hide--secret-signs_settings, .sheet-control__hide--sail_settings, .sheet-control__hide--research_settings, .sheet-control__hide--ranged_settings, .sheet-control__hide--pray_settings, .sheet-control__hide--play_settings, .sheet-control__hide--pick-lock_settings, .sheet-control__hide--perform_settings, .sheet-control__hide--lore_settings, .sheet-control__hide--language_settings, .sheet-control__hide--heal_settings, .sheet-control__hide--eva1uate_settings, .sheet-control__hide--channelling_settings, .sheet-control__hide--animal-training_settings, .sheet-control__hide--settings, .sheet-control__hide--animal-care_settings, .sheet-control__hide--fellowship, .sheet-control__hide--willpower, .sheet-control__hide--intelligence, .sheet-control__hide--dexterity, .sheet-control__hide--agility, .sheet-control__hide--initiative, .sheet-control__hide--toughness, .sheet-control__hide--strength, .sheet-control__hide--ballistic_skill, .sheet-control__hide--weapon_skill {
+.sheet-sw-npcsettings__wrapper, .sheet-control__hide--npctalent_settings, .sheet-control__hide--npctrait_settings, .sheet-control__hide--npcattack_settings, .sheet-control__hide--Custom, .sheet-control__hide--skill, .sheet-control__hide--characteristic, .sheet-sw-criticaltable__row .sheet-sw-criticaltable__cell--description, .sheet-sw-corruptiontable__row .sheet-sw-corruptiontable__cell--description, .sheet-sw-psychologytable__row .sheet-sw-psychologytable__cell--description, .sheet-sw-conditiontable__row .sheet-sw-conditiontable__cell--description, .sheet-sw-talenttable__row .sheet-sw-talenttable__cell--description, .sheet-control__hide--spell_settings, .sheet-control__hide--weapon_settings, .sheet-control__hide--armour_settings, .sheet-control__hide--trappings_settings, .sheet-control__hide--species_settings, .sheet-control__hide--career_settings, .sheet-control__hide--critical_settings, .sheet-control__hide--corruption_settings, .sheet-control__hide--psychology_settings, .sheet-control__hide--condition_settings, .sheet-control__hide--talent_settings, .sheet-control__hide--custom, .sheet-control__hide--galactic_basic, .sheet-control__hide--alter, .sheet-control__hide--sense, .sheet-control__hide--control, .sheet-control__hide--throwing, .sheet-control__hide--explosives, .sheet-control__hide--entangling, .sheet-control__hide--exotic, .sheet-control__hide--gunnery, .sheet-control__hide--heavy, .sheet-control__hide--rifle, .sheet-control__hide--pistol, .sheet-control__hide--stun, .sheet-control__hide--two-handed, .sheet-control__hide--polearm, .sheet-control__hide--parry, .sheet-control__hide--vibroweapon, .sheet-control__hide--lightsaber, .sheet-control__hide--brawling, .sheet-control__hide--basic, .sheet-control__hide--custom_settings, .sheet-control__hide--galactic_basic_settings, .sheet-control__hide--alter_settings, .sheet-control__hide--sense_settings, .sheet-control__hide--control_settings, .sheet-control__hide--throwing_settings, .sheet-control__hide--explosives_settings, .sheet-control__hide--entangling_settings, .sheet-control__hide--exotic_settings, .sheet-control__hide--gunnery_settings, .sheet-control__hide--heavy_settings, .sheet-control__hide--rifle_settings, .sheet-control__hide--pistol_settings, .sheet-control__hide--stun_settings, .sheet-control__hide--two-handed_settings, .sheet-control__hide--polearm_settings, .sheet-control__hide--parry_settings, .sheet-control__hide--vibroweapon_settings, .sheet-control__hide--lightsaber_settings, .sheet-control__hide--brawling_settings, .sheet-control__hide--basic_settings, .sheet-control__hide--zero-g_settings, .sheet-control__hide--survival_settings, .sheet-control__hide--streetwise_settings, .sheet-control__hide--stealth_settings, .sheet-control__hide--ride_settings, .sheet-control__hide--perception_settings, .sheet-control__hide--navigation_settings, .sheet-control__hide--melee_settings, .sheet-control__hide--leadership_settings, .sheet-control__hide--intuition_settings, .sheet-control__hide--intimidate_settings, .sheet-control__hide--haggle_settings, .sheet-control__hide--gamble_settings, .sheet-control__hide--entertain_settings, .sheet-control__hide--endurance_settings, .sheet-control__hide--drive_settings, .sheet-control__hide--dodge_settings, .sheet-control__hide--cool_settings, .sheet-control__hide--climb_settings, .sheet-control__hide--charm_settings, .sheet-control__hide--carouse_settings, .sheet-control__hide--bribery_settings, .sheet-control__hide--athletics_settings, .sheet-control__hide--art_settings, .sheet-control__hide--animal-handling_settings, .sheet-control__hide--trade_settings, .sheet-control__hide--track_settings, .sheet-control__hide--tactics_settings, .sheet-control__hide--swim_settings, .sheet-control__hide--slicing_settings, .sheet-control__hide--sleight-of-hand_settings, .sheet-control__hide--security_settings, .sheet-control__hide--research_settings, .sheet-control__hide--ranged_settings, .sheet-control__hide--pilot_settings, .sheet-control__hide--perform_settings, .sheet-control__hide--medicine_settings, .sheet-control__hide--mechanics_settings, .sheet-control__hide--language_settings, .sheet-control__hide--knowledge_settings, .sheet-control__hide--force_settings, .sheet-control__hide--deceive_settings, .sheet-control__hide--demolitions_settings, .sheet-control__hide--computers_settings, .sheet-control__hide--settings, .sheet-control__hide--astrogation_settings, .sheet-control__hide--fellowship, .sheet-control__hide--willpower, .sheet-control__hide--intelligence, .sheet-control__hide--dexterity, .sheet-control__hide--agility, .sheet-control__hide--initiative, .sheet-control__hide--toughness, .sheet-control__hide--strength, .sheet-control__hide--ballistic_skill, .sheet-control__hide--weapon_skill {
   display: none;
 }
 
@@ -1363,7 +1449,7 @@ input[name*=characteristic][value=fellowship] ~ .sheet-control__hide--fellowship
   display: block;
 }
 
-input[name*=npc_settings][value=on] + .sheet-sw-npcsettings__wrapper, input[name*=settings][value="1"] + div > .sheet-control__hide--npctalent_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npctrait_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npcattack_settings, input[name*=type][value=Custom] ~ .sheet-control__hide--Custom, input[name*=type][value=Prayer] ~ .sheet-control__hide--Prayer, input[name*=type][value=Spell] ~ .sheet-control__hide--Spell, input[name=attr_talent_test_type][value=skill] ~ .sheet-control__hide--skill, input[name=attr_talent_test_type][value=characteristic] ~ .sheet-control__hide--characteristic, .sheet-sw-criticaltable__row input[name=attr_critical_toggle][value="1"] + .sheet-sw-criticaltable__cell--description, .sheet-sw-corruptiontable__row input[name=attr_corruption_toggle][value="1"] + .sheet-sw-corruptiontable__cell--description, .sheet-sw-psychologytable__row input[name=attr_psychology_toggle][value="1"] + .sheet-sw-psychologytable__cell--description, .sheet-sw-conditiontable__row input[name=attr_condition_toggle][value="1"] + .sheet-sw-conditiontable__cell--description, .sheet-sw-talenttable__row input[name=attr_talent_toggle][value="1"] + .sheet-sw-talenttable__cell--description, input[name*=settings][value="1"] + div > .sheet-control__hide--spell_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--weapon_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--armour_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--trappings_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--species_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--career_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--critical_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--corruption_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--psychology_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--condition_settings, input[name*=settings][value="1"] + div > div[class*=settings], input[name*=settings][value="1"] + div > .sheet-control__hide--talent_settings, input[name*=control][value=on] + .sheet-control__hide--custom, input[name*=control][value=on] + .sheet-control__hide--magick, input[name*=control][value=on] + .sheet-control__hide--ulgu, input[name*=control][value=on] + .sheet-control__hide--shyish, input[name*=control][value=on] + .sheet-control__hide--hysh, input[name*=control][value=on] + .sheet-control__hide--ghyran, input[name*=control][value=on] + .sheet-control__hide--ghur, input[name*=control][value=on] + .sheet-control__hide--dhar, input[name*=control][value=on] + .sheet-control__hide--chamon, input[name*=control][value=on] + .sheet-control__hide--aqshy, input[name*=control][value=on] + .sheet-control__hide--azyr, input[name*=control][value=on] + .sheet-control__hide--throwing, input[name*=control][value=on] + .sheet-control__hide--sling, input[name*=control][value=on] + .sheet-control__hide--explosives, input[name*=control][value=on] + .sheet-control__hide--entangling, input[name*=control][value=on] + .sheet-control__hide--engineering, input[name*=control][value=on] + .sheet-control__hide--crossbow, input[name*=control][value=on] + .sheet-control__hide--bow, input[name*=control][value=on] + .sheet-control__hide--blackpowder, input[name*=control][value=on] + .sheet-control__hide--two-handed, input[name*=control][value=on] + .sheet-control__hide--polearm, input[name*=control][value=on] + .sheet-control__hide--parry, input[name*=control][value=on] + .sheet-control__hide--flail, input[name*=control][value=on] + .sheet-control__hide--fencing, input[name*=control][value=on] + .sheet-control__hide--cavalry, input[name*=control][value=on] + .sheet-control__hide--brawling, input[name*=control][value=on] + .sheet-control__hide--basic, input[name*=settings][value="1"] ~ div > .sheet-control__hide--custom_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--magick_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ulgu_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--shyish_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--hysh_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ghyran_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ghur_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--dhar_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--chamon_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--aqshy_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--azyr_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--throwing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--explosives_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entangling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--engineering_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--crossbow_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--bow_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--blackpowder_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--two-handed_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--polearm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--parry_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--flail_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--fencing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--cavalry_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--brawling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--basic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stealth_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--row_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ride_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perception_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--outdoor-survival_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--navigation_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--melee_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--leadership_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intuition_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intimidate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--haggle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gossip_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gamble_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entertain_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--endurance_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--drive_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--dodge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--cool_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--consume-alcohol_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--climb_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--charm-animal_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--charm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--bribery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--athletics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--art_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--trade_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--track_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--swim_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sleight-of-hand_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--set-trap_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--secret-signs_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sail_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--research_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ranged_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pray_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--play_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pick-lock_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perform_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--lore_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--language_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--heal_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--eva1uate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--channelling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--animal-training_settings, input[name*=settings][value="1"] ~ div > div[class*=settings], input[name*=settings][value="1"] ~ div > .sheet-control__hide--animal-care_settings {
+input[name*=npc_settings][value=on] + .sheet-sw-npcsettings__wrapper, input[name*=settings][value="1"] + div > .sheet-control__hide--npctalent_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npctrait_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npcattack_settings, input[name*=type][value=Custom] ~ .sheet-control__hide--Custom, input[name=attr_talent_test_type][value=skill] ~ .sheet-control__hide--skill, input[name=attr_talent_test_type][value=characteristic] ~ .sheet-control__hide--characteristic, .sheet-sw-criticaltable__row input[name=attr_critical_toggle][value="1"] + .sheet-sw-criticaltable__cell--description, .sheet-sw-corruptiontable__row input[name=attr_corruption_toggle][value="1"] + .sheet-sw-corruptiontable__cell--description, .sheet-sw-psychologytable__row input[name=attr_psychology_toggle][value="1"] + .sheet-sw-psychologytable__cell--description, .sheet-sw-conditiontable__row input[name=attr_condition_toggle][value="1"] + .sheet-sw-conditiontable__cell--description, .sheet-sw-talenttable__row input[name=attr_talent_toggle][value="1"] + .sheet-sw-talenttable__cell--description, input[name*=settings][value="1"] + div > .sheet-control__hide--spell_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--weapon_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--armour_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--trappings_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--species_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--career_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--critical_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--corruption_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--psychology_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--condition_settings, input[name*=settings][value="1"] + div > div[class*=settings], input[name*=settings][value="1"] + div > .sheet-control__hide--talent_settings, input[name*=control][value=on] + .sheet-control__hide--custom, input[name*=control][value=on] + .sheet-control__hide--galactic_basic, input[name*=control][value=on] + .sheet-control__hide--alter, input[name*=control][value=on] + .sheet-control__hide--sense, input[name*=control][value=on] + .sheet-control__hide--control, input[name*=control][value=on] + .sheet-control__hide--throwing, input[name*=control][value=on] + .sheet-control__hide--explosives, input[name*=control][value=on] + .sheet-control__hide--entangling, input[name*=control][value=on] + .sheet-control__hide--exotic, input[name*=control][value=on] + .sheet-control__hide--gunnery, input[name*=control][value=on] + .sheet-control__hide--heavy, input[name*=control][value=on] + .sheet-control__hide--rifle, input[name*=control][value=on] + .sheet-control__hide--pistol, input[name*=control][value=on] + .sheet-control__hide--stun, input[name*=control][value=on] + .sheet-control__hide--two-handed, input[name*=control][value=on] + .sheet-control__hide--polearm, input[name*=control][value=on] + .sheet-control__hide--parry, input[name*=control][value=on] + .sheet-control__hide--vibroweapon, input[name*=control][value=on] + .sheet-control__hide--lightsaber, input[name*=control][value=on] + .sheet-control__hide--brawling, input[name*=control][value=on] + .sheet-control__hide--basic, input[name*=settings][value="1"] ~ div > .sheet-control__hide--custom_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--galactic_basic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--alter_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sense_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--control_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--throwing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--explosives_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entangling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--exotic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gunnery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--heavy_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--rifle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pistol_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stun_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--two-handed_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--polearm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--parry_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--vibroweapon_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--lightsaber_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--brawling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--basic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--zero-g_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--survival_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--streetwise_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stealth_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ride_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perception_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--navigation_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--melee_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--leadership_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intuition_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intimidate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--haggle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gamble_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entertain_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--endurance_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--drive_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--dodge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--cool_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--climb_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--charm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--carouse_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--bribery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--athletics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--art_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--animal-handling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--trade_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--track_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--tactics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--swim_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--slicing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sleight-of-hand_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--security_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--research_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ranged_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pilot_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perform_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--medicine_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--mechanics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--language_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--knowledge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--force_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--deceive_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--demolitions_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--computers_settings, input[name*=settings][value="1"] ~ div > div[class*=settings], input[name*=settings][value="1"] ~ div > .sheet-control__hide--astrogation_settings {
   display: grid;
 }
 
@@ -1477,39 +1563,6 @@ input[name*=trapping_flag][value=on] + .sheet-sw-npctrappings {
   display: block;
 }
 
-.sheet-sw-compendium_warning {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 10000;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.sheet-sw-compendium_warning_inside {
-  display: block;
-  position: sticky;
-  top: 50%;
-  width: 50%;
-  margin: 5em auto;
-  padding: 2rem;
-  background: #eff2f1;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/144589463/lqxlbyKEgMXnVw8VajQTCQ/max.png") #eff2f1 center/cover;
-  border: 15px solid transparent;
-  border-image: url("https://s3.amazonaws.com/files.d20.io/images/149238777/ywxEJDLgdNlQGlSSRbjpmw/max.png?1594320939") 30 round;
-  font-family: "IM Fell DW Pica", serif;
-  font-size: 1.5rem;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.sheet-sw-wrapper.active-drop-target.dropping .sheet-sw-compendium_warning {
-  display: block;
-}
-
 input[type=hidden][name*=species_disable3][value="1"] ~ * input[type=radio][value="3"]:not(:checked) {
   pointer-events: none;
   opacity: 0.5;
@@ -1523,7 +1576,7 @@ input[type=hidden][name*=species_disable5][value="1"] ~ * input[type=radio][valu
 .sheet-sw-wrapper .sheet-page__main,
 .sheet-sw-wrapper .sheet-page__advances,
 .sheet-sw-wrapper .sheet-page__combat,
-.sheet-sw-wrapper .sheet-page__magic,
+.sheet-sw-wrapper .sheet-page__force,
 .sheet-sw-wrapper .sheet-page__settings {
   display: none;
 }
@@ -1532,20 +1585,20 @@ input[type=hidden][name*=species_disable5][value="1"] ~ * input[type=radio][valu
 .sheet-sw-wrapper .sheet-page__advances--grid,
 .sheet-sw-wrapper .sheet-page__combat--flex,
 .sheet-sw-wrapper .sheet-page__combat--grid,
-.sheet-sw-wrapper .sheet-page__magic--flex,
-.sheet-sw-wrapper .sheet-page__magic--grid,
+.sheet-sw-wrapper .sheet-page__force--flex,
+.sheet-sw-wrapper .sheet-page__force--grid,
 .sheet-sw-wrapper .sheet-page__settings--flex,
 .sheet-sw-wrapper .sheet-page__settings--grid {
   display: none;
 }
 
-input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat, input[type=hidden][name=attr_nav][value=magic] ~ * .sheet-page__magic, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings {
+input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat, input[type=hidden][name=attr_nav][value=force] ~ * .sheet-page__force, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings {
   display: block;
 }
-input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main--flex, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances--flex, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat--flex, input[type=hidden][name=attr_nav][value=magic] ~ * .sheet-page__magic--flex, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings--flex {
+input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main--flex, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances--flex, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat--flex, input[type=hidden][name=attr_nav][value=force] ~ * .sheet-page__force--flex, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings--flex {
   display: flex;
 }
-input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main--grid, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances--grid, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat--grid, input[type=hidden][name=attr_nav][value=magic] ~ * .sheet-page__magic--grid, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings--grid {
+input[type=hidden][name=attr_nav][value=main] ~ * .sheet-page__main--grid, input[type=hidden][name=attr_nav][value=advances] ~ * .sheet-page__advances--grid, input[type=hidden][name=attr_nav][value=combat] ~ * .sheet-page__combat--grid, input[type=hidden][name=attr_nav][value=force] ~ * .sheet-page__force--grid, input[type=hidden][name=attr_nav][value=settings] ~ * .sheet-page__settings--grid {
   display: grid;
 }
 
@@ -1564,10 +1617,14 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
 }
 
 .sheet-sw-npc {
-  background: url("https://s3.amazonaws.com/files.d20.io/images/160727772/3ooM_wEx6-v_u4EaT9mBPg/max.png") repeat;
+  padding: 6px;
+  border: 2px solid #151a21;
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgb(96.5411764706%, 97.1176470588%, 97.6941176471%), #dde3e9);
+  color: #10151c;
 }
 .sheet-sw-npc__wrapper h1 {
-  font-size: 4.125rem;
+  font-size: 3rem;
   font-variant: small-caps;
 }
 .sheet-sw-npcsettings__toggle {
@@ -1580,28 +1637,28 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   opacity: 1;
 }
 .sheet-sw-npcsettings__toggle span {
-  font-size: 1.65rem;
+  font-size: 1.2rem;
   opacity: 0.5;
 }
 .sheet-sw-npcsettings__toggle:hover {
   cursor: pointer;
 }
 .sheet-sw-npcsettings__toggle:hover span {
-  font-size: 1.65rem;
+  font-size: 1.2rem;
   opacity: 1;
 }
 .sheet-sw-npcsettings__wrapper {
   margin: auto;
   padding: 0.5rem 10%;
-  border-bottom: 2px dashed #404040;
+  border-bottom: 1px dashed rgba(44, 109, 155, 0.6);
   background: rgba(195, 223, 241, 0.125);
 }
 .sheet-sw-npcsettings__wrapper h2 {
   margin-top: 3rem;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/151167682/MU4qaf0sjSe1o3s318ZhKA/max.png") no-repeat calc(50% + 10px) 100%/90% 15px;
-  font-size: 2.0625rem;
+  border-bottom: 2px solid #f3c331;
+  font-size: 1.5rem;
   text-transform: uppercase;
   text-align: center;
 }
@@ -1667,15 +1724,18 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
 .sheet-sw-npc__slash {
   margin: 2rem 0;
   padding: 1rem 2.5%;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/160723383/I0S4DZJH5fDt80oHEHXiiw/max.png") no-repeat 50% 50%/100% 100%;
+  background: radial-gradient(1px 1px at 12% 30%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.7) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 22%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 76% 64%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 89% 18%, rgba(255, 255, 255, 0.8) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 4% 82%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 47% 48%, rgba(255, 255, 255, 0.5) 50%, transparent 51%), radial-gradient(ellipse at 70% 120%, rgba(44, 109, 155, 0.45), transparent 60%), linear-gradient(180deg, #0b0f15, #18202b);
+  border-bottom: 3px solid #f3c331;
+  border-radius: 3px;
+  color: #f3c331;
 }
 .sheet-sw-npcskill {
   display: grid;
   grid-template-columns: 1fr 0.25fr;
 }
 .sheet-sw-npc__description {
-  font-family: "Lusitana", serif;
-  font-size: 1.5rem;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 14.4px;
 }
 .sheet-sw-npc__stats {
   display: grid;
@@ -1705,7 +1765,7 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   align-items: center;
   margin-right: 1rem;
   width: auto;
-  font-size: 1.61rem;
+  font-size: 14.95px;
 }
 .sheet-sw-npcskill__wrapper {
   display: flex;
@@ -1726,7 +1786,7 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
 }
 .sheet-sw-npcskill__value {
   display: inline;
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
 }
 .sheet-sw-npcskill__value:after {
   display: inline;
@@ -1759,7 +1819,7 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   align-items: center;
   width: 70%;
   margin: auto;
-  font-size: 1.61rem;
+  font-size: 14.95px;
   text-align: center;
 }
 .sheet-sw-npcadvantage .sheet-sw-advantage__label {
@@ -1769,8 +1829,8 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   margin: auto;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/151167682/MU4qaf0sjSe1o3s318ZhKA/max.png") no-repeat calc(50% + 10px) 100%/100% 15px;
-  font-size: 1.8975rem;
+  border-bottom: 2px solid #f3c331;
+  font-size: 1.38rem;
   text-transform: uppercase;
   text-align: center;
 }
@@ -1781,11 +1841,11 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   margin: 0.25rem;
 }
 .sheet-sw-npccontrols__button button[type=roll] {
-  background: rgba(44, 76, 87, 0.125);
+  background: rgba(60, 72, 87, 0.125);
   text-align: center;
 }
 .sheet-sw-npctalent, .sheet-sw-npctrait, .sheet-sw-npcattack {
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
 }
 .sheet-sw-npctalent .repitem:first-child .sheet-sw-npctalent__row,
 .sheet-sw-npctalent .repitem:first-child .sheet-sw-npctrait__row,
@@ -1822,8 +1882,8 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
 }
 .sheet-sw-npctalent__cell--title, .sheet-sw-npctrait__cell--title, .sheet-sw-npcattack__cell--title {
   width: 85%;
-  font-family: "IM Fell DW Pica", serif;
-  font-size: 1.65rem;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 .sheet-sw-npctalent__cell--description, .sheet-sw-npctrait__cell--description, .sheet-sw-npcattack__cell--description {
@@ -1845,7 +1905,7 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
 }
 .sheet-sw-npctalent__label, .sheet-sw-npctrait__label, .sheet-sw-npcattack__label {
   margin-right: 0.33rem;
-  font-family: "IM Fell DW Pica", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
   font-weight: bold;
 }
 .sheet-sw-npctrappings textarea.sheet-sw-npctrappings__textarea {
@@ -1856,32 +1916,45 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
 }
 
 .sheet-rolltemplate-sw {
-  font-family: "Lusitana", serif;
-  color: black;
+  overflow: hidden;
+  border: 1px solid #151a21;
+  border-radius: 4px;
+  background: #edf0f3;
+  color: #10151c;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
 }
 .sheet-rolltemplate-sw h1, .sheet-rolltemplate-sw h2, .sheet-rolltemplate-sw h3 {
   grid-column: 1/-1;
   margin: 0;
-  font-family: "Lusitana", serif;
+  font-family: "Exo 2", "Segoe UI", Arial, sans-serif;
   line-height: 1em;
   text-align: center;
 }
 .sheet-rolltemplate-sw h1 {
-  padding: 0.5rem 0;
-  color: black;
-  font-family: "IM Fell DW Pica", serif;
+  padding: 0.5rem 0 0.25rem;
+  color: #10151c;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  letter-spacing: 0.06em;
   font-size: 14pt;
   font-weight: bold;
   line-height: 1;
   text-transform: uppercase;
 }
 .sheet-rolltemplate-sw h2 {
-  font-size: 12pt;
+  color: #3c4857;
+  font-size: 10pt;
 }
 .sheet-rolltemplate-sw h3 {
   font-size: 9pt;
   text-transform: uppercase;
-  color: #333333;
+  color: #3c4857;
+}
+.sheet-rolltemplate-sw > h3 {
+  padding: 4px 0;
+  background: radial-gradient(1px 1px at 12% 30%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.7) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 58% 22%, rgba(255, 255, 255, 0.9) 50%, transparent 51%), radial-gradient(1px 1px at 76% 64%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 89% 18%, rgba(255, 255, 255, 0.8) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 4% 82%, rgba(255, 255, 255, 0.6) 50%, transparent 51%), radial-gradient(1px 1px at 47% 48%, rgba(255, 255, 255, 0.5) 50%, transparent 51%), radial-gradient(ellipse at 70% 120%, rgba(44, 109, 155, 0.45), transparent 60%), linear-gradient(180deg, #0b0f15, #18202b);
+  color: #b9c7d6;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  letter-spacing: 0.2em;
 }
 .sheet-rolltemplate-sw .importantroll,
 .sheet-rolltemplate-sw .fullcrit,
@@ -1894,27 +1967,30 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
 }
 .sheet-rolltemplate-sw .sheet-fullcrit,
 .sheet-rolltemplate-sw .fullcrit {
-  color: darkgreen;
+  color: #1e7a4c;
 }
 .sheet-rolltemplate-sw .sheet-fullfail,
 .sheet-rolltemplate-sw .fullfail {
-  color: darkred;
+  color: #a5282c;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll {
   display: grid;
   gap: 0.25rem;
-  padding: 1rem 1.5rem;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/151442442/WL3whxtgGLSL18KI8cvGQw/max.png?1595121884") no-repeat center/100% 100%;
+  padding: 0.5rem 1rem 1rem;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__divider {
   width: 100%;
-  height: 10px;
+  height: 2px;
+  margin: 0.25rem 0;
   grid-column: 1/-1;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/151167682/MU4qaf0sjSe1o3s318ZhKA/max.png?1595036126") no-repeat center/100% 100%;
+  background: linear-gradient(90deg, transparent, #f3c331 20%, #f3c331 80%, transparent);
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__result {
   grid-column: 1/-1;
-  font-size: 4rem;
+  color: #1d4f73;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 3.25rem;
+  font-weight: 700;
   text-align: center;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__target {
@@ -1922,14 +1998,18 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   display: grid;
   grid-template-columns: 1fr 3em;
   padding: 0.5rem;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/152053989/T4Qj08IjX22oQyaJ5_I9hA/max.png?1595356909") no-repeat center/100% 100%;
+  border: 1px solid rgba(44, 109, 155, 0.5);
+  border-radius: 3px;
+  background: rgba(44, 109, 155, 0.1);
   font-weight: bold;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__success, .sheet-rolltemplate-sw .sheet-sw-roll__fail {
   grid-column: 1/-1;
   padding: 0.5rem;
+  border-radius: 3px;
   color: white;
-  font-size: 1.25rem;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 1rem;
   font-weight: bold;
   letter-spacing: 1px;
   text-align: center;
@@ -1939,12 +2019,10 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   margin-right: 0.5rem;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__success {
-  background: #073;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/152053987/hoKLlnb8gZzQDMW6zEUewQ/max.png?1595356908") no-repeat center/100% 100%;
+  background: linear-gradient(180deg, rgb(14.133126935%, 57.4747162023%, 35.8039215686%), #1e7a4c);
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__fail {
-  background: #900;
-  background: url("https://s3.amazonaws.com/files.d20.io/images/152053988/NMX6iU7S6buq5KDq8l9NlQ/max.png?1595356908") no-repeat center/100% 100%;
+  background: linear-gradient(180deg, rgb(74.3644189383%, 18.0277379244%, 19.8305117169%), #a5282c);
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__row, .sheet-rolltemplate-sw .sheet-sw-roll__row--full {
   display: grid;
@@ -1959,8 +2037,13 @@ input[type=hidden][name=attr_npc][value=on] ~ * .sheet-sw-npc, input[type=hidden
   grid-column: 1/-1;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__label {
-  font-weight: bold;
+  color: #3c4857;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-align: left;
+  text-transform: uppercase;
 }
 .sheet-rolltemplate-sw .sheet-sw-roll__value {
   text-align: center;

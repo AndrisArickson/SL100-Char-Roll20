@@ -5,7 +5,7 @@
         &.editmode { 
 
             + .repcontrol .repcontrol_edit {
-                background: rgba(yellow, 0.5);
+                background: rgba($sw-accent, 0.6);
                 
             }
         }
@@ -27,12 +27,12 @@
         }
 
         button.repcontrol_del {
-            background: #900;
+            background: $sw-fail;
             color: white;
         }
 
         a.repcontrol_move {
-            background: azure; 
+            background: lighten($sw-panel, 3%); 
         }
 
     }

@@ -7,9 +7,9 @@ mixin npc-skill(skill)
     if (grouped !== true)
 
         input(name=`attr_${attr}`, type="hidden")    
-        button.sw-npcskill(name=`roll_${attr}`, type="roll", value=rolls.skills[attr])
+        button.sl-npcskill(name=`roll_${attr}`, type="roll", value=rolls.skills[attr])
 
-            .sw-npcskill__title(data-i18n=name)
+            .sl-npcskill__title(data-i18n=name)
 
-            .sw-npcskill__value
+            .sl-npcskill__value
                 span(name=`attr_${attr}`)

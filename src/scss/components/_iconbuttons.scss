@@ -1,6 +1,6 @@
 .sheet {
 
-    &-sw {
+    &-sl {
 
         // Settings Cog
 
@@ -16,7 +16,7 @@
                 }
             }
 
-            input.sheet-sw-displaytoggle__hide[type="checkbox"] {
+            input.sheet-sl-displaytoggle__hide[type="checkbox"] {
                 display: none;
 
                 &:checked ~ span {
@@ -29,7 +29,7 @@
 
 // Vocalise Button
 
-button.sheet-sw-vocalise[type="roll"] {
+button.sheet-sl-vocalise[type="roll"] {
     opacity: .5;
 
     font-family: pictos;

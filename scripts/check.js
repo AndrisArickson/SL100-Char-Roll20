@@ -46,7 +46,7 @@ const pugForceSpecs = allSkills.find(skill => skill.name === "Force").specialisa
     .map(spec => spec.toLowerCase());
 
 // Sheetworkers: run the module with Roll20 globals stubbed out.
-const sw = (() => {
+const sl = (() => {
     const noop = () => {};
     const context = {
         on: noop, getAttrs: noop, setAttrs: noop, getSectionIDs: noop,
@@ -56,17 +56,17 @@ const sw = (() => {
     const source = ["sheetworkers.js", "helperfunctions.js"]
         .map(file => read(`src/js/${file}`))
         .join("\n");
-    vm.runInNewContext(`${source}\nthis.result = swModule.sw;`, context);
+    vm.runInNewContext(`${source}\nthis.result = slModule.sl;`, context);
     return context.result;
 })();
 
-sameSet("skills (pug vs sheetworkers)", pugSkills, sw.skills);
-sameSet("specialisations (pug vs sheetworkers)", pugSpecialisations, sw.specialisations);
-sameSet("repeating skills (pug vs sheetworkers)", pugRepeating, sw.repeating_skills);
-sameSet("weapon specialisations (pug vs sheetworkers)", pugWeaponSpecs, sw.weapon_specialisations);
-sameSet("force specialisations (pug vs sheetworkers)", pugForceSpecs, sw.force_specialisations);
+sameSet("skills (pug vs sheetworkers)", pugSkills, sl.skills);
+sameSet("specialisations (pug vs sheetworkers)", pugSpecialisations, sl.specialisations);
+sameSet("repeating skills (pug vs sheetworkers)", pugRepeating, sl.repeating_skills);
+sameSet("weapon specialisations (pug vs sheetworkers)", pugWeaponSpecs, sl.weapon_specialisations);
+sameSet("force specialisations (pug vs sheetworkers)", pugForceSpecs, sl.force_specialisations);
 sameSet("characteristics (pug vs sheetworkers)",
-    abstracts.characteristics.map(c => c.name.toLowerCase().replace(/ /g, "_")), sw.characteristics);
+    abstracts.characteristics.map(c => c.name.toLowerCase().replace(/ /g, "_")), sl.characteristics);
 
 // SCSS lists drive the show/hide rules for skill settings rows.
 const scss = read("src/scss/_abstracts.scss");

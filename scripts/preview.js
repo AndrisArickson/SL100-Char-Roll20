@@ -138,7 +138,7 @@ const buildPage = (state) => {
 
     // Strip sheet workers and roll templates; they are not rendered in the sheet body.
     html = html.replace(/<script type="text\/worker">[\s\S]*?<\/script>/, "");
-    const templateMatch = html.match(/<rolltemplate class="sheet-rolltemplate-sw">([\s\S]*?)<\/rolltemplate>/);
+    const templateMatch = html.match(/<rolltemplate class="sheet-rolltemplate-sl">([\s\S]*?)<\/rolltemplate>/);
     html = html.replace(/<rolltemplate[\s\S]*?<\/rolltemplate>/g, "");
 
     return `<!doctype html><html><head><meta charset="utf-8">
@@ -152,7 +152,7 @@ const buildPage = (state) => {
   .itemcontrol { display: none; }
   button[type=roll] { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; }
   fieldset[class^="repeating_"] { display: none; }
-  .sheet-rolltemplate-sw { width: 260px; }
+  .sheet-rolltemplate-sl { width: 260px; }
   #card { margin: 16px auto; width: 300px; background: #fff; padding: 8px; }
 </style>
 <style>${css}</style>
@@ -163,7 +163,7 @@ const buildPage = (state) => {
   .charsheet .repcontrol button.repcontrol_edit:before { content: "✎" !important; }
 </style></head><body>
 <div class="charsheet" id="sheet">${html}</div>
-<div id="card" class="sheet-rolltemplate-sw" style="display:none">${templateMatch ? renderTemplate(templateMatch[1], cardValues) : ""}</div>
+<div id="card" class="sheet-rolltemplate-sl" style="display:none">${templateMatch ? renderTemplate(templateMatch[1], cardValues) : ""}</div>
 <script>
 (() => {
 const translation = ${JSON.stringify(translation)};

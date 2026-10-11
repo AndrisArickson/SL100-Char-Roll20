@@ -1,11 +1,11 @@
-.sheet-sw-npc {
+.sheet-sl-npc {
 
     padding: 6px;
 
-    border: 2px solid $sw-frame;
+    border: 2px solid $sl-frame;
     border-radius: 6px;
-    background: linear-gradient(180deg, $sw-panel-light, $sw-panel-shade);
-    color: $sw-ink;
+    background: linear-gradient(180deg, $sl-panel-light, $sl-panel-shade);
+    color: $sl-ink;
 
     &__wrapper {
 
@@ -21,7 +21,7 @@
         &__toggle {
             margin: $margin-large;
 
-            input.sheet-sw-npcsettings__hide[type="checkbox"] {
+            input.sheet-sl-npcsettings__hide[type="checkbox"] {
                 display: none;
 
                 &:checked ~ span {
@@ -57,21 +57,21 @@
                 padding-bottom: $margin-general;
                 margin-bottom: $margin-large;
 
-                border-bottom: 2px solid $sw-accent;
+                border-bottom: 2px solid $sl-accent;
 
                 font-size: $h1-size * 1.25;
                 text-transform: uppercase;
                 text-align: center;    
             }
 
-            select.sheet-sw-npcsettings__select,
-            input[type="number"].sheet-sw-npcsettings__input,
-            input[type="text"].sheet-sw-npcsettings__input {                
+            select.sheet-sl-npcsettings__select,
+            input[type="number"].sheet-sl-npcsettings__input,
+            input[type="text"].sheet-sl-npcsettings__input {                
                 background: none;
                 border-bottom: 1px solid black;
             }
 
-            textarea.sheet-sw-npcsettings__textarea {
+            textarea.sheet-sl-npcsettings__textarea {
                 height: 7em;
                 resize: vertical;
 
@@ -147,10 +147,10 @@
     &__slash {
         margin: $margin-large*2 0;
         padding: $margin-large 2.5%;
-        background: $sw-starfield;
-        border-bottom: 3px solid $sw-accent;
+        background: $sl-starfield;
+        border-bottom: 3px solid $sl-accent;
         border-radius: 3px;
-        color: $sw-accent;
+        color: $sl-accent;
     }
 
     &skill {
@@ -182,7 +182,7 @@
             min-height: 49%;
 
             &--head {
-                @extend .sheet-sw-npccharacteristic__cell
+                @extend .sheet-sl-npccharacteristic__cell
             }
 
             > span {
@@ -204,7 +204,7 @@
                 &[value="0"],
                 &[value=""],
                 &:not([value]) { 
-                    & + button.sheet-sw-npcskill {
+                    & + button.sheet-sl-npcskill {
                     display: none;
                 }
             }
@@ -281,7 +281,7 @@
         border-bottom: 1px solid rgba(36, 107, 131, .33);
         border-top: 1px solid rgba(36, 107, 131, .33);
         
-        .sheet-sw-advantage {
+        .sheet-sl-advantage {
 
             &__wrapper {
                 display: grid;
@@ -306,7 +306,7 @@
             margin-bottom: $margin-large;
         padding-bottom: $margin-general;
 
-        border-bottom: 2px solid $sw-accent;
+        border-bottom: 2px solid $sl-accent;
 
         font-size: $h1-size * 1.15;
         text-transform: uppercase;
@@ -338,9 +338,9 @@
     &attack {
         font-family: $font-family-alt;
 
-        .repitem:first-child .sheet-sw-npctalent__row,
-        .repitem:first-child .sheet-sw-npctrait__row,
-        .repitem:first-child .sheet-sw-npcattack__row {
+        .repitem:first-child .sheet-sl-npctalent__row,
+        .repitem:first-child .sheet-sl-npctrait__row,
+        .repitem:first-child .sheet-sl-npcattack__row {
             padding-top: 0;
         }
 
@@ -363,7 +363,7 @@
 
             border-bottom: 1px dashed black;
 
-            .sheet-sw-settings {
+            .sheet-sl-settings {
                 width: 100%;
             }
         }

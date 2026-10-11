@@ -1,4 +1,4 @@
-.sheet-sw-wrapper {
+.sheet-sl-wrapper {
 
     input[type="text"],
     input[type="number"],
@@ -53,15 +53,15 @@
         text-shadow: none;
     }
 
-    button.sheet-sw-advancenotify__button {
+    button.sheet-sl-advancenotify__button {
         display: block;
         margin: 2px;
         padding: $margin-general;
 
         border-radius: 5px;
 
-        background-color: $sw-accent;
-        color: $sw-ink;
+        background-color: $sl-accent;
+        color: $sl-ink;
 
         font-family: $font-family-display;
         font-size: 8pt;

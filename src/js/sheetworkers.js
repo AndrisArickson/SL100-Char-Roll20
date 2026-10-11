@@ -1,8 +1,8 @@
-const swModule = ( () => {
+const slModule = ( () => {
 
     // Global Variables
 
-    const sw = {
+    const sl = {
         sheet_version: "1.0.0",
 
         characteristics: [
@@ -157,16 +157,16 @@ const swModule = ( () => {
 
     const initSheet = () => {
 
-        sw.characteristics.forEach(char => {
+        sl.characteristics.forEach(char => {
             calculateCharacteristic(char)
             recalculateAttribute(`${char}_modifier`, char);
         });
 
-        sw.skills.forEach(skill => calculateSkill(skill));
+        sl.skills.forEach(skill => calculateSkill(skill));
 
-        sw.specialisations.forEach(specialisation => calculateSpecialisation(specialisation));
+        sl.specialisations.forEach(specialisation => calculateSpecialisation(specialisation));
 
-        getAttrs(["sheet_version"], values => (values["sheet_version"] !== sw.sheet_version) ? updateSheet(values["sheet_version"]) : 0);
+        getAttrs(["sheet_version"], values => (values["sheet_version"] !== sl.sheet_version) ? updateSheet(values["sheet_version"]) : 0);
 
         recalculateEarnedXP();
 
@@ -190,7 +190,7 @@ const swModule = ( () => {
 
         switch (version) {
             default:
-                updateAttrs["sheet_version"] = sw.sheet_version;
+                updateAttrs["sheet_version"] = sl.sheet_version;
             break; 
         }
 
@@ -264,20 +264,20 @@ const swModule = ( () => {
     const applyMod = (mod) => {
         const parsed_name = mod.toLowerCase().replace(/[^a-z ]/g,"").trim().replace(/ /g,"_");
 
-        sw.characteristics.forEach((char, index) => {
+        sl.characteristics.forEach((char, index) => {
             const standard = new RegExp(`\\b${char.toLowerCase()}\\b`, "g");
-            const short = new RegExp(`\\b${sw.characteristics_short[index].toLowerCase()}\\b`, "g");
+            const short = new RegExp(`\\b${sl.characteristics_short[index].toLowerCase()}\\b`, "g");
 
             if (parsed_name.match(standard) || parsed_name.match(short)) recalculateAttribute(`${char}_modifier`, char);
         });
-        sw.characteristics.forEach((char, index) => {
+        sl.characteristics.forEach((char, index) => {
             const standard = `${char.toLowerCase()}_bonus`;
-            const short = `${sw.characteristics_short[index].toLowerCase()}_bonus`;
-            const tiny = `${sw.characteristics_short[index].toLowerCase()}b`;
+            const short = `${sl.characteristics_short[index].toLowerCase()}_bonus`;
+            const tiny = `${sl.characteristics_short[index].toLowerCase()}b`;
 
             if (parsed_name === standard || parsed_name.match === short || parsed_name === tiny) recalculateAttribute(`${char}_bonusmod`, standard);
         });
-        sw.skills.forEach(skill => (parsed_name.indexOf(skill) > -1) ? recalculateAttribute(`${skill}_modifier`, skill.replace(/_/g," ")) : false);
+        sl.skills.forEach(skill => (parsed_name.indexOf(skill) > -1) ? recalculateAttribute(`${skill}_modifier`, skill.replace(/_/g," ")) : false);
         if (parsed_name === "ranged damage") recalculateAttribute("ranged_damage_bonus","ranged damage");
         if (parsed_name === "melee damage") recalculateAttribute("melee_damage_bonus","melee damage");
         if (parsed_name === "movement") recalculateAttribute("movement_mod","movement");
@@ -288,7 +288,7 @@ const swModule = ( () => {
     }
 
     const recalculateAttribute = (attribute, query) => {
-        const attrs = [...sw.characteristics, ...sw.characteristics.map(item => `${item}_bonus`), ...sw.characteristics.map(item => `${item}_custom_mod`)];
+        const attrs = [...sl.characteristics, ...sl.characteristics.map(item => `${item}_bonus`), ...sl.characteristics.map(item => `${item}_custom_mod`)];
         let match_array = [query];
         const parsed_query = query.replace(/ /g, "_");
 
@@ -325,7 +325,7 @@ const swModule = ( () => {
             }
         });
 
-        sw.repeating_sections.forEach(section => {
+        sl.repeating_sections.forEach(section => {
             getSectionIDs(section, id_array => {
                 id_array.forEach(id => attrs.push(`repeating_${section}_${id}_${section}_mods`));
                 id_array.forEach(id => attrs.push(`repeating_${section}_${id}_${section}_ranks`));
@@ -342,11 +342,11 @@ const swModule = ( () => {
 
                                 mod = mod.toLowerCase();
 
-                                sw.characteristics.forEach((characteristic, index) => {      
+                                sl.characteristics.forEach((characteristic, index) => {      
                                     mod = mod.replace(`\[${characteristic.replace(/_/g, " ")}\]`, values[characteristic]);
                                     mod = mod.replace(`\[${characteristic.replace(/_/g, " ")} bonus\]`, values[`${characteristic}_bonus`]);
-                                    mod = mod.replace(`\[${sw.characteristics_short[index].toLowerCase().replace(/_/g, " ")}\]`, values[characteristic]);
-                                    mod = mod.replace(`\[${sw.characteristics_short[index].toLowerCase().replace(/_/g, " ")}b\]`, values[`${characteristic}_bonus`]);
+                                    mod = mod.replace(`\[${sl.characteristics_short[index].toLowerCase().replace(/_/g, " ")}\]`, values[characteristic]);
+                                    mod = mod.replace(`\[${sl.characteristics_short[index].toLowerCase().replace(/_/g, " ")}b\]`, values[`${characteristic}_bonus`]);
                                 });
 
                                 const row_id = helperFunctions.extractRepeatingId(key,"talent");
@@ -368,7 +368,7 @@ const swModule = ( () => {
                         }
                     });
 
-                    if (sw.characteristics.includes(query)) mod_array.push(+values[`${parsed_query}_custom_mod`]);
+                    if (sl.characteristics.includes(query)) mod_array.push(+values[`${parsed_query}_custom_mod`]);
 
                     const new_value = mod_array.reduce((a,b) => a+b, 0);
 
@@ -518,7 +518,7 @@ const swModule = ( () => {
 
             if (check["npc"] === "on") return;
 
-            sw.skills.forEach(skill => {
+            sl.skills.forEach(skill => {
                 getAttrs([`${skill}_characteristic`], values => {
                     const skill_characteristic = values[`${skill}_characteristic`];
 
@@ -526,7 +526,7 @@ const swModule = ( () => {
                 });
             });
 
-            sw.specialisations.forEach(specialisation => {
+            sl.specialisations.forEach(specialisation => {
                 getAttrs([`${specialisation}_characteristic`], values => {
                     const specialisation_characteristic = values[`${specialisation}_characteristic`];
 
@@ -534,7 +534,7 @@ const swModule = ( () => {
                 });
             });
 
-            sw.repeating_skills.forEach(section => {
+            sl.repeating_skills.forEach(section => {
                 getSectionIDs(section, id_array => {
                     id_array.forEach(id => {
                         getAttrs([`repeating_${section}_${id}_specialisation_characteristic`], values => {
@@ -816,7 +816,7 @@ const swModule = ( () => {
 
         const attrs = [];
 
-        sw.characteristics.forEach(characteristic => attrs.push(`${repeating_id}_career_${characteristic}_advances`));
+        sl.characteristics.forEach(characteristic => attrs.push(`${repeating_id}_career_${characteristic}_advances`));
 
         for (let i = 1; i <= 4; i++) {
             for (let j = 1; j <= 10; j++) {
@@ -937,7 +937,7 @@ const swModule = ( () => {
 
             for (const id of ids.careers) {
 
-                for (const characteristic of sw.characteristics) {
+                for (const characteristic of sl.characteristics) {
                     attrs.push(`repeating_careers_${id}_career_${characteristic}_advances`);
                     attrs.push(`repeating_careers_${id}_career_${characteristic}_init`);
                 }
@@ -990,7 +990,7 @@ const swModule = ( () => {
 
                 for (const id of ids.careers) {
 
-                    sw.characteristics.forEach(characteristic => {
+                    sl.characteristics.forEach(characteristic => {
                         const value = parseInt(values[`repeating_careers_${id}_career_${characteristic}_advances`]) || 0;
                         const current = characteristic_advances.get(characteristic) || 0; 
                         const total = value + current;
@@ -1200,7 +1200,7 @@ const swModule = ( () => {
                     skills.forEach((value, key) => {
                         let parsed_key = key.replace(/ /g,"-").toLowerCase();
 
-                        if (sw.skills.includes(parsed_key)) {
+                        if (sl.skills.includes(parsed_key)) {
 
                             updateAttrs[`${parsed_key}_advances`] = value;
                             
@@ -1216,13 +1216,13 @@ const swModule = ( () => {
                                             
                             const specialisation_test = specialisation.toLowerCase();
 
-                            if (sw.specialisations.includes(specialisation_test)) {
+                            if (sl.specialisations.includes(specialisation_test)) {
 
                                 updateAttrs[`${specialisation}_advances`] = value;
 
                                 if (value > 0) updateAttrs[`${specialisation}_control`] = "on";
 
-                            } else if (sw.repeating_skills.includes(group)) {
+                            } else if (sl.repeating_skills.includes(group)) {
 
                                 modifyRepeatingSkill(group, specialisation, value);
 
@@ -1397,7 +1397,7 @@ const swModule = ( () => {
     }
 
     const updateAdvances = () => {
-        sw.characteristics.forEach(characteristic => calculateCharacteristicAdvances(characteristic));
+        sl.characteristics.forEach(characteristic => calculateCharacteristicAdvances(characteristic));
         calculateSkillAdvances();
         calculateTalentAdvances();
 
@@ -1653,10 +1653,10 @@ const swModule = ( () => {
         const section = "spells";   
         const repeating_id = helperFunctions.extractRepeatingId(attribute, section);
         
-        getAttrs([...sw.force_specialisations, `${repeating_id}_spell_type`], values => {
+        getAttrs([...sl.force_specialisations, `${repeating_id}_spell_type`], values => {
 
             const chosen = (values[`${repeating_id}_spell_type`] || "").toLowerCase();
-            const skill = (sw.force_specialisations.includes(chosen)) ? chosen : "alter";
+            const skill = (sl.force_specialisations.includes(chosen)) ? chosen : "alter";
 
             setAttrs({
                 [`${repeating_id}_spell_total`]:`@{${skill}}`, 
@@ -1676,7 +1676,7 @@ const swModule = ( () => {
             `${repeating_id}_attack_type`,
             "weapon_skill",
             "ballistic_skill",
-            ...sw.weapon_specialisations
+            ...sl.weapon_specialisations
         ];
 
         getAttrs(request, values => {
@@ -1709,7 +1709,7 @@ const swModule = ( () => {
             const attrs = [
                 "weapon_skill",
                 "ballistic_skill",
-                ...sw.weapon_specialisations
+                ...sl.weapon_specialisations
             ];
             
             for (const id of ids) {
@@ -1753,7 +1753,7 @@ const swModule = ( () => {
             "npc_intuition",
             "npc_perception",
             "npc_cool",
-            ...sw.characteristics
+            ...sl.characteristics
         ];
 
         getAttrs(attrs, values => {
@@ -1796,7 +1796,7 @@ const swModule = ( () => {
 
     return { 
         // Globals
-        sw: sw,
+        sl: sl,
 
         // Sheet Functions
         initSheet: initSheet,
@@ -1869,15 +1869,15 @@ const swModule = ( () => {
 
 // SHEET OPENED
 
-on(`sheet:opened`, eventInfo => swModule.initSheet());
+on(`sheet:opened`, eventInfo => slModule.initSheet());
 
 // SHEET FUNCTIONS
 
-on(`change:setting_diff_option`, eventInfo => swModule.toggleRollDifficulty(eventInfo.newValue));
-on(`change:setting_bonus_option`, eventInfo => swModule.toggleRollBonus(eventInfo.newValue));
-on(`change:setting_crit_option`, eventInfo => swModule.toggleRollCrits(eventInfo.newValue));
-on(`change:setting_init_option`, eventInfo => swModule.toggleInitOption(eventInfo.newValue));
-on(`change:setting_whisper`, eventInfo => swModule.toggleWhisper(eventInfo.newValue));
+on(`change:setting_diff_option`, eventInfo => slModule.toggleRollDifficulty(eventInfo.newValue));
+on(`change:setting_bonus_option`, eventInfo => slModule.toggleRollBonus(eventInfo.newValue));
+on(`change:setting_crit_option`, eventInfo => slModule.toggleRollCrits(eventInfo.newValue));
+on(`change:setting_init_option`, eventInfo => slModule.toggleInitOption(eventInfo.newValue));
+on(`change:setting_whisper`, eventInfo => slModule.toggleWhisper(eventInfo.newValue));
 
 [
     "repeating_talent:talent_mods", 
@@ -1888,11 +1888,11 @@ on(`change:setting_whisper`, eventInfo => swModule.toggleWhisper(eventInfo.newVa
     "repeating_weapon:weapon_mods",
     "repeating_armour:armour_mods",
 ].forEach(modifier => {
-    on(`change:${modifier}`, eventInfo => swModule.parseModField(eventInfo.newValue, eventInfo.previousValue));
+    on(`change:${modifier}`, eventInfo => slModule.parseModField(eventInfo.newValue, eventInfo.previousValue));
 });
 
-swModule.sw.characteristics.forEach(characteristic => {
-    on(`change:${characteristic}_custom_mod`, eventInfo => swModule.recalculateAttribute(`${characteristic}_modifier`, characteristic));
+slModule.sl.characteristics.forEach(characteristic => {
+    on(`change:${characteristic}_custom_mod`, eventInfo => slModule.recalculateAttribute(`${characteristic}_modifier`, characteristic));
 });
 
 // CLASS AND SPECIES CONTROLS
@@ -1901,86 +1901,86 @@ on(`clicked:remove_custom_class`, eventInfo => setAttrs({"class":""}));
 
 on(`clicked:remove_custom_species`, eventInfo => setAttrs({"species":""}));
 
-on(`change:species`, eventInfo => swModule.changeSpecies(eventInfo.newValue));
+on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
 
 for (let index = 1; index <= 12; index++) {
-    on(`change:species_skill_${index}_advances`, eventInfo => swModule.checkSpeciesAdvances());
+    on(`change:species_skill_${index}_advances`, eventInfo => slModule.checkSpeciesAdvances());
 } 
 
 // CHARACTERISTIC CALCULATIONS
 
-swModule.sw.characteristics.forEach(characteristic => {
-    on(`change:${characteristic} change:${characteristic}_initial change:${characteristic}_advances change:${characteristic}_modifier change:${characteristic}_custom_mod change:${characteristic}_bonusmod change:${characteristic}_bonus`, eventInfo => swModule.calculateCharacteristic(characteristic));
+slModule.sl.characteristics.forEach(characteristic => {
+    on(`change:${characteristic} change:${characteristic}_initial change:${characteristic}_advances change:${characteristic}_modifier change:${characteristic}_custom_mod change:${characteristic}_bonusmod change:${characteristic}_bonus`, eventInfo => slModule.calculateCharacteristic(characteristic));
 
-    on(`change:${characteristic}`, eventInfo => swModule.cascadeAttributeChange(characteristic));
+    on(`change:${characteristic}`, eventInfo => slModule.cascadeAttributeChange(characteristic));
 
-    on(`change:${characteristic}_noncareer`, eventInfo => swModule.calculateCharacteristicAdvances(characteristic));
+    on(`change:${characteristic}_noncareer`, eventInfo => slModule.calculateCharacteristicAdvances(characteristic));
 
-    on(`change:repeating_careers:career_${characteristic}_advances`, eventInfo => swModule.calculateCharacteristicAdvances(characteristic))
+    on(`change:repeating_careers:career_${characteristic}_advances`, eventInfo => slModule.calculateCharacteristicAdvances(characteristic))
 });
 
-on(`change:movement`, eventInfo => swModule.updateMovementRates(eventInfo.newValue));
+on(`change:movement`, eventInfo => slModule.updateMovementRates(eventInfo.newValue));
 
 // SKILL CALCULATIONS
 
-swModule.sw.skills.forEach(skill => {
-    on(`change:${skill} change:${skill}_advances change:${skill}_modifier change:${skill}_bonus change:${skill}_characteristic`, eventInfo => {swModule.calculateSkill(skill)});
+slModule.sl.skills.forEach(skill => {
+    on(`change:${skill} change:${skill}_advances change:${skill}_modifier change:${skill}_bonus change:${skill}_characteristic`, eventInfo => {slModule.calculateSkill(skill)});
 });
 
-swModule.sw.specialisations.forEach(specialisation => {
+slModule.sl.specialisations.forEach(specialisation => {
     on(`change:${specialisation} change:${specialisation}_advances change:${specialisation}_bonus change:${specialisation}_characteristic`, eventInfo => {
-        swModule.calculateSpecialisation(specialisation);
-        swModule.cascadeNPCAttacks();
+        slModule.calculateSpecialisation(specialisation);
+        slModule.cascadeNPCAttacks();
     });
 });
 
-swModule.sw.repeating_skills.forEach(section => {
-    //on(`change:repeating_${section}`, eventInfo => swModule.updateRepeatingSkillBase(eventInfo.sourceAttribute, section, eventInfo.newValue));
+slModule.sl.repeating_skills.forEach(section => {
+    //on(`change:repeating_${section}`, eventInfo => slModule.updateRepeatingSkillBase(eventInfo.sourceAttribute, section, eventInfo.newValue));
 
-    on(`change:repeating_${section}`, eventInfo => swModule.recalculateRepeatingSkill(eventInfo.sourceAttribute, section));
+    on(`change:repeating_${section}`, eventInfo => slModule.recalculateRepeatingSkill(eventInfo.sourceAttribute, section));
 });
 
-swModule.sw.specialisations.forEach(skill => on(`change:${skill}`, eventInfo => swModule.cascadeSkillChanges(skill)));
+slModule.sl.specialisations.forEach(skill => on(`change:${skill}`, eventInfo => slModule.cascadeSkillChanges(skill)));
 
 // CAREERS CHANGES
 
-on(`clicked:update_advances`, eventInfo => swModule.updateAdvances());
+on(`clicked:update_advances`, eventInfo => slModule.updateAdvances());
 
 on(`change:repeating_careers change:_reporder:careers`, eventInfo => {
-    if (eventInfo.sourceType === "player" && !eventInfo.sourceAttribute.match(/reporder/g)) swModule.calculateTotalAdvances(eventInfo.sourceAttribute);
-    swModule.updateCareerPath();
-    swModule.updateFirstCareer();
-    swModule.updateCurrentCareer();
+    if (eventInfo.sourceType === "player" && !eventInfo.sourceAttribute.match(/reporder/g)) slModule.calculateTotalAdvances(eventInfo.sourceAttribute);
+    slModule.updateCareerPath();
+    slModule.updateFirstCareer();
+    slModule.updateCurrentCareer();
 });
 
 on(`remove:repeating_careers`, eventInfo => {
-    swModule.updateCareerPath();
-    swModule.updateFirstCareer();
-    swModule.updateCurrentCareer();
+    slModule.updateCareerPath();
+    slModule.updateFirstCareer();
+    slModule.updateCurrentCareer();
 });
 
-on(`change:repeating_careers:career_current`, eventInfo => (eventInfo.sourceType === "player") ? swModule.updateCurrentCareer(eventInfo.sourceAttribute) : false);
+on(`change:repeating_careers:career_current`, eventInfo => (eventInfo.sourceType === "player") ? slModule.updateCurrentCareer(eventInfo.sourceAttribute) : false);
 
-on(`change:repeating_careers:career_name change:repeating_careers:career_level_current`, eventInfo => swModule.updateCareerNames(eventInfo.sourceAttribute));
+on(`change:repeating_careers:career_name change:repeating_careers:career_level_current`, eventInfo => slModule.updateCareerNames(eventInfo.sourceAttribute));
 
 [1,2,3,4].forEach(level => {
-    on(`change:repeating_careers:career_level${level}_name change:repeating_careers:career_level${level}_status`, eventInfo => swModule.updateCareerNames(eventInfo.sourceAttribute));
-    on(`clicked:repeating_careers:newcareerlevel-${level}`, eventInfo => swModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, level));
+    on(`change:repeating_careers:career_level${level}_name change:repeating_careers:career_level${level}_status`, eventInfo => slModule.updateCareerNames(eventInfo.sourceAttribute));
+    on(`clicked:repeating_careers:newcareerlevel-${level}`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, level));
 });
 
-on(`change:repeating_careers:career_level_current`, eventInfo => swModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue));
+on(`change:repeating_careers:career_level_current`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue));
 
 // EXPERIENCE CHANGES
 
-on(`change:repeating_experience change:repeating_experiencespent change:experience_mod remove:repeating_experiencespent remove:repeating_experience`, eventInfo => swModule.recalculateEarnedXP());
+on(`change:repeating_experience change:repeating_experiencespent change:experience_mod remove:repeating_experiencespent remove:repeating_experience`, eventInfo => slModule.recalculateEarnedXP());
 
-on(`change:current_xp change:spent_xp change:total_xp remove:repeating_experience`, eventInfo => swModule.recalculateCurrentXP());
+on(`change:current_xp change:spent_xp change:total_xp remove:repeating_experience`, eventInfo => slModule.recalculateCurrentXP());
 
-on(`change:repeating_experience change:repeating_experiencespent change:experience_mod remove:repeating_experiencespent remove:repeating_experience`, eventInfo => swModule.recalculateSpentXP());
+on(`change:repeating_experience change:repeating_experiencespent change:experience_mod remove:repeating_experiencespent remove:repeating_experience`, eventInfo => slModule.recalculateSpentXP());
 
 const advance_triggers = []
 
-swModule.sw.characteristics.forEach(characteristic => {
+slModule.sl.characteristics.forEach(characteristic => {
     advance_triggers.push(`change:repeating_careers:career_${characteristic}_advances change:repeating_careers:career_${characteristic}_init`)
 });
 
@@ -2006,56 +2006,56 @@ for (let index = 1; index <= 10; index++) {
 
 on(advance_triggers.join(" "), eventInfo => setAttrs({advances_changed:"1"}));
 
-on(`clicked:combinexp`, eventInfo => swModule.consolidateXP());
+on(`clicked:combinexp`, eventInfo => slModule.consolidateXP());
 
-on(`clicked:advance`, eventInfo => swModule.advanceXP());
+on(`clicked:advance`, eventInfo => slModule.advanceXP());
 
-on(`clicked:career_incomplete`, eventInfo => swModule.incompleteCareerXP());
+on(`clicked:career_incomplete`, eventInfo => slModule.incompleteCareerXP());
 
-on(`clicked:career_complete`, eventInfo => swModule.completeCareerXP());
+on(`clicked:career_complete`, eventInfo => slModule.completeCareerXP());
 
-on(`change:repeating_noncareer-skills delete:repeating_noncareer-skills`, eventInfo => swModule.calculateSkillAdvances());
+on(`change:repeating_noncareer-skills delete:repeating_noncareer-skills`, eventInfo => slModule.calculateSkillAdvances());
 
-on(`change:repeating_careers`, eventInfo => swModule.calculateInitColumns(eventInfo.sourceAttribute, eventInfo.newValue));
+on(`change:repeating_careers`, eventInfo => slModule.calculateInitColumns(eventInfo.sourceAttribute, eventInfo.newValue));
 
 // TRAPPINGS, WEAPONS & ARMOR FUNCTIONS
 
-on(`change:repeating_armour remove:repeating_armour`, eventInfo => swModule.calculateArmour());
+on(`change:repeating_armour remove:repeating_armour`, eventInfo => slModule.calculateArmour());
 
-on(`change:repeating_trappings change:repeating_armour:armour_enc change:repeating_armour:armour_worn change:repeating_weapons:weapon_enc`, eventInfo => swModule.calculateCurrentEncumbrance());
+on(`change:repeating_trappings change:repeating_armour:armour_enc change:repeating_armour:armour_worn change:repeating_weapons:weapon_enc`, eventInfo => slModule.calculateCurrentEncumbrance());
 
-on(`change:repeating_weapons:weapon_damage_flat change:repeating_weapons:weapon_damage_bonus`, eventInfo => swModule.updateWeaponDamage(eventInfo.sourceAttribute));
+on(`change:repeating_weapons:weapon_damage_flat change:repeating_weapons:weapon_damage_bonus`, eventInfo => slModule.updateWeaponDamage(eventInfo.sourceAttribute));
 
-on(`change:repeating_weapons:weapon_group`, eventInfo => swModule.updateWeaponTarget(eventInfo.sourceAttribute, eventInfo.newValue));
+on(`change:repeating_weapons:weapon_group`, eventInfo => slModule.updateWeaponTarget(eventInfo.sourceAttribute, eventInfo.newValue));
 
-on(`change:strength_bonus change:toughness_bonus change:encumbrance_bonus change:encumbrance_mod`, eventInfo => swModule.calculateMaxEncumbrance());
+on(`change:strength_bonus change:toughness_bonus change:encumbrance_bonus change:encumbrance_mod`, eventInfo => slModule.calculateMaxEncumbrance());
 
 
 // COMBAT FUNCTIONS 
 
-on(`change:strength_bonus change:toughness_bonus change:willpower_bonus change:wound_mod change:size`, eventInfo => swModule.calculateMaxWounds());
+on(`change:strength_bonus change:toughness_bonus change:willpower_bonus change:wound_mod change:size`, eventInfo => slModule.calculateMaxWounds());
 
-on(`change:strength_bonus change:toughness_bonus change:encumbrance_mod`, eventInfo => swModule.calculateMaxEncumbrance());
+on(`change:strength_bonus change:toughness_bonus change:encumbrance_mod`, eventInfo => slModule.calculateMaxEncumbrance());
 
-on(`clicked:increment_advantage`, eventInfo => swModule.incrementAdvantage());
+on(`clicked:increment_advantage`, eventInfo => slModule.incrementAdvantage());
 
-on(`clicked:decrement_advantage`, eventInfo => swModule.decrementAdvantage());
+on(`clicked:decrement_advantage`, eventInfo => slModule.decrementAdvantage());
 
 on(`clicked:reset_advantage`, eventInfo => setAttrs({advantage:0}));
 
 // SPELL FUNCTIONS
 
-on(`change:repeating_spells:spell_type`, eventInfo => swModule.calculateSpellValue(eventInfo.sourceAttribute));
+on(`change:repeating_spells:spell_type`, eventInfo => slModule.calculateSpellValue(eventInfo.sourceAttribute));
 
 // NPC FUNCTIONS
 
-on(`change:repeating_attacks:attack_name change:repeating_attacks:attack_type`, eventInfo => swModule.getAttackValue(eventInfo.sourceAttribute));
+on(`change:repeating_attacks:attack_name change:repeating_attacks:attack_type`, eventInfo => slModule.getAttackValue(eventInfo.sourceAttribute));
 
-on(`change:weapon_skill change:ballistic_skill`, eventInfo => swModule.cascadeNPCAttacks());
+on(`change:weapon_skill change:ballistic_skill`, eventInfo => slModule.cascadeNPCAttacks());
 
-[...swModule.sw.characteristics, "initiative", "dodge", "endurance", "intuition", "perception", "cool"].forEach(characteristic => {
-    on(`change:${characteristic} change:${characteristic}_bonus`, eventInfo => swModule.updateNPCButtons())
+[...slModule.sl.characteristics, "initiative", "dodge", "endurance", "intuition", "perception", "cool"].forEach(characteristic => {
+    on(`change:${characteristic} change:${characteristic}_bonus`, eventInfo => slModule.updateNPCButtons())
 });
 
-on(`change:npc sheet:opened`, eventInfo => swModule.updateNPCButtons());
+on(`change:npc sheet:opened`, eventInfo => slModule.updateNPCButtons());
 

@@ -1,9 +1,9 @@
 mixin display-toggle(attr, checked=false, icon="y")
-    label.sw-displaytoggle
-        input.sw-displaytoggle__hide(checked=checked, name=`attr_${attr}`, type="checkbox", value="1")
-        span.sw-displaytoggle__span=icon
+    label.sl-displaytoggle
+        input.sl-displaytoggle__hide(checked=checked, name=`attr_${attr}`, type="checkbox", value="1")
+        span.sl-displaytoggle__span=icon
 
 mixin trait-toggle(attr, display, checked=false)
-    label.sw-traittoggle
-        input.sw-traittoggle__hide(checked=checked, name=`attr_${attr}_toggle`, type="checkbox", value="1")
-        span.sw-traittoggle__span(name=display)
+    label.sl-traittoggle
+        input.sl-traittoggle__hide(checked=checked, name=`attr_${attr}_toggle`, type="checkbox", value="1")
+        span.sl-traittoggle__span(name=display)

@@ -5,7 +5,7 @@ A Roll20 character sheet for **Star Legends – Galactic Wars** (**SL100**), a s
 The layout, panel structure and sheetworker engine come from the
 [Warhammer Fantasy Roleplay 4e Official sheet](https://github.com/Roll20/roll20-character-sheets/tree/master/Warhammer%20Fantasy%20Roleplay%204e%20Official).
 The game content and visual theme have been replaced: it uses a gunmetal console frame,
-datapad panels, Orbitron and Exo 2 type, and a signal-yellow accent. None of the
+datapad panels, Bruno Ace SC for the title, Orbitron and Exo 2 type, and a signal-yellow accent. None of the
 WFRP artwork is used.
 
 ![Sheet preview](preview.png)
@@ -74,7 +74,7 @@ npm start         # watch mode while editing
 
 - the skill and specialisation lists, which live in three places:
   - `src/pug/abstracts.pug`
-  - `src/js/sheetworkers.js` (the `sw` object)
+  - `src/js/sheetworkers.js` (the `sl` object)
   - `src/scss/_abstracts.scss`
 - the `data-i18n` keys used in the HTML and the entries in `translation.json`. Roll20
   shows a blank label for any key that has no translation.
@@ -122,13 +122,13 @@ then run `npm run build`. Variables left as `null` keep the CSS look.
 
 | Variable | Where it shows | Suggested size |
 | --- | --- | --- |
-| `$sw-art-logo` | Title image; replaces the "Star Legends / Galactic Wars" text | 600×150 transparent PNG |
-| `$sw-art-header-background` | Backdrop behind the title | 840×110 |
-| `$sw-art-frame-background` | Texture for the dark frame | 256×256, tileable |
-| `$sw-art-panel-background` | Texture for the light panels (keep it pale) | 512×512, tileable |
-| `$sw-art-armour-figure` | Figure behind the hit locations on the Combat tab | 230×330 transparent PNG |
-| `$sw-art-npc-banner` | Banner behind the NPC name and stats | 840×200 |
-| `$sw-art-rollcard-banner` | Strip at the top of roll cards | 300×40 |
+| `$sl-art-logo` | Title image; replaces the "Star Legends / Galactic Wars" text | 600×150 transparent PNG |
+| `$sl-art-header-background` | Backdrop behind the title | 840×110 |
+| `$sl-art-frame-background` | Texture for the dark frame | 256×256, tileable |
+| `$sl-art-panel-background` | Texture for the light panels (keep it pale) | 512×512, tileable |
+| `$sl-art-armour-figure` | Figure behind the hit locations on the Combat tab | 230×330 transparent PNG |
+| `$sl-art-npc-banner` | Banner behind the NPC name and stats | 840×200 |
+| `$sl-art-rollcard-banner` | Strip at the top of roll cards | 300×40 |
 
 A relative path such as `"art/logo.png"` (relative to the repo root) works in
 `scripts/preview.js`. Use that while designing. Roll20 can't read files from
@@ -143,7 +143,7 @@ src/pug/abstracts.pug      game data: header fields, characteristics, skills, we
 src/pug/layout/            pc.pug, npc.pug, settings.pug
 src/pug/components/        mixins for skills, characteristic columns and repeating rows
 src/pug/rolls.pug          roll macro builders
-src/pug/rolltemplates.pug  the sw roll template
+src/pug/rolltemplates.pug  the sl roll template
 src/scss/_abstracts.scss   colour tokens and the skill lists used by show/hide rules
 src/scss/styling/          theme (panels, header, navigation, grids)
 src/js/sheetworkers.js     calculations: characteristics, skills, careers, XP, armour, Force powers
@@ -152,10 +152,10 @@ scripts/                   build check and preview tooling
 
 ### Internal names
 
-CSS classes (`sw-…`), the roll template name (`sw`) and the sheet-worker module
-(`swModule`) keep their original `sw` prefix. Players never see these names, and
-the attribute names that store character data are unchanged, so existing
-characters keep all their values.
+CSS classes use the `sl-` prefix (`sheet-sl-…` once built). The roll template
+is `sl`, so macros call it with `&{template:sl}`. The sheet-worker module is
+`slModule`. Attribute names that store character data don't use the prefix,
+so characters keep their values across the rename.
 
 ## Licence
 

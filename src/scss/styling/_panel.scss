@@ -1,5 +1,5 @@
-.sheet-sw-wrapper .sheet-sw-panel {
-    background: linear-gradient(180deg, $sw-panel-light, $sw-panel 40%, $sw-panel-shade);
+.sheet-sl-wrapper .sheet-sl-panel {
+    background: linear-gradient(180deg, $sl-panel-light, $sl-panel 40%, $sl-panel-shade);
 
     border: 1px solid #0a0d12;
     border-radius: 3px;
@@ -9,9 +9,9 @@
         padding: 3px 0 2px;
         margin-bottom: 1px;
 
-        border-bottom: 2px solid $sw-accent;
-        background: linear-gradient(90deg, $sw-frame, $sw-frame-light 50%, $sw-frame);
-        color: $sw-accent;
+        border-bottom: 2px solid $sl-accent;
+        background: linear-gradient(90deg, $sl-frame, $sl-frame-light 50%, $sl-frame);
+        color: $sl-accent;
 
         font-size: 12px;
         font-weight: 700;
@@ -22,36 +22,36 @@
     }
 }
 
-.sheet-sw-armour {
+.sheet-sl-armour {
     
-    // Qualified with .sheet-sw-panel so it outranks the generic panel background.
-    @at-root .sheet-sw-wrapper &__wrapper.sheet-sw-panel {
+    // Qualified with .sheet-sl-panel so it outranks the generic panel background.
+    @at-root .sheet-sl-wrapper &__wrapper.sheet-sl-panel {
         // Targeting reticle behind the hit-location blocks.
         background:
-            radial-gradient(circle at 50% 55%, transparent 0, transparent 58px, rgba($sw-holo, .25) 59px, rgba($sw-holo, .25) 60px, transparent 61px, transparent 100px, rgba($sw-holo, .18) 101px, rgba($sw-holo, .18) 102px, transparent 103px),
-            linear-gradient(90deg, transparent calc(50% - .5px), rgba($sw-holo, .18) calc(50% - .5px), rgba($sw-holo, .18) calc(50% + .5px), transparent calc(50% + .5px)),
-            linear-gradient(180deg, $sw-panel-light, $sw-panel-shade);
+            radial-gradient(circle at 50% 55%, transparent 0, transparent 58px, rgba($sl-holo, .25) 59px, rgba($sl-holo, .25) 60px, transparent 61px, transparent 100px, rgba($sl-holo, .18) 101px, rgba($sl-holo, .18) 102px, transparent 103px),
+            linear-gradient(90deg, transparent calc(50% - .5px), rgba($sl-holo, .18) calc(50% - .5px), rgba($sl-holo, .18) calc(50% + .5px), transparent calc(50% + .5px)),
+            linear-gradient(180deg, $sl-panel-light, $sl-panel-shade);
     }
 
     &__display {
-        border: 1px solid $sw-steel;
+        border: 1px solid $sl-steel;
         border-radius: 3px;
         background: rgba(255,255,255,.75);
-        color: $sw-holo-dark;
+        color: $sl-holo-dark;
     }
 }
 
-.sheet-sw-wrapper {
+.sheet-sl-wrapper {
 
-    .sheet-sw-controls {
+    .sheet-sl-controls {
 
         button[type="roll"],
         button[type="action"] {
             padding: 3px 0;
 
-            border: 1px solid $sw-steel;
+            border: 1px solid $sl-steel;
             border-radius: 3px;
-            background: linear-gradient(180deg, $sw-frame-light, $sw-frame);
+            background: linear-gradient(180deg, $sl-frame-light, $sl-frame);
             color: #e6edf4;
 
             font-family: $font-family-display;
@@ -61,19 +61,19 @@
             text-transform: uppercase;
 
             &:hover {
-                color: $sw-accent;
+                color: $sl-accent;
             }
         }
     }
 
-    .sheet-sw-advantage {
+    .sheet-sl-advantage {
         font-size: 16pt;
 
         &__wrapper {
             font-size: 16pt;
             text-align: center; 
     
-            input[type="number"].sheet-sw-advantage__input {
+            input[type="number"].sheet-sl-advantage__input {
                 border: $grid-border;
                 font-size: 16pt;
             }

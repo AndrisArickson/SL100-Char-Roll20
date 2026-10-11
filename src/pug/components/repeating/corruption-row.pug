@@ -1,30 +1,30 @@
 mixin corruption-row
     input(name=`attr_corruption_settings`, type="hidden", value=1)
-    .sw-corruptiontable__row
+    .sl-corruptiontable__row
 
-        .sw-corruptiontable__cell--settingstoggle
+        .sl-corruptiontable__cell--settingstoggle
             +display-toggle(`corruption_settings`, true)
 
-        .sw-corruptiontable__cell
+        .sl-corruptiontable__cell
             +trait-toggle(`corruption`, `attr_corruption_name`)
 
-        .sw-corruptiontable__cell--vocalise
-            button.sw-vocalise(type="roll", value=rolls.repeating.corruption) w
+        .sl-corruptiontable__cell--vocalise
+            button.sl-vocalise(type="roll", value=rolls.repeating.corruption) w
             
         input(name="attr_corruption_toggle", type="hidden")
-        .sw-corruptiontable__cell--description
+        .sl-corruptiontable__cell--description
             span(name=`attr_corruption_description`)
             
-        .sw-corruptiontable__row.sw-settings.control__hide--corruption_settings
+        .sl-corruptiontable__row.sl-settings.control__hide--corruption_settings
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Name`) 
-                input.sw-settings__input(name=`attr_corruption_name`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Name`) 
+                input.sl-settings__input(name=`attr_corruption_name`, type="text")
                             
-            .sw-settings__row--span
-                .sw-settings__label--full(data-i18n=`Description`) 
-                textarea.sw-settings__textarea(name=`attr_corruption_description`, type="number", value=0)
+            .sl-settings__row--span
+                .sl-settings__label--full(data-i18n=`Description`) 
+                textarea.sl-settings__textarea(name=`attr_corruption_description`, type="number", value=0)
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Modifiers`) 
-                input.sw-settings__input(name=`attr_corruption_mods`, type="text") 
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Modifiers`) 
+                input.sl-settings__input(name=`attr_corruption_mods`, type="text") 

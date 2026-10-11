@@ -1,15 +1,15 @@
-.sheet-sw {
+.sheet-sl {
 
     &-settings {
         padding-top: $margin-general;
 
         border-top: $grid-border-settings;
-        background: rgba($sw-holo, 0.06);
+        background: rgba($sl-holo, 0.06);
 
-        input.sheet-sw-settings__input[type="text"],
-        input.sheet-sw-settings__input[type="number"],
-        textarea.sheet-sw-settings__textarea,
-        select.sheet-sw-settings__select {
+        input.sheet-sl-settings__input[type="text"],
+        input.sheet-sl-settings__input[type="number"],
+        textarea.sheet-sl-settings__textarea,
+        select.sheet-sl-settings__select {
             background-color: $form-input-background;
             color: $form-input-foreground;
 
@@ -17,7 +17,7 @@
         }
 
         &--noborder {
-            @extend .sheet-sw-settings;
+            @extend .sheet-sl-settings;
 
             border: 0;
         }

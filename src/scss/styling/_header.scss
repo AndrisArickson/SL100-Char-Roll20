@@ -1,4 +1,4 @@
-.sheet-sw-header {
+.sheet-sl-header {
     padding: 0;
     overflow: hidden;
 
@@ -8,20 +8,20 @@
             align-items: center;
             justify-content: center;
 
-        background: $sw-starfield;
-        border-bottom: 3px solid $sw-accent;
+        background: $sl-starfield;
+        border-bottom: 3px solid $sl-accent;
     }
 
     &__logo-title {
-        color: $sw-accent;
+        color: $sl-accent;
 
         font-family: $font-family-title;
-        font-size: 40px;
-        font-weight: 900;
+        font-size: 38px;
+        font-weight: 400;
         letter-spacing: .14em;
         line-height: 1;
         text-transform: uppercase;
-        text-shadow: 0 0 12px rgba($sw-accent, .35);
+        text-shadow: 0 0 12px rgba($sl-accent, .35);
     }
 
     &__logo-tagline {
@@ -31,7 +31,7 @@
 
         font-family: $font-family-title;
         font-size: 15px;
-        font-weight: 700;
+        font-weight: 400;
         letter-spacing: .55em;
         line-height: 1;
         text-transform: uppercase;
@@ -56,10 +56,10 @@
     &__portrait {
         overflow: hidden;
 
-        border: 2px solid $sw-accent;
+        border: 2px solid $sl-accent;
         border-radius: 3px;
-        background: $sw-starfield;
-        box-shadow: 0 0 0 1px $sw-frame, 0 0 10px rgba($sw-accent, .3);
+        background: $sl-starfield;
+        box-shadow: 0 0 0 1px $sl-frame, 0 0 10px rgba($sl-accent, .3);
     }
 
     &__portrait-empty {
@@ -101,7 +101,7 @@
     &__title {
         padding: $margin-small;
 
-        color: $sw-steel;
+        color: $sl-steel;
 
         font-family: $font-family-display;
         font-size: 10px;

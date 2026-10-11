@@ -1,4 +1,4 @@
-.sheet-sw-header {
+.sheet-sl-header {
 
     &__logo {
         height: 118px;
@@ -72,7 +72,7 @@
         &--height,
         &--homeworld,
         &--eyes {
-            @extend .sheet-sw-header__item-wrapper;
+            @extend .sheet-sl-header__item-wrapper;
         }
 
         &--character_name,

@@ -4,27 +4,27 @@ mixin skill-grouped(skill)
         const attr = name.toLowerCase().replace(/ /g, "-");
         const classn = (attr === "evaluate") ? "eva1uate" : attr; // Roll20 hates the word "evaluate" in stylesheets.
         const char_attr = characteristic.toLowerCase().replace(/ /g, "_");
-    .sw-skillwrapper    
+    .sl-skillwrapper    
         input(name=`attr_${attr}_settings`, type="hidden")
-        .sw-skilltable__row--grouped
+        .sl-skilltable__row--grouped
             input(name=`attr_${attr}_characteristic`, type="hidden", value=char_attr)
 
             if (grouped && specialisations && specialisations[0] !== 1)
-                .sw-skilltable__cell--settingstoggle
+                .sl-skilltable__cell--settingstoggle
                     +display-toggle(`${attr}_settings`)
 
-            .sw-skilltable__cell--grouped
+            .sl-skilltable__cell--grouped
                 span(data-i18n=name)
 
-            .sw-skilltable_row.sw-settings(class=`control__hide--${classn}_settings`)
+            .sl-skilltable_row.sl-settings(class=`control__hide--${classn}_settings`)
 
                 if (grouped && specialisations && specialisations[0] !== 1)
                     h2(data-i18n="specialisation display")
 
                     each specialisation in specialisations
-                        .sw-settings__row 
-                            .sw-settings__label(data-i18n=specialisation)
-                            input.sw-settings__checkbox(name=`attr_${specialisation.toLowerCase().replace(/ /g,"_")}_control`, type="checkbox", checked=shown.includes(specialisation))
+                        .sl-settings__row 
+                            .sl-settings__label(data-i18n=specialisation)
+                            input.sl-settings__checkbox(name=`attr_${specialisation.toLowerCase().replace(/ /g,"_")}_control`, type="checkbox", checked=shown.includes(specialisation))
 
     if (grouped && specialisations && specialisations[0] !== 1)
         each specialisation in specialisations
@@ -33,58 +33,58 @@ mixin skill-grouped(skill)
                 input(name=`attr_${attr}_settings`, type="hidden")
                 input(name=`attr_${attr}_control`, type="hidden", value=(shown.includes(specialisation) ? "on" : false))
                 
-                .sw-skilltable__row--specialisation(class=`control__hide--${attr}`)
+                .sl-skilltable__row--specialisation(class=`control__hide--${attr}`)
                     input(name=`attr_${attr}_characteristic`, type="hidden", value=char_attr)
 
-                    .sw-skilltable__cell--settingstoggle
+                    .sl-skilltable__cell--settingstoggle
                         +display-toggle(`${attr}_settings`)
 
                     if (specialisation === "Custom")
                     
-                        .sw-skilltable__cell
+                        .sl-skilltable__cell
                             button(name=`roll_${attr}`, type="roll", value=rolls.skills[attr])
                                 span(name=`attr_${attr}_name`)
 
                     else
                     
-                        .sw-skilltable__cell
+                        .sl-skilltable__cell
                             button(data-i18n=specialisation, name=`roll_${attr}`, type="roll", value=rolls.skills[attr])
 
-                    .sw-skilltable__cell
+                    .sl-skilltable__cell
                         +characteristic-select(characteristic,`${attr}_characteristic`, true)
 
                     each characteristic in characteristics
                         - const c_attr = characteristic.name.toLowerCase().replace(/ /g, "_");
-                        .sw-skilltable__cell(class=`control__hide--${c_attr}`)
+                        .sl-skilltable__cell(class=`control__hide--${c_attr}`)
                             span.display(name=`attr_${c_attr}`)
                             input(name=`attr_${c_attr}`, type="hidden", value="0")
                         
-                    .sw-skilltable__cell
+                    .sl-skilltable__cell
                         input(name=`attr_${attr}_advances`, type="hidden", value="0")
                         span.display(name=`attr_${attr}_advances`)
 
-                    .sw-skilltable__cell--last.sw-skilltable__cell--highlight
+                    .sl-skilltable__cell--last.sl-skilltable__cell--highlight
                         span.display(name=`attr_${attr}`)
 
-                    .sw-skilltable_row.sw-settings(class=`control__hide--${attr}_settings`)
+                    .sl-skilltable_row.sl-settings(class=`control__hide--${attr}_settings`)
 
                         if (specialisation === "Custom")                        
-                            .sw-settings__row--span
-                                .sw-settings__label(data-i18n=`Name`) 
-                                input.sw-settings__input(name=`attr_${attr}_name`, type="text") 
+                            .sl-settings__row--span
+                                .sl-settings__label(data-i18n=`Name`) 
+                                input.sl-settings__input(name=`attr_${attr}_name`, type="text") 
                             
-                        .sw-settings__row
-                            .sw-settings__label(data-i18n=`Modifier`) 
+                        .sl-settings__row
+                            .sl-settings__label(data-i18n=`Modifier`) 
                             span.display(name=`attr_${attr}_modifier`)
                             input(name=`attr_${attr}_modifier`, type="hidden", value="0")
                             
-                        .sw-settings__row
-                            .sw-settings__label(data-i18n=`Bonus`) 
-                            input.sw-settings__input(name=`attr_${attr}_bonus`, type="text")
+                        .sl-settings__row
+                            .sl-settings__label(data-i18n=`Bonus`) 
+                            input.sl-settings__input(name=`attr_${attr}_bonus`, type="text")
                     
-                        .sw-settings__row--span
-                            .sw-settings__label(data-i18n=`Roll Notes`) 
-                            input.sw-settings__input(name=`attr_${attr}_notes`, type="text") 
+                        .sl-settings__row--span
+                            .sl-settings__label(data-i18n=`Roll Notes`) 
+                            input.sl-settings__input(name=`attr_${attr}_notes`, type="text") 
 
     if (grouped && !specialisations || forced === 1)
         +repeating-section(attr.replace(/_/g,"-"), 'skill-row', characteristic)

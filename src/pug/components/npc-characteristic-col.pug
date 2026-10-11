@@ -2,8 +2,8 @@ mixin npc-characteristic-col(characteristic)
     -
         const attr = characteristic.name.toLowerCase().replace(/ /g,"_");
 
-    .sw-npccharacteristic__col
-        .sw-npccharacteristic__cell--head
+    .sl-npccharacteristic__col
+        .sl-npccharacteristic__cell--head
             button(data-i18n=characteristic.abbreviation, name=`roll_${attr}`, type="roll", value=rolls.characteristic[attr])
-        .sw-npccharacteristic__cell
+        .sl-npccharacteristic__cell
             span(name=`attr_${attr}`)

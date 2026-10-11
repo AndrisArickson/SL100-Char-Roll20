@@ -1,67 +1,67 @@
 mixin spell-row
     input(name=`attr_spell_settings`, type="hidden", value=1)
-    .sw-spelltable__row
+    .sl-spelltable__row
 
-        .sw-spelltable__cell--settingstoggle
+        .sl-spelltable__cell--settingstoggle
             +display-toggle(`spell_settings`, true)
 
-        .sw-spelltable__cell
+        .sl-spelltable__cell
             button(type="roll", value=rolls.spell)
                 span(name=`attr_spell_name`)
 
-        .sw-spelltable__cell
+        .sl-spelltable__cell
             span(name=`attr_spell_lore`)
 
-        .sw-spelltable__cell
+        .sl-spelltable__cell
             span(name=`attr_spell_display`)
             input(name=`attr_spell_total`, type="hidden")
             input(name=`attr_spell_display`, type="hidden")
 
-        .sw-spelltable__cell
+        .sl-spelltable__cell
             span(name=`attr_spell_cn`)
 
-        .sw-spelltable__cell
+        .sl-spelltable__cell
             span(name=`attr_spell_range`)
 
-        .sw-spelltable__cell
+        .sl-spelltable__cell
             span(name=`attr_spell_target`)
 
-        .sw-spelltable__cell--last
+        .sl-spelltable__cell--last
             span(name=`attr_spell_duration`)
             
-        .sw-spelltable__cell.sw-settings.control__hide--spell_settings
+        .sl-spelltable__cell.sl-settings.control__hide--spell_settings
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Name`) 
-                input.sw-settings__input(name=`attr_spell_name`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Name`) 
+                input.sl-settings__input(name=`attr_spell_name`, type="text")
         
             input(name=`attr_spell_type`, type="hidden", value="Alter")
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Skill`) 
-                select.sw-settings__input(name=`attr_spell_type`)
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Skill`) 
+                select.sl-settings__input(name=`attr_spell_type`)
                     each specialisation in findSkill("Force").specialisations.filter(spec => spec !== "Custom")
                         option(value=specialisation, data-i18n=specialisation)
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Discipline`) 
-                input.sw-settings__input(name=`attr_spell_lore`, type="text")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Discipline`) 
+                input.sl-settings__input(name=`attr_spell_lore`, type="text")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`DN`) 
-                input.sw-settings__input(name=`attr_spell_cn`, type="number")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`DN`) 
+                input.sl-settings__input(name=`attr_spell_cn`, type="number")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Range`) 
-                input.sw-settings__input(name=`attr_spell_range`, type="text")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Range`) 
+                input.sl-settings__input(name=`attr_spell_range`, type="text")
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Target`) 
-                input.sw-settings__input(name=`attr_spell_target`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Target`) 
+                input.sl-settings__input(name=`attr_spell_target`, type="text")
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Duration`) 
-                input.sw-settings__input(name=`attr_spell_duration`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Duration`) 
+                input.sl-settings__input(name=`attr_spell_duration`, type="text")
                             
-            .sw-settings__row--span
-                .sw-settings__label--full(data-i18n=`Description`) 
-                textarea.sw-settings__textarea(name=`attr_spell_description`)
+            .sl-settings__row--span
+                .sl-settings__label--full(data-i18n=`Description`) 
+                textarea.sl-settings__textarea(name=`attr_spell_description`)

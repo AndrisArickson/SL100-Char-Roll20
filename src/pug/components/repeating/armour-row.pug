@@ -1,48 +1,48 @@
 mixin armour-row
     input(name=`attr_armour_settings`, type="hidden", value=1)
-    .sw-armourtable__row
+    .sl-armourtable__row
 
-        .sw-armourtable__cell--settingstoggle
+        .sl-armourtable__cell--settingstoggle
             +display-toggle(`armour_settings`, true)
 
-        .sw-armourtable__cell
+        .sl-armourtable__cell
             span.display(name=`attr_armour_name`)
 
-        .sw-armourtable__cell
+        .sl-armourtable__cell
             span.display(name=`attr_armour_locations_display`)
 
-        .sw-armourtable__cell
+        .sl-armourtable__cell
             span.display(name=`attr_armour_points`)
 
-        .sw-armourtable__cell--last
+        .sl-armourtable__cell--last
             span.display(name=`attr_armour_qualities`)
             
-        .sw-armourtable__row.sw-settings.control__hide--armour_settings
+        .sl-armourtable__row.sl-settings.control__hide--armour_settings
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Name`) 
-                input.sw-settings__input(name=`attr_armour_name`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Name`) 
+                input.sl-settings__input(name=`attr_armour_name`, type="text")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Armour Points`) 
-                input.sw-settings__input(name=`attr_armour_points`, type="number")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Armour Points`) 
+                input.sl-settings__input(name=`attr_armour_points`, type="number")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Locations`) 
-                input.sw-settings__input(name=`attr_armour_locations`, type="text")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Locations`) 
+                input.sl-settings__input(name=`attr_armour_locations`, type="text")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Enc.`) 
-                input.sw-settings__input(name=`attr_armour_enc`, type="number")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Enc.`) 
+                input.sl-settings__input(name=`attr_armour_enc`, type="number")
         
-            .sw-settings__row
-                .sw-settings__label(data-i18n=`Worn`) 
-                input.sw-settings__input(name=`attr_armour_worn`, type="checkbox")
+            .sl-settings__row
+                .sl-settings__label(data-i18n=`Worn`) 
+                input.sl-settings__input(name=`attr_armour_worn`, type="checkbox")
         
-            .sw-settings__row--span
-                .sw-settings__label(data-i18n=`Qualities`) 
-                input.sw-settings__input(name=`attr_armour_qualities`, type="text")
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Qualities`) 
+                input.sl-settings__input(name=`attr_armour_qualities`, type="text")
                             
-            .sw-settings__row--span
-                .sw-settings__label--full(data-i18n=`Description`) 
-                textarea.sw-settings__textarea(name=`attr_armour_description`)
+            .sl-settings__row--span
+                .sl-settings__label--full(data-i18n=`Description`) 
+                textarea.sl-settings__textarea(name=`attr_armour_description`)

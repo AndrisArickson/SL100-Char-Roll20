@@ -14,16 +14,33 @@ WFRP artwork is used.
 
 | Tab | Contents |
 | --- | --- |
-| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics, Resilience/Resolve/Motivation and Extra Points, Destiny & Fortune, Movement (metres), Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
+| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics (with a Species / Origin row), Resilience/Resolve/Motivation and Extra Points, Destiny & Fortune (with refresh buttons), Movement (metres), Experience, Basic and Advanced Skills, Talents (with the talent library), Conditions, Psychology, Dark Side, Ambitions, Party |
 | **Combat** | Gear, Encumbrance, Wealth (Credits / Bank / Debt), d100 hit-location Armour Points, quick-roll Controls, Advantage, Wounds, Critical Wounds, Armour, Weapons |
-| **Force** | Force Powers (rolled against Force: Control, Sense or Alter) and Conflict |
-| **Advances** | Careers with four levels, species skills and talents, XP awards and spends |
+| **Force** | Force Powers (rolled against Use the Force: Sense, Control or Alter, showing the discipline rank as +SL on success) and Conflict |
+| **Advances** | Careers (with the career library), Species, Origin, Faction, Character Creation helper, XP awards and spends |
 | **Settings** | Custom modifiers, non-career advances, roll options |
 | **NPC** | A compact stat-block view (toggle **NPC** in Settings) |
 
 Rolls use the d100 roll-under engine from the WFRP sheet: difficulty query, bonuses,
 Advantage, Success Levels, automatic success and failure, and hit locations. All of
 this goes to a themed roll template.
+
+### Rules sources
+
+The rules content comes from the SL100 design documents in the
+[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki) repository. Nothing is invented on the
+sheet: where a document is silent, the field is left blank and editable and the gap is listed in
+[`NOTES-rules-gaps.md`](NOTES-rules-gaps.md) and [`docs/data-report.md`](docs/data-report.md).
+
+| Sheet part | Source |
+| --- | --- |
+| Characteristics, creation methods, bonus XP, point-buy | 01 Introduction & Characteristics |
+| Species (modifiers, talents, Movement, Destiny, Resilience, Extra Points, Size) | 02 Species |
+| Origin (13 worlds, +5 bonuses, 12 starting skills) | 03 Origin |
+| Faction (selector and details; no game effects are written) | 04 Faction |
+| Career library (24 careers x 4 levels) | 05 Careers |
+| Skills and specialisations | 06 Skills |
+| Talent library (167 talents) and random-talent table | 07 Talents (revised), Talent List (revised) |
 
 ### How WFRP 4e maps to SL100
 
@@ -32,32 +49,50 @@ this goes to a themed roll template.
 | Fate / Fortune | Destiny / Fortune (labels only; attributes unchanged) | `fate` / `fortune` |
 | Corruption & Mutations | Dark Side Points & taints | `corruption_points`, `repeating_corruption` |
 | Spells & Prayers, Sin | Force Powers, Conflict | `repeating_spells`, `sin` |
-| Channelling (winds of magic) | Force (Control / Sense / Alter / Custom) | `control`, `sense`, `alter`, `custom` |
+| Channelling | Use the Force (Sense / Control / Alter / Custom) | `force`; `sense`, `control`, `alter`, `custom` |
+| Read/Write | Datapad Use (talent) | — |
 | GC / SS / BP | Credits / Bank / Debt | `credits`, `bank`, `debt` |
 | Trappings | Gear | `repeating_trappings` |
 | Hair | Homeworld | `homeworld` |
+| Yards | Metres (Walk = 2 x Movement, Run = 4 x Movement) | `walk`, `run` |
 
-The characteristics stay the same: WS, BS, S, T, I, Ag, Dex, Int, WP, Fel.
+**Characteristics.** WS, BS, S, T, I, Ag, Dex, Int, WP, Fel (ten, as in the 05 advance schemes;
+01 currently lists nine without Dex, see the gaps file).
 
-**Skills.** Basic: Animal Handling, Art, Athletics, Bribery, Carouse, Charm, Climb, Cool,
-Dodge, Drive, Endurance, Entertain, Gamble, Haggle, Intimidate, Intuition, Leadership,
-Melee, Navigation, Perception, Ride, Stealth, Streetwise, Survival, Zero-G.
-Advanced: Astrogation, Computers, Deceive, Demolitions, Force, Knowledge, Language,
-Mechanics, Medicine, Perform, Pilot, Ranged, Research, Security, Sleight of Hand,
-Slicing, Swim, Tactics, Track, Trade.
+**Skills (06).** Basic: Art, Athletics, Bribery, Charm, Charm Creature, Climb, Consume Intoxicant,
+Cool, Dodge, Endurance, Entertain, Gamble, Gossip, Haggle, Intimidate, Intuition, Leadership,
+Melee (1H, 2H, Lightsaber), Navigation, Outdoor Survival, Perception, Pilot (Speeder, Starship),
+Ride (Air, Land, Water), Stealth (Urban, Wilderness). Advanced: Codes, Creature Care, Creature
+Training, Demolitions, Evaluate, Language, Lore, Medicine, Meditate, Perform, Pilot (Capital Ship)
+(Mega Freighter, Capital Ship, Space Station), Play, Profession, Ranged (Archaic, Blaster, Heavy,
+Ordinance), Research, Sleight of Hand, Slice Security System, Swim, Track, Use the Force (Sense,
+Control, Alter). Pending (used by 05, not yet in 06): Consume Alcohol, Heal, Secret Signs, Trade.
 
-**Weapon groups.** Melee: Basic, Brawling, Lightsaber, Vibroweapon, Parry, Polearm,
-Two-Handed, Stun. Ranged: Pistol, Rifle, Heavy, Gunnery, Exotic, Entangling,
-Explosives, Throwing.
+**Species (02).** Arkanian, Besalisk, Chironian, Chiss, Echani, Human, Kel Dor, Miraluka,
+Nautolan, Otolla Gungan, Togruta, Trandoshan, T'surr, Twi'lek, Weequay, Wookiee, Zabrak, plus
+Custom (applies nothing).
 
-**Species.** Human, Bothan, Duros, Mon Calamari, Rodian, Trandoshan, Twi'lek,
-Wookiee, Zabrak and Droid. A Custom option is also available. Picking a species
-fills in Destiny, Resilience, Movement and Size, plus starter species skills and
-talents. These presets are placeholders. Edit `species_presets` in
-`src/js/sheetworkers.js` to match your rules.
+### Rules data and how to regenerate it
+
+Species, origins, factions, careers and talents are generated from the design documents by
+`scripts/gen-data.js` into `src/js/data/sl100-data.js` (sheet workers) and
+`src/pug/sl100-data.pug` (templates). Both are committed, so the sheet builds without the wiki.
+When the documents change:
+
+```bash
+# SL100-Wiki checked out next to this repository (or set SL100_WIKI=/path/to/SL100-Wiki)
+npm run gen        # regenerate the data and docs/data-report.md
+npm run build      # compile and check
+npm run i18n       # add/remove translation keys for new or removed names
+npm run build      # rebuild so labels pick up the translations
+```
+
+`gen` fails if the number of talents in 07 (revised) differs from the revised Talent List.
+Talent names that 02/05 still spell the old way are mapped in `scripts/data/renames.json`
+(e.g. Read/Write -> Datapad Use); `docs/data-report.md` lists every name that still does not match.
 
 The WFRP sheet loaded species and talent data from the WFRP compendium.
-SL100 has no compendium, so that drag-and-drop code has been removed.
+SL100 has no compendium (Roll20 does not allow custom ones), so the libraries are built into the sheet.
 
 ## Building
 
@@ -78,6 +113,8 @@ npm start         # watch mode while editing
   - `src/scss/_abstracts.scss`
 - the `data-i18n` keys used in the HTML and the entries in `translation.json`. Roll20
   shows a blank label for any key that has no translation.
+- the rules data counts: talents vs the revised Talent List, 13 origins, species vs 02.
+- retired terms in visible labels ("Fate", "Read/Write").
 
 It also fails if any Roll20-hosted WFRP artwork is referenced.
 

@@ -1049,11 +1049,15 @@ button.sheet-pictos[type=action]:hover {
 
 .sheet-sl-extrapoints {
   display: grid;
-  grid-template-columns: auto 3em auto 3em auto 3em;
-  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2px 0.25rem;
   padding: 2px 0.25rem;
   border-top: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-extrapoints__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .sheet-sl-extrapoints__label {
   font-size: 11px;
@@ -1205,6 +1209,10 @@ input[type=hidden][name*=origin_disable5][value="1"] ~ * input[type=radio][value
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: 0.5rem;
+}
+
+.sheet-sl-wrapper select.sheet-control__custom {
+  display: block;
 }
 
 .sheet-sl-wrapper input[type=text],

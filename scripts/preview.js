@@ -26,10 +26,16 @@ const root = path.join(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
 const sample = {
-    character_name: "Kessa Varn", species: "Human", class: "Scoundrel", career: "Smuggler",
+    character_name: "Kessa Varn", species: "Twi'lek", class: "Scoundrels", origin: "Hive Worlds", faction: "Smugglers' Alliance", career: "Smuggler",
     career_level: "Freighter Captain", career_path: "Spacer ⟶ Smuggler", status: "Silver 3",
     age: "31", height: "1.72m", homeworld: "Corvane Prime", eyes: "Amber",
-    fate: 2, fortune: 2, resilience: 1, resolve: 1, motivation: "Never owe the syndicate again",
+    fate: 2, fortune: 2, resilience: 1, resolve: 1, extra_points: 2, extra_fate: 1, extra_resilience: 1,
+    origin_description: "Highly urbanized planets with massive, sprawling cities that cover most of the surface.", origin_fixed_label: "Agility",
+    origin_choice_1_label: "Ballistic Skill", origin_choice_2_label: "Initiative", origin_choice_3_label: "Fellowship", origin_choice: 3,
+    origin_skill_1: "Bribery", origin_skill_2: "Charm", origin_skill_3: "Consume Intoxicant", origin_skill_4: "Cool", origin_skill_5: "Dodge", origin_skill_6: "Evaluate",
+    faction_group: "Criminal Underworld · Smugglers & Pirate Gangs", faction_description: "Loose network of independent smugglers.",
+    creation_method: "pointbuy", creation_xp: 0, pointbuy_budget: 100, creation_spent: 98, creation_remaining: 2, creation_warning: "Points spent do not match the budget.",
+    species_talent_1_name: "Attractive or Beneath Notice", species_talent_2_name: "Datapad Use", species_talent_3_name: "Random talent (roll)", motivation: "Never owe the syndicate again",
     movement: 4, walk: 8, run: 16, current_xp: 340, spent_xp: 1260, total_xp: 1600,
     wounds: 11, wounds_max: 13, advantage: 2, encumbrance: 6, encumbrance_max: 7,
     credits: 2450, bank: 800, debt: 12000, corruption_points: 1, sin: 0,

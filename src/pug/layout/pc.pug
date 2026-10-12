@@ -59,12 +59,15 @@ input(name="attr_setting_button_hide", type="hidden")
     //- Extra Points come from the species (02) and are split between Destiny and
     //- Resilience; the sheet worker checks the split and applies it.
     .sl-extrapoints
-        span.sl-extrapoints__label(data-i18n="Extra Points")
-        input.sl-extrapoints__input(name="attr_extra_points", type="number")
-        span.sl-extrapoints__label(data-i18n="to Destiny")
-        input.sl-extrapoints__input(name="attr_extra_fate", type="number", value="0")
-        span.sl-extrapoints__label(data-i18n="to Resilience")
-        input.sl-extrapoints__input(name="attr_extra_resilience", type="number", value="0")
+        label.sl-extrapoints__item
+            span.sl-extrapoints__label(data-i18n="Extra Points")
+            input.sl-extrapoints__input(name="attr_extra_points", type="number")
+        label.sl-extrapoints__item
+            span.sl-extrapoints__label(data-i18n="to Destiny")
+            input.sl-extrapoints__input(name="attr_extra_fate", type="number", value="0")
+        label.sl-extrapoints__item
+            span.sl-extrapoints__label(data-i18n="to Resilience")
+            input.sl-extrapoints__input(name="attr_extra_resilience", type="number", value="0")
     input(name="attr_species_fate", type="hidden")
     input(name="attr_species_resilience", type="hidden")
     .sl-extrapoints__check

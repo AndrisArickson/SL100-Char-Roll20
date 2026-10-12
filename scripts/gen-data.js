@@ -590,8 +590,17 @@ const strip = (list, keys) => list.map(item => {
     return copy;
 });
 
+// Counts taken from the documents themselves, so check.js can verify the
+// generated data without the wiki being present.
+const speciesHeadings = readSource("species").filter(l => /^(?:#+\s*)?\[[^\]]+\]\(https?:/.test(l.trim())).length;
+
 const data = {
     generated_from: Object.values(SOURCES),
+    source_counts: {
+        talent_list: listCheck.listedCount,
+        species_headings: speciesHeadings,
+        origin_table_rows: origins.filter(o => o.d100).length,
+    },
     species: strip(species, ["line", "url"]),
     origins: strip(origins, ["line"]),
     factions: factions.map(f => ({ name: f.name, section: f.section, group: f.group, era: f.era, description: f.description })),

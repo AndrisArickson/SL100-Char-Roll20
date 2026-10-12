@@ -133,6 +133,26 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     if (modernColour) errors.push(`sl100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
 }
 
+// Rules data (scripts/gen-data.js) against the counts read from the documents.
+{
+    const counts = sl100Data.source_counts || {};
+    if (sl100Data.talents.length !== counts.talent_list) errors.push(`talent library has ${sl100Data.talents.length} talents; the Talent List (revised) has ${counts.talent_list} (re-run npm run gen)`);
+    if (sl100Data.origins.length !== 13) errors.push(`expected 13 origins (chapter 03), found ${sl100Data.origins.length}`);
+    if (sl100Data.species.length !== counts.species_headings) errors.push(`species data has ${sl100Data.species.length} entries; chapter 02 has ${counts.species_headings}`);
+}
+
+// Retired terms must not appear in visible labels (data inside the sheet
+// worker, such as talent rules text quoting "Fate points", is not checked).
+{
+    const visible = html.replace(/<script type="text\/worker">[\s\S]*?<\/script>/, "").replace(/<rolltemplate[\s\S]*?<\/rolltemplate>/g, (m) => m);
+    const labels = [...visible.matchAll(/>([^<>]+)</g)].map(m => m[1]).concat(Object.values(translation));
+    [/\bFate\b/, /Read\/Write/].forEach(pattern => {
+        const hit = labels.find(text => pattern.test(text));
+        if (hit) errors.push(`visible label uses a retired term (${pattern}): "${hit.trim().slice(0, 80)}"`);
+    });
+    if (sl100Data.talents.some(t => /Read\/Write/.test(t.name))) errors.push("talent library contains Read/Write");
+}
+
 // The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.
 const css = read("sl100.css");
 for (const [name, text] of [["sl100.css", css], ["sl100.html", html]]) {
@@ -145,4 +165,4 @@ if (errors.length) {
     errors.forEach(message => console.error(`error: ${message}`));
     process.exit(1);
 }
-console.log(`check passed: ${pugSkills.length} skills, ${pugSpecialisations.length} specialisations, ${used.size} translation keys`);
+console.log(`check passed: ${pugSkills.length} skills, ${pugSpecialisations.length} specialisations, ${sl100Data.species.length} species, ${sl100Data.origins.length} origins, ${sl100Data.careers.length} careers, ${sl100Data.talents.length} talents, ${used.size} translation keys`);

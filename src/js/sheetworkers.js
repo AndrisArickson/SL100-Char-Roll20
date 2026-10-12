@@ -434,6 +434,51 @@ const slModule = ( () => {
         setAttrs(update, {silent:true});
     }
 
+    // Character creation helper (chapter 01, "Determine Characteristics")
+
+    // Bonus XP by method: keep the rolled order 50, rearrange 25, otherwise 0.
+    const CREATION_XP = {rolled: 50, rearranged: 25, rerolled: 0, pointbuy: 0};
+    // Point-buy: each Characteristic starts at 20 and takes 4 to 18 points.
+    const POINTBUY_BASE = 20;
+    const POINTBUY_MIN = 4;
+    const POINTBUY_MAX = 18;
+    // Rolled: 2d10 + 20.
+    const ROLLED_MIN = 22;
+    const ROLLED_MAX = 40;
+
+    const checkCreation = () => {
+        const attrs = ["creation_method", "pointbuy_budget"];
+        sl.characteristics.forEach(c => attrs.push(`${c}_initial`));
+
+        getAttrs(attrs, values => {
+            const method = values.creation_method || "";
+            const update = {creation_xp: CREATION_XP[method] || 0, creation_warning: ""};
+            const warnings = [];
+            const label = (c) => sl.characteristics_short[sl.characteristics.indexOf(c)];
+
+            if (method === "pointbuy") {
+                const budget = parseInt(values.pointbuy_budget) || 0;
+                let spent = 0;
+                sl.characteristics.forEach(c => {
+                    const points = (parseInt(values[`${c}_initial`]) || 0) - POINTBUY_BASE;
+                    spent += points;
+                    if (points < POINTBUY_MIN || points > POINTBUY_MAX) warnings.push(`${label(c)}: ${points} ` + t("creation_points_range", "points (allowed 4 to 18)"));
+                });
+                update.creation_spent = spent;
+                update.creation_remaining = budget - spent;
+                if (spent !== budget) warnings.push(t("creation_points_total", "Points spent do not match the budget."));
+            } else if (method) {
+                sl.characteristics.forEach(c => {
+                    const value = parseInt(values[`${c}_initial`]) || 0;
+                    if (value < ROLLED_MIN || value > ROLLED_MAX) warnings.push(`${label(c)}: ${value} ` + t("creation_rolled_range", "is outside 2d10+20 (22 to 40)"));
+                });
+            }
+
+            update.creation_warning = warnings.join("\n");
+            setAttrs(update, {silent: true}, () => recalculateEarnedXP());
+        });
+    };
+
     // Destiny / Resilience and Extra Points
 
     // Translated text for messages set from the worker, with an English fallback.
@@ -539,6 +584,8 @@ const slModule = ( () => {
             `${characteristic}_modifier`,
             `${characteristic}_custom_mod`,
             `${characteristic}_bonusmod`,
+            `${characteristic}_species`,
+            `${characteristic}_origin`,
         ];
 
         getAttrs(attrs, values => {
@@ -562,12 +609,16 @@ const slModule = ( () => {
                 return;
             } else {
 
-                const current = initial + advances + modifier;
+                // Species (02) and Origin (03) modifiers apply to the starting
+                // value and are not Advances (01, "Determine Characteristics").
+                const creation = (parseInt(values[`${characteristic}_species`]) || 0) + (parseInt(values[`${characteristic}_origin`]) || 0);
+                const current = initial + creation + advances + modifier;
     
                 const bonus = Math.floor(current / 10) + bonusmod;
     
                 const updateAttrs = {};
     
+                updateAttrs[`${characteristic}_creation`] = creation;
                 updateAttrs[`${characteristic}`] = current;
                 updateAttrs[`${characteristic}_bonus`] = bonus;
     
@@ -1154,6 +1205,7 @@ const slModule = ( () => {
             });
 
             attrs.push(`experience_mod`);
+            attrs.push(`creation_xp`);
 
             getAttrs(attrs, values => {
                 const int_values = Object.values(values).map(item => parseInt(item) || 0).filter(item => item > 0);
@@ -1878,6 +1930,7 @@ const slModule = ( () => {
         changeSpecies:changeSpecies,
         checkSpeciesAdvances:checkSpeciesAdvances,
         applyExtraPoints:applyExtraPoints,
+        checkCreation:checkCreation,
         refreshFortune:refreshFortune,
         refreshResolve:refreshResolve,
 
@@ -1975,6 +2028,10 @@ on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
 on(`change:species_fate change:species_resilience change:extra_points change:extra_fate change:extra_resilience`, eventInfo => slModule.applyExtraPoints());
 
 on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
+
+on(`change:creation_method change:pointbuy_budget ${slModule.sl.characteristics.map(c => `change:${c}_initial`).join(" ")}`, eventInfo => slModule.checkCreation());
+
+slModule.sl.characteristics.forEach(c => on(`change:${c}_species change:${c}_origin`, eventInfo => slModule.calculateCharacteristic(c)));
 
 on(`clicked:refresh_resolve`, eventInfo => slModule.refreshResolve());
 

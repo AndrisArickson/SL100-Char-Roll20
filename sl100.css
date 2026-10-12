@@ -497,7 +497,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .sheet-sl-chartable {
   display: grid;
   grid-template-columns: 2fr repeat(10, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   grid-auto-flow: column;
 }
 .sheet-sl-chartable input[type=number],
@@ -1093,6 +1093,35 @@ button.sheet-pictos[type=action]:hover {
   color: #a77b06;
   font-size: 10px;
   font-style: italic;
+}
+
+.sheet-sl-creation__row {
+  display: grid;
+  grid-template-columns: 1fr 9em;
+  align-items: center;
+  padding: 1px 0.25rem;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-creation__label {
+  font-size: 12px;
+}
+.sheet-sl-creation__value {
+  text-align: center;
+}
+.sheet-sl-creation__warning {
+  padding: 2px 0.25rem;
+  color: #a5282c;
+  font-size: 11px;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.sheet-sl-creation__pointbuy {
+  display: none;
+}
+
+input[name=attr_creation_method][value=pointbuy] + .sheet-sl-creation__pointbuy {
+  display: block;
 }
 
 .sheet-sl-wrapper input[type=text],

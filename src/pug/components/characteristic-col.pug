@@ -7,6 +7,11 @@ mixin characteristic-col(characteristic)
     .sl-chartable__cell
         input(name=`attr_${attr}_initial`, type="number", value="0")
     .sl-chartable__cell
+        input(name=`attr_${attr}_species`, type="hidden", value="0")
+        input(name=`attr_${attr}_origin`, type="hidden", value="0")
+        input(name=`attr_${attr}_creation`, type="hidden", value="0")
+        span.display(name=`attr_${attr}_creation`)
+    .sl-chartable__cell
         input(name=`attr_${attr}_advances`, type="hidden", value="0")
         span.display(name=`attr_${attr}_advances`)
     .sl-chartable__cell

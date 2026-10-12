@@ -384,5 +384,20 @@
   "Refresh Fortune": "Refresh Fortune",
   "extra_points_unset": "Extra Points not set for this species (rules TBD).",
   "extra_points_over": "Extra Points over-allocated by",
-  "extra_points_left": "Extra Points left to allocate:"
+  "extra_points_left": "Extra Points left to allocate:",
+  "Species / Origin": "Species / Origin",
+  "Character Creation": "Character Creation",
+  "Method": "Method",
+  "Choose…": "Choose…",
+  "Rolled, kept in order (+50 XP)": "Rolled, kept in order (+50 XP)",
+  "Rolled, rearranged (+25 XP)": "Rolled, rearranged (+25 XP)",
+  "Rolled again (no bonus)": "Rolled again (no bonus)",
+  "Point-buy (no bonus)": "Point-buy (no bonus)",
+  "Bonus XP": "Bonus XP",
+  "Point-buy budget": "Point-buy budget",
+  "Points spent": "Points spent",
+  "Points remaining": "Points remaining",
+  "creation_points_range": "points (allowed 4 to 18)",
+  "creation_points_total": "Points spent do not match the budget.",
+  "creation_rolled_range": "is outside 2d10+20 (22 to 40)"
 }

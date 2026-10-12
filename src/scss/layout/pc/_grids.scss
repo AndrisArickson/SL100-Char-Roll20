@@ -56,7 +56,7 @@
     &-chartable {
         display: grid;
         grid-template-columns: 2fr repeat(10, 1fr);
-        grid-template-rows: repeat(6, 1fr);
+        grid-template-rows: repeat(7, 1fr);
         grid-auto-flow: column;
 
         input[type=number],

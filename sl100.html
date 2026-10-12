@@ -139,6 +139,7 @@
       <div class="sheet-sl-chartable">
         <div class="sheet-sl-chartable__cell--noborder">&nbsp;</div>
         <div class="sheet-sl-chartable__cell--left" data-i18n="Initial">Initial</div>
+        <div class="sheet-sl-chartable__cell--left" data-i18n="Species / Origin">Species / Origin</div>
         <div class="sheet-sl-chartable__cell--left" data-i18n="Advances">Advances</div>
         <div class="sheet-sl-chartable__cell--left" data-i18n="Modifier">Modifier</div>
         <div class="sheet-sl-chartable__cell--left" data-i18n="Current">Current</div>
@@ -148,6 +149,11 @@
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_weapon_skill_initial" type="number" value="0"/>
+        </div>
+        <div class="sheet-sl-chartable__cell">
+          <input name="attr_weapon_skill_species" type="hidden" value="0"/>
+          <input name="attr_weapon_skill_origin" type="hidden" value="0"/>
+          <input name="attr_weapon_skill_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_weapon_skill_creation"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_weapon_skill_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_weapon_skill_advances"></span>
@@ -169,6 +175,11 @@
           <input name="attr_ballistic_skill_initial" type="number" value="0"/>
         </div>
         <div class="sheet-sl-chartable__cell">
+          <input name="attr_ballistic_skill_species" type="hidden" value="0"/>
+          <input name="attr_ballistic_skill_origin" type="hidden" value="0"/>
+          <input name="attr_ballistic_skill_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_ballistic_skill_creation"></span>
+        </div>
+        <div class="sheet-sl-chartable__cell">
           <input name="attr_ballistic_skill_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_ballistic_skill_advances"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
@@ -186,6 +197,11 @@
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_strength_initial" type="number" value="0"/>
+        </div>
+        <div class="sheet-sl-chartable__cell">
+          <input name="attr_strength_species" type="hidden" value="0"/>
+          <input name="attr_strength_origin" type="hidden" value="0"/>
+          <input name="attr_strength_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_strength_creation"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_strength_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_strength_advances"></span>
@@ -207,6 +223,11 @@
           <input name="attr_toughness_initial" type="number" value="0"/>
         </div>
         <div class="sheet-sl-chartable__cell">
+          <input name="attr_toughness_species" type="hidden" value="0"/>
+          <input name="attr_toughness_origin" type="hidden" value="0"/>
+          <input name="attr_toughness_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_toughness_creation"></span>
+        </div>
+        <div class="sheet-sl-chartable__cell">
           <input name="attr_toughness_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_toughness_advances"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
@@ -224,6 +245,11 @@
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_initiative_initial" type="number" value="0"/>
+        </div>
+        <div class="sheet-sl-chartable__cell">
+          <input name="attr_initiative_species" type="hidden" value="0"/>
+          <input name="attr_initiative_origin" type="hidden" value="0"/>
+          <input name="attr_initiative_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_initiative_creation"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_initiative_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_initiative_advances"></span>
@@ -245,6 +271,11 @@
           <input name="attr_agility_initial" type="number" value="0"/>
         </div>
         <div class="sheet-sl-chartable__cell">
+          <input name="attr_agility_species" type="hidden" value="0"/>
+          <input name="attr_agility_origin" type="hidden" value="0"/>
+          <input name="attr_agility_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_agility_creation"></span>
+        </div>
+        <div class="sheet-sl-chartable__cell">
           <input name="attr_agility_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_agility_advances"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
@@ -262,6 +293,11 @@
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_dexterity_initial" type="number" value="0"/>
+        </div>
+        <div class="sheet-sl-chartable__cell">
+          <input name="attr_dexterity_species" type="hidden" value="0"/>
+          <input name="attr_dexterity_origin" type="hidden" value="0"/>
+          <input name="attr_dexterity_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_dexterity_creation"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_dexterity_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_dexterity_advances"></span>
@@ -283,6 +319,11 @@
           <input name="attr_intelligence_initial" type="number" value="0"/>
         </div>
         <div class="sheet-sl-chartable__cell">
+          <input name="attr_intelligence_species" type="hidden" value="0"/>
+          <input name="attr_intelligence_origin" type="hidden" value="0"/>
+          <input name="attr_intelligence_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_intelligence_creation"></span>
+        </div>
+        <div class="sheet-sl-chartable__cell">
           <input name="attr_intelligence_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_intelligence_advances"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
@@ -302,6 +343,11 @@
           <input name="attr_willpower_initial" type="number" value="0"/>
         </div>
         <div class="sheet-sl-chartable__cell">
+          <input name="attr_willpower_species" type="hidden" value="0"/>
+          <input name="attr_willpower_origin" type="hidden" value="0"/>
+          <input name="attr_willpower_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_willpower_creation"></span>
+        </div>
+        <div class="sheet-sl-chartable__cell">
           <input name="attr_willpower_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_willpower_advances"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
@@ -319,6 +365,11 @@
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_fellowship_initial" type="number" value="0"/>
+        </div>
+        <div class="sheet-sl-chartable__cell">
+          <input name="attr_fellowship_species" type="hidden" value="0"/>
+          <input name="attr_fellowship_origin" type="hidden" value="0"/>
+          <input name="attr_fellowship_creation" type="hidden" value="0"/><span class="sheet-display" name="attr_fellowship_creation"></span>
         </div>
         <div class="sheet-sl-chartable__cell">
           <input name="attr_fellowship_advances" type="hidden" value="0"/><span class="sheet-display" name="attr_fellowship_advances"></span>
@@ -6183,6 +6234,29 @@
       </div>
     </div>
     <div class="sheet-sl-experience--alt sheet-page__advances--flex">
+      <div class="sheet-sl-panel sheet-sl-creation">
+        <h1 class="sheet-sl-panel__header" data-i18n="Character Creation">Character Creation</h1>
+        <div class="sheet-sl-creation__row"><span class="sheet-sl-creation__label" data-i18n="Method">Method</span>
+          <select class="sheet-sl-creation__select" name="attr_creation_method">
+            <option value="" data-i18n="Choose…">Choose…</option>
+            <option value="rolled" data-i18n="Rolled, kept in order (+50 XP)">Rolled, kept in order (+50 XP)</option>
+            <option value="rearranged" data-i18n="Rolled, rearranged (+25 XP)">Rolled, rearranged (+25 XP)</option>
+            <option value="rerolled" data-i18n="Rolled again (no bonus)">Rolled again (no bonus)</option>
+            <option value="pointbuy" data-i18n="Point-buy (no bonus)">Point-buy (no bonus)</option>
+          </select>
+        </div>
+        <input name="attr_creation_xp" type="hidden" value="0"/>
+        <div class="sheet-sl-creation__row"><span class="sheet-sl-creation__label" data-i18n="Bonus XP">Bonus XP</span><span class="sheet-sl-creation__value" name="attr_creation_xp"></span></div>
+        <input name="attr_creation_method" type="hidden"/>
+        <div class="sheet-sl-creation__pointbuy">
+          <div class="sheet-sl-creation__row"><span class="sheet-sl-creation__label" data-i18n="Point-buy budget">Point-buy budget</span>
+            <input class="sheet-sl-creation__input" name="attr_pointbuy_budget" type="number" value="100"/>
+          </div>
+          <div class="sheet-sl-creation__row"><span class="sheet-sl-creation__label" data-i18n="Points spent">Points spent</span><span class="sheet-sl-creation__value" name="attr_creation_spent"></span></div>
+          <div class="sheet-sl-creation__row"><span class="sheet-sl-creation__label" data-i18n="Points remaining">Points remaining</span><span class="sheet-sl-creation__value" name="attr_creation_remaining"></span></div>
+        </div>
+        <div class="sheet-sl-creation__warning"><span name="attr_creation_warning"></span></div>
+      </div>
       <input name="attr_advances_changed" type="hidden"/>
       <div class="sheet-sl-panel sheet-sl-advancenotify"><span class="sheet-sl-advancenotify__message" data-i18n="This sheet has pending advance changes. Click below to save these changes.">This sheet has pending advance changes. Click below to save these changes.</span>
         <button class="sheet-sl-advancenotify__button" data-i18n="Update" name="act_update_advances" type="action"> </button>
@@ -8834,6 +8908,51 @@
         setAttrs(update, {silent:true});
     }
 
+    // Character creation helper (chapter 01, "Determine Characteristics")
+
+    // Bonus XP by method: keep the rolled order 50, rearrange 25, otherwise 0.
+    const CREATION_XP = {rolled: 50, rearranged: 25, rerolled: 0, pointbuy: 0};
+    // Point-buy: each Characteristic starts at 20 and takes 4 to 18 points.
+    const POINTBUY_BASE = 20;
+    const POINTBUY_MIN = 4;
+    const POINTBUY_MAX = 18;
+    // Rolled: 2d10 + 20.
+    const ROLLED_MIN = 22;
+    const ROLLED_MAX = 40;
+
+    const checkCreation = () => {
+        const attrs = ["creation_method", "pointbuy_budget"];
+        sl.characteristics.forEach(c => attrs.push(`${c}_initial`));
+
+        getAttrs(attrs, values => {
+            const method = values.creation_method || "";
+            const update = {creation_xp: CREATION_XP[method] || 0, creation_warning: ""};
+            const warnings = [];
+            const label = (c) => sl.characteristics_short[sl.characteristics.indexOf(c)];
+
+            if (method === "pointbuy") {
+                const budget = parseInt(values.pointbuy_budget) || 0;
+                let spent = 0;
+                sl.characteristics.forEach(c => {
+                    const points = (parseInt(values[`${c}_initial`]) || 0) - POINTBUY_BASE;
+                    spent += points;
+                    if (points < POINTBUY_MIN || points > POINTBUY_MAX) warnings.push(`${label(c)}: ${points} ` + t("creation_points_range", "points (allowed 4 to 18)"));
+                });
+                update.creation_spent = spent;
+                update.creation_remaining = budget - spent;
+                if (spent !== budget) warnings.push(t("creation_points_total", "Points spent do not match the budget."));
+            } else if (method) {
+                sl.characteristics.forEach(c => {
+                    const value = parseInt(values[`${c}_initial`]) || 0;
+                    if (value < ROLLED_MIN || value > ROLLED_MAX) warnings.push(`${label(c)}: ${value} ` + t("creation_rolled_range", "is outside 2d10+20 (22 to 40)"));
+                });
+            }
+
+            update.creation_warning = warnings.join("\n");
+            setAttrs(update, {silent: true}, () => recalculateEarnedXP());
+        });
+    };
+
     // Destiny / Resilience and Extra Points
 
     // Translated text for messages set from the worker, with an English fallback.
@@ -8939,6 +9058,8 @@
             `${characteristic}_modifier`,
             `${characteristic}_custom_mod`,
             `${characteristic}_bonusmod`,
+            `${characteristic}_species`,
+            `${characteristic}_origin`,
         ];
 
         getAttrs(attrs, values => {
@@ -8962,12 +9083,16 @@
                 return;
             } else {
 
-                const current = initial + advances + modifier;
+                // Species (02) and Origin (03) modifiers apply to the starting
+                // value and are not Advances (01, "Determine Characteristics").
+                const creation = (parseInt(values[`${characteristic}_species`]) || 0) + (parseInt(values[`${characteristic}_origin`]) || 0);
+                const current = initial + creation + advances + modifier;
     
                 const bonus = Math.floor(current / 10) + bonusmod;
     
                 const updateAttrs = {};
     
+                updateAttrs[`${characteristic}_creation`] = creation;
                 updateAttrs[`${characteristic}`] = current;
                 updateAttrs[`${characteristic}_bonus`] = bonus;
     
@@ -9554,6 +9679,7 @@
             });
 
             attrs.push(`experience_mod`);
+            attrs.push(`creation_xp`);
 
             getAttrs(attrs, values => {
                 const int_values = Object.values(values).map(item => parseInt(item) || 0).filter(item => item > 0);
@@ -10278,6 +10404,7 @@
         changeSpecies:changeSpecies,
         checkSpeciesAdvances:checkSpeciesAdvances,
         applyExtraPoints:applyExtraPoints,
+        checkCreation:checkCreation,
         refreshFortune:refreshFortune,
         refreshResolve:refreshResolve,
 
@@ -10375,6 +10502,10 @@ on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
 on(`change:species_fate change:species_resilience change:extra_points change:extra_fate change:extra_resilience`, eventInfo => slModule.applyExtraPoints());
 
 on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
+
+on(`change:creation_method change:pointbuy_budget ${slModule.sl.characteristics.map(c => `change:${c}_initial`).join(" ")}`, eventInfo => slModule.checkCreation());
+
+slModule.sl.characteristics.forEach(c => on(`change:${c}_species change:${c}_origin`, eventInfo => slModule.calculateCharacteristic(c)));
 
 on(`clicked:refresh_resolve`, eventInfo => slModule.refreshResolve());
 

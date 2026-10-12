@@ -42,6 +42,7 @@ input(name="attr_setting_button_hide", type="hidden")
     .sl-chartable
         .sl-chartable__cell--noborder &nbsp;
         .sl-chartable__cell--left(data-i18n="Initial")
+        .sl-chartable__cell--left(data-i18n="Species / Origin")
         .sl-chartable__cell--left(data-i18n="Advances")
         .sl-chartable__cell--left(data-i18n="Modifier")
         .sl-chartable__cell--left(data-i18n="Current")
@@ -329,6 +330,35 @@ input(name="attr_setting_button_hide", type="hidden")
         +species("spells","spell-row")
 
 .sl-experience--alt.page__advances--flex
+
+    //- Character creation helper (chapter 01): method, bonus XP, point-buy check.
+    .sl-panel.sl-creation
+        h1.sl-panel__header(data-i18n="Character Creation")
+        .sl-creation__row
+            span.sl-creation__label(data-i18n="Method")
+            select.sl-creation__select(name="attr_creation_method")
+                option(value="", data-i18n="Choose…")
+                option(value="rolled", data-i18n="Rolled, kept in order (+50 XP)")
+                option(value="rearranged", data-i18n="Rolled, rearranged (+25 XP)")
+                option(value="rerolled", data-i18n="Rolled again (no bonus)")
+                option(value="pointbuy", data-i18n="Point-buy (no bonus)")
+        input(name="attr_creation_xp", type="hidden", value="0")
+        .sl-creation__row
+            span.sl-creation__label(data-i18n="Bonus XP")
+            span.sl-creation__value(name="attr_creation_xp")
+        input(name="attr_creation_method", type="hidden")
+        .sl-creation__pointbuy
+            .sl-creation__row
+                span.sl-creation__label(data-i18n="Point-buy budget")
+                input.sl-creation__input(name="attr_pointbuy_budget", type="number", value="100")
+            .sl-creation__row
+                span.sl-creation__label(data-i18n="Points spent")
+                span.sl-creation__value(name="attr_creation_spent")
+            .sl-creation__row
+                span.sl-creation__label(data-i18n="Points remaining")
+                span.sl-creation__value(name="attr_creation_remaining")
+        .sl-creation__warning
+            span(name="attr_creation_warning")
 
     input(name="attr_advances_changed", type="hidden")
     .sl-panel.sl-advancenotify

@@ -57,3 +57,41 @@
     font-size: 10px;
     font-style: italic;
 }
+
+.sheet-sl-creation {
+
+    &__row {
+        display: grid;
+            grid-template-columns: 1fr 9em;
+            align-items: center;
+        padding: 1px $margin-small;
+
+        border-bottom: $grid-border;
+    }
+
+    &__label {
+        font-size: 12px;
+    }
+
+    &__value {
+        text-align: center;
+    }
+
+    &__warning {
+        padding: 2px $margin-small;
+
+        color: $sl-fail;
+        font-size: 11px;
+        font-style: italic;
+        white-space: pre-line;
+    }
+}
+
+// The point-buy rows show only when the point-buy method is chosen.
+.sheet-sl-creation__pointbuy {
+    display: none;
+}
+
+input[name="attr_creation_method"][value="pointbuy"] + .sheet-sl-creation__pointbuy {
+    display: block;
+}

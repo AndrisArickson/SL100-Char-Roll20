@@ -996,6 +996,51 @@ const slModule = ( () => {
 
     }
 
+    // Career library (chapter 05, generated data). Filling a row writes the
+    // career name, each level's title, status, skills (10 slots), talents
+    // (5 slots) and trappings, then ticks the in-career characteristics for the
+    // row's current level. Advances are left alone.
+    const CAREER_SKILL_SLOTS = 10;
+    const CAREER_TALENT_SLOTS = 5;
+
+    const findCareer = (name) => sl100Data.careers.find(c => c.name === name);
+
+    const fillCareer = (attribute, name) => {
+        const career = findCareer(name);
+        if (!career) return;
+        const row = helperFunctions.extractRepeatingId(attribute, "careers");
+        const update = {[`${row}_career_name`]: career.name};
+
+        [1, 2, 3, 4].forEach(n => {
+            const level = career.levels.find(l => l.level === n) || {title: "", status: "", skills: [], talents: [], trappings: []};
+            update[`${row}_career_level${n}_name`] = level.title;
+            update[`${row}_career_level${n}_status`] = level.status;
+            for (let i = 1; i <= CAREER_SKILL_SLOTS; i++) update[`${row}_career_skill_${n}_${i}_name`] = level.skills[i - 1] || "";
+            for (let i = 1; i <= CAREER_TALENT_SLOTS; i++) update[`${row}_career_talent_${n}_${i}_name`] = level.talents[i - 1] || "";
+            update[`${row}_career_${n}_trappings`] = level.trappings.join(", ");
+        });
+
+        setAttrs(update, {}, () => updateCareerCharacteristics(attribute));
+    };
+
+    // A characteristic is in-career once the current level reaches the level
+    // that opens it in the advance scheme (05: "a level keeps every
+    // characteristic opened before it").
+    const updateCareerCharacteristics = (attribute) => {
+        const row = helperFunctions.extractRepeatingId(attribute, "careers");
+        getAttrs([`${row}_career_preset`, `${row}_career_level_current`], values => {
+            const career = findCareer(values[`${row}_career_preset`]);
+            if (!career) return;
+            const level = parseInt(values[`${row}_career_level_current`]) || 1;
+            const update = {};
+            sl.characteristics.forEach(c => {
+                const opens = career.scheme[c];
+                update[`${row}_career_${c}`] = (opens && opens <= level) ? "on" : "0";
+            });
+            setAttrs(update);
+        });
+    };
+
     // Career Functions
 
     const updateCareerPath = () => {
@@ -2135,6 +2180,8 @@ const slModule = ( () => {
         applyExtraPoints:applyExtraPoints,
         checkCreation:checkCreation,
         changeOrigin:changeOrigin,
+        fillCareer:fillCareer,
+        updateCareerCharacteristics:updateCareerCharacteristics,
         changeFaction:changeFaction,
         applyOriginBonus:applyOriginBonus,
         checkOriginAdvances:checkOriginAdvances,
@@ -2322,7 +2369,12 @@ on(`change:repeating_careers:career_name change:repeating_careers:career_level_c
     on(`clicked:repeating_careers:newcareerlevel-${level}`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, level));
 });
 
-on(`change:repeating_careers:career_level_current`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue));
+on(`change:repeating_careers:career_level_current`, eventInfo => {
+    slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue);
+    slModule.updateCareerCharacteristics(eventInfo.sourceAttribute);
+});
+
+on(`change:repeating_careers:career_preset`, eventInfo => slModule.fillCareer(eventInfo.sourceAttribute, eventInfo.newValue));
 
 // EXPERIENCE CHANGES
 

@@ -1200,6 +1200,13 @@ input[type=hidden][name*=origin_disable5][value="1"] ~ * input[type=radio][value
   font-size: 11px;
 }
 
+.sheet-sl-library {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .sheet-sl-wrapper input[type=text],
 .sheet-sl-wrapper input[type=number],
 .sheet-sl-wrapper textarea,

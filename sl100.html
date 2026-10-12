@@ -5845,6 +5845,36 @@
                 <div class="sheet-sl-settings__label" data-i18n="Name">Name</div>
                 <input class="sheet-sl-settings__input" name="attr_career_name" type="text"/>
               </div>
+              <div class="sheet-sl-settings__row--span sheet-sl-library">
+                <div class="sheet-sl-settings__label" data-i18n="Fill from career library">Fill from career library</div>
+                <select class="sheet-sl-settings__select" name="attr_career_preset">
+                  <option value="" data-i18n="Choose…">Choose…</option>
+                  <option value="Physician (Medic)" data-i18n="Physician (Medic)">Physician (Medic)</option>
+                  <option value="Agitator" data-i18n="Agitator">Agitator</option>
+                  <option value="Artisan" data-i18n="Artisan">Artisan</option>
+                  <option value="Investigator" data-i18n="Investigator">Investigator</option>
+                  <option value="Merchant" data-i18n="Merchant">Merchant</option>
+                  <option value="Advisor" data-i18n="Advisor">Advisor</option>
+                  <option value="Envoy" data-i18n="Envoy">Envoy</option>
+                  <option value="Noble" data-i18n="Noble">Noble</option>
+                  <option value="Spy" data-i18n="Spy">Spy</option>
+                  <option value="Warden" data-i18n="Warden">Warden</option>
+                  <option value="Force Savant" data-i18n="Force Savant">Force Savant</option>
+                  <option value="Force Shadow" data-i18n="Force Shadow">Force Shadow</option>
+                  <option value="Force Warrior" data-i18n="Force Warrior">Force Warrior</option>
+                  <option value="Bounty Hunter" data-i18n="Bounty Hunter">Bounty Hunter</option>
+                  <option value="Scout" data-i18n="Scout">Scout</option>
+                  <option value="Smuggler" data-i18n="Smuggler">Smuggler</option>
+                  <option value="Bawd" data-i18n="Bawd">Bawd</option>
+                  <option value="Charlatan" data-i18n="Charlatan">Charlatan</option>
+                  <option value="Fence" data-i18n="Fence">Fence</option>
+                  <option value="Outlaw" data-i18n="Outlaw">Outlaw</option>
+                  <option value="Thief" data-i18n="Thief">Thief</option>
+                  <option value="Guard" data-i18n="Guard">Guard</option>
+                  <option value="Pit Fighter" data-i18n="Pit Fighter">Pit Fighter</option>
+                  <option value="Soldier" data-i18n="Soldier">Soldier</option>
+                </select>
+              </div>
               <div class="sheet-sl-settings__row--span">
                 <div class="sheet-sl-settings__label--full" data-i18n="Notes"> </div>
                 <textarea class="sheet-sl-settings__textarea" name="attr_career_notes"></textarea>
@@ -10089,6 +10119,51 @@ const sl100Data = {"generated_from":["02 New Star Wars - Species.md","03 New Sta
 
     }
 
+    // Career library (chapter 05, generated data). Filling a row writes the
+    // career name, each level's title, status, skills (10 slots), talents
+    // (5 slots) and trappings, then ticks the in-career characteristics for the
+    // row's current level. Advances are left alone.
+    const CAREER_SKILL_SLOTS = 10;
+    const CAREER_TALENT_SLOTS = 5;
+
+    const findCareer = (name) => sl100Data.careers.find(c => c.name === name);
+
+    const fillCareer = (attribute, name) => {
+        const career = findCareer(name);
+        if (!career) return;
+        const row = helperFunctions.extractRepeatingId(attribute, "careers");
+        const update = {[`${row}_career_name`]: career.name};
+
+        [1, 2, 3, 4].forEach(n => {
+            const level = career.levels.find(l => l.level === n) || {title: "", status: "", skills: [], talents: [], trappings: []};
+            update[`${row}_career_level${n}_name`] = level.title;
+            update[`${row}_career_level${n}_status`] = level.status;
+            for (let i = 1; i <= CAREER_SKILL_SLOTS; i++) update[`${row}_career_skill_${n}_${i}_name`] = level.skills[i - 1] || "";
+            for (let i = 1; i <= CAREER_TALENT_SLOTS; i++) update[`${row}_career_talent_${n}_${i}_name`] = level.talents[i - 1] || "";
+            update[`${row}_career_${n}_trappings`] = level.trappings.join(", ");
+        });
+
+        setAttrs(update, {}, () => updateCareerCharacteristics(attribute));
+    };
+
+    // A characteristic is in-career once the current level reaches the level
+    // that opens it in the advance scheme (05: "a level keeps every
+    // characteristic opened before it").
+    const updateCareerCharacteristics = (attribute) => {
+        const row = helperFunctions.extractRepeatingId(attribute, "careers");
+        getAttrs([`${row}_career_preset`, `${row}_career_level_current`], values => {
+            const career = findCareer(values[`${row}_career_preset`]);
+            if (!career) return;
+            const level = parseInt(values[`${row}_career_level_current`]) || 1;
+            const update = {};
+            sl.characteristics.forEach(c => {
+                const opens = career.scheme[c];
+                update[`${row}_career_${c}`] = (opens && opens <= level) ? "on" : "0";
+            });
+            setAttrs(update);
+        });
+    };
+
     // Career Functions
 
     const updateCareerPath = () => {
@@ -11228,6 +11303,8 @@ const sl100Data = {"generated_from":["02 New Star Wars - Species.md","03 New Sta
         applyExtraPoints:applyExtraPoints,
         checkCreation:checkCreation,
         changeOrigin:changeOrigin,
+        fillCareer:fillCareer,
+        updateCareerCharacteristics:updateCareerCharacteristics,
         changeFaction:changeFaction,
         applyOriginBonus:applyOriginBonus,
         checkOriginAdvances:checkOriginAdvances,
@@ -11415,7 +11492,12 @@ on(`change:repeating_careers:career_name change:repeating_careers:career_level_c
     on(`clicked:repeating_careers:newcareerlevel-${level}`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, level));
 });
 
-on(`change:repeating_careers:career_level_current`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue));
+on(`change:repeating_careers:career_level_current`, eventInfo => {
+    slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue);
+    slModule.updateCareerCharacteristics(eventInfo.sourceAttribute);
+});
+
+on(`change:repeating_careers:career_preset`, eventInfo => slModule.fillCareer(eventInfo.sourceAttribute, eventInfo.newValue));
 
 // EXPERIENCE CHANGES
 

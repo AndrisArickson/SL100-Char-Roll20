@@ -33,7 +33,7 @@ Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; D
 - 03 New Star Wars - Origin.md: d100 table leaves 41-45, 91-99 unassigned
 - 05 New Star Wars - Careers.md:542: Force Savant level 3 title is a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice")
 
-## Mismatches (22)
+## Mismatches (25)
 
 - 02 New Star Wars - Species.md:26: Chironian: talent "Stride (Sprinter?)" is not in 07 (revised)
 - 02 New Star Wars - Species.md:78: Kel Dor: talent "Force Ability (Alter, Control or Sense)" is not in 07 (revised)
@@ -57,6 +57,9 @@ Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; D
 - 05 New Star Wars - Careers.md:1213: Soldier 1: talent "Strong Back" is not in 07 (revised)
 - 05 New Star Wars - Careers.md:1229: Soldier 3: talent "Unshakeable" is not in 07 (revised)
 - 05 New Star Wars - Careers.md:1237: Soldier 4: talent "Public Speaking" is not in 07 (revised)
+- species.csv vs 02: Miraluka talents: CSV "from the random talents list" vs 02 "Datapad Use, Force Sensitive (Sight), Force Ability - Sense" (02 used)
+- species.csv vs 02: Nautolan talents: CSV "" vs 02 "Acute Sense (Smell), Amphibious, Datapad Use, Night Vision, Strong Swimmer" (02 used)
+- origins.csv vs 03: Feudal Worlds skills differ: CSV "(none)" (03 used)
 
 ## Notes
 

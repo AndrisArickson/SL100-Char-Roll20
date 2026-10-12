@@ -102,6 +102,15 @@ mixin careers-row
                 .sl-settings__label(data-i18n=`Name`)
                 input.sl-settings__input(name=`attr_career_name`, type="text")
 
+            //- Career library (chapter 05, generated): fills the name, levels,
+            //- skills, talents, trappings and in-career characteristics.
+            .sl-settings__row--span.sl-library
+                .sl-settings__label(data-i18n="Fill from career library")
+                select.sl-settings__select(name="attr_career_preset")
+                    option(value="", data-i18n="Choose…")
+                    each career in sl100Data.careers
+                        option(value=career.name, data-i18n=career.name)
+
             .sl-settings__row--span
                 .sl-settings__label--full(data-i18n=`Notes`) 
                 textarea.sl-settings__textarea(name=`attr_career_notes`)

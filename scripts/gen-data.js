@@ -514,6 +514,68 @@ randomTable.forEach(row => {
     if (!talentNames.has(baseName(row.talent))) mismatch(SOURCES.talents, `random table entry "${row.talent}" (${row.roll}) is not a talent in 07 (revised)`);
 });
 
+// Cross-check against the collation CSVs (docs/collation in the wiki). They
+// are extracts and can lag the documents; the markdown is used and any
+// disagreement is reported.
+const readCsv = (file) => {
+    const full = path.join(wiki, "docs", "collation", file);
+    if (!fs.existsSync(full)) { report.notes.push(`docs/collation/${file} not found; cross-check skipped.`); return null; }
+    const rows = [];
+    let field = "", row = [], quoted = false;
+    const text = fs.readFileSync(full, "utf8");
+    for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (quoted) {
+            if (ch === '"' && text[i + 1] === '"') { field += '"'; i++; }
+            else if (ch === '"') quoted = false;
+            else field += ch;
+        } else if (ch === '"') quoted = true;
+        else if (ch === ",") { row.push(field); field = ""; }
+        else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+        else if (ch !== "\r") field += ch;
+    }
+    if (field || row.length) { row.push(field); rows.push(row); }
+    const [header, ...body] = rows;
+    return body.filter(r => r.length > 1).map(r => Object.fromEntries(header.map((h, i) => [h, (r[i] || "").trim()])));
+};
+const normList = (list) => list.map(x => x.replace(/\s+/g, " ").trim().toLowerCase()).sort().join(" | ");
+
+const csvSpecies = readCsv("species.csv");
+if (csvSpecies) {
+    csvSpecies.forEach(row => {
+        const sp = species.find(x => x.name === row.species);
+        if (!sp) { mismatch("species.csv", `"${row.species}" is not a species in 02`); return; }
+        const csvTalents = splitList(row.talents || "").filter(t => !/random/i.test(t)).map(t => splitOr(t).map(renameTalent).join(OR));
+        if (normList(csvTalents) !== normList(sp.talents)) mismatch("species.csv vs 02", `${sp.name} talents: CSV "${row.talents}" vs 02 "${sp.talents.join(", ")}" (02 used)`);
+        ["movement", "fate", "resilience", "extra_points"].forEach(f => {
+            const csv = row[f] === "" ? null : Number(row[f]);
+            if (csv !== sp[f]) mismatch("species.csv vs 02", `${sp.name} ${f}: CSV ${row[f] || "blank"} vs 02 ${sp[f] === null ? "blank" : sp[f]} (02 used)`);
+        });
+    });
+}
+
+const csvOrigins = readCsv("origins.csv");
+if (csvOrigins) {
+    csvOrigins.forEach(row => {
+        const origin = origins.find(o => o.name === row.origin);
+        if (!origin) { mismatch("origins.csv", `"${row.origin}" is not an origin in 03`); return; }
+        if (normList(splitList(row.starting_skills || "")) !== normList(origin.skills)) mismatch("origins.csv vs 03", `${origin.name} skills differ: CSV "${row.starting_skills || "(none)"}" (03 used)`);
+    });
+}
+
+const csvCareers = readCsv("careers_l1.csv");
+if (csvCareers) {
+    csvCareers.forEach(row => {
+        const career = careers.find(c => c.name === row.career);
+        if (!career) { mismatch("careers_l1.csv", `"${row.career}" is not a career in 05`); return; }
+        const l1 = career.levels.find(l => l.level === 1);
+        if (!l1) return;
+        const csvTalents = splitList(row.talents || "").map(t => splitOr(t).map(renameTalent).join(OR));
+        if (normList(splitList(row.skills || "")) !== normList(l1.skills)) mismatch("careers_l1.csv vs 05", `${career.name} level 1 skills differ (05 used)`);
+        if (normList(csvTalents) !== normList(l1.talents)) mismatch("careers_l1.csv vs 05", `${career.name} level 1 talents differ (05 used)`);
+    });
+}
+
 // The talent count is checked against the revised Talent List, not a fixed
 // number, so it stays right as the documents grow.
 let failed = false;

@@ -180,3 +180,10 @@ input[type="hidden"][name*="origin_disable5"][value="1"] ~ * input[type="radio"]
 .sheet-sl-faction__group {
     font-size: 11px;
 }
+
+.sheet-sl-library {
+    display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: $margin-general;
+}

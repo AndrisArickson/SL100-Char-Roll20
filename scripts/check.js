@@ -85,6 +85,9 @@ const used = new Set();
 for (const match of html.matchAll(/data-i18n(?:-placeholder|-title)?="([^"]*)"/g)) {
     used.add(match[1].replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'"));
 }
+// Keys the sheet workers look up with t("key", fallback).
+for (const match of read("src/js/sheetworkers.js").matchAll(/\bt\("([^"]+)"/g)) used.add(match[1]);
+
 const sheetJson = JSON.parse(read("sheet.json"));
 for (const option of sheetJson.useroptions || []) {
     for (const key of [option.displaytranslationkey, option.descriptiontranslationkey, ...(option.optiontranslationkeys || [])]) {

@@ -434,6 +434,72 @@ const slModule = ( () => {
         setAttrs(update, {silent:true});
     }
 
+    // Destiny / Resilience and Extra Points
+
+    // Translated text for messages set from the worker, with an English fallback.
+    const t = (key, fallback) => {
+        const text = (typeof getTranslationByKey === "function") ? getTranslationByKey(key) : false;
+        return text || fallback;
+    };
+
+    // Destiny (fate) = species Destiny + Extra Points put into Destiny; the same
+    // for Resilience. Runs only when the species or the split changes, so
+    // Destiny spent in play is not reset.
+    const applyExtraPoints = () => {
+        const attrs = ["species_fate", "species_resilience", "extra_points", "extra_fate", "extra_resilience"];
+
+        getAttrs(attrs, values => {
+            const extra = values.extra_points === "" ? null : parseInt(values.extra_points);
+            const toFate = parseInt(values.extra_fate) || 0;
+            const toResilience = parseInt(values.extra_resilience) || 0;
+            const allocated = toFate + toResilience;
+            const update = {};
+
+            if (extra === null || isNaN(extra)) {
+                update.extra_points_check = (allocated > 0) ? t("extra_points_unset", "Extra Points not set for this species (rules TBD).") : "";
+            } else if (allocated > extra) {
+                update.extra_points_check = t("extra_points_over", "Extra Points over-allocated by") + ` ${allocated - extra}.`;
+            } else if (allocated < extra) {
+                update.extra_points_check = t("extra_points_left", "Extra Points left to allocate:") + ` ${extra - allocated}.`;
+            } else {
+                update.extra_points_check = "";
+            }
+
+            if (values.species_fate !== "" && values.species_fate !== undefined) update.fate = (parseInt(values.species_fate) || 0) + toFate;
+            if (values.species_resilience !== "" && values.species_resilience !== undefined) update.resilience = (parseInt(values.species_resilience) || 0) + toResilience;
+
+            setAttrs(update, {silent: true});
+        });
+    };
+
+    // Sum the ranks of a named talent across the talent rows.
+    const talentRanks = (name, callback) => {
+        getSectionIDs("talent", ids => {
+            const attrs = [];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`, `repeating_talent_${id}_talent_ranks`));
+            getAttrs(attrs, values => {
+                const total = ids
+                    .filter(id => (values[`repeating_talent_${id}_talent_name`] || "").trim().toLowerCase() === name.toLowerCase())
+                    .reduce((sum, id) => sum + (parseInt(values[`repeating_talent_${id}_talent_ranks`]) || 0), 0);
+                callback(total);
+            });
+        });
+    };
+
+    // 07 (revised), Luck: maximum Fortune = current Destiny (Fate) + Luck levels.
+    const refreshFortune = () => {
+        talentRanks("Luck", luck => {
+            getAttrs(["fate"], values => setAttrs({fortune: (parseInt(values.fate) || 0) + luck}));
+        });
+    };
+
+    // 07 (revised), Strong-Minded: add its level to the maximum Resolve pool.
+    const refreshResolve = () => {
+        talentRanks("Strong-Minded", strong => {
+            getAttrs(["resilience"], values => setAttrs({resolve: (parseInt(values.resilience) || 0) + strong}));
+        });
+    };
+
     const checkSpeciesAdvances = () => {
         const attrs = [];
 
@@ -1811,6 +1877,9 @@ const slModule = ( () => {
         // Class and Species Controls
         changeSpecies:changeSpecies,
         checkSpeciesAdvances:checkSpeciesAdvances,
+        applyExtraPoints:applyExtraPoints,
+        refreshFortune:refreshFortune,
+        refreshResolve:refreshResolve,
 
         // Characteristic Functions
         calculateCharacteristic: calculateCharacteristic,
@@ -1902,6 +1971,12 @@ on(`clicked:remove_custom_class`, eventInfo => setAttrs({"class":""}));
 on(`clicked:remove_custom_species`, eventInfo => setAttrs({"species":""}));
 
 on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
+
+on(`change:species_fate change:species_resilience change:extra_points change:extra_fate change:extra_resilience`, eventInfo => slModule.applyExtraPoints());
+
+on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
+
+on(`clicked:refresh_resolve`, eventInfo => slModule.refreshResolve());
 
 for (let index = 1; index <= 12; index++) {
     on(`change:species_skill_${index}_advances`, eventInfo => slModule.checkSpeciesAdvances());

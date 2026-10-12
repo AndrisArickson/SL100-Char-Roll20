@@ -55,11 +55,28 @@ input(name="attr_setting_button_hide", type="hidden")
         +generic-field(resilience[0], "text", "2-1")
         +generic-field(resilience[1], "text", "2-1")
     +generic-field(resilience[2], "text", "1-2")
+    //- Extra Points come from the species (02) and are split between Destiny and
+    //- Resilience; the sheet worker checks the split and applies it.
+    .sl-extrapoints
+        span.sl-extrapoints__label(data-i18n="Extra Points")
+        input.sl-extrapoints__input(name="attr_extra_points", type="number")
+        span.sl-extrapoints__label(data-i18n="to Destiny")
+        input.sl-extrapoints__input(name="attr_extra_fate", type="number", value="0")
+        span.sl-extrapoints__label(data-i18n="to Resilience")
+        input.sl-extrapoints__input(name="attr_extra_resilience", type="number", value="0")
+    input(name="attr_species_fate", type="hidden")
+    input(name="attr_species_resilience", type="hidden")
+    .sl-extrapoints__check
+        span(name="attr_extra_points_check")
+    .sl-panelbuttons
+        button.sl-panelbuttons__button(data-i18n="Refresh Resolve", name="act_refresh_resolve", type="action")
 
 .sl-fate.sl-panel.page__main
     h1.sl-panel__header(data-i18n="Destiny")
     each field in fate 
         +generic-field(field, "number", "1-1")
+    .sl-panelbuttons
+        button.sl-panelbuttons__button(data-i18n="Refresh Fortune", name="act_refresh_fortune", type="action")
 
 .sl-movement.sl-panel.page__main
     input(name="attr_movement_mod", type="hidden")

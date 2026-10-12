@@ -1,0 +1,59 @@
+// Components added for the SL100 rules: Extra Points, creation helper,
+// origin/faction blocks, library pickers and "rules TBD" hints.
+
+.sheet-sl-extrapoints {
+    display: grid;
+        grid-template-columns: auto 3em auto 3em auto 3em;
+        align-items: center;
+        gap: 2px $margin-small;
+    padding: 2px $margin-small;
+
+    border-top: $grid-border;
+
+    &__label {
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    &__check {
+        min-height: 0;
+        padding: 0 $margin-small;
+
+        color: $sl-fail;
+        font-size: 11px;
+        font-style: italic;
+    }
+}
+
+.sheet-sl-wrapper .sheet-sl-panelbuttons {
+    display: flex;
+        justify-content: flex-end;
+        gap: $margin-small;
+    padding: 2px $margin-small;
+
+    button.sheet-sl-panelbuttons__button[type="action"] {
+        width: auto;
+        padding: 1px 8px;
+
+        border: 1px solid $sl-steel;
+        border-radius: 3px;
+        background: linear-gradient(180deg, $sl-frame-light, $sl-frame);
+        color: #e6edf4;
+
+        font-family: $font-family-display;
+        font-size: 9px;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+
+        &:hover {
+            color: $sl-accent;
+        }
+    }
+}
+
+// Small italic hint for fields the rules documents leave undefined.
+.sheet-sl-tbd {
+    color: $sl-accent-dark;
+    font-size: 10px;
+    font-style: italic;
+}

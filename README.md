@@ -14,7 +14,7 @@ WFRP artwork is used.
 
 | Tab | Contents |
 | --- | --- |
-| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics, Resilience/Resolve, Destiny & Force Points, Movement, Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
+| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics, Resilience/Resolve/Motivation and Extra Points, Destiny & Fortune, Movement (metres), Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
 | **Combat** | Gear, Encumbrance, Wealth (Credits / Bank / Debt), d100 hit-location Armour Points, quick-roll Controls, Advantage, Wounds, Critical Wounds, Armour, Weapons |
 | **Force** | Force Powers (rolled against Force: Control, Sense or Alter) and Conflict |
 | **Advances** | Careers with four levels, species skills and talents, XP awards and spends |
@@ -29,7 +29,7 @@ this goes to a themed roll template.
 
 | WFRP 4e | SL100 | Attribute (for macros) |
 | --- | --- | --- |
-| Fate / Fortune | Destiny / Force Points | `fate` / `fortune` |
+| Fate / Fortune | Destiny / Fortune (labels only; attributes unchanged) | `fate` / `fortune` |
 | Corruption & Mutations | Dark Side Points & taints | `corruption_points`, `repeating_corruption` |
 | Spells & Prayers, Sin | Force Powers, Conflict | `repeating_spells`, `sin` |
 | Channelling (winds of magic) | Force (Control / Sense / Alter / Custom) | `control`, `sense`, `alter`, `custom` |

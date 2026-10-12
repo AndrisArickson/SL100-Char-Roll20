@@ -348,14 +348,28 @@
       <div class="sheet-sl-field--grid1-2"><span class="sheet-sl-field__header" data-i18n="Motivation">Motivation</span>
         <input class="sheet-sl-field__input" name="attr_motivation" type="text"/>
       </div>
+      <div class="sheet-sl-extrapoints"><span class="sheet-sl-extrapoints__label" data-i18n="Extra Points">Extra Points</span>
+        <input class="sheet-sl-extrapoints__input" name="attr_extra_points" type="number"/><span class="sheet-sl-extrapoints__label" data-i18n="to Destiny">to Destiny</span>
+        <input class="sheet-sl-extrapoints__input" name="attr_extra_fate" type="number" value="0"/><span class="sheet-sl-extrapoints__label" data-i18n="to Resilience">to Resilience</span>
+        <input class="sheet-sl-extrapoints__input" name="attr_extra_resilience" type="number" value="0"/>
+      </div>
+      <input name="attr_species_fate" type="hidden"/>
+      <input name="attr_species_resilience" type="hidden"/>
+      <div class="sheet-sl-extrapoints__check"><span name="attr_extra_points_check"></span></div>
+      <div class="sheet-sl-panelbuttons">
+        <button class="sheet-sl-panelbuttons__button" data-i18n="Refresh Resolve" name="act_refresh_resolve" type="action">Refresh Resolve</button>
+      </div>
     </div>
     <div class="sheet-sl-fate sheet-sl-panel sheet-page__main">
       <h1 class="sheet-sl-panel__header" data-i18n="Destiny">Destiny</h1>
       <div class="sheet-sl-field--grid1-1"><span class="sheet-sl-field__header" data-i18n="Destiny">Destiny</span>
         <input class="sheet-sl-field__input" name="attr_fate" type="number"/>
       </div>
-      <div class="sheet-sl-field--grid1-1"><span class="sheet-sl-field__header" data-i18n="Force Points">Force Points</span>
+      <div class="sheet-sl-field--grid1-1"><span class="sheet-sl-field__header" data-i18n="Fortune">Fortune</span>
         <input class="sheet-sl-field__input" name="attr_fortune" type="number"/>
+      </div>
+      <div class="sheet-sl-panelbuttons">
+        <button class="sheet-sl-panelbuttons__button" data-i18n="Refresh Fortune" name="act_refresh_fortune" type="action">Refresh Fortune</button>
       </div>
     </div>
     <div class="sheet-sl-movement sheet-sl-panel sheet-page__main">
@@ -364,10 +378,10 @@
       <div class="sheet-sl-field--grid1-2"><span class="sheet-sl-field__header" data-i18n="Movement">Movement</span>
         <input class="sheet-sl-field__input" name="attr_movement" type="text"/>
       </div>
-      <div class="sheet-sl-field--grid1-2"><span class="sheet-sl-field__header" data-i18n="Walk">Walk</span>
+      <div class="sheet-sl-field--grid1-2"><span class="sheet-sl-field__header" data-i18n="Walk (m)">Walk (m)</span>
         <input class="sheet-sl-field__input" name="attr_walk" type="text"/>
       </div>
-      <div class="sheet-sl-field--grid1-2"><span class="sheet-sl-field__header" data-i18n="Run">Run</span>
+      <div class="sheet-sl-field--grid1-2"><span class="sheet-sl-field__header" data-i18n="Run (m)">Run (m)</span>
         <input class="sheet-sl-field__input" name="attr_run" type="text"/>
       </div>
     </div>
@@ -8820,6 +8834,72 @@
         setAttrs(update, {silent:true});
     }
 
+    // Destiny / Resilience and Extra Points
+
+    // Translated text for messages set from the worker, with an English fallback.
+    const t = (key, fallback) => {
+        const text = (typeof getTranslationByKey === "function") ? getTranslationByKey(key) : false;
+        return text || fallback;
+    };
+
+    // Destiny (fate) = species Destiny + Extra Points put into Destiny; the same
+    // for Resilience. Runs only when the species or the split changes, so
+    // Destiny spent in play is not reset.
+    const applyExtraPoints = () => {
+        const attrs = ["species_fate", "species_resilience", "extra_points", "extra_fate", "extra_resilience"];
+
+        getAttrs(attrs, values => {
+            const extra = values.extra_points === "" ? null : parseInt(values.extra_points);
+            const toFate = parseInt(values.extra_fate) || 0;
+            const toResilience = parseInt(values.extra_resilience) || 0;
+            const allocated = toFate + toResilience;
+            const update = {};
+
+            if (extra === null || isNaN(extra)) {
+                update.extra_points_check = (allocated > 0) ? t("extra_points_unset", "Extra Points not set for this species (rules TBD).") : "";
+            } else if (allocated > extra) {
+                update.extra_points_check = t("extra_points_over", "Extra Points over-allocated by") + ` ${allocated - extra}.`;
+            } else if (allocated < extra) {
+                update.extra_points_check = t("extra_points_left", "Extra Points left to allocate:") + ` ${extra - allocated}.`;
+            } else {
+                update.extra_points_check = "";
+            }
+
+            if (values.species_fate !== "" && values.species_fate !== undefined) update.fate = (parseInt(values.species_fate) || 0) + toFate;
+            if (values.species_resilience !== "" && values.species_resilience !== undefined) update.resilience = (parseInt(values.species_resilience) || 0) + toResilience;
+
+            setAttrs(update, {silent: true});
+        });
+    };
+
+    // Sum the ranks of a named talent across the talent rows.
+    const talentRanks = (name, callback) => {
+        getSectionIDs("talent", ids => {
+            const attrs = [];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`, `repeating_talent_${id}_talent_ranks`));
+            getAttrs(attrs, values => {
+                const total = ids
+                    .filter(id => (values[`repeating_talent_${id}_talent_name`] || "").trim().toLowerCase() === name.toLowerCase())
+                    .reduce((sum, id) => sum + (parseInt(values[`repeating_talent_${id}_talent_ranks`]) || 0), 0);
+                callback(total);
+            });
+        });
+    };
+
+    // 07 (revised), Luck: maximum Fortune = current Destiny (Fate) + Luck levels.
+    const refreshFortune = () => {
+        talentRanks("Luck", luck => {
+            getAttrs(["fate"], values => setAttrs({fortune: (parseInt(values.fate) || 0) + luck}));
+        });
+    };
+
+    // 07 (revised), Strong-Minded: add its level to the maximum Resolve pool.
+    const refreshResolve = () => {
+        talentRanks("Strong-Minded", strong => {
+            getAttrs(["resilience"], values => setAttrs({resolve: (parseInt(values.resilience) || 0) + strong}));
+        });
+    };
+
     const checkSpeciesAdvances = () => {
         const attrs = [];
 
@@ -10197,6 +10277,9 @@
         // Class and Species Controls
         changeSpecies:changeSpecies,
         checkSpeciesAdvances:checkSpeciesAdvances,
+        applyExtraPoints:applyExtraPoints,
+        refreshFortune:refreshFortune,
+        refreshResolve:refreshResolve,
 
         // Characteristic Functions
         calculateCharacteristic: calculateCharacteristic,
@@ -10288,6 +10371,12 @@ on(`clicked:remove_custom_class`, eventInfo => setAttrs({"class":""}));
 on(`clicked:remove_custom_species`, eventInfo => setAttrs({"species":""}));
 
 on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
+
+on(`change:species_fate change:species_resilience change:extra_points change:extra_fate change:extra_resilience`, eventInfo => slModule.applyExtraPoints());
+
+on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
+
+on(`clicked:refresh_resolve`, eventInfo => slModule.refreshResolve());
 
 for (let index = 1; index <= 12; index++) {
     on(`change:species_skill_${index}_advances`, eventInfo => slModule.checkSpeciesAdvances());

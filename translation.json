@@ -56,10 +56,7 @@
   "Resolve": "Resolve",
   "Motivation": "Motivation",
   "Destiny": "Destiny",
-  "Force Points": "Force Points",
   "Movement": "Movement",
-  "Walk": "Walk",
-  "Run": "Run",
   "Experience": "Experience",
   "Current XP": "Current",
   "Spent XP": "Spent",
@@ -376,5 +373,16 @@
   "Set a portrait in Bio & Info": "Set a portrait in Bio & Info",
   "Star Legends": "Star Legends",
   "Galactic Wars": "Galactic Wars",
-  "SL100 Character Record": "SL100 Character Record"
+  "SL100 Character Record": "SL100 Character Record",
+  "Fortune": "Fortune",
+  "Walk (m)": "Walk (m)",
+  "Run (m)": "Run (m)",
+  "Extra Points": "Extra Points",
+  "to Destiny": "to Destiny",
+  "to Resilience": "to Resilience",
+  "Refresh Resolve": "Refresh Resolve",
+  "Refresh Fortune": "Refresh Fortune",
+  "extra_points_unset": "Extra Points not set for this species (rules TBD).",
+  "extra_points_over": "Extra Points over-allocated by",
+  "extra_points_left": "Extra Points left to allocate:"
 }

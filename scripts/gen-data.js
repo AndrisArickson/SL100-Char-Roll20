@@ -532,7 +532,7 @@ const data = {
     generated_from: Object.values(SOURCES),
     species: strip(species, ["line", "url"]),
     origins: strip(origins, ["line"]),
-    factions: factions.map(f => ({ name: f.name, section: f.section, group: f.group, era: f.era })),
+    factions: factions.map(f => ({ name: f.name, section: f.section, group: f.group, era: f.era, description: f.description })),
     careers: careers.map(c => ({ name: c.name, class: c.class, scheme: c.scheme,
         levels: c.levels.map(l => ({ level: l.level, title: l.title, status: l.status, skills: l.skills, talents: l.talents, trappings: l.trappings })) })),
     talents: talents.map(t => ({ name: t.name, group: t.group, max: t.max, tests: t.tests, text: t.summary })),

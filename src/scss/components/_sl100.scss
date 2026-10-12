@@ -169,3 +169,14 @@ input[type="hidden"][name*="origin_disable5"][value="1"] ~ * input[type="radio"]
     pointer-events: none;
     opacity: .5;
 }
+
+.sheet-sl-faction__info {
+    display: flex;
+        flex-direction: column;
+        gap: 2px;
+    padding: 2px $margin-small;
+}
+
+.sheet-sl-faction__group {
+    font-size: 11px;
+}

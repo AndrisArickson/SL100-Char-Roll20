@@ -562,6 +562,15 @@ const slModule = ( () => {
         });
     };
 
+    // Faction (chapter 04): lore only, so choosing one just shows its details.
+    const changeFaction = (new_value) => {
+        const faction = sl100Data.factions.find(f => f.name.toLowerCase() === (new_value || "").trim().toLowerCase());
+        setAttrs({
+            faction_group: faction ? [faction.section, faction.group, faction.era].filter(Boolean).join(" · ") : "",
+            faction_description: faction ? faction.description : "",
+        });
+    };
+
     const checkOriginAdvances = () => {
         const attrs = [];
         for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) attrs.push(`origin_adv_${i}`);
@@ -2126,6 +2135,7 @@ const slModule = ( () => {
         applyExtraPoints:applyExtraPoints,
         checkCreation:checkCreation,
         changeOrigin:changeOrigin,
+        changeFaction:changeFaction,
         applyOriginBonus:applyOriginBonus,
         checkOriginAdvances:checkOriginAdvances,
         calculateForceRanks:calculateForceRanks,
@@ -2230,6 +2240,8 @@ on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
 on(`change:origin`, eventInfo => slModule.changeOrigin(eventInfo.newValue));
 
 on(`change:origin_choice`, eventInfo => slModule.applyOriginBonus());
+
+on(`change:faction`, eventInfo => slModule.changeFaction(eventInfo.newValue));
 
 for (let index = 1; index <= 12; index++) {
     on(`change:origin_adv_${index}`, eventInfo => slModule.checkOriginAdvances());

@@ -20,6 +20,16 @@ mixin talent-row
             
         .sl-talenttable__row.sl-settings.control__hide--talent_settings
         
+            //- Talent library (07 revised, generated): picking one, or typing a
+            //- name that matches, fills Max, Tests and the rules text. The name
+            //- stays free text for homebrew talents.
+            .sl-settings__row--span.sl-library
+                .sl-settings__label(data-i18n="Talent library")
+                select.sl-settings__select(name="attr_talent_library")
+                    option(value="", data-i18n="Choose…")
+                    each talent in sl100Data.talents
+                        option(value=talent.name, data-i18n=talent.name)
+
             .sl-settings__row--span
                 .sl-settings__label(data-i18n=`Name`) 
                 input.sl-settings__input(name=`attr_talent_name`, type="text")
@@ -31,6 +41,14 @@ mixin talent-row
             .sl-settings__row
                 .sl-settings__label(data-i18n=`Max`) 
                 input.sl-settings__input(name=`attr_talent_ranks_max`, type="number")
+
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Max rule`) 
+                input.sl-settings__input(name=`attr_talent_max_rule`, type="text")
+
+            .sl-settings__row--span
+                .sl-settings__label(data-i18n=`Tests`) 
+                input.sl-settings__input(name=`attr_talent_tests`, type="text")
         
             .sl-settings__row--span
                 .sl-settings__label(data-i18n=`Modifiers`) 

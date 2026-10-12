@@ -1041,6 +1041,68 @@ const slModule = ( () => {
         });
     };
 
+    // Talent library (07 revised, generated data). The name is matched exactly,
+    // then on the part before "(" so "Resistance (Cold)" finds "Resistance
+    // (Threat)". Max rules naming a Characteristic Bonus resolve to the
+    // character's current bonus and follow it as it changes.
+    const BONUS_RULES = {
+        "weapon skill bonus": "weapon_skill_bonus", "ballistic skill bonus": "ballistic_skill_bonus",
+        "strength bonus": "strength_bonus", "toughness bonus": "toughness_bonus", "initiative bonus": "initiative_bonus",
+        "agility bonus": "agility_bonus", "dexterity bonus": "dexterity_bonus", "intelligence bonus": "intelligence_bonus",
+        "willpower bonus": "willpower_bonus", "fellowship bonus": "fellowship_bonus",
+    };
+
+    const findTalent = (name) => {
+        const lower = (name || "").trim().toLowerCase();
+        if (!lower) return null;
+        const exact = sl100Data.talents.find(t => t.name.toLowerCase() === lower);
+        if (exact) return exact;
+        const base = lower.split("(")[0].trim();
+        return sl100Data.talents.find(t => t.name.toLowerCase().split("(")[0].trim() === base) || null;
+    };
+
+    const resolveTalentMax = (rule, bonuses) => {
+        const text = (rule || "").trim();
+        if (/^\d+$/.test(text)) return parseInt(text);
+        const attr = BONUS_RULES[text.toLowerCase()];
+        return attr ? (parseInt(bonuses[attr]) || 0) : "";
+    };
+
+    // Fill one talent row from the library. `overwrite` replaces the rules text
+    // even when the player has written their own (used when picking from the
+    // library list).
+    const fillTalent = (attribute, name, overwrite) => {
+        const talent = findTalent(name);
+        if (!talent) return;
+        const row = helperFunctions.extractRepeatingId(attribute, "talent");
+        getAttrs([`${row}_talent_description`, `${row}_talent_name`, ...Object.values(BONUS_RULES)], values => {
+            const update = {
+                [`${row}_talent_max_rule`]: talent.max,
+                [`${row}_talent_tests`]: talent.tests,
+                [`${row}_talent_ranks_max`]: resolveTalentMax(talent.max, values),
+            };
+            if (overwrite) update[`${row}_talent_name`] = talent.name;
+            if (overwrite || !values[`${row}_talent_description`]) update[`${row}_talent_description`] = talent.text;
+            setAttrs(update);
+        });
+    };
+
+    // Re-resolve every talent's Max after a Characteristic Bonus changes.
+    const updateTalentMaxima = () => {
+        getSectionIDs("talent", ids => {
+            const attrs = [...Object.values(BONUS_RULES)];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_max_rule`));
+            getAttrs(attrs, values => {
+                const update = {};
+                ids.forEach(id => {
+                    const rule = values[`repeating_talent_${id}_talent_max_rule`];
+                    if (rule && BONUS_RULES[rule.trim().toLowerCase()]) update[`repeating_talent_${id}_talent_ranks_max`] = resolveTalentMax(rule, values);
+                });
+                setAttrs(update, {silent: true});
+            });
+        });
+    };
+
     // Career Functions
 
     const updateCareerPath = () => {
@@ -2180,6 +2242,8 @@ const slModule = ( () => {
         applyExtraPoints:applyExtraPoints,
         checkCreation:checkCreation,
         changeOrigin:changeOrigin,
+        fillTalent:fillTalent,
+        updateTalentMaxima:updateTalentMaxima,
         fillCareer:fillCareer,
         updateCareerCharacteristics:updateCareerCharacteristics,
         changeFaction:changeFaction,
@@ -2375,6 +2439,14 @@ on(`change:repeating_careers:career_level_current`, eventInfo => {
 });
 
 on(`change:repeating_careers:career_preset`, eventInfo => slModule.fillCareer(eventInfo.sourceAttribute, eventInfo.newValue));
+
+on(`change:repeating_talent:talent_library`, eventInfo => slModule.fillTalent(eventInfo.sourceAttribute, eventInfo.newValue, true));
+
+// Typed names, and rows the sheet adds from species and career talents, are
+// filled only where the rules text is still empty.
+on(`change:repeating_talent:talent_name`, eventInfo => slModule.fillTalent(eventInfo.sourceAttribute, eventInfo.newValue, false));
+
+on(slModule.sl.characteristics.map(c => `change:${c}_bonus`).join(" "), eventInfo => slModule.updateTalentMaxima());
 
 // EXPERIENCE CHANGES
 

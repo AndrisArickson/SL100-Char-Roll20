@@ -41,7 +41,7 @@ mixin talent-row
                 select.sl-settings__select.control__select(name="attr_talent_test_skill")
                     option(data-i18n="None", value="none") 
                     each skill in [...skills.basic, ...skills.advanced]
-                        option(data-i18n=skill.name, value=skill.name.toLowerCase().replace(/ /g,"_"))
+                        option(data-i18n=skill.name, value=skillAttr(skill).replace(/-/g,"_"))
                             
             .sl-settings__row--span
                 .sl-settings__label--full(data-i18n=`Description`) 

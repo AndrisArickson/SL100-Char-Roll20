@@ -5,6 +5,11 @@ include components/_component-index.pug
 
 input(name="attr_sheet_version", type="hidden", value="1.0.0")
 input(name="attr_npc", type="hidden", value="0")
+//- Ranks in the Force Sense / Control / Alter (Discipline) talents (07 revised):
+//- each rank is +1 SL on a successful Use the Force Test of that discipline.
+input(name="attr_force_rank_sense", type="hidden", value="0")
+input(name="attr_force_rank_control", type="hidden", value="0")
+input(name="attr_force_rank_alter", type="hidden", value="0")
 input(name="attr_nav", type="hidden", value="main")
 input(name="attr_difficulty_query", type="hidden", value="?{Difficulty|Average (+20), 20|Very Easy (+60), 60|Easy (+40), 40|Average (+20), 20|Challenging (0), 0|Difficult (-10), -10|Hard (-20), -20|Very Hard (-30), -30}")
 input(name="attr_difficulty_query_combat", type="hidden", value="?{Difficulty|Challenging (+0), 0|Very Easy (+60), 60|Easy (+40), 40|Average (+20), 20|Challenging (0), 0|Difficult (-10), -10|Hard (-20), -20|Very Hard (-30), -30}")

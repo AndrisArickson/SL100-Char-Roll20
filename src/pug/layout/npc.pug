@@ -42,17 +42,17 @@
 
                 each skill in skill_list
                     - 
-                        const attr = skill.name.toLowerCase().replace(/ /g,"-");
+                        const attr = skillAttr(skill);
                     if (skill.grouped !== true)
                         .sl-npcsettings__skill
                             .sl-npcsettings__label(data-i18n=skill.name)
                             input.sl-npcsettings__input(name=`attr_${attr}`, type="number")
                             
-                    if (skill.name === "Melee" || skill.name === "Ranged" || skill.name === "Force" || skill.name === "Language")
+                    if (skill.specialisations)
                         each specialism in skill.specialisations
                             .sl-npcsettings__skill
                                 .sl-npcsettings__label(data-i18n=`${skill.name} (${specialism})`) 
-                                input.sl-npcsettings__input(name=`attr_${specialism}`, type="number")
+                                input.sl-npcsettings__input(name=`attr_${specAttr(specialism)}`, type="number")
 
             h2(data-i18n="Additional Skills")
             .sl-npcsettings__skills--additional

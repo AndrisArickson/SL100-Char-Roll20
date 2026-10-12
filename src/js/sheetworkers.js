@@ -3,7 +3,7 @@ const slModule = ( () => {
     // Global Variables
 
     const sl = {
-        sheet_version: "1.0.0",
+        sheet_version: "1.1.0",
 
         characteristics: [
             "weapon_skill",
@@ -31,116 +31,126 @@ const slModule = ( () => {
             "Fel"
         ],
 
+        // Skill attributes (chapter 06; see src/pug/abstracts.pug).
         skills: [
-            "astrogation",
-            "computers",
+            "codes",
+            "creature-care",
+            "creature-training",
             "demolitions",
-            "deceive",
-            "force",
-            "knowledge",
+            "evaluate",
             "language",
-            "mechanics",
+            "lore",
             "medicine",
+            "meditate",
             "perform",
-            "pilot",
+            "pilot-capital-ship",
+            "play",
+            "profession",
             "ranged",
             "research",
-            "security",
             "sleight-of-hand",
-            "slicing",
+            "slice-security-system",
             "swim",
-            "tactics",
             "track",
-            "trade",
-            "animal-handling",
+            "force",
             "art",
             "athletics",
             "bribery",
-            "carouse",
             "charm",
+            "charm-creature",
             "climb",
+            "consume-alcohol",
+            "consume-intoxicant",
             "cool",
             "dodge",
-            "drive",
             "endurance",
             "entertain",
             "gamble",
+            "gossip",
             "haggle",
+            "heal",
             "intimidate",
             "intuition",
             "leadership",
             "melee",
             "navigation",
+            "outdoor-survival",
             "perception",
+            "pilot",
             "ride",
+            "secret-signs",
             "stealth",
-            "streetwise",
-            "survival",
-            "zero-g"
+            "trade"
         ],
 
         // Weapon groups: the Melee and Ranged specialisations.
         weapon_specialisations: [
-            "basic",
-            "brawling",
+            "1h",
+            "2h",
             "lightsaber",
-            "vibroweapon",
-            "parry",
-            "polearm",
-            "two-handed",
-            "stun",
-            "pistol",
-            "rifle",
+            "archaic",
+            "blaster",
             "heavy",
-            "gunnery",
-            "exotic",
-            "entangling",
-            "explosives",
-            "throwing"
+            "ordinance"
         ],
 
-        // Force specialisations a Force power can be rolled against.
+        // Use the Force disciplines a Force power can be rolled against.
         force_specialisations: [
-            "control",
             "sense",
+            "control",
             "alter"
         ],
 
         specialisations: [
-            "basic",
-            "brawling",
-            "lightsaber",
-            "vibroweapon",
-            "parry",
-            "polearm",
-            "two-handed",
-            "stun",
-            "pistol",
-            "rifle",
+            "mega_freighter",
+            "capital_ship",
+            "space_station",
+            "archaic",
+            "blaster",
             "heavy",
-            "gunnery",
-            "exotic",
-            "entangling",
-            "explosives",
-            "throwing",
-            "control",
+            "ordinance",
             "sense",
+            "control",
             "alter",
-            "galactic_basic",
-            "custom"
+            "custom",
+            "1h",
+            "2h",
+            "lightsaber",
+            "speeder",
+            "starship",
+            "air",
+            "land",
+            "water",
+            "urban",
+            "wilderness"
         ],
 
         repeating_skills: [
+            "codes",
+            "creature-training",
+            "language",
+            "lore",
+            "perform",
+            "play",
+            "profession",
+            "ranged",
             "art",
             "entertain",
-            "ride",
-            "stealth",
-            "knowledge",
-            "language",
-            "perform",
+            "melee",
             "pilot",
+            "ride",
+            "secret-signs",
+            "stealth",
             "trade"
         ],
+
+        // Career/species/origin skill names that are spelling variants of a
+        // skill or specialisation on the sheet (lower case -> attribute).
+        skill_aliases: {
+            "bribe": "bribery",
+            "slice security": "slice-security-system",
+            "pilot (capital ship)": "capital_ship"
+        },
 
         repeating_sections: [
             "talent",
@@ -186,15 +196,61 @@ const slModule = ( () => {
     }
 
     const updateSheet = (version) => {
-        let updateAttrs = {};
+        const done = () => setAttrs({sheet_version: sl.sheet_version});
 
-        switch (version) {
-            default:
-                updateAttrs["sheet_version"] = sl.sheet_version;
-            break; 
-        }
+        if (!version || version < "1.1.0") migrateTo110(done);
+        else done();
+    }
 
-        setAttrs(updateAttrs);
+    // 1.1.0: skill list aligned with chapter 06. Skills 06 renamed keep their
+    // player-entered bonus and notes; Knowledge rows move to Lore; the two
+    // unambiguous weapon groups are renamed. Advances are recalculated from the
+    // career, species and origin entries, so they need no copying. Old
+    // attributes are left in place.
+    const migrateTo110 = (callback) => {
+        const renamed = {
+            "carouse": "consume-intoxicant",
+            "survival": "outdoor-survival",
+            "animal-handling": "charm-creature",
+            "security": "slice-security-system",
+        };
+        const weaponGroups = {"Basic": "1H", "Two-Handed": "2H"};
+        const attrs = [];
+        Object.keys(renamed).forEach(old => attrs.push(`${old}_bonus`, `${old}_notes`));
+
+        getSectionIDs("knowledge", knowledgeIds => {
+            getSectionIDs("weapons", weaponIds => {
+                knowledgeIds.forEach(id => ["name", "characteristic", "modifier", "notes"].forEach(f => attrs.push(`repeating_knowledge_${id}_specialisation_${f}`)));
+                weaponIds.forEach(id => attrs.push(`repeating_weapons_${id}_weapon_group`));
+
+                getAttrs(attrs, values => {
+                    const update = {};
+
+                    Object.entries(renamed).forEach(([old, now]) => {
+                        ["bonus", "notes"].forEach(f => {
+                            if (values[`${old}_${f}`]) update[`${now}_${f}`] = values[`${old}_${f}`];
+                        });
+                    });
+
+                    knowledgeIds.forEach(id => {
+                        const name = values[`repeating_knowledge_${id}_specialisation_name`];
+                        if (!name) return;
+                        const row = `repeating_lore_${generateRowID()}`;
+                        ["name", "characteristic", "modifier", "notes"].forEach(f => {
+                            const v = values[`repeating_knowledge_${id}_specialisation_${f}`];
+                            if (v) update[`${row}_specialisation_${f}`] = v;
+                        });
+                    });
+
+                    weaponIds.forEach(id => {
+                        const group = values[`repeating_weapons_${id}_weapon_group`];
+                        if (weaponGroups[group]) update[`repeating_weapons_${id}_weapon_group`] = weaponGroups[group];
+                    });
+
+                    setAttrs(update, {}, callback);
+                });
+            });
+        });
     }  
 
     const toggleRollDifficulty = (new_value) => {
@@ -476,6 +532,24 @@ const slModule = ( () => {
 
             update.creation_warning = warnings.join("\n");
             setAttrs(update, {silent: true}, () => recalculateEarnedXP());
+        });
+    };
+
+    // Use the Force discipline ranks, from the "Force Sense / Control / Alter
+    // (Discipline)" talents in 07 (revised).
+    const calculateForceRanks = () => {
+        getSectionIDs("talent", ids => {
+            const attrs = [];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`, `repeating_talent_${id}_talent_ranks`));
+            getAttrs(attrs, values => {
+                const ranks = {sense: 0, control: 0, alter: 0};
+                ids.forEach(id => {
+                    const name = (values[`repeating_talent_${id}_talent_name`] || "").trim().toLowerCase();
+                    const match = name.match(/^force (sense|control|alter)\b/);
+                    if (match) ranks[match[1]] += parseInt(values[`repeating_talent_${id}_talent_ranks`]) || 0;
+                });
+                setAttrs({force_rank_sense: ranks.sense, force_rank_control: ranks.control, force_rank_alter: ranks.alter});
+            });
         });
     };
 
@@ -1268,6 +1342,43 @@ const slModule = ( () => {
         });   
     }
 
+    // Map a skill name as written in a career, species or origin entry to the
+    // sheet: a plain skill, a fixed specialisation, or a row in a grouped
+    // skill. Text after a dash is an explanatory note ("Melee (Lightsaber —
+    // defensive form only)"). Unresolved choices ("1H/2H", "Rural or Urban",
+    // "Any") are skipped until the player picks one.
+    const resolveSkillName = (name) => {
+        const text = (name || "").trim();
+        if (!text) return null;
+        const lower = text.toLowerCase();
+
+        const alias = sl.skill_aliases[lower];
+        if (alias) {
+            if (sl.skills.includes(alias)) return {type: "skill", attr: alias};
+            if (sl.specialisations.includes(alias)) return {type: "specialisation", attr: alias};
+        }
+
+        const plain = lower.replace(/ /g, "-");
+        if (sl.skills.includes(plain)) return {type: "skill", attr: plain};
+
+        const match = text.match(/^([^(]+)\((.*)\)\s*$/);
+        if (!match) return null;
+
+        const group = match[1].trim().toLowerCase().replace(/ /g, "-");
+        const groupAttr = (group === "use-the-force") ? "force" : group;
+        const specialisation = match[2].split(/\s+[—–]\s+|\s+-\s+/)[0].trim();
+        const specLower = specialisation.toLowerCase();
+
+        if (!specialisation || /\/|\bor\b|^any\b/i.test(specialisation)) return null;
+
+        const specAttr = specLower.replace(/ /g, "_");
+        if (sl.specialisations.includes(specAttr)) return {type: "specialisation", attr: specAttr};
+
+        if (sl.repeating_skills.includes(groupAttr)) return {type: "repeating", group: groupAttr, specialisation: specialisation};
+
+        return null;
+    };
+
     const calculateSkillAdvances = () => {
         getSectionIDs("careers", id_array => {
 
@@ -1316,35 +1427,17 @@ const slModule = ( () => {
                     const updateAttrs = {};
 
                     skills.forEach((value, key) => {
-                        let parsed_key = key.replace(/ /g,"-").toLowerCase();
+                        const target = resolveSkillName(key);
 
-                        if (sl.skills.includes(parsed_key)) {
+                        if (!target) return;
 
-                            updateAttrs[`${parsed_key}_advances`] = value;
-                            
-                        } else if (key.match(/\(/g)) {
-                            const group = key.split("(")[0]
-                                            .trim()
-                                            .replace(/ /g,"-")
-                                            .toLowerCase();
-                                            
-                            const specialisation = key.split("(")[1]
-                                                      .trim()
-                                                      .replace(/\)/g,"");
-                                            
-                            const specialisation_test = specialisation.toLowerCase();
-
-                            if (sl.specialisations.includes(specialisation_test)) {
-
-                                updateAttrs[`${specialisation}_advances`] = value;
-
-                                if (value > 0) updateAttrs[`${specialisation}_control`] = "on";
-
-                            } else if (sl.repeating_skills.includes(group)) {
-
-                                modifyRepeatingSkill(group, specialisation, value);
-
-                            }
+                        if (target.type === "skill") {
+                            updateAttrs[`${target.attr}_advances`] = value;
+                        } else if (target.type === "specialisation") {
+                            updateAttrs[`${target.attr}_advances`] = value;
+                            if (value > 0) updateAttrs[`${target.attr}_control`] = "on";
+                        } else if (target.type === "repeating") {
+                            modifyRepeatingSkill(target.group, target.specialisation, value);
                         }
                     });
 
@@ -1369,14 +1462,10 @@ const slModule = ( () => {
             });
 
             getAttrs(attrs, values => {
-                const value_array = Object.values(values).filter(item => item !== "");
-                const value_array_test = value_array.map(item=>item.toLowerCase());
-                const key_array = Object.keys(values).filter(item => item !== "");
                 const specialisation_test = specialisation.toLowerCase();
+                const key = Object.keys(values).find(k => (values[k] || "").trim().toLowerCase() === specialisation_test);
 
-                if (value_array_test.includes(specialisation_test)) {
-                    const index = value_array_test.indexOf(specialisation_test);
-                    const key = key_array[index];
+                if (key) {
                     const new_key = `${key.substring(0, key.length-5)}_advances`;
                     
                     updateAttrs[new_key] = value;
@@ -1778,7 +1867,8 @@ const slModule = ( () => {
 
             setAttrs({
                 [`${repeating_id}_spell_total`]:`@{${skill}}`, 
-                [`${repeating_id}_spell_display`]:values[skill] || 0
+                [`${repeating_id}_spell_display`]:values[skill] || 0,
+                [`${repeating_id}_spell_rank`]:`@{force_rank_${skill}}`
             });
 
         });
@@ -1931,6 +2021,7 @@ const slModule = ( () => {
         checkSpeciesAdvances:checkSpeciesAdvances,
         applyExtraPoints:applyExtraPoints,
         checkCreation:checkCreation,
+        calculateForceRanks:calculateForceRanks,
         refreshFortune:refreshFortune,
         refreshResolve:refreshResolve,
 
@@ -2028,6 +2119,8 @@ on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
 on(`change:species_fate change:species_resilience change:extra_points change:extra_fate change:extra_resilience`, eventInfo => slModule.applyExtraPoints());
 
 on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
+
+on(`change:repeating_talent:talent_name change:repeating_talent:talent_ranks remove:repeating_talent`, eventInfo => slModule.calculateForceRanks());
 
 on(`change:creation_method change:pointbuy_budget ${slModule.sl.characteristics.map(c => `change:${c}_initial`).join(" ")}`, eventInfo => slModule.checkCreation());
 

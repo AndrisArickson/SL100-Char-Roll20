@@ -31,19 +31,19 @@ const abstracts = (() => {
 })();
 
 const allSkills = [...abstracts.skills.basic, ...abstracts.skills.advanced];
-const pugSkills = allSkills.map(skill => skill.name.toLowerCase().replace(/ /g, "-"));
-const pugSpecialisations = allSkills
-    .flatMap(skill => skill.specialisations || [])
-    .map(spec => spec.toLowerCase().replace(/ /g, "_"));
+const skillAttr = (skill) => skill.attr || skill.name.toLowerCase().replace(/ /g, "-");
+const specAttr = (spec) => spec.toLowerCase().replace(/ /g, "_");
+const pugSkills = allSkills.map(skillAttr);
+const pugSpecialisations = allSkills.flatMap(skill => skill.specialisations || []).map(specAttr);
 const pugRepeating = allSkills
     .filter(skill => skill.grouped && (!skill.specialisations || skill.forced === 1))
-    .map(skill => skill.name.toLowerCase().replace(/ /g, "-"));
+    .map(skillAttr);
 const pugWeaponSpecs = ["Melee", "Ranged"]
     .flatMap(name => allSkills.find(skill => skill.name === name).specialisations)
-    .map(spec => spec.toLowerCase().replace(/ /g, "_"));
-const pugForceSpecs = allSkills.find(skill => skill.name === "Force").specialisations
+    .map(specAttr);
+const pugForceSpecs = allSkills.find(skill => skill.name === "Use the Force").specialisations
     .filter(spec => spec !== "Custom")
-    .map(spec => spec.toLowerCase());
+    .map(specAttr);
 
 // Sheetworkers: run the module with Roll20 globals stubbed out.
 const sl = (() => {
@@ -74,7 +74,8 @@ const scssList = (name) => {
     const match = scss.match(new RegExp(`\\$${name}:([^;]*);`));
     return match ? [...match[1].matchAll(/"([^"]+)"/g)].map(m => m[1]) : [];
 };
-sameSet("skills (pug vs scss)", pugSkills, scssList("skills"));
+// Roll20's CSS sanitizer mangles "evaluate", so the SCSS list spells it "eva1uate".
+sameSet("skills (pug vs scss)", pugSkills.map(s => (s === "evaluate" ? "eva1uate" : s)), scssList("skills"));
 sameSet("specialisations (pug vs scss)", pugSpecialisations, scssList("specialisations"));
 
 // Translations: every data-i18n key used in the HTML (and every key sheet.json

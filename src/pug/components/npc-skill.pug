@@ -1,7 +1,7 @@
 mixin npc-skill(skill)
     - 
         const {name, characteristic, type, grouped, specialisations, forced} = skill;
-        const attr = name.toLowerCase().replace(/ /g, "-");
+        const attr = skillAttr(skill);
         const char_attr = characteristic.toLowerCase().replace(/ /g, "_");
 
     if (grouped !== true)

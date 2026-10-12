@@ -121,3 +121,51 @@ input[name="attr_creation_method"][value="pointbuy"] + .sheet-sl-creation__point
 
     font-size: 10px;
 }
+
+.sheet-sl-origin {
+    padding: 2px $margin-small;
+
+    &__info {
+        display: flex;
+            flex-direction: column;
+            gap: 2px;
+        margin-bottom: $margin-small;
+    }
+
+    &__name {
+        font-family: $font-family-display;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    &__description {
+        font-size: 11px;
+        font-style: italic;
+    }
+
+    &__choice {
+        display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 2px $margin-general;
+        margin-bottom: $margin-small;
+    }
+
+    &__option {
+        grid-column: 2;
+        display: flex;
+            align-items: center;
+            gap: $margin-small;
+
+        input[type="radio"] {
+            width: auto;
+        }
+    }
+}
+
+// Same 3 x +3 / 3 x +5 limit as the species skills.
+input[type="hidden"][name*="origin_disable3"][value="1"] ~ * input[type="radio"][value="3"]:not(:checked),
+input[type="hidden"][name*="origin_disable5"][value="1"] ~ * input[type="radio"][value="5"]:not(:checked) {
+    pointer-events: none;
+    opacity: .5;
+}

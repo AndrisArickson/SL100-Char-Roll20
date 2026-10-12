@@ -142,7 +142,7 @@
         &-careers { 
             grid-column: 1 / span 4;
             display: grid;
-                grid-template-rows: 1fr minmax(5rem, auto);
+                grid-template-rows: 1fr repeat(3, auto);
 
             + .sheet-sl-experience {
                 grid-column: span 2;

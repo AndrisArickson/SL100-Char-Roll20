@@ -206,7 +206,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .sheet-sl-pc .sheet-sl-careers {
   grid-column: 1/span 4;
   display: grid;
-  grid-template-rows: 1fr minmax(5rem, auto);
+  grid-template-rows: 1fr repeat(3, auto);
 }
 .sheet-sl-pc .sheet-sl-careers + .sheet-sl-experience {
   grid-column: span 2;
@@ -310,13 +310,13 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
   width: auto;
   padding: 0 1.5em 0.5em;
 }
-.sheet-sl-header__item-wrapper, .sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--career_path, .sheet-sl-header__item-wrapper--age, .sheet-sl-header__item-wrapper--height, .sheet-sl-header__item-wrapper--homeworld, .sheet-sl-header__item-wrapper--eyes {
+.sheet-sl-header__item-wrapper, .sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--origin, .sheet-sl-header__item-wrapper--faction, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--career_path, .sheet-sl-header__item-wrapper--age, .sheet-sl-header__item-wrapper--height, .sheet-sl-header__item-wrapper--homeworld, .sheet-sl-header__item-wrapper--eyes {
   display: flex;
   flex-flow: row nowrap;
   align-items: baseline;
   min-width: 0;
 }
-.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level {
+.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--origin, .sheet-sl-header__item-wrapper--faction, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level {
   grid-column: span 2;
 }
 .sheet-sl-header__item-wrapper--career_path {
@@ -1148,6 +1148,47 @@ input[name=attr_creation_method][value=pointbuy] + .sheet-sl-creation__pointbuy 
   font-size: 10px;
 }
 
+.sheet-sl-origin {
+  padding: 2px 0.25rem;
+}
+.sheet-sl-origin__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 0.25rem;
+}
+.sheet-sl-origin__name {
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.sheet-sl-origin__description {
+  font-size: 11px;
+  font-style: italic;
+}
+.sheet-sl-origin__choice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 2px 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.sheet-sl-origin__option {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.sheet-sl-origin__option input[type=radio] {
+  width: auto;
+}
+
+input[type=hidden][name*=origin_disable3][value="1"] ~ * input[type=radio][value="3"]:not(:checked),
+input[type=hidden][name*=origin_disable5][value="1"] ~ * input[type=radio][value="5"]:not(:checked) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .sheet-sl-wrapper input[type=text],
 .sheet-sl-wrapper input[type=number],
 .sheet-sl-wrapper textarea,
@@ -1413,12 +1454,12 @@ input[name=attr_creation_method][value=pointbuy] + .sheet-sl-creation__pointbuy 
   line-height: 1.4;
   text-transform: uppercase;
 }
-.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_path {
+.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--origin, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_path {
   border: 0;
   border-right: 1px solid rgba(60, 72, 87, 0.55);
   border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
-.sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--status {
+.sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--faction, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--status {
   border: 0;
   border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }

@@ -65,6 +65,8 @@
         &--character_name,
         &--species,
         &--class,
+        &--origin,
+        &--faction,
         &--career,
         &--career_level,
         &--career_path,
@@ -76,6 +78,8 @@
         }
 
         &--character_name,
+        &--origin,
+        &--faction,
         &--career,
         &--career_level {
             grid-column: span 2;

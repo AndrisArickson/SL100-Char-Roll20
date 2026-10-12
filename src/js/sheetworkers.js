@@ -510,6 +510,71 @@ const slModule = ( () => {
         });
     }
 
+    // Origin (chapter 03): +5 to one fixed characteristic and +5 to one of
+    // three, applied to the starting value like the species modifiers; 12
+    // starting skills taking 3 x +5 and 3 x +3 (like the species skills).
+    const ORIGIN_SKILL_SLOTS = 12;
+    const ORIGIN_BONUS = 5;
+    const CHARACTERISTIC_NAMES = {
+        weapon_skill: "Weapon Skill", ballistic_skill: "Ballistic Skill", strength: "Strength", toughness: "Toughness",
+        initiative: "Initiative", agility: "Agility", dexterity: "Dexterity", intelligence: "Intelligence",
+        willpower: "Willpower", fellowship: "Fellowship",
+    };
+
+    const findOrigin = (name) => sl100Data.origins.find(o => o.name.toLowerCase() === (name || "").trim().toLowerCase());
+
+    const changeOrigin = (new_value) => {
+        const origin = findOrigin(new_value);
+        if (!origin) return;
+
+        const label = (c) => t(CHARACTERISTIC_NAMES[c], CHARACTERISTIC_NAMES[c]);
+        const update = {
+            origin_description: origin.description,
+            origin_fixed_label: origin.fixed ? label(origin.fixed) : "",
+            origin_choice: "",
+        };
+        [1, 2, 3].forEach(n => {
+            update[`origin_choice_${n}_label`] = origin.choice[n - 1] ? label(origin.choice[n - 1]) : "";
+        });
+        for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) {
+            update[`origin_skill_${i}`] = origin.skills[i - 1] || "";
+            update[`origin_adv_${i}`] = "0";
+        }
+        update.origin_gap = (origin.skills.length !== ORIGIN_SKILL_SLOTS)
+            ? t("origin_gap_skills", "Rules TBD in 03: this origin lists") + ` ${origin.skills.length} ` + t("origin_gap_skills_end", "starting skills, not 12.")
+            : "";
+        update.advances_changed = 1;
+
+        setAttrs(update, {}, () => applyOriginBonus());
+    };
+
+    const applyOriginBonus = () => {
+        getAttrs(["origin", "origin_choice"], values => {
+            const origin = findOrigin(values.origin);
+            if (!origin) return;
+
+            const chosen = origin.choice[(parseInt(values.origin_choice) || 0) - 1];
+            const update = {};
+            sl.characteristics.forEach(c => {
+                update[`${c}_origin`] = ((c === origin.fixed) ? ORIGIN_BONUS : 0) + ((c === chosen) ? ORIGIN_BONUS : 0);
+            });
+            setAttrs(update);
+        });
+    };
+
+    const checkOriginAdvances = () => {
+        const attrs = [];
+        for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) attrs.push(`origin_adv_${i}`);
+
+        getAttrs(attrs, values => {
+            const counts = Object.values(values).reduce((acc, v) => { acc[v] = (acc[v] || 0) + 1; return acc; }, {});
+            setAttrs({
+                origin_disable3: (counts["3"] || 0) >= 3 ? 1 : 0,
+                origin_disable5: (counts["5"] || 0) >= 3 ? 1 : 0,
+            });
+        });
+    };
+
     // Character creation helper (chapter 01, "Determine Characteristics")
 
     // Bonus XP by method: keep the rolled order 50, rearrange 25, otherwise 0.
@@ -1433,10 +1498,22 @@ const slModule = ( () => {
                     attrs.push(`species_skill_${i}_name`); 
                     attrs.push(`species_skill_${i}_advances`);
                 }
+
+                for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) {
+                    attrs.push(`origin_skill_${i}`);
+                    attrs.push(`origin_adv_${i}`);
+                }
         
                 getAttrs(attrs, values => {
                     const skill_list = Object.entries(values);
                     const names = skill_list.filter(([key, value]) => key.match(/name/g) && value !== "");
+
+                    // Origin skills use origin_skill_N / origin_adv_N.
+                    for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) {
+                        const name = values[`origin_skill_${i}`];
+                        if (!name) continue;
+                        skills.set(name, (skills.get(name) || 0) + (parseInt(values[`origin_adv_${i}`]) || 0));
+                    }
 
                     names.forEach(([id, name]) => {
                         const value_addr = id.substring(0,id.length-4) + "advances";
@@ -2048,6 +2125,9 @@ const slModule = ( () => {
         checkSpeciesAdvances:checkSpeciesAdvances,
         applyExtraPoints:applyExtraPoints,
         checkCreation:checkCreation,
+        changeOrigin:changeOrigin,
+        applyOriginBonus:applyOriginBonus,
+        checkOriginAdvances:checkOriginAdvances,
         calculateForceRanks:calculateForceRanks,
         refreshFortune:refreshFortune,
         refreshResolve:refreshResolve,
@@ -2146,6 +2226,16 @@ on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
 on(`change:species_fate change:species_resilience change:extra_points change:extra_fate change:extra_resilience`, eventInfo => slModule.applyExtraPoints());
 
 on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
+
+on(`change:origin`, eventInfo => slModule.changeOrigin(eventInfo.newValue));
+
+on(`change:origin_choice`, eventInfo => slModule.applyOriginBonus());
+
+for (let index = 1; index <= 12; index++) {
+    on(`change:origin_adv_${index}`, eventInfo => slModule.checkOriginAdvances());
+    on(`clicked:remove_origin_skill_${index}`, eventInfo => setAttrs({[`origin_adv_${index}`]: "0", advances_changed: "1"}));
+    on(`clicked:remove_skill_${index}`, eventInfo => setAttrs({[`species_skill_${index}_advances`]: "0"}));
+}
 
 on(`change:repeating_talent:talent_name change:repeating_talent:talent_ranks remove:repeating_talent`, eventInfo => slModule.calculateForceRanks());
 
@@ -2250,6 +2340,8 @@ for (let index = 1; index <= 12; index++) {
     advance_triggers.push(`clicked:remove_skill_${index}`);
 
     advance_triggers.push(`change:species_skill_${index}_advances`);
+
+    advance_triggers.push(`change:origin_adv_${index}`, `change:origin_skill_${index}`);
 } 
 
 for (let index = 1; index <= 10; index++) {

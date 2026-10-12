@@ -17,6 +17,18 @@
             "options":["", ...[...new Set(sl100Data.careers.map(c => c.class))]]
         },
         {
+            "name":"Origin",
+            "field":"select",
+            // Chapter 03, generated into sl100-data.pug.
+            "options":["", ...sl100Data.origins.map(o => o.name)]
+        },
+        {
+            "name":"Faction",
+            "field":"select",
+            // Chapter 04 (selector only: 04 gives no game effects).
+            "options":["", ...sl100Data.factions.map(f => f.name)]
+        },
+        {
             "name":"Career",
             "field":"hidden",
             "placeholder":"Input your first career on the career tab"

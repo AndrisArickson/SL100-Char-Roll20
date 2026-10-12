@@ -7,34 +7,14 @@
         {
             "name":"Species",
             "field":"select",
-            "options":[
-                "",
-                "Human",
-                "Bothan",
-                "Duros",
-                "Mon Calamari",
-                "Rodian",
-                "Trandoshan",
-                "Twi'lek",
-                "Wookiee",
-                "Zabrak",
-                "Droid",
-            ]
+            // Chapter 02, generated into sl100-data.pug.
+            "options":["", ...sl100Data.species.map(sp => sp.name)]
         },
         {
             "name":"Class",
             "field":"select",
-            "options":[
-                "Fringer",
-                "Scoundrel",
-                "Soldier",
-                "Pilot",
-                "Technician",
-                "Noble",
-                "Diplomat",
-                "Bounty Hunter",
-                "Force Adept",
-            ]
+            // The career classes of chapter 05.
+            "options":["", ...[...new Set(sl100Data.careers.map(c => c.class))]]
         },
         {
             "name":"Career",

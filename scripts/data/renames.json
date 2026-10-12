@@ -1,0 +1,15 @@
+{
+  "_comment": "Talent names in 02/05 that 07 (revised) has renamed. Applied by scripts/gen-data.js to species and career talent lists. Source of each entry is noted; edit as the wording cleanup progresses.",
+  "talents": {
+    "Read/Write": "Datapad Use",
+    "Datapad Literate": "Datapad Use",
+    "Animal Affinity": "Creature Affinity",
+    "Warleader": "War Leader"
+  },
+  "_sources": {
+    "Read/Write": "Brief section 2; 07 (revised) line 5: Datapad Use 'replaces any other form of literacy'",
+    "Datapad Literate": "07 (revised) line 5 (same literacy note); Datapad Literate is not a talent in 07 (revised)",
+    "Animal Affinity": "Brief section 2 (Creature Affinity); 07 (revised) random table uses Creature Affinity",
+    "Warleader": "Brief section 2 (War Leader); 07 (revised) line 784"
+  }
+}

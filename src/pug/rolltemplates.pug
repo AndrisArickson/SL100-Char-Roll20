@@ -263,6 +263,14 @@ rolltemplate.sheet-rolltemplate-sl
         +tags(["roll"])
             +roll()
 
+        +tags(["random_talent"])
+            .sl-roll__result {{random_talent}}
+            each row in sl100Data.random_talents
+                - const [lo, hi] = row.roll.split("-").map(n => (n === "00" ? 100 : Number(n)));
+                +tags([`rollBetween() random_talent ${lo} ${hi || lo}`])
+                    .sl-roll__target
+                        .sl-roll__label= row.talent
+
         +tags(["init"])
             .sl-roll__result {{init}}
         

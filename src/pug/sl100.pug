@@ -1,3 +1,4 @@
+include sl100-data.pug
 include abstracts.pug
 include rolls.pug
 
@@ -42,6 +43,8 @@ input(name="attr_bar3_l", type="hidden")
 include rolltemplates.pug
 
 script(type="text/worker")
+    |
+    include ../js/data/sl100-data.js
     |
     include ../js/sheetworkers.js
     |

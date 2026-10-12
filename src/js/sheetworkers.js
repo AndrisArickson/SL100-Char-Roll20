@@ -436,58 +436,78 @@ const slModule = ( () => {
 
     // Species Controls
 
-    // Species presets. Selecting a species sets Destiny (fate), Resilience,
-    // Movement and Size, and fills the species skill and talent lists on the
-    // Advances tab. Edit this table to match your game.
-    const species_presets = {
-        "human":        {fate: 2, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Cool", "Gamble", "Haggle", "Leadership", "Navigation", "Perception", "Streetwise", "Knowledge (Galaxy)", "Language (Galactic Basic)", "Melee (Basic)", "Ranged (Pistol)"], talents: ["Savvy, Sharp", "Lucky"]},
-        "bothan":       {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Deceive", "Gamble", "Intuition", "Perception", "Research", "Slicing", "Stealth (Urban)", "Streetwise", "Knowledge (Politics)", "Language (Bothese)", "Language (Galactic Basic)"], talents: ["Read/Write", "Suave, Schemer"]},
-        "duros":        {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Astrogation", "Computers", "Cool", "Mechanics", "Navigation", "Perception", "Pilot (Freighter)", "Pilot (Starfighter)", "Research", "Knowledge (Hyperspace Routes)", "Language (Durese)", "Language (Galactic Basic)"], talents: ["Night Vision", "Coolheaded, Savvy"]},
-        "mon calamari": {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Astrogation", "Computers", "Cool", "Leadership", "Mechanics", "Perception", "Pilot (Capital Ship)", "Swim", "Tactics", "Knowledge (Engineering)", "Language (Mon Calamarian)", "Language (Galactic Basic)"], talents: ["Amphibious", "Night Vision"]},
-        "rodian":       {fate: 1, resilience: 2, movement: 4, size: "average", skills: ["Cool", "Dodge", "Intimidate", "Perception", "Ranged (Rifle)", "Ranged (Pistol)", "Stealth (Rural)", "Streetwise", "Survival", "Track", "Language (Rodese)", "Language (Galactic Basic)"], talents: ["Acute Sense (Smell)", "Marksman, Rover"]},
-        "trandoshan":   {fate: 0, resilience: 2, movement: 4, size: "average", skills: ["Athletics", "Climb", "Cool", "Endurance", "Intimidate", "Melee (Brawling)", "Perception", "Ranged (Heavy)", "Survival", "Track", "Language (Dosh)", "Language (Galactic Basic)"], talents: ["Regenerate", "Claws", "Strong-minded, Hardy"]},
-        "twi'lek":      {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Deceive", "Dodge", "Entertain (Dance)", "Gamble", "Haggle", "Intuition", "Perception", "Sleight of Hand", "Streetwise", "Language (Ryl)", "Language (Galactic Basic)"], talents: ["Attractive", "Etiquette (Criminals), Suave"]},
-        "wookiee":      {fate: 0, resilience: 2, movement: 4, size: "large", skills: ["Athletics", "Climb", "Cool", "Endurance", "Intimidate", "Mechanics", "Melee (Brawling)", "Melee (Two-Handed)", "Perception", "Survival", "Language (Shyriiwook)", "Language (Galactic Basic)"], talents: ["Very Strong", "Very Resilient", "Night Vision"]},
-        "zabrak":       {fate: 1, resilience: 2, movement: 4, size: "average", skills: ["Athletics", "Cool", "Dodge", "Endurance", "Intimidate", "Melee (Basic)", "Perception", "Ranged (Pistol)", "Survival", "Tactics", "Language (Zabraki)", "Language (Galactic Basic)"], talents: ["Strong-minded", "Hardy, Resolute"]},
-        "droid":        {fate: 0, resilience: 0, movement: 3, size: "average", skills: ["Computers", "Cool", "Mechanics", "Perception", "Research", "Security", "Slicing", "Knowledge (Technology)", "Language (Binary)", "Language (Galactic Basic)"], talents: ["Inorganic", "Programmed Specialist"]},
-    };
+    // Species (chapter 02), from the generated data in src/js/data/sl100-data.js.
+    // Selecting a species fills its characteristic modifiers, Destiny,
+    // Resilience, Extra Points, Movement, Size and talents. Fields 02 leaves
+    // empty are set blank (not zero), stay editable, and are listed in
+    // species_gap. "Custom" (or an unknown name) applies nothing.
+    const SIZE_VALUES = {tiny: "tiny", little: "little", small: "small", average: "average", medium: "average", large: "large", enormous: "enormous", monstrous: "monstrous"};
+    const SPECIES_TALENT_SLOTS = 10;
+    const SPECIES_SKILL_SLOTS = 12;
 
     const changeSpecies = (new_value) => {
-        
-        new_value = (new_value || "").toLowerCase();
+        const name = (new_value || "").trim().toLowerCase();
+        if (!name) return;
 
-        if (new_value === "") {
-            return;
-        }
+        const preset = sl100Data.species.find(sp => sp.name.toLowerCase() === name);
+        if (!preset) return;
 
-        const preset = species_presets[new_value];
-
-        if (!preset) {
-            return;
-        }
-
+        const blankIfNull = (value) => (value === null || value === undefined) ? "" : value;
         const update = {
-            fate: preset.fate,
-            resilience: preset.resilience,
-            movement: preset.movement,
-            size: preset.size
+            species_fate: blankIfNull(preset.fate),
+            species_resilience: blankIfNull(preset.resilience),
+            extra_points: blankIfNull(preset.extra_points),
+            movement: blankIfNull(preset.movement),
         };
 
-        for (let index = 1; index <= 12; index++) {
-            update[`species_skill_${index}_name`] = preset.skills[index - 1] || "";
-            update[`species_skill_${index}_advances`] = "0";
+        // Destiny / Resilience follow the species via applyExtraPoints; when 02
+        // gives no value they are blanked rather than left from another species.
+        if (preset.fate === null) update.fate = "";
+        if (preset.resilience === null) update.resilience = "";
+
+        // Size only when 02 names a single size ("Medium or Large" is a choice).
+        const size = SIZE_VALUES[(preset.size || "").toLowerCase()];
+        if (size) update.size = size;
+
+        const noMods = preset.gap.includes("characteristics");
+        sl.characteristics.forEach(c => {
+            update[`${c}_species`] = noMods ? "" : (preset.modifiers[c] || 0);
+        });
+
+        // 02 lists no species skills; the slots are cleared for the player.
+        for (let i = 1; i <= SPECIES_SKILL_SLOTS; i++) {
+            update[`species_skill_${i}_name`] = "";
+            update[`species_skill_${i}_advances`] = "0";
         }
 
-        // A talent entry of "A, B" is a choice between talents, so it starts unticked.
-        for (let index = 1; index <= 10; index++) {
-            const talent = preset.talents[index - 1] || "";
-            update[`species_talent_${index}_name`] = talent;
-            update[`species_talent_${index}_advances`] = (talent && !talent.includes(",")) ? "1" : "0";
+        // Talents: fixed ones are taken; "X or Y" choices and random rolls wait
+        // for the player.
+        const slots = [...preset.talents];
+        for (let i = 0; i < preset.random_talents; i++) slots.push(t("random_talent_slot", "Random talent (roll)"));
+        for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) {
+            const talent = slots[i - 1] || "";
+            const isChoice = / or /.test(talent) || talent === t("random_talent_slot", "Random talent (roll)");
+            update[`species_talent_${i}_name`] = talent;
+            update[`species_talent_${i}_advances`] = (talent && !isChoice) ? "1" : "0";
         }
+
+        const gapLabels = {characteristics: "characteristic modifiers", talents: "talents", movement: "Movement", fate: "Destiny", resilience: "Resilience", extra_points: "Extra Points"};
+        update.species_gap = preset.gap.length
+            ? t("species_gap_prefix", "Rules TBD in 02:") + " " + preset.gap.map(g => gapLabels[g] || g).join(", ")
+            : "";
+
+        const notes = [...preset.notes];
+        if (preset.natural_weapons) notes.push(`${t("Natural weapons", "Natural weapons")}: ${preset.natural_weapons}`);
+        if (preset.size && !size) notes.push(`${t("Size", "Size")}: ${preset.size}`);
+        update.species_notes = notes.join("\n");
 
         update["advances_changed"] = 1;
 
-        setAttrs(update, {silent:true});
+        setAttrs(update, {}, () => {
+            applyExtraPoints();
+            updateMovementRates(update.movement);
+            sl.characteristics.forEach(c => calculateCharacteristic(c));
+        });
     }
 
     // Character creation helper (chapter 01, "Determine Characteristics")
@@ -744,6 +764,13 @@ const slModule = ( () => {
         getAttrs(["npc"], check => {
 
             if (check["npc"] === "on") return;
+
+            // Walk = 2 x Movement, Run = 4 x Movement, in metres. A blank
+            // Movement (not yet defined for the species) leaves both blank.
+            if (newValue === "" || newValue === undefined || newValue === null) {
+                setAttrs({walk: "", run: ""});
+                return;
+            }
 
             const movement = parseInt(newValue) || 0;
             const walk = movement * 2 || 0;

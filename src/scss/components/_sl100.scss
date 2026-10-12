@@ -95,3 +95,29 @@
 input[name="attr_creation_method"][value="pointbuy"] + .sheet-sl-creation__pointbuy {
     display: block;
 }
+
+.sheet-sl-speciesinfo {
+    display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+    &__notes {
+        font-size: 11px;
+        font-style: italic;
+        white-space: pre-line;
+    }
+}
+
+.sheet-sl-speciesmods__grid {
+    display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+}
+
+.sheet-sl-speciesmods__item {
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    font-size: 10px;
+}

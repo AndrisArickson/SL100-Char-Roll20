@@ -218,6 +218,16 @@
         rolls.npctalent = makeRoll(roll_values)
     }
 
+    // Random talent: d100 on the table in 07 (revised); the roll template
+    // names the result (see random-talent in rolltemplates.pug).
+    rolls.random_talent = [
+        `@{roll_whisper}`,
+        `&{template:sl}`,
+        `{{name=@{character_name}}}`,
+        `{{roll_name=Random Talent}}`,
+        `{{random_talent=[[1d100]]}}`,
+    ].join(" ");
+
     rolls.combat = {};
 
     ["Dodge","Endurance","Intuition","Perception","Cool"].forEach(button => {

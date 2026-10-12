@@ -16,7 +16,9 @@
     "check": "node scripts/check.js",
     "start": "npm-run-all --parallel watch:sass watch:pug",
     "watch:sass": "sass src/scss/sl100.scss sl100.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions --watch",
-    "watch:pug": "pug src/pug/sl100.pug --out . -P -w"
+    "watch:pug": "pug src/pug/sl100.pug --out . -P -w",
+    "gen": "node scripts/gen-data.js",
+    "i18n": "node scripts/sync-translations.js"
   },
   "license": "MIT"
 }

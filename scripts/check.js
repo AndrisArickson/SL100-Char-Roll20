@@ -22,10 +22,17 @@ const sameSet = (label, a, b) => {
     }
 };
 
+// Generated rules data (scripts/gen-data.js).
+const sl100Data = (() => {
+    const context = {};
+    vm.runInNewContext(`${read("src/js/data/sl100-data.js")}\nthis.result = sl100Data;`, context);
+    return context.result;
+})();
+
 // Pug data: the abstracts file is a single unbuffered code block.
 const abstracts = (() => {
     const source = read("src/pug/abstracts.pug").replace(/^-\s*\n/, "");
-    const context = {};
+    const context = {sl100Data};
     vm.runInNewContext(`${source}\nthis.result = {skills, characteristics};`, context);
     return context.result;
 })();

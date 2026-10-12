@@ -28,6 +28,24 @@ mixin species
 
                         button.sl-header__hidecustom(name=`act_remove_custom_species`, type="action") ╳
 
+            //- What chapter 02 gives the chosen species. Blank fields are ones
+            //- 02 leaves undefined (listed in species_gap and NOTES-rules-gaps.md).
+            .sl-settings__row--span.sl-speciesinfo
+                span.sl-tbd(name="attr_species_gap")
+                span.sl-speciesinfo__notes(name="attr_species_notes")
+
+            .sl-settings__row--span.sl-speciesmods
+                .sl-settings__label(data-i18n="Species modifiers")
+                .sl-speciesmods__grid
+                    each characteristic in characteristics
+                        - const c_attr = characteristic.name.toLowerCase().replace(/ /g,"_");
+                        label.sl-speciesmods__item
+                            span(data-i18n=characteristic.abbreviation)
+                            input.sl-settings__input(name=`attr_${c_attr}_species`, type="number")
+
+            .sl-settings__row--span.sl-panelbuttons
+                button.sl-panelbuttons__button(data-i18n="Roll random talent", type="roll", value=rolls.random_talent)
+
             .sl-settings__col
                 input(name="attr_species_disable3", type="hidden", value="0")
                 input(name="attr_species_disable5", type="hidden", value="0")

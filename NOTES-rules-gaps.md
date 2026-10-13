@@ -5,143 +5,156 @@ into line with the SL100 design documents. **None of them has been resolved on t
 rule is missing, the field is blank and editable. Where the sources disagree, the choice made is
 stated so it can be reversed.
 
-**Source snapshot.** The documents were read from the GitHub copy of
-[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki) at commit `4bd5f02` (2026-10-12 20:44).
-The local copy may be newer. That copy has 167 talents, not 187, no *Unshakeable*, and no
-`docs/collation/wording_cleanup_2026-10-12.md`. After pushing the wiki or pointing `SL100_WIKI` at
-the local copy, re-run `npm run gen`. The machine-generated list of gaps and mismatches is in
-[`docs/data-report.md`](docs/data-report.md).
+**Source snapshot.** The documents were read from
+[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki) at commit `c89dd36` (2026-10-13). The
+sheet uses **02 Species (revised)**, **05 Careers (revised)**, **07 Talents (revised)** and the
+Talent List (revised), with 01, 03, 04 and 06 as they stand. The machine-generated list of gaps and
+mismatches is in [`docs/data-report.md`](docs/data-report.md); re-run `npm run gen` after the wiki
+changes.
 
-Line references are `file:line` in SL100-Wiki. The files are 01 Introduction & Characteristics,
-02 Species, 03 Origin, 04 Faction, 05 Careers, 06 Skills and 07 Talents (revised).
+Line references are `file:line` in SL100-Wiki.
 
-## 1. Where the brief and the documents differ
+## 1. Settled by the 13 October documents
 
-| # | Brief | Documents | What the sheet does |
-|---|---|---|---|
-| 1.1 | Ten characteristics including Dexterity, "per 01" | 01:25 and 01:13 say **nine** (no Dex), but the 05 advance schemes have ten (including Dex) | Keeps **ten**, matching 05 and the existing sheet. 01 and 05 need reconciling. |
-| 1.2 | Point-buy budget **110** | 01:28: base 20, **100** points, 4 to 18 per characteristic | Budget field defaults to **100**. It's editable (Advances → Character Creation). |
-| 1.3 | 01 covers derived values, Destiny, Fortune, Resilience, Resolve, Motivation, Extra Points, Movement | 01 has none of these, only characteristics and creation steps | Keeps the WFRP formulas already on the sheet: Wounds SB + 2×TB + WPB, scaled by size; walk 2×M and run 4×M. Extra Points come from 02; the split between Destiny and Resilience follows the brief. |
-| 1.4 | Roll-template reminders "Not Today", "That Was Close", "I Will Not Fail", "Not My Path", worded from 01 | Not found in any document | **Not added.** Effects can't be written without a source. |
-| 1.5 | Fortune refreshes from Destiny, Resolve from Resilience, "as 01 describes" | Not in 01. 07:414 (Luck): max Fortune = Fate + Luck levels. 07:717 (Strong-Minded) adds its level to max Resolve | Refresh buttons use Destiny + Luck ranks and Resilience + Strong-Minded ranks. |
-| 1.6 | Talent library of **187**, including *Unshakeable* | 07 (revised) has **167** (148 general + 19 Force), matching Talent List (revised). *Unshakeable* is absent, but five careers use it (§6) | Library has 167. `gen` checks 07 against the Talent List, not a fixed number. |
-| 1.7 | One-line talent summary | 07 (revised) has full rules text but no summaries. Talent List (revised) has Name / Max / Tests only | The description holds the full rules text. No summaries written. |
-| 1.8 | "Skills … with Datapad Use and the Intuition skill kept" | Datapad Use is a **talent** (07:192), not a skill. Intuition is a skill (06:183) | Datapad Use is in the talent library; Intuition is kept as a skill. |
-| 1.9 | Force Warrior level 1 talent "Ace Pilot or Roughrider" | 05:688 reads "Roughrider (Mounted Beast Combat) or Pilot" | Uses the 05 text. The local 05 may already say Ace Pilot. |
-| 1.10 | Renames from `wording_cleanup_2026-10-12.md` | File not in the repository | Applies only Read/Write → Datapad Use, Animal Affinity → Creature Affinity and Warleader → War Leader (brief examples), plus Datapad Literate → Datapad Use (inferred from 07:5, the note on literacy). All in `scripts/data/renames.json`. |
+These were gaps in the earlier snapshot and are now taken from the documents:
+
+- **Ten characteristics** including Dexterity (01:17, 01:28, 01:57), matching the 05 advance schemes.
+- **Point-buy budget 110**, base 20, 4 to 18 per characteristic (01:60). The sheet's default budget is now 110.
+- **Wounds** = SB + 2×TB + WPB (01:75), **Movement** and Walk/Run in metres (01:81–93),
+  **Destiny and Fortune** (01:95), **Resilience and Resolve** (01:112), **Motivation** (01:127) and
+  **Extra Points** (01:131–135).
+- **"Not Today", "That Was Close", "I Will Not Fail", "Not My Path"** (01:107–125) are now on the
+  sheet as one-line reminders under the Destiny and Resilience panels.
+- **Starting Fortune = Destiny and starting Resolve = Resilience** (01:133). Allocating Extra Points
+  now sets all four.
+- **Talents used by careers** that were missing from 07 (Strong Back, Unshakeable, Tower of Memories
+  and so on) all have entries in 07 (revised) now.
+- **Origin d100 table** (03:12–26) now covers 01–00 with no gaps or overlaps, and every Origin lists 12 skills.
+- **Trandoshan's "Regenerate (Minor)"** is now "Regeneration (Minor)" in 02, as in 07 (07:611).
+  `renames.json` also maps the old spelling, in case it appears again.
 
 ## 2. Characteristics and creation (01)
 
-- **Abbreviations** are not consistent:
-  - the 01 table uses WS, BS, S, T, AG, INT, I, WP, FEL;
-  - the 01:19 example uses "Strength (Str) … StrB" and "Willpower (Wil) … WilB";
-  - 02 uses STR, AGI, WILL and INT.
-  The generator accepts all of them.
-- **"I" is ambiguous** in 02 (Chiss 02:45, Kel Dor 02:86, Nautolan 02:110). It's read as Initiative, per the 01 table.
-- **Creation order:** 01:25–27 goes from Characteristics straight to "2) Origin on page 51". Species (02) and Faction (04) aren't placed in the creation order.
-- **Bonus XP:** rolled and kept = 50, rearranged = 25, rolled again = 0, point-buy = 0 (01:25–28). The sheet adds it to earned XP.
+- **Size and Wounds:** 01:75 gives one formula. The sheet keeps WFRP's size scaling (Small, Large and so on)
+  from the Size setting. 01 doesn't mention size.
+- **Hardy** "adds to this total" (01:77; 07: + Toughness Bonus). It isn't automated: add it in the
+  talent's Modifiers box (`Wounds +3`) or the Wounds modifier.
+- **Bonus XP:** rolled and kept = 50, rearranged = 25, rolled again = 0, point-buy = 0 (01:57–60).
+  The sheet adds it to earned XP.
+- **The creation check never blocks.** It explains what to enter in the Initial column, counts
+  points (point-buy) or checks the 22–40 range (rolled), and lists anything outside the rules.
 
-## 3. Species (02)
+## 3. Species (02 revised)
+
+**223 species:** 17 written by the design group (`[sl100]`) and 206 added from Legends lore (`[review]`).
+02 says the review entries are provisional until reviewed. The sheet says so in the species notes.
 
 | Species | Missing in 02 | Line |
 |---|---|---|
-| Human | characteristic modifiers | 02:66–76 |
-| Otolla Gungan | characteristic modifiers | 02:114–123 |
-| Togruta | characteristic modifiers | 02:125–134 |
-| Wookiee | Movement, Fate (Destiny), Resilience, Extra Points | 02:186–194 |
-| Zabrak | Movement, Fate (Destiny), Resilience, Extra Points | 02:196–201 |
+| Human | characteristic modifiers | 02:313 |
+| Otolla Gungan | characteristic modifiers | 02:369 |
+| Togruta | characteristic modifiers | 02:382 |
+| Wookiee | Movement, Destiny, Resilience, Extra Points | 02:455 |
+| Zabrak | Movement, Destiny, Resilience, Extra Points | 02:469 |
 
-These fields are blank on the sheet, with a "Rules TBD in 02" hint.
+These fields are blank on the sheet, with a "Rules TBD in 02" hint. Destiny, Resilience and Extra
+Points can be typed in by hand for these species.
 
-- **No species skills** for any species. WFRP species have 3×+5 / 3×+3 skill lists. The species skill slots are kept but cleared.
-- **Human** (02:72): "Choose any one Talent … Gain +5 free ranks in any skill." Shown as a note, not automated.
-- **Kel Dor** (02:90): a Force - Sense cost reduction. Shown as a note.
-- **Talent names not in 07 (revised):**
-  - "Stride (Sprinter?)" (Chironian, 02:31); 07 has Sprinter at 07:664;
-  - "Force Ability (Alter, Control or Sense)" (Kel Dor, 02:86) and "Force Ability - Sense" (Miraluka, 02:100); 07 has Force Sense / Control / Alter (Discipline);
-  - "Night Sight(Thermal)" (Trandoshan, 02:142); 07 has Night Vision at 07:451;
-  - "Regenerate (Minor)" (Trandoshan, 02:142); 07 has Regeneration (Minor) at 07:534.
-- **Size "Medium or Large"** (T'surr 02:158, Wookiee 02:192) is a choice, so it isn't set. Chironian "Large" (02:35) is set.
-- **Natural weapons** (Chironian, T'surr, Wookiee) are shown as notes; no weapon rows are created.
-- **"Roll N talents from the random talents list"** becomes N "Random talent (roll)" slots. The roll button uses the d100 table at 07:7–28.
-- **Random table names not in 07:** none. The table uses Creature Affinity and Datapad Use.
+- **Species skills:** 02 gives none. The species skill block is hidden. It reappears only on
+  characters from earlier versions that already have entries in it, so their values and XP don't change.
+- **Kel Dor** (02:337): "Force Sense, Force Control or Force Alter (Discipline)". The comma makes this
+  read as Force Sense plus a choice of Control or Alter; it probably means a choice of one of the
+  three. The sheet follows the text as written.
+- **Size "Medium or Large"** (T'surr, Wookiee) is a choice, so Size isn't set. Both also get the
+  Large talent from their "Size talent" lines, which suggests Large.
+- **"No Datapad Use"** (18 review species, e.g. Yuzzem, Yuzzum) is shown as a note.
+- **Zeltron** "Fel +20 (near-human)": the "(near-human)" is shown as a note.
+- **Human** (02:321): "Choose any one Talent … Gain +5 free ranks in any skill." Shown as a note, not automated.
+- **Natural weapons** and **Traits** are shown as notes; no weapon rows are created.
+- **"Roll N talents from the random talents list"** becomes N "Random talent (roll)" slots. The roll
+  button uses the d100 table at 07:9–30.
 
 ## 4. Origin (03)
 
-- **d100 table** (03:7–21):
-  - 41–45 and 91–99 are unassigned;
-  - 55 belongs to both Industrial (51–55) and Lava (55–60);
-  - Lava is listed out of order.
-- **Lava Worlds** lists **11** starting skills (03:119); 03:23 says 12. The sheet shows a hint.
-- **Choice entries** are left for the player to edit before they gain advances: "Melee (1H/2H)", "Ranged (Blaster/Heavy)", "Ride(Air/Land/Water)", "Stealth(Urban/Wilderness)".
-- **Starting-skill names not in 06:** none. Origins use 06 names, e.g. Consume Intoxicant.
+- **Choice entries** are left for the player to edit before they gain advances, e.g.
+  "Ranged (Blaster Pistol or Blaster Rifle)", "Ride (Air, Land or Water)", "Melee (any one)".
+- **Space** is the only Origin heading without "Worlds" (03:162); the sheet uses the names as written.
 
 ## 5. Faction (04)
 
-- 04 gives **lore only**: no skills, talents, characteristic changes or Patron rules. The Faction selector is flavour only. It shows section, group, era and description, plus notes.
-- 04 doesn't say where Faction sits in creation, or how Origin changes the chance of a faction (03:3 says it does).
+- 04 gives **lore only**: no skills, talents or characteristic changes. The selector is flavour only.
+  It now covers 145 factions and shows section, group, era, description and, where 04:44–59
+  says, who the faction draws its members from.
 
-## 6. Careers (05)
+## 6. Careers (05 revised)
 
-**Talents used by careers but missing from 07 (revised):**
+**91 careers:** 24 by the design group (`[sl100]`) and 67 converted or new (`[review]`). 05 says the
+advance-scheme levels 2–4 of converted careers are proposals. The career library groups them by class,
+including the new Spacers class.
 
-| Talent | Careers (05 line) | Note |
-|---|---|---|
-| Strong Back | Artisan 1 (132), Bounty Hunter 2 (771), Smuggler 1 (853), Soldier 1 (1217) | |
-| Unshakeable | Force Savant 3, Force Shadow 3, Force Warrior 3, Guard 3, Soldier 3 | Brief says it is new; not in this 07 |
-| Tower of Memories | Investigator 4 (201), Spy 4 (428) | |
-| Master Tradesman (Any) | Artisan 3 (148) | |
-| Shadowy | Force Shadow 2 (617) | |
-| Resistant (Disease) | Bawd 2 (908) | 07 has Resistance (Threat) |
-| Dirty Fighter | Pit Fighter 1 (1172) | 07 has Dirty Fighting (07:214) |
-| Public Speaking | Soldier 4 (1241) | 07 has Public Speaker (07:507) |
-
-**Other career gaps:**
-
-- **Skill counts per level:** the 05 design note asks for 10 / 6 / 4 / 2.
-  - Most level-1 entries list 8 skills.
-  - Force Warrior 1 lists 4.
-  - Bounty Hunter 1 lists 9 skills and 5 talents.
-  - Smuggler 2 lists 7.
-  - Bounty Hunter 4 lists 1.
-- **Force Warrior 2** lists 3 talents.
-- **Placeholders:** Force Savant 3 title "Jedi Councillor / (Tradition) xxx / Sith Apprentice" (05:542). Tradition flavour lines read "xx" or "xxx".
-- **Skills used by careers that 06 doesn't define:**
-  - kept as pending basic skills on their usual WFRP characteristic: Consume Alcohol (T), Heal (Int), Secret Signs (Int), Trade (Dex);
-  - spelling variants aliased: Bribe → Bribery (Envoy 2), Slice Security → Slice Security System (Charlatan 3, Investigator 2, Thief 2);
-  - not placed: "Underworld (Street — …)" (Force Shadow 2, 05:615). It has no skill and no WFRP equivalent.
+- **Conversion typos**, read correctly by `scripts/data/renames.json` but worth fixing in the wiki:
+  - **"Briberyry"** (16 places, e.g. 05:252, 05:384) for the skill Bribery;
+  - **"Briberyr"** (9 places, e.g. 05:456, 05:875) for the talent Briber (07:124).
+- **Levels that differ from 8 / 6 / 4 / 2 skills and 4 talents:**
+  - Force Savant: 3 levels (05:1567); level 2 has 4 skills.
+  - Force Warrior 1: 4 skills. Force Warrior 2: 3 talents.
+  - Bounty Hunter 1: 9 skills and 5 talents. Bounty Hunter 4: 1 skill.
+  - Smuggler 2: 7 skills.
 - **Specialisations not in 06** get their own extra row under the skill, so their advances still land:
-  - Melee (Basic), (Brawling), (Any), (Vibroblade), (Force Tradition Weapon);
-  - Pilot (Land Vehicle);
-  - Ride (Bantha).
-- **Statuses** are WFRP Brass / Silver / Gold. **Trappings** include WFRP leftovers ("Healing Draught", "Hammer and Nails", "Impressive Hat").
-- **Choices:** "X or Y" talents and skills (e.g. "Stealth (Rural or Urban)") are kept as written for the player to choose.
+  Melee (Force Tradition Weapon), Ranged (Entangling) and similar.
+- **Etiquette (Trade Guild)** and **Etiquette (Trade Guilds)** are both used; the library offers both.
+- **Statuses** are still WFRP Brass / Silver / Gold (05 lists renaming them as an open decision).
 
 ## 7. Skills (06)
 
-- **Ranged:** listed as **Basic** at 06:17 but "advanced" in its entry (06:317). The sheet uses advanced.
-- **Charm Creature:** in the Basic list (06:17) but has no entry or characteristic. The sheet uses WP (WFRP Charm Animal).
-- **Use the Force:** in the Advanced list (06:23) but has no entry or characteristic. The sheet uses WP, from the 01 description of Willpower. Disciplines Sense / Control / Alter come from the 07 Force talents.
-- **Begging** (06:61) has a heading but is a use of Charm, not a skill. Not added.
-- **Pilot (Starship)** (06:293–295) still has WFRP Row text ("pulling an oar").
-- **Consume Intoxicant** (06:93) and **Consume Alcohol** (used by 05) both exist on the sheet until one is chosen.
-- **Pilot** appears three times (06:271, 293, 297). It's modelled as basic Pilot (Speeder, Starship) plus advanced Pilot (Capital Ship) (Mega Freighter, Capital Ship, Space Station).
-- **Specialisation lists** in 06 used as fixed rows: Melee 1H / 2H / Lightsaber; Ranged Archaic / Blaster / Heavy / Ordinance; Ride Air / Land / Water; Stealth Urban / Wilderness.
+The sheet's skill list now follows 06:16 and 06:25:
+
+- **Melee:** Brawling, Vibroblade, Vibro-Axe, Force Pike, Lightsaber, Electrostaff, Stun Baton, Parry, Two-Handed.
+- **Ranged** (advanced): Blaster Pistol, Blaster Rifle, Heavy Blaster, Slugthrower, Bowcaster,
+  Disruptor, Grenade/Explosives, Missile/Rocket, Sniper.
+- **Stealth:** Rural, Underground, Urban.
+- **Meditate** is now Willpower (06:228).
+- **Removed** (no longer used by 03 or 05): the stand-ins Consume Alcohol, Heal, Secret Signs and Trade.
+
+Still open in 06:
+
+- **Charm Creature** is described inside Charm (06:73, WP) but isn't in the Basic list (06:16). The sheet keeps it as a basic WP skill.
+- **Use the Force** is in the Advanced list (06:25) but has no entry or characteristic. The sheet uses WP; disciplines Sense / Control / Alter come from the 07 Force talents.
+- **Begging** (06:61) has a heading but is a use of Bribery. Not added.
+- **Pilot (Starship)** (06:318) still has WFRP Row text ("pulling an oar").
 - **Lightsaber penalty** of −20 for wielders who aren't Force sensitive (06:19) is not automated.
 
 ## 8. Talents (07 revised)
 
-- **Talent List vs 07:** the 167 entries agree on names, Max and Tests (`gen` reports any difference).
-- **Max values** "None", "Number of spells available" and similar can't be resolved, so the Max number is left blank. "<Characteristic> Bonus" follows the character's bonus.
-- **Force section:** Jedi and other disciplines are talents with +1 SL per rank (07:804+). Force power rolls show that rank as "+SL on success". Sorcery (Language (The Force) casting, Miscasts) has no roll support.
+- **07 has 191 entries; the Talent List (revised) lists 187.** Animal Companion, Cadence,
+  Captain's Word and Large have entries in 07 but aren't in the list. The sheet uses all 191.
+- **Characteristic bonuses:** ten talents give "a permanent +5 bonus to your starting …":
+  Coolheaded (WP), Lightning Reflexes (Ag), Marksman (BS), Nimble Fingered (Dex), Savvy (Int),
+  Sharp (I), Suave (Fel), Very Resilient (T), Very Strong (S) and Warrior Born (WS). Picking one
+  fills its Modifiers box (e.g. `WS +5`), which applies the bonus.
+- **Named versions** such as Night Vision (Thermal), Resistance (Cold) and Etiquette (Scholars) are
+  in the talent library, taken from the names 02 and 05 use. Others can still be typed.
+- **Max values** "None", "Number of spells available" and similar can't be resolved, so the Max
+  number is left blank. "<Characteristic> Bonus" follows the character's bonus.
+- **Force section:** Jedi and other disciplines are talents with +1 SL per rank. Force power rolls show
+  that rank as "+SL on success". Sorcery has no roll support.
 
 ## 9. Sheet compatibility notes (not rules gaps)
 
-- **Sheet version 1.1.0.** The migration runs once when an existing character is opened:
-  - copies bonus and notes from Carouse, Survival, Animal Handling and Security to Consume Intoxicant, Outdoor Survival, Charm Creature and Slice Security System;
-  - copies Knowledge rows to Lore;
-  - remaps weapon groups Basic → 1H and Two-Handed → 2H.
-  Old attributes are left in place.
-- **Weapon groups not remapped:** Pistol, Rifle, Gunnery, Exotic, Entangling, Explosives, Throwing, Brawling, Vibroweapon, Parry, Polearm, Stun. A mapping would be a rules decision, so players re-select the group.
-- **NPC attack rows** using the old "Melee (…)" / "Ranged (…)" names need re-selecting.
-- **Header selectors:** Species, Class, Origin and Faction were hidden since the earlier reset change (the WFRP `display: unset`). They're shown again.
+**Sheet version 1.2.0.** Migrations run once when an existing character is opened. Old attributes are
+left in place.
+
+- **From 1.0.0:**
+  - Bonus and notes are copied from Carouse, Survival, Animal Handling and Security to Consume
+    Intoxicant, Outdoor Survival, Charm Creature and Slice Security System.
+  - The same is done for Pistol, Rifle, Heavy, Explosives and Stun to Blaster Pistol, Blaster Rifle,
+    Heavy Blaster, Grenade/Explosives and Stun Baton.
+  - Knowledge rows are copied to Lore.
+  - Weapon groups Pistol, Rifle, Heavy, Explosives and Stun are renamed to their 06 successors.
+    Brawling, Lightsaber, Parry and Two-Handed are unchanged.
+- **Weapon groups not remapped:** Basic, Vibroweapon (Vibroblade or Vibro-Axe?), Polearm (Force Pike?),
+  Gunnery, Exotic, Entangling and Throwing have no clear 06 successor. Players re-select the group.
+- **From 1.1.0 test builds:** 2H becomes Two-Handed. 1H, Archaic, Blaster, Ordinance and Wilderness
+  need re-selecting.
+- **Talent rows** whose talent gives a characteristic bonus get it in their Modifiers box if that box is empty.
+- **NPC attack rows** using old "Melee (…)" / "Ranged (…)" names need re-selecting.

@@ -39,7 +39,7 @@ const abstracts = (() => {
 
 const allSkills = [...abstracts.skills.basic, ...abstracts.skills.advanced];
 const skillAttr = (skill) => skill.attr || skill.name.toLowerCase().replace(/ /g, "-");
-const specAttr = (spec) => spec.toLowerCase().replace(/ /g, "_");
+const specAttr = (spec) => spec.toLowerCase().replace(/[ \/]/g, "_");
 const pugSkills = allSkills.map(skillAttr);
 const pugSpecialisations = allSkills.flatMap(skill => skill.specialisations || []).map(specAttr);
 const pugRepeating = allSkills
@@ -136,7 +136,9 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
 // Rules data (scripts/gen-data.js) against the counts read from the documents.
 {
     const counts = sl100Data.source_counts || {};
-    if (sl100Data.talents.length !== counts.talent_list) errors.push(`talent library has ${sl100Data.talents.length} talents; the Talent List (revised) has ${counts.talent_list} (re-run npm run gen)`);
+    // 07 (revised) is the rules text; a Talent List that disagrees is reported in docs/data-report.md.
+    if (sl100Data.talents.length !== counts.talent_entries) errors.push(`talent library has ${sl100Data.talents.length} talents; 07 (revised) has ${counts.talent_entries} entries (re-run npm run gen)`);
+    if (counts.talent_list !== counts.talent_entries) warnings.push(`07 (revised) has ${counts.talent_entries} talents but the Talent List (revised) lists ${counts.talent_list}; see docs/data-report.md`);
     if (sl100Data.origins.length !== 13) errors.push(`expected 13 origins (chapter 03), found ${sl100Data.origins.length}`);
     if (sl100Data.species.length !== counts.species_headings) errors.push(`species data has ${sl100Data.species.length} entries; chapter 02 has ${counts.species_headings}`);
 }

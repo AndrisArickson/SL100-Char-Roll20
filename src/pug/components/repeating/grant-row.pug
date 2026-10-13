@@ -1,0 +1,25 @@
+mixin grant-row
+    //- One granted skill or talent: what it is, where it came from and why.
+    //- Rows a talent adds by itself carry that talent row's id in grant_auto
+    //- and are removed with the talent; rows added by hand are never touched.
+    input(name="attr_grant_auto", type="hidden", value="")
+    .sl-granttable__row
+        .sl-granttable__cell
+            select.sl-granttable__select(name="attr_grant_type")
+                option(value="skill", data-i18n="Skill")
+                option(value="talent", data-i18n="Talent")
+        .sl-granttable__cell
+            input.sl-granttable__input(name="attr_grant_name", type="text", data-i18n-placeholder="e.g. Entertain (Sing)")
+        .sl-granttable__cell
+            select.sl-granttable__select(name="attr_grant_source")
+                option(value="Other", data-i18n="Other")
+                option(value="Talent", data-i18n="Talent")
+                option(value="Species", data-i18n="Species")
+                option(value="Career", data-i18n="Career")
+                option(value="GM", data-i18n="GM")
+        .sl-granttable__cell
+            input.sl-granttable__input(name="attr_grant_reason", type="text", data-i18n-placeholder="Reason")
+        .sl-granttable__cell
+            input.sl-granttable__input(name="attr_grant_advances", type="number", value="0")
+        .sl-granttable__cell--last
+            input.sl-granttable__input(name="attr_grant_discount", type="number", value="0")

@@ -341,6 +341,21 @@ input(name="attr_setting_button_hide", type="hidden")
         h1.sl-panel__header(data-i18n="Origin")
         +origin
 
+    //- Granted skills and talents: anything a talent, species, career or the GM
+    //- grants outside the normal lists. A granted skill counts as a career skill
+    //- in every career; skills granted by a talent cost 5 XP less per Advance.
+    .sl-panel.sl-grants
+        h1.sl-panel__header(data-i18n="Granted Skills & Talents")
+        p.sl-reminder(data-i18n="A granted skill counts as a career skill in every career: enter its Advances here. Skills granted by a talent cost 5 XP less per Advance. Granted talents add their Advances as free ranks. Talents such as Perfect Pitch add their row by themselves.")
+        .sl-granttable__row--head
+            .sl-granttable__cell(data-i18n="Type")
+            .sl-granttable__cell(data-i18n="Name")
+            .sl-granttable__cell(data-i18n="Granted by")
+            .sl-granttable__cell(data-i18n="Reason")
+            .sl-granttable__cell(data-i18n="Adv.")
+            .sl-granttable__cell--last(data-i18n="XP −")
+        +repeating-section("grants","grant-row")
+
     //- Faction (chapter 04): 04 gives lore only, so this is a selector and notes.
     .sl-panel.sl-faction
         h1.sl-panel__header(data-i18n="Faction")

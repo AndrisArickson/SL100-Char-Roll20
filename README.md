@@ -17,7 +17,7 @@ WFRP artwork is used.
 | **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics (with a Species / Origin row), Resilience/Resolve/Motivation and Extra Points, Destiny & Fortune (with refresh buttons), Movement (metres), Experience, Basic and Advanced Skills, Talents (with the talent library), Conditions, Psychology, Dark Side, Ambitions, Party |
 | **Combat** | Gear, Encumbrance, Wealth (Credits / Bank / Debt), d100 hit-location Armour Points, quick-roll Controls, Advantage, Wounds, Critical Wounds, Armour, Weapons |
 | **Force** | Force Powers (rolled against Use the Force: Sense, Control or Alter, showing the discipline rank as +SL on success) and Conflict |
-| **Advances** | Careers (with the career library), Species, Origin, Faction, Character Creation helper, XP awards and spends |
+| **Advances** | Careers (with the career library), Species, Origin, Granted Skills & Talents (from talents such as Perfect Pitch, species, career or GM, with a reason), Faction, Character Creation helper, XP awards and spends |
 | **Settings** | Custom modifiers, non-career advances, roll options |
 | **NPC** | A compact stat-block view (toggle **NPC** in Settings) |
 

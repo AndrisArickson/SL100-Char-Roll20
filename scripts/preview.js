@@ -87,6 +87,10 @@ const rows = {
     spells: [{ spell_name: "Sense Danger", spell_lore: "Universal", spell_display: 37, spell_cn: 3, spell_range: "Self", spell_target: "Self", spell_duration: "1 hour" }],
     careers: [{ career_name: "Smuggler", career_level: "Freighter Captain", career_status: "Silver 3" }],
     experience: [{ experience_desc: "Escaped the orbital blockade", experience_amount: 150 }],
+    grants: [
+        { grant_auto: "-talentrow", grant_type: "skill", grant_name: "Entertain (Sing)", grant_source: "Talent", grant_reason: "Perfect Pitch", grant_advances: 5, grant_discount: 5 },
+        { grant_type: "talent", grant_name: "Night Vision", grant_source: "GM", grant_reason: "Cybernetic eyes (Kessel job)", grant_advances: 1, grant_discount: 0 },
+    ],
     experiencespent: [{ experience_desc: "Ranged (Blaster Pistol) +5", experience_amount: 50 }],
     knowledge: [{ specialisation_name: "Frontier Worlds", specialisation: 41 }],
     pilot: [{ specialisation_name: "Freighter", specialisation: 60 }],

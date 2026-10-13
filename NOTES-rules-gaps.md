@@ -134,6 +134,15 @@ Still open in 06:
   fills its Modifiers box (e.g. `WS +5`), which applies the bonus.
 - **Named versions** such as Night Vision (Thermal), Resistance (Cold) and Etiquette (Scholars) are
   in the talent library, taken from the names 02 and 05 use. Others can still be typed.
+- **Talents that grant a skill** (07 has three wordings for it): Amphibious (Swim, 07:62),
+  Artistic (Profession (Artist), 07:77), Craftsman (the Profession of its specialisation, 07:212),
+  Perfect Pitch (Entertain (Sing), 07:572) and Seasoned Traveller (Lore (Local), 07:684). Each adds
+  a row to **Granted Skills & Talents** by itself. The skill counts as a career skill in every
+  career and, by design decision (13 Oct), always costs **5 XP less per Advance**. Craftsman's text
+  gives no discount, but it gets one under that decision. A `**Grants:** Career skill X; Talent Y`
+  line under a talent's Max/Tests would be read in place of the prose.
+- **Entertain (Sing)** (Perfect Pitch) vs 06's Entertain specialisation **Singing** (06:141). The
+  sheet uses the talent's wording, so the advances land on a "Sing" row.
 - **Max values** "None", "Number of spells available" and similar can't be resolved, so the Max
   number is left blank. "<Characteristic> Bonus" follows the character's bonus.
 - **Force section:** Jedi and other disciplines are talents with +1 SL per rank. Force power rolls show
@@ -156,5 +165,9 @@ left in place.
   Gunnery, Exotic, Entangling and Throwing have no clear 06 successor. Players re-select the group.
 - **From 1.1.0 test builds:** 2H becomes Two-Handed. 1H, Archaic, Blaster, Ordinance and Wilderness
   need re-selecting.
+- **Granted Skills & Talents** (Advances tab, new section `repeating_grants`): granted skills add
+  paid Advances at the row's discount; granted talents add free ranks (at least 1) and create the
+  talent row if needed. The Settings "Non-Career Advances" list is unchanged. Origin skills stay in
+  the Origin panel.
 - **Talent rows** whose talent gives a characteristic bonus get it in their Modifiers box if that box is empty.
 - **NPC attack rows** using old "Melee (…)" / "Ranged (…)" names need re-selecting.

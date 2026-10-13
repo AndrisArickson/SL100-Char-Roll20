@@ -1211,6 +1211,74 @@ const slModule = ( () => {
         });
     };
 
+    // Granted Skills & Talents. A talent whose 07 entry grants a skill ("add
+    // Entertain (Sing) to any career you enter") adds a row here by itself,
+    // marked with its talent row's id; the row goes when the talent goes.
+    // Rows added by hand are never touched. Skills granted by a talent always
+    // cost 5 XP less per Advance (design decision, 13 Oct 2026).
+    const TALENT_GRANT_DISCOUNT = 5;
+
+    const syncTalentGrants = () => {
+        getSectionIDs("talent", talentIds => {
+            getSectionIDs("grants", grantIds => {
+                const attrs = [];
+                talentIds.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`));
+                grantIds.forEach(id => attrs.push(`repeating_grants_${id}_grant_auto`, `repeating_grants_${id}_grant_name`));
+                getAttrs(attrs, values => {
+                    const wanted = new Map();
+                    talentIds.forEach(id => {
+                        const name = (values[`repeating_talent_${id}_talent_name`] || "").trim();
+                        const talent = findTalent(name);
+                        if (!talent || !talent.grants || !talent.grants.length) return;
+                        // "Craftsman (Engineer)" grants Profession (Engineer).
+                        const spec = (name.match(/\(([^)]*)\)\s*$/) || [])[1];
+                        const placeholder = ((talent.name.match(/\(([^)]*)\)/) || [])[1] || "").toLowerCase();
+                        const concrete = spec && spec.toLowerCase() !== placeholder;
+                        talent.grants.forEach(grant => {
+                            const grantName = grant.name.includes("{spec}")
+                                ? (concrete ? grant.name.replace("{spec}", spec) : grant.name.replace(/\s*\(\{spec\}\)/, ""))
+                                : grant.name;
+                            wanted.set(`${id}|${grantName.toLowerCase()}`, {id, talent: name, type: grant.type, name: grantName});
+                        });
+                    });
+
+                    const update = {};
+                    grantIds.forEach(gid => {
+                        const auto = (values[`repeating_grants_${gid}_grant_auto`] || "").trim();
+                        if (!auto) return;
+                        const key = `${auto}|${(values[`repeating_grants_${gid}_grant_name`] || "").trim().toLowerCase()}`;
+                        if (wanted.has(key)) wanted.delete(key);
+                        else removeRepeatingRow(`repeating_grants_${gid}`);
+                    });
+                    wanted.forEach(grant => {
+                        const row = `repeating_grants_${generateRowID()}`;
+                        update[`${row}_grant_auto`] = grant.id;
+                        update[`${row}_grant_type`] = grant.type;
+                        update[`${row}_grant_name`] = grant.name;
+                        update[`${row}_grant_source`] = "Talent";
+                        update[`${row}_grant_reason`] = grant.talent;
+                        update[`${row}_grant_advances`] = 0;
+                        update[`${row}_grant_discount`] = grant.type === "skill" ? TALENT_GRANT_DISCOUNT : 0;
+                    });
+                    setAttrs(update, {silent: true}, () => {
+                        recalculateSpentXP();
+                        setAttrs({advances_changed: "1"});
+                    });
+                });
+            });
+        });
+    };
+
+    // Choosing "Talent" as the source of a granted skill sets the 5 XP discount;
+    // other sources start at no discount (editable).
+    const updateGrantDiscount = (attribute) => {
+        const row = helperFunctions.extractRepeatingId(attribute, "grants");
+        getAttrs([`${row}_grant_type`, `${row}_grant_source`], values => {
+            const talentSkill = values[`${row}_grant_source`] === "Talent" && values[`${row}_grant_type`] !== "talent";
+            setAttrs({[`${row}_grant_discount`]: talentSkill ? TALENT_GRANT_DISCOUNT : 0});
+        });
+    };
+
     // Talent rows made before talents carried modifiers: fill an empty
     // Modifiers box from the library.
     const fillTalentModifiers = (callback) => {
@@ -1471,7 +1539,7 @@ const slModule = ( () => {
 
     const recalculateSpentXP = () => {
 
-        helperFunctions.aggregateRepeatingIDs([`careers`, `experience`, `experiencespent`], ids => {
+        helperFunctions.aggregateRepeatingIDs([`careers`, `experience`, `experiencespent`, `grants`], ids => {
 
             const attrs = [];
 
@@ -1509,6 +1577,10 @@ const slModule = ( () => {
 
             for (const id of ids.experience) {
                 attrs.push(`repeating_experience_${id}_experience_amount`);
+            }
+
+            for (const id of ids.grants) {
+                ["type", "name", "advances", "discount"].forEach(f => attrs.push(`repeating_grants_${id}_grant_${f}`));
             }
 
             for (const id of ids.experiencespent) {
@@ -1594,14 +1666,36 @@ const slModule = ( () => {
                     const total_free = current_free + value_free;
                 }
 
+                // Granted Skills & Talents: skill Advances are paid like career
+                // Advances, less the row's discount per Advance (5 for a skill
+                // granted by a talent); granted talent ranks are free.
+                const skill_discount = new Map();
+                for (const id of ids.grants) {
+                    const row = `repeating_grants_${id}`;
+                    const name = (values[`${row}_grant_name`] || "").trim();
+                    if (!name) continue;
+                    const advances = parseInt(values[`${row}_grant_advances`]) || 0;
+                    if (values[`${row}_grant_type`] === "talent") {
+                        talent_advances_free.set(name, (talent_advances_free.get(name) || 0) + Math.max(1, advances));
+                        if (!talent_advances.has(name)) talent_advances.set(name, 0);
+                    } else {
+                        skill_advances.set(name, (skill_advances.get(name) || 0) + advances);
+                        if (!skill_advances_free.has(name)) skill_advances_free.set(name, 0);
+                        const discount = parseInt(values[`${row}_grant_discount`]) || 0;
+                        const key = name.toLowerCase();
+                        skill_discount.set(key, Math.max(skill_discount.get(key) || 0, discount));
+                    }
+                }
+
                 let xp = 0;
 
                 characteristic_advances.forEach((value, key) => xp += calculateCharacteristicXP(value, characteristic_advances_free.get(key)));
-                skill_advances.forEach((value, key) => xp += calculateSkillXP(value, skill_advances_free.get(key)));
-                talent_advances.forEach((value, key) => xp += calculateTalentXP(value, talent_advances_free.get(key)));
+                skill_advances.forEach((value, key) => xp += calculateSkillXP(value, skill_advances_free.get(key) || 0));
+                skill_advances.forEach((value, key) => xp -= (skill_discount.get((key || "").trim().toLowerCase()) || 0) * (parseInt(value) || 0));
+                talent_advances.forEach((value, key) => xp += calculateTalentXP(value, talent_advances_free.get(key) || 0));
 
                 for (const id of ids.experiencespent) {
-                    const value = parseInt(values[`repeating_experiencespent_${id}_experience_amount`]);
+                    const value = parseInt(values[`repeating_experiencespent_${id}_experience_amount`]) || 0;
 
                     xp += value;
                 }
@@ -1736,8 +1830,12 @@ const slModule = ( () => {
         getSectionIDs("careers", id_array => {
 
             getSectionIDs("noncareer-skills", id_array_2 => {
+            getSectionIDs("grants", grant_ids => {
                 const attrs = [];
                 const skills = new Map();
+
+                // Granted skills (Granted Skills & Talents) count like career advances.
+                grant_ids.forEach(id => attrs.push(`repeating_grants_${id}_grant_type`, `repeating_grants_${id}_grant_name`, `repeating_grants_${id}_grant_advances`));
 
                 id_array.forEach((id, index) => {
 
@@ -1767,7 +1865,8 @@ const slModule = ( () => {
         
                 getAttrs(attrs, values => {
                     const skill_list = Object.entries(values);
-                    const names = skill_list.filter(([key, value]) => key.match(/name/g) && value !== "");
+                    const isGrantedTalent = (key) => key.startsWith("repeating_grants_") && values[key.replace(/_grant_name$/, "_grant_type")] === "talent";
+                    const names = skill_list.filter(([key, value]) => key.match(/name/g) && value !== "" && !isGrantedTalent(key));
 
                     // Origin skills use origin_skill_N / origin_adv_N.
                     for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) {
@@ -1810,6 +1909,7 @@ const slModule = ( () => {
 
                 });
 
+            });
             });   
 
         });   
@@ -1847,8 +1947,11 @@ const slModule = ( () => {
 
     const calculateTalentAdvances = () => {
         getSectionIDs("careers", id_array => {
+        getSectionIDs("grants", grant_ids => {
             const attrs = [];
             const talents = new Map();
+
+            grant_ids.forEach(id => attrs.push(`repeating_grants_${id}_grant_type`, `repeating_grants_${id}_grant_name`, `repeating_grants_${id}_grant_advances`));
 
             id_array.forEach((id, index) => {
 
@@ -1867,7 +1970,15 @@ const slModule = ( () => {
             }
     
             getAttrs(attrs, values => {
-                const talent_list = Object.entries(values);
+                // Granted talents: free ranks, at least one per row.
+                grant_ids.forEach(id => {
+                    const row = `repeating_grants_${id}`;
+                    const name = (values[`${row}_grant_name`] || "").trim();
+                    if (values[`${row}_grant_type`] !== "talent" || !name) return;
+                    talents.set(name, (talents.get(name) || 0) + Math.max(1, parseInt(values[`${row}_grant_advances`]) || 0));
+                });
+
+                const talent_list = Object.entries(values).filter(([key]) => !key.startsWith("repeating_grants_"));
                 const names = talent_list.filter(([key, value]) => key.match(/name/g) && value !== "");
 
                 names.forEach(([id, name]) => {
@@ -1927,6 +2038,7 @@ const slModule = ( () => {
 
             });
 
+        });
         });
     }
 
@@ -2385,6 +2497,8 @@ const slModule = ( () => {
         changeSpecies:changeSpecies,
         checkSpeciesAdvances:checkSpeciesAdvances,
         updateSpeciesSkillsUsed:updateSpeciesSkillsUsed,
+        syncTalentGrants:syncTalentGrants,
+        updateGrantDiscount:updateGrantDiscount,
         applyExtraPoints:applyExtraPoints,
         checkCreation:checkCreation,
         changeOrigin:changeOrigin,
@@ -2593,6 +2707,14 @@ on(`change:repeating_talent:talent_library`, eventInfo => slModule.fillTalent(ev
 // filled only where the rules text is still empty.
 on(`change:repeating_talent:talent_name`, eventInfo => slModule.fillTalent(eventInfo.sourceAttribute, eventInfo.newValue, false));
 
+on(`change:repeating_talent:talent_name remove:repeating_talent`, eventInfo => slModule.syncTalentGrants());
+
+on(`change:repeating_grants:grant_source change:repeating_grants:grant_type`, eventInfo => {
+    if (eventInfo.sourceType === "player") slModule.updateGrantDiscount(eventInfo.sourceAttribute);
+});
+
+on(`change:repeating_grants remove:repeating_grants`, eventInfo => slModule.recalculateSpentXP());
+
 on(slModule.sl.characteristics.map(c => `change:${c}_bonus`).join(" "), eventInfo => slModule.updateTalentMaxima());
 
 // EXPERIENCE CHANGES
@@ -2630,6 +2752,8 @@ for (let index = 1; index <= 12; index++) {
 for (let index = 1; index <= 10; index++) {
     advance_triggers.push(`change:species_talent_${index}_advances`);
 };
+
+advance_triggers.push(`change:repeating_grants:grant_name change:repeating_grants:grant_type change:repeating_grants:grant_advances remove:repeating_grants`);
 
 on(advance_triggers.join(" "), eventInfo => setAttrs({advances_changed:"1"}));
 

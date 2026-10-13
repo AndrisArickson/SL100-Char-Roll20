@@ -255,3 +255,38 @@ input[type="hidden"][name*="origin_disable5"][value="1"] ~ * input[type="radio"]
     font-style: italic;
     line-height: 1.25;
 }
+
+// Granted Skills & Talents (Advances tab).
+.sheet-sl-granttable {
+
+    &__row,
+    &__row--head {
+        display: grid;
+            grid-template-columns: 4.4rem 1fr 4.8rem 1fr 2.6rem 2.6rem;
+            gap: 2px;
+            align-items: center;
+        padding: 1px $margin-small;
+
+        border-bottom: $grid-border;
+    }
+
+    &__row--head {
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    &__select,
+    &__input {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+
+        font-size: 12px;
+    }
+}
+
+// Rows a talent added by itself are marked with a yellow edge.
+input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
+    box-shadow: inset 3px 0 0 $sl-accent;
+}

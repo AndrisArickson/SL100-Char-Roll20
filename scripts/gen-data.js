@@ -171,6 +171,12 @@ const parseTalents = () => {
 
         if (!current) return;
 
+        // Optional "**Grants:** Career skill X; Talent Y" line (see readGrants).
+        if (/^\*\*Grants:\*\*/i.test(line)) {
+            current.grantsLine = clean(line).replace(/^Grants:\s*/i, "");
+            return;
+        }
+
         if (/^\*\*Max:\*\*/.test(line)) {
             const text = clean(line);
             const max = text.match(/Max:\s*([^·]*)/);
@@ -600,6 +606,38 @@ talents.forEach(t => {
     else mismatch(`${SOURCES.talents}:${t.line}`, `talent "${t.name}": bonus to unknown characteristic "${m[2]}"`);
 });
 
+// Skills and talents a talent grants. Read from a "**Grants:**" line when 07
+// has one ("Career skill Entertain (Sing); Talent Night Vision"), otherwise
+// from the wording 07 uses today:
+//   "add Entertain (Sing) to any career you enter"
+//   "Swim always counts as a career skill for you"
+//   "Add the associated Profession skill to any career you enter" (Craftsman:
+//    the Profession named by the talent's specialisation, written "{spec}").
+// A granted skill counts as a career skill in every career; its 5 XP
+// discount per Advance is a sheet rule (see TALENT_GRANT_DISCOUNT).
+const readGrants = (t) => {
+    const grants = [];
+    if (t.grantsLine) {
+        t.grantsLine.split(/;\s*/).forEach(part => {
+            const m = part.trim().match(/^(career skill|skill|talent)\s+(.+?)\.?$/i);
+            if (m) grants.push({ type: /talent/i.test(m[1]) ? "talent" : "skill", name: m[2].trim() });
+            else mismatch(`${SOURCES.talents}:${t.line}`, `talent "${t.name}": could not read Grants entry "${part}"`);
+        });
+        return grants;
+    }
+    const text = t.summary;
+    for (const m of text.matchAll(/\badd ((?:[A-Z][\w'-]*)(?: [A-Z][\w'-]*)*(?: \([^)]*\))?) to any career you enter/gi)) {
+        if (/^the associated Profession/i.test(m[1])) continue;
+        grants.push({ type: "skill", name: m[1] });
+    }
+    for (const m of text.matchAll(/((?:[A-Z][\w'-]*)(?: [A-Z][\w'-]*)*(?: \([^)]*\))?) always counts as a career skill/g)) {
+        grants.push({ type: "skill", name: m[1] });
+    }
+    if (/add the associated Profession skill to any career you enter/i.test(text)) grants.push({ type: "skill", name: "Profession ({spec})" });
+    return grants;
+};
+talents.forEach(t => { t.grants = readGrants(t); });
+
 // Named versions of talents ("Night Vision (Thermal)", "Resistance (Cold)") as
 // written in 02, 05 and the random table, so the talent library can offer them.
 const variantSources = [
@@ -718,7 +756,7 @@ const data = {
     factions: factions.map(f => ({ name: f.name, section: f.section, group: f.group, era: f.era, description: f.description, draws_from: f.draws_from })),
     careers: careers.map(c => ({ name: c.name, class: c.class, status: c.status, scheme: c.scheme,
         levels: c.levels.map(l => ({ level: l.level, title: l.title, status: l.status, skills: l.skills, talents: l.talents, trappings: l.trappings })) })),
-    talents: talents.map(t => ({ name: t.name, group: t.group, max: t.max, tests: t.tests, mods: t.mods, variants: t.variants, text: t.summary })),
+    talents: talents.map(t => ({ name: t.name, group: t.group, max: t.max, tests: t.tests, mods: t.mods, grants: t.grants, variants: t.variants, text: t.summary })),
     random_talents: randomTable,
 };
 

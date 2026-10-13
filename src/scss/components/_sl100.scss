@@ -74,6 +74,10 @@
         border-bottom: $grid-border;
     }
 
+    &__row--method {
+        grid-template-columns: 4em 1fr;
+    }
+
     &__label {
         font-size: 12px;
     }
@@ -92,13 +96,40 @@
     }
 }
 
-// The point-buy rows show only when the point-buy method is chosen.
-.sheet-sl-creation__pointbuy {
+// The help text and point-buy rows follow the chosen method.
+.sheet-sl-creation__pointbuy,
+.sheet-sl-creation__help {
     display: none;
 }
 
-input[name="attr_creation_method"][value="pointbuy"] + .sheet-sl-creation__pointbuy {
-    display: block;
+.sheet-sl-creation__help {
+    margin: 0;
+    padding: 2px $margin-small;
+
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+.sheet-sl-creation__status {
+    padding: 2px $margin-small;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+input[name="attr_creation_method"][value="pointbuy"] + .sheet-sl-creation__body {
+    .sheet-sl-creation__pointbuy,
+    .sheet-sl-creation__help--pointbuy {
+        display: block;
+    }
+}
+
+input[name="attr_creation_method"][value="rolled"] + .sheet-sl-creation__body,
+input[name="attr_creation_method"][value="rearranged"] + .sheet-sl-creation__body,
+input[name="attr_creation_method"][value="rerolled"] + .sheet-sl-creation__body {
+    .sheet-sl-creation__help--rolled {
+        display: block;
+    }
 }
 
 .sheet-sl-speciesinfo {
@@ -199,4 +230,28 @@ input[type="hidden"][name*="origin_disable5"][value="1"] ~ * input[type="radio"]
 // control/_hide.scss is more specific and still hides the select then.
 .sheet-sl-wrapper select.sheet-control__custom {
     display: block;
+}
+
+// Species skills: hidden unless a character from an earlier version uses them.
+.sheet-sl-speciesskills {
+    display: none;
+}
+
+.sheet-sl-speciesskills__flag[value="1"] + .sheet-sl-speciesskills {
+    display: block;
+}
+
+.sheet-sl-speciesskills__flag:not([value="1"]) ~ .sheet-sl-settings__col {
+    grid-column: 1 / -1;
+}
+
+// One-line rules reminders under the Destiny and Resilience panels (01).
+.sheet-sl-reminder {
+    grid-column: 1 / -1;
+    margin: 2px 0 0;
+    padding: 0 $margin-small;
+
+    font-size: 10px;
+    font-style: italic;
+    line-height: 1.25;
 }

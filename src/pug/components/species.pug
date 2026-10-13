@@ -46,10 +46,14 @@ mixin species
             .sl-settings__row--span.sl-panelbuttons
                 button.sl-panelbuttons__button(data-i18n="Roll random talent", type="roll", value=rolls.random_talent)
 
-            .sl-settings__col
+            //- 02 gives species no skills. The slots are kept, and shown, only for
+            //- characters from earlier versions that already have entries in them.
+            input.sl-speciesskills__flag(name="attr_species_skills_used", type="hidden", value="0")
+            .sl-settings__col.sl-speciesskills
                 input(name="attr_species_disable3", type="hidden", value="0")
                 input(name="attr_species_disable5", type="hidden", value="0")
-                    
+
+                .sl-settings__label--full(data-i18n="Species skills (earlier versions; 02 gives none)")
                 .sl-settings__row--speciesskill
                     .sl-settings__header(data-i18n="Skill Name")
                     .sl-settings__header +3

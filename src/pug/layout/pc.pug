@@ -70,10 +70,13 @@ input(name="attr_setting_button_hide", type="hidden")
             input.sl-extrapoints__input(name="attr_extra_resilience", type="number", value="0")
     input(name="attr_species_fate", type="hidden")
     input(name="attr_species_resilience", type="hidden")
+    p.sl-reminder(data-i18n="Split the species' Extra Points between Destiny and Resilience. Destiny, Fortune, Resilience and Resolve update as you enter them.")
     .sl-extrapoints__check
         span(name="attr_extra_points_check")
     .sl-panelbuttons
         button.sl-panelbuttons__button(data-i18n="Refresh Resolve", name="act_refresh_resolve", type="action")
+    //- 01, Resilience and Resolve.
+    p.sl-reminder(data-i18n="Resolve: ignore Psychology or Critical Wound modifiers for a round, or remove a Condition. Resilience: I Will Not Fail, Not My Path.")
 
 .sl-fate.sl-panel.page__main
     h1.sl-panel__header(data-i18n="Destiny")
@@ -81,6 +84,8 @@ input(name="attr_setting_button_hide", type="hidden")
         +generic-field(field, "number", "1-1")
     .sl-panelbuttons
         button.sl-panelbuttons__button(data-i18n="Refresh Fortune", name="act_refresh_fortune", type="action")
+    //- 01, Destiny and Fortune.
+    p.sl-reminder(data-i18n="Fortune: reroll a failed Test, add +1 SL, or pick your place in the Initiative order. Destiny: Not Today, That Was Close.")
 
 .sl-movement.sl-panel.page__main
     input(name="attr_movement_mod", type="hidden")
@@ -349,10 +354,11 @@ input(name="attr_setting_button_hide", type="hidden")
 
 .sl-experience--alt.page__advances--flex
 
-    //- Character creation helper (chapter 01): method, bonus XP, point-buy check.
+    //- Character creation helper (chapter 01, Determine Characteristics):
+    //- method, bonus XP, what to enter, and a check of the Initial column.
     .sl-panel.sl-creation
         h1.sl-panel__header(data-i18n="Character Creation")
-        .sl-creation__row
+        .sl-creation__row.sl-creation__row--method
             span.sl-creation__label(data-i18n="Method")
             select.sl-creation__select(name="attr_creation_method")
                 option(value="", data-i18n="Choose…")
@@ -365,18 +371,17 @@ input(name="attr_setting_button_hide", type="hidden")
             span.sl-creation__label(data-i18n="Bonus XP")
             span.sl-creation__value(name="attr_creation_xp")
         input(name="attr_creation_method", type="hidden")
-        .sl-creation__pointbuy
-            .sl-creation__row
-                span.sl-creation__label(data-i18n="Point-buy budget")
-                input.sl-creation__input(name="attr_pointbuy_budget", type="number", value="100")
-            .sl-creation__row
-                span.sl-creation__label(data-i18n="Points spent")
-                span.sl-creation__value(name="attr_creation_spent")
-            .sl-creation__row
-                span.sl-creation__label(data-i18n="Points remaining")
-                span.sl-creation__value(name="attr_creation_remaining")
-        .sl-creation__warning
-            span(name="attr_creation_warning")
+        .sl-creation__body
+            p.sl-creation__help.sl-creation__help--rolled(data-i18n="Roll 2d10+20 for each Characteristic and enter the results in the Initial column of the Characteristics table (Main tab). Species and Origin modifiers are added for you in the next column.")
+            p.sl-creation__help.sl-creation__help--pointbuy(data-i18n="Every Characteristic starts at 20. Share 110 points between the ten (4 to 18 each) and enter 20 + its points in the Initial column: 12 points is 32. Species and Origin modifiers are added for you in the next column.")
+            .sl-creation__pointbuy
+                .sl-creation__row
+                    span.sl-creation__label(data-i18n="Point-buy budget")
+                    input.sl-creation__input(name="attr_pointbuy_budget", type="number", value="110")
+            .sl-creation__status
+                span(name="attr_creation_status")
+            .sl-creation__warning
+                span(name="attr_creation_warning")
 
     input(name="attr_advances_changed", type="hidden")
     .sl-panel.sl-advancenotify

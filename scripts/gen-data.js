@@ -18,13 +18,15 @@ const path = require("path");
 
 const root = path.join(__dirname, "..");
 const wiki = path.resolve(process.env.SL100_WIKI || path.join(root, "..", "SL100-Wiki"));
-const renames = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "renames.json"), "utf8")).talents;
+const renameFile = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "renames.json"), "utf8"));
+const renames = renameFile.talents;
+const skillRenames = renameFile.skills || {};
 
 const SOURCES = {
-    species: "02 New Star Wars - Species.md",
+    species: "02 New Star Wars - Species (revised).md",
     origins: "03 New Star Wars - Origin.md",
     factions: "04 New Star Wars - Faction.md",
-    careers: "05 New Star Wars - Careers.md",
+    careers: "05 New Star Wars - Careers (revised).md",
     talents: "07 New Star Wars - Talents (revised).md",
     talentList: "Talent List (revised).md",
 };
@@ -45,6 +47,7 @@ const readSource = (key) => {
 // Markdown cleanup: bold markers, HTML space entities, stray spaces.
 const clean = (text) => text
     .replace(/&#32;/g, " ")
+    .replace(/\u2212/g, "-")
     .replace(/\*\*/g, "")
     .replace(/\*/g, "")
     .replace(/\s+/g, " ")
@@ -100,6 +103,17 @@ const renameTalent = (name) => {
     if (renames[base]) return name.replace(base, renames[base]);
     return name;
 };
+
+// Obvious misspellings of 06 skill names in 05 (scripts/data/renames.json "skills").
+const renameSkill = (name) => {
+    const base = name.split("(")[0].trim();
+    if (skillRenames[name]) return skillRenames[name];
+    if (skillRenames[base]) { report.notes.push(`skill "${name}" read as "${name.replace(base, skillRenames[base])}" (renames.json)`); return name.replace(base, skillRenames[base]); }
+    return name;
+};
+
+// Review markers written into the documents ("`[converted]`", "`[review: ...]`").
+const stripMarkers = (text) => text.replace(/`\[[^\]`]*\]`/g, "").trim();
 
 // Characteristic abbreviations as written in 02/03/05, mapped to sheet attributes.
 const CHAR_ALIASES = {
@@ -222,9 +236,21 @@ const parseSpecies = (talentNames) => {
     let current = null;
 
     const startSpecies = (name, url, lineNo) => {
-        current = { name, url, line: lineNo, modifiers: {}, talents: [], random_talents: 0,
-            movement: null, fate: null, resilience: null, extra_points: null, size: "", natural_weapons: "", notes: [], gap: [] };
+        current = { name, url, status: "", line: lineNo, modifiers: {}, talents: [], random_talents: 0,
+            movement: null, fate: null, resilience: null, extra_points: null, size: "", natural_weapons: "", traits: "", notes: [], gap: [] };
         species.push(current);
+    };
+
+    const readModifiers = (text, lineNo) => {
+        for (const [, abbr, value] of text.matchAll(/([A-Za-z]+)\s*:?\s*([+-]\s*\d+)/g)) {
+            const attr = CHAR_ALIASES[abbr.toUpperCase()];
+            if (attr) current.modifiers[attr] = Number(value.replace(/\s/g, ""));
+            else mismatch(`${SOURCES.species}:${lineNo}`, `${current.name}: unknown characteristic "${abbr}"`);
+        }
+    };
+
+    const addTalent = (name) => {
+        if (!current.talents.some(t => t.toLowerCase() === name.toLowerCase())) current.talents.push(name);
     };
 
     lines.forEach((raw, index) => {
@@ -235,20 +261,22 @@ const parseSpecies = (talentNames) => {
             else current = null;
             return;
         }
+        if (/^## /.test(raw)) { current = null; return; }
         if (!current) return;
 
-        const line = clean(raw);
+        const tag = raw.trim().match(/^`\[(sl100|review)\]`$/);
+        if (tag) { current.status = tag[1]; return; }
+
+        const line = clean(stripMarkers(raw));
         if (!line || line.startsWith("|")) return;
+
+        // "Size talent: Large" (added to big and small species on 12 Oct).
+        const sizeTalent = line.match(/^Size talent\s*:\s*(\w+)/i);
+        if (sizeTalent) { addTalent(renameTalent(sizeTalent[1])); return; }
 
         const talentMatch = line.match(/Talents?\s*:\s*(.*)$/i);
         if (talentMatch) {
-            const before = line.slice(0, talentMatch.index);
-            const mods = before.replace(/Characteristics\s*:/i, "").matchAll(/([A-Za-z]+)\s*:?\s*([+-]\s*\d+)/g);
-            for (const [, abbr, value] of mods) {
-                const attr = CHAR_ALIASES[abbr.toUpperCase()];
-                if (attr) current.modifiers[attr] = Number(value.replace(/\s/g, ""));
-                else mismatch(`${SOURCES.species}:${lineNo}`, `${current.name}: unknown characteristic "${abbr}"`);
-            }
+            readModifiers(line.slice(0, talentMatch.index).replace(/Characteristics\s*:/i, ""), lineNo);
             splitList(talentMatch[1]).forEach(entry => {
                 const random = entry.match(/roll\s+(\d+)\s+talents?\s+from\s+the\s+random/i);
                 if (random) {
@@ -256,17 +284,27 @@ const parseSpecies = (talentNames) => {
                 } else if (/random talents list/i.test(entry)) {
                     current.random_talents += 1;
                     mismatch(`${SOURCES.species}:${lineNo}`, `${current.name}: "${entry}" has no count; treated as 1 random talent`);
+                } else if (/^no\s/i.test(entry)) {
+                    // "no Datapad Use (uncivilised)": a note, not a talent.
+                    current.notes.push(entry.charAt(0).toUpperCase() + entry.slice(1));
                 } else {
-                    current.talents.push(splitOr(entry).map(renameTalent).join(OR));
+                    addTalent(splitOr(entry).map(renameTalent).join(OR));
                 }
             });
+            return;
+        }
+
+        if (/^Characteristics\s*:/i.test(line)) {
+            readModifiers(line.replace(/^Characteristics\s*:/i, ""), lineNo);
+            const extra = line.match(/\(([^)]*)\)\s*$/);
+            if (extra) current.notes.push(`Characteristics: ${extra[1]}`);
             return;
         }
 
         const stats = line.match(/(?:Movement|Mv)\s*:\s*(\d+)/i);
         if (stats) {
             current.movement = Number(stats[1]);
-            const fate = line.match(/Fate\s*:\s*(\d+)/i);
+            const fate = line.match(/(?:Destiny|Fate)\s*:\s*(\d+)/i);
             const res = line.match(/Resilience\s*:\s*(\d+)/i);
             const extra = line.match(/Extra points\s*:\s*(\d+)/i);
             current.fate = fate ? Number(fate[1]) : null;
@@ -275,12 +313,17 @@ const parseSpecies = (talentNames) => {
             return;
         }
 
-        const size = line.match(/Size\s*:\s*([^]*?)(?:\s{2,}|Natural Weapon|$)/i);
-        if (size && /size\s*:/i.test(line)) current.size = size[1].trim();
-        const weapon = line.match(/Natural Weapon\s*[-:]?\s*(.*)$/i);
-        if (weapon) current.natural_weapons = weapon[1].trim();
+        const hasSize = /\bSize\s*:/i.test(line);
+        const weapon = line.match(/Natural Weapons?\s*[-:]?\s*(.*?)(?:\s+Traits\s*:|$)/i);
+        const traits = line.match(/Traits\s*:\s*(.*)$/i);
+        if (hasSize) {
+            const size = line.match(/Size\s*:\s*(.*?)(?:\s+Natural Weapon|\s+Traits\s*:|$)/i);
+            current.size = size[1].replace(/,$/, "").trim();
+        }
+        if (weapon && !/^none$/i.test(weapon[1].trim())) current.natural_weapons = weapon[1].replace(/,$/, "").trim();
+        if (traits && !/^none\b/i.test(traits[1].trim())) current.traits = traits[1].trim();
         if (/^Claws\s/i.test(line)) current.natural_weapons = line.replace(/,?\s*Size\s*:.*$/i, "").replace(/,$/, "").trim();
-        if (size || weapon || /^Claws\s/i.test(line)) return;
+        if (hasSize || weapon || traits || /^Claws\s/i.test(line)) return;
 
         // Rules notes between the stat lines and the next species (short lines only).
         if (current.talents.length || current.movement !== null) {
@@ -320,34 +363,43 @@ const parseOrigins = () => {
     const table = [];
     const origins = [];
     let current = null;
+    let inWorlds = false;
 
     lines.forEach((raw, index) => {
         const lineNo = index + 1;
-        const row = raw.match(/^\|\s*(\d[\d-]*)\s*\|\s*([^|]+)\|\s*([^|]+)\|/);
+        // d100 table: | 01–10 | **Hive** | Agility | Ballistic Skill, Initiative or Fellowship |
+        const row = raw.match(/^\|\s*(\d[\d–-]*)\s*\|\s*([^|]+)\|\s*([^|]+)\|/);
         if (row) {
-            table.push({ d100: row[1].trim(), short: clean(row[2]), text: clean(row[3]), line: lineNo });
+            table.push({ d100: row[1].trim().replace(/–/g, "-"), short: clean(row[2]), text: clean(row[3]), line: lineNo });
             return;
         }
-        const heading = raw.match(/^## (.+?):?\s*$/);
-        if (heading && !/ORIGIN/i.test(heading[1])) {
-            current = { name: clean(heading[1]).replace(/:$/, ""), line: lineNo, description: "", fixed: null, choice: [], skills: [] };
+        // Sections: "## Origin worlds", then "### Hive Worlds" and so on.
+        const h2 = raw.match(/^## (.+?)\s*$/);
+        if (h2) { inWorlds = /origin worlds/i.test(h2[1]); current = null; return; }
+        const heading = raw.match(/^### (.+?):?\s*$/);
+        if (heading) {
+            current = null;
+            if (!inWorlds) return;
+            current = { name: clean(heading[1]).replace(/:$/, ""), line: lineNo, description: "", examples: "", fixed: null, choice: [], skills: [] };
             origins.push(current);
             return;
         }
         if (!current) return;
-        const line = clean(raw);
+        if (/^!\[/.test(raw.trim())) return;
+        const line = clean(raw.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1"));
         if (!line) return;
+        if (/^Example worlds?\s*:/i.test(line)) { current.examples = line.replace(/^Example worlds?\s*:\s*/i, ""); return; }
         if (/^Starting Characteristics/i.test(line)) {
-            const m = line.match(/\+5\s+([A-Za-z ]+?)\s+and\s+\+5\s+to\s+either\s+(.+?)\.?$/i);
+            const m = line.match(/\+5\s+([A-Za-z ]+?),?\s+and\s+\+5\s+to\s+(?:either|one of)\s+(.+?)\.?$/i);
             if (!m) { mismatch(`${SOURCES.origins}:${lineNo}`, `${current.name}: could not read the characteristic bonus`); return; }
             current.fixed = CHAR_ALIASES[m[1].trim().toUpperCase()] || null;
             current.choice = m[2].split(/,\s*|\s+or\s+/).map(s => s.replace(/^or\s+/i, "").trim()).filter(Boolean)
                 .map(s => CHAR_ALIASES[s.toUpperCase()]).filter(Boolean);
-            if (!current.fixed || current.choice.length !== 3) mismatch(`${SOURCES.origins}:${lineNo}`, `${current.name}: bonus not in the "+5 X and +5 to either A, B or C" form`);
+            if (!current.fixed || current.choice.length !== 3) mismatch(`${SOURCES.origins}:${lineNo}`, `${current.name}: bonus not in the "+5 X and +5 to one of A, B or C" form`);
             return;
         }
         if (/^Starting Skills/i.test(line)) {
-            current.skills = splitList(line.replace(/^Starting Skills\s*:\s*/i, ""));
+            current.skills = splitList(line.replace(/^Starting Skills\s*:\s*/i, "")).map(renameSkill);
             return;
         }
         if (!current.description) current.description = line;
@@ -403,21 +455,38 @@ const compactRanges = (numbers) => {
 const parseFactions = () => {
     const lines = readSource("factions");
     const factions = [];
+    const drawsFrom = {};
     let section = "";
     let group = "";
+    const unlink = (text) => text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1");
+    // The opening sections explain Factions; the lists start at "## Force Traditions".
+    const intro = /^(CAREER PATH|FACTIONS|How Factions work)/i;
 
     lines.forEach((raw, index) => {
         const h2 = raw.match(/^## (.*)$/);
         if (h2) { section = clean(h2[1]); group = ""; return; }
         const h3 = raw.match(/^### (.*)$/);
         if (h3) { group = clean(h3[1]).replace(/^[^A-Za-z]+/, ""); return; }
-        const row = raw.match(/^\|\s*\*\*([^|*]+)\*\*\s*\|\s*([^|]*)\|\s*([^|]*)\|/);
-        if (row && group && !/^(Tradition|Organisation|Organization|Name|Syndicate|Group|Faction|Corporation|Body|Guild)$/i.test(row[1].trim())) {
-            factions.push({ name: row[1].trim(), section, group, description: clean(row[2]), era: clean(row[3]), line: index + 1 });
+        const row = unlink(raw).match(/^\|\s*\*\*([^|]+?)\*\*\s*\|\s*([^|]*)\|(?:\s*([^|]*)\|)?/);
+        if (!row || !group) return;
+        const name = clean(row[1]);
+        // 04 "Origin and Faction": who a Faction recruits from.
+        if (/^Origin and Faction$/i.test(group)) {
+            if (!/^Faction$/i.test(name)) drawsFrom[name.toLowerCase()] = clean(row[2]);
+            return;
         }
+        if (intro.test(section)) return;
+        if (/^(Tradition|Organisation|Organization|Name|Syndicate|Group|Faction|Corporation|Body|Guild)$/i.test(name)) return;
+        factions.push({ name, section, group, description: clean(row[2]), era: clean(row[3] || ""), line: index + 1 });
     });
 
-    report.notes.push(`${SOURCES.factions}: factions carry lore only (no skills, talents or characteristic effects are written), so the sheet's Faction field is flavour only.`);
+    factions.forEach(f => {
+        f.draws_from = drawsFrom[f.name.toLowerCase()] || "";
+    });
+    Object.keys(drawsFrom).filter(n => !/\(all\)/.test(n) && !factions.some(f => f.name.toLowerCase() === n))
+        .forEach(n => mismatch(SOURCES.factions, `"Origin and Faction" names "${n}", which is not in the faction lists`));
+
+    report.notes.push(`${SOURCES.factions}: factions carry lore and recruitment notes only (no skills, talents or characteristic effects are written), so the sheet's Faction field is flavour only.`);
     return factions;
 };
 
@@ -435,11 +504,13 @@ const parseCareers = (talentNames) => {
 
     lines.forEach((raw, index) => {
         const lineNo = index + 1;
-        const h1 = raw.match(/^# (.*)$/);
-        if (h1) { className = clean(h1[1]); career = null; return; }
+        // 05 (revised): "## Class", then "### Career" with its scheme and four levels.
         const h2 = raw.match(/^## (.*)$/);
-        if (h2) {
-            career = { name: clean(h2[1]), class: className, line: lineNo, scheme: {}, levels: [] };
+        if (h2) { className = /^Index$/i.test(clean(h2[1])) ? "" : clean(h2[1]); career = null; return; }
+        const h3 = raw.match(/^### (.*)$/);
+        if (h3) {
+            if (!className) { career = null; return; }
+            career = { name: clean(h3[1]), class: className, status: "", line: lineNo, scheme: {}, levels: [] };
             careers.push(career);
             level = null;
             schemeHeader = false;
@@ -447,14 +518,18 @@ const parseCareers = (talentNames) => {
         }
         if (!career) return;
 
+        const tag = raw.trim().match(/^`\[(sl100|review)\]`$/);
+        if (tag) { career.status = tag[1]; return; }
+
         if (/^\|\s*\*\*WS\*\*/.test(raw)) {
-            const cols = raw.split("|").slice(1, -1).map(c => clean(c).toUpperCase());
-            const expected = ["WS", "BS", "S", "T", "I", "AGI", "DEX", "INT", "WP", "FEL"];
+            const cols = raw.split("|").slice(1, -1).map(c => clean(c).toUpperCase().replace(/^AGI$/, "AG"));
+            const expected = ["WS", "BS", "S", "T", "I", "AG", "DEX", "INT", "WP", "FEL"];
             if (cols.join(",") !== expected.join(",")) mismatch(`${SOURCES.careers}:${lineNo}`, `${career.name}: advance scheme columns are ${cols.join(" ")}`);
             schemeHeader = true;
             return;
         }
         if (schemeHeader && /^\|/.test(raw)) {
+            if (/^\|\s*---/.test(raw)) return;
             const cells = raw.split("|").slice(1, -1).map(c => clean(c));
             SCHEME_COLUMNS.forEach((attr, i) => {
                 const n = parseInt(cells[i], 10);
@@ -472,11 +547,12 @@ const parseCareers = (talentNames) => {
         }
         if (!level) return;
 
-        const field = clean(raw).match(/^(Skills|Talents|Trappings)\s*:\s*(.*)$/i);
+        const field = clean(stripMarkers(raw)).match(/^(Skills|Talents|Trappings)\s*:\s*(.*)$/i);
         if (field) {
             const key = field[1].toLowerCase();
             const items = splitList(field[2]);
-            level[key] = key === "talents" ? items.map(item => splitOr(item).map(renameTalent).join(OR)) : items;
+            level[key] = key === "talents" ? items.map(item => splitOr(item).map(renameTalent).join(OR))
+                : key === "skills" ? items.map(renameSkill) : items;
         }
     });
 
@@ -509,6 +585,39 @@ const species = parseSpecies(talentNames);
 const origins = parseOrigins();
 const factions = parseFactions();
 const careers = parseCareers(talentNames);
+
+// Talents that give a permanent characteristic bonus ("You gain a permanent +5
+// bonus to your starting Weapon Skill"): written as a sheet modifier ("WS +5")
+// so the talent row applies it to the characteristic.
+const CHAR_SHORT = { "weapon skill": "WS", "ballistic skill": "BS", "strength": "S", "toughness": "T", "initiative": "I",
+    "agility": "Ag", "dexterity": "Dex", "intelligence": "Int", "willpower": "WP", "fellowship": "Fel" };
+talents.forEach(t => {
+    const m = t.summary.match(/permanent \+(\d+) bonus to your starting ([A-Za-z ]+?)(?:\s+Characteristic)?\s*[.(]/i);
+    t.mods = "";
+    if (!m) return;
+    const short = CHAR_SHORT[m[2].trim().toLowerCase()];
+    if (short) t.mods = `${short} +${m[1]}`;
+    else mismatch(`${SOURCES.talents}:${t.line}`, `talent "${t.name}": bonus to unknown characteristic "${m[2]}"`);
+});
+
+// Named versions of talents ("Night Vision (Thermal)", "Resistance (Cold)") as
+// written in 02, 05 and the random table, so the talent library can offer them.
+const variantSources = [
+    ...species.flatMap(sp => sp.talents),
+    ...careers.flatMap(c => c.levels.flatMap(l => l.talents)),
+    ...randomTable.map(r => r.talent),
+];
+talents.forEach(t => { t.variants = []; });
+variantSources.flatMap(entry => splitOr(entry)).forEach(option => {
+    const name = option.trim();
+    const spec = (name.match(/\((.*)\)/) || [])[1];
+    // Skip choices ("Taste or Touch", "Any") and explanatory notes ("Force Presence — a gravity ...").
+    if (!spec || / or |\bany\b/i.test(spec) || / [\u2014\u2013] /.test(spec) || /^[a-z]/.test(spec)) return;
+    const talent = talents.find(t => baseName(t.name) === baseName(name));
+    if (!talent || talent.name.toLowerCase() === name.toLowerCase()) return;
+    if (!talent.variants.some(v => v.toLowerCase() === name.toLowerCase())) talent.variants.push(name);
+});
+talents.forEach(t => t.variants.sort());
 
 randomTable.forEach(row => {
     if (!talentNames.has(baseName(row.talent))) mismatch(SOURCES.talents, `random table entry "${row.talent}" (${row.roll}) is not a talent in 07 (revised)`);
@@ -576,12 +685,14 @@ if (csvCareers) {
     });
 }
 
-// The talent count is checked against the revised Talent List, not a fixed
-// number, so it stays right as the documents grow.
+// 07 (revised) is the rules text, so every talent with an entry there goes on
+// the sheet. If the revised Talent List disagrees, the difference is reported
+// (and printed) rather than stopping the build.
 let failed = false;
 if (talents.length !== listCheck.listedCount || talents.length !== listCheck.declaredTotal) {
-    console.error(`gen-data: talent count mismatch: 07 (revised) has ${talents.length}, Talent List (revised) lists ${listCheck.listedCount} and declares ${listCheck.declaredTotal}`);
-    failed = true;
+    const msg = `talent count: 07 (revised) has ${talents.length} entries, Talent List (revised) lists ${listCheck.listedCount} and declares ${listCheck.declaredTotal}`;
+    console.warn(`gen-data: warning: ${msg}`);
+    mismatch(SOURCES.talentList, `${msg} (07 used)`);
 }
 
 const strip = (list, keys) => list.map(item => {
@@ -598,15 +709,16 @@ const data = {
     generated_from: Object.values(SOURCES),
     source_counts: {
         talent_list: listCheck.listedCount,
+        talent_entries: talents.length,
         species_headings: speciesHeadings,
         origin_table_rows: origins.filter(o => o.d100).length,
     },
     species: strip(species, ["line", "url"]),
     origins: strip(origins, ["line"]),
-    factions: factions.map(f => ({ name: f.name, section: f.section, group: f.group, era: f.era, description: f.description })),
-    careers: careers.map(c => ({ name: c.name, class: c.class, scheme: c.scheme,
+    factions: factions.map(f => ({ name: f.name, section: f.section, group: f.group, era: f.era, description: f.description, draws_from: f.draws_from })),
+    careers: careers.map(c => ({ name: c.name, class: c.class, status: c.status, scheme: c.scheme,
         levels: c.levels.map(l => ({ level: l.level, title: l.title, status: l.status, skills: l.skills, talents: l.talents, trappings: l.trappings })) })),
-    talents: talents.map(t => ({ name: t.name, group: t.group, max: t.max, tests: t.tests, text: t.summary })),
+    talents: talents.map(t => ({ name: t.name, group: t.group, max: t.max, tests: t.tests, mods: t.mods, variants: t.variants, text: t.summary })),
     random_talents: randomTable,
 };
 

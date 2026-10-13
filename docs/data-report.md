@@ -6,61 +6,68 @@ empty on the sheet.
 
 | Data | Count | Source |
 |---|---|---|
-| Species | 17 | 02 New Star Wars - Species.md |
+| Species | 223 | 02 New Star Wars - Species (revised).md |
 | Origins | 13 | 03 New Star Wars - Origin.md |
-| Factions | 109 | 04 New Star Wars - Faction.md |
-| Careers | 24 | 05 New Star Wars - Careers.md |
-| Talents | 167 (148 general, 19 Force) | 07 New Star Wars - Talents (revised).md |
+| Factions | 145 | 04 New Star Wars - Faction.md |
+| Careers | 91 | 05 New Star Wars - Careers (revised).md |
+| Talents | 191 (168 general, 23 Force) | 07 New Star Wars - Talents (revised).md |
 | Random talent table rows | 32 | 07 New Star Wars - Talents (revised).md |
-| Talent List (revised) entries | 167 (headers declare 167) | Talent List (revised).md |
+| Talent List (revised) entries | 187 (headers declare 187) | Talent List (revised).md |
 
-Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; Datapad Literate -> Datapad Use; Animal Affinity -> Creature Affinity; Warleader -> War Leader.
+Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; Datapad Literate -> Datapad Use; Animal Affinity -> Creature Affinity; Warleader -> War Leader; Regenerate -> Regeneration; Briberyr -> Briber.
 
-## Gaps (14)
+## Gaps (12)
 
-- 02 New Star Wars - Species.md:66: Human has no characteristic modifiers
-- 02 New Star Wars - Species.md:114: Otolla Gungan has no characteristic modifiers
-- 02 New Star Wars - Species.md:125: Togruta has no characteristic modifiers
-- 02 New Star Wars - Species.md:186: Wookiee has no movement
-- 02 New Star Wars - Species.md:186: Wookiee has no fate
-- 02 New Star Wars - Species.md:186: Wookiee has no resilience
-- 02 New Star Wars - Species.md:186: Wookiee has no extra points
-- 02 New Star Wars - Species.md:196: Zabrak has no movement
-- 02 New Star Wars - Species.md:196: Zabrak has no fate
-- 02 New Star Wars - Species.md:196: Zabrak has no resilience
-- 02 New Star Wars - Species.md:196: Zabrak has no extra points
-- 03 New Star Wars - Origin.md:113: Lava Worlds lists 11 starting skills (03 says 12)
-- 03 New Star Wars - Origin.md: d100 table leaves 41-45, 91-99 unassigned
-- 05 New Star Wars - Careers.md:542: Force Savant level 3 title is a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice")
+- 02 New Star Wars - Species (revised).md:313: Human has no characteristic modifiers
+- 02 New Star Wars - Species (revised).md:369: Otolla Gungan has no characteristic modifiers
+- 02 New Star Wars - Species (revised).md:382: Togruta has no characteristic modifiers
+- 02 New Star Wars - Species (revised).md:455: Wookiee has no movement
+- 02 New Star Wars - Species (revised).md:455: Wookiee has no fate
+- 02 New Star Wars - Species (revised).md:455: Wookiee has no resilience
+- 02 New Star Wars - Species (revised).md:455: Wookiee has no extra points
+- 02 New Star Wars - Species (revised).md:469: Zabrak has no movement
+- 02 New Star Wars - Species (revised).md:469: Zabrak has no fate
+- 02 New Star Wars - Species (revised).md:469: Zabrak has no resilience
+- 02 New Star Wars - Species (revised).md:469: Zabrak has no extra points
+- 05 New Star Wars - Careers (revised).md:1567: Force Savant has 3 career levels (expected 4)
 
-## Mismatches (25)
+## Mismatches (34)
 
-- 02 New Star Wars - Species.md:26: Chironian: talent "Stride (Sprinter?)" is not in 07 (revised)
-- 02 New Star Wars - Species.md:78: Kel Dor: talent "Force Ability (Alter, Control or Sense)" is not in 07 (revised)
-- 02 New Star Wars - Species.md:92: Miraluka: talent "Force Ability - Sense" is not in 07 (revised)
-- 02 New Star Wars - Species.md:136: Trandoshan: talent "Night Sight(Thermal)" is not in 07 (revised)
-- 02 New Star Wars - Species.md:136: Trandoshan: talent "Regenerate (Minor)" is not in 07 (revised)
-- 03 New Star Wars - Origin.md: d100 table assigns 55 to more than one origin
-- 05 New Star Wars - Careers.md:128: Artisan 1: talent "Strong Back" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:144: Artisan 3: talent "Master Tradesman (Any)" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:197: Investigator 4: talent "Tower of Memories" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:424: Spy 4: talent "Tower of Memories" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:542: Force Savant 3: talent "Unshakeable" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:613: Force Shadow 2: talent "Shadowy" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:627: Force Shadow 3: talent "Unshakeable" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:716: Force Warrior 3: talent "Unshakeable" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:767: Bounty Hunter 2: talent "Strong Back" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:849: Smuggler 1: talent "Strong Back" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:904: Bawd 2: talent "Resistant (Disease)" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:1139: Guard 3: talent "Unshakeable" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:1168: Pit Fighter 1: talent "Dirty Fighter" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:1213: Soldier 1: talent "Strong Back" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:1229: Soldier 3: talent "Unshakeable" is not in 07 (revised)
-- 05 New Star Wars - Careers.md:1237: Soldier 4: talent "Public Speaking" is not in 07 (revised)
-- species.csv vs 02: Miraluka talents: CSV "from the random talents list" vs 02 "Datapad Use, Force Sensitive (Sight), Force Ability - Sense" (02 used)
+- 07 New Star Wars - Talents (revised).md: "Animal Companion" has an entry but is not in the Talent List (revised)
+- 07 New Star Wars - Talents (revised).md: "Cadence" has an entry but is not in the Talent List (revised)
+- 07 New Star Wars - Talents (revised).md: "Captain's Word" has an entry but is not in the Talent List (revised)
+- 07 New Star Wars - Talents (revised).md: "Large" has an entry but is not in the Talent List (revised)
+- species.csv vs 02: Arkanian fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Besalisk fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Chironian talents: CSV "Datapad Use, Sprinter, roll 3 talents from the random talents list" vs 02 "Datapad Use, Sprinter, Large" (02 used)
+- species.csv vs 02: Chironian fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Chiss fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Echani fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Human fate: CSV blank vs 02 2 (02 used)
+- species.csv vs 02: Kel Dor fate: CSV blank vs 02 2 (02 used)
+- species.csv vs 02: Miraluka talents: CSV "from the random talents list" vs 02 "Datapad Use, Force Sensitive (Sight), Force Sense (Discipline)" (02 used)
+- species.csv vs 02: Miraluka fate: CSV blank vs 02 2 (02 used)
 - species.csv vs 02: Nautolan talents: CSV "" vs 02 "Acute Sense (Smell), Amphibious, Datapad Use, Night Vision, Strong Swimmer" (02 used)
-- origins.csv vs 03: Feudal Worlds skills differ: CSV "(none)" (03 used)
+- species.csv vs 02: Nautolan fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Otolla Gungan fate: CSV blank vs 02 2 (02 used)
+- species.csv vs 02: Togruta fate: CSV blank vs 02 2 (02 used)
+- species.csv vs 02: Trandoshan fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: T'surr talents: CSV "Datapad Use, Hardy, Sturdy, Very Resilient, Warrior Born" vs 02 "Datapad Use, Hardy, Sturdy, Very Resilient, Warrior Born, Large" (02 used)
+- species.csv vs 02: T'surr fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Twi'lek fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Weequay fate: CSV blank vs 02 1 (02 used)
+- species.csv vs 02: Wookiee talents: CSV "Craftsman (Profession), Datapad Use, Very Strong, roll 2 talents from the random talents list" vs 02 "Craftsman (Profession), Datapad Use, Very Strong, Large" (02 used)
+- careers_l1.csv vs 05: Physician (Medic) level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Merchant level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Envoy level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Bounty Hunter level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Scout level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Fence level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Outlaw level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Guard level 1 skills differ (05 used)
+- careers_l1.csv vs 05: Soldier level 1 skills differ (05 used)
+- Talent List (revised).md: talent count: 07 (revised) has 191 entries, Talent List (revised) lists 187 and declares 187 (07 used)
 
 ## Notes
 
-- 04 New Star Wars - Faction.md: factions carry lore only (no skills, talents or characteristic effects are written), so the sheet's Faction field is flavour only.
+- 04 New Star Wars - Faction.md: factions carry lore and recruitment notes only (no skills, talents or characteristic effects are written), so the sheet's Faction field is flavour only.

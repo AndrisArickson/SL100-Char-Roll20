@@ -1,15 +1,23 @@
 {
-  "_comment": "Talent names in 02/05 that 07 (revised) has renamed. Applied by scripts/gen-data.js to species and career talent lists. Source of each entry is noted; edit as the wording cleanup progresses.",
+  "_comment": "Names in 02/03/05 that 07 (revised) or 06 spell differently, applied by scripts/gen-data.js. \"talents\" also renames the base of \"Base (Specialisation)\"; \"skills\" fixes misspelt 06 skill names. Each entry's reason is in _sources.",
   "talents": {
     "Read/Write": "Datapad Use",
     "Datapad Literate": "Datapad Use",
     "Animal Affinity": "Creature Affinity",
-    "Warleader": "War Leader"
+    "Warleader": "War Leader",
+    "Regenerate": "Regeneration",
+    "Briberyr": "Briber"
   },
   "_sources": {
     "Read/Write": "Brief section 2; 07 (revised) line 5: Datapad Use 'replaces any other form of literacy'",
     "Datapad Literate": "07 (revised) line 5 (same literacy note); Datapad Literate is not a talent in 07 (revised)",
     "Animal Affinity": "Brief section 2 (Creature Affinity); 07 (revised) random table uses Creature Affinity",
-    "Warleader": "Brief section 2 (War Leader); 07 (revised) line 784"
+    "Warleader": "Brief section 2 (War Leader); 07 (revised) line 784",
+    "Regenerate": "Earlier 02 spelled Trandoshan's talent \"Regenerate (Minor)\"; 07 (revised) has Regeneration (Minor). 02 (revised) now uses Regeneration.",
+    "Briberyry": "05 (revised) misspells Bribery as \"Briberyry\" (a doubled conversion); 06 has Bribery.",
+    "Briberyr": "05 (revised) writes \"Briberyr\" in nine careers: the Bribe -> Bribery conversion also hit the talent Briber. 07 (revised) line 124 has Briber."
+  },
+  "skills": {
+    "Briberyry": "Bribery"
   }
 }

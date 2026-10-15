@@ -76,6 +76,12 @@ class.
   skill to one group, e.g. Melee (1H). The career panel says so.
 - **Force Savant level 3 title** is still a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice").
 - **Etiquette (Trade Guild)** and **Etiquette (Trade Guilds)** are both used; the library offers both.
+- **Level completion** is shown under each level of every career, and as "Level complete" in the career list for
+  the current level. Level N needs N × 5 Advances in each characteristic the level opens (from the advance scheme, or
+  the ticked in-career characteristics for a career typed by hand), N × 5 Advances in 8 of the career's skills (its
+  levels 1 to N, the two extra level-1 slots and granted skills), and at least one rank in a talent of level N gained
+  anywhere. Advances are the character's totals: initial plus bought, in every career. Trappings are not tracked. Skill
+  Advances count once Update has been clicked; a choice such as Melee (1H/2H) counts once edited to one group.
 - **Statuses** are written Brass / Silver / Gold (renaming them is an open decision on the Careers page).
 
 ## 6. Skills (Skills)

@@ -40,7 +40,7 @@ sheet: where a document is silent, the field is left blank and editable and the 
 | Species (223: modifiers, talents, Movement, Destiny, Resilience, Extra Points, Size, Traits) | Species |
 | Origin (13 worlds, +5 bonuses, 12 starting skills) | Origin |
 | Faction (145 factions: details and recruitment; no game effects are written) | Faction |
-| Career library (91 careers x 4 levels, grouped by class; 12 skill slots at level 1) | Careers |
+| Career library (91 careers x 4 levels, grouped by class; 12 skill slots at level 1; level completion shown on each level) | Careers |
 | Skills and specialisations | Skills |
 | Talent library (191 talents, plus named versions such as Night Vision (Thermal)) and random-talent table | Talents (with its index and random-talent table) |
 

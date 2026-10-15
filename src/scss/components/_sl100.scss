@@ -290,3 +290,26 @@ input[type="hidden"][name*="origin_disable5"][value="1"] ~ * input[type="radio"]
 input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
     box-shadow: inset 3px 0 0 $sl-accent;
 }
+
+// Level completion line under each career level heading (sheetworker checkCareerLevels).
+.sl-levelcheck {
+    grid-column: 1 / -1;
+    font-size: 0.85em;
+    font-style: italic;
+    margin: 2px 0 6px;
+    opacity: 0.85;
+
+    &__flag[value="1"] + .sl-levelcheck__text {
+        font-style: normal;
+        font-weight: bold;
+        color: #2e8b57;
+        opacity: 1;
+    }
+}
+
+.sl-levelcheck__ready {
+    display: block;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #2e8b57;
+}

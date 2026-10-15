@@ -27,6 +27,7 @@ leaves open are listed in [`NOTES-rules-gaps.md`](NOTES-rules-gaps.md).
   Ranged (Archaic, Blaster, Exotic, Ordnance, Thrown).
 - **Talents:** library of 191 talents with named versions (e.g. Night Vision (Thermal)), the random
   talent table, characteristic bonuses filled into Modifiers, and Force discipline ranks.
+- **Level completion:** each career level shows whether it is complete, or what it still needs.
 - **Granted Skills & Talents:** skills granted by talents cost 5 XP less per Advance; granted
   talents add free ranks.
 - **Migrations:** characters made with earlier versions convert themselves when opened (1.1.0 to

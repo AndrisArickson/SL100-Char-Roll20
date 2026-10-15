@@ -1345,7 +1345,7 @@ input[name=attr_grant_auto]:not([value=""]) + .sheet-sl-granttable__row {
   opacity: 0.8;
 }
 .sheet-sl-header__build::after {
-  content: " · CSS 2026-10-15 12:01 UTC";
+  content: " · CSS 2026-10-15 12:23 UTC";
 }
 
 .sheet-sl-header__logo {

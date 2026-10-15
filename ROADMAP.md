@@ -1,7 +1,7 @@
 # SL100 Character Sheet – Roadmap
 
 Progress on the Roll20 sheet for **Star Legends – Galactic Wars (SL100)**.
-Updated 2026-10-15 (sheet version 1.3.0).
+Updated 2026-10-15 (sheet version 1.3.0, build 2026-10-15 12:37 UTC).
 
 The rules come from the SL100 wiki pages, which are the master copy of the rules
 ([SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki)). Gaps the wiki still
@@ -27,7 +27,11 @@ leaves open are listed in [`NOTES-rules-gaps.md`](NOTES-rules-gaps.md).
   Ranged (Archaic, Blaster, Exotic, Ordnance, Thrown).
 - **Talents:** library of 191 talents with named versions (e.g. Night Vision (Thermal)), the random
   talent table, characteristic bonuses filled into Modifiers, and Force discipline ranks.
-- **Level completion:** each career level shows whether it is complete, or what it still needs.
+- **Level completion:** each career level shows whether it is complete, or what it still needs; the
+  career's Status turns green with a tick when its current level is complete.
+- **Tested live in Roll20** (15 Oct, build 2026-10-15 12:37 UTC): level completion, rolls and chat cards.
+- **Build safeguards:** the header shows the build date; `npm run build` fails if the HTML passes 1.4 MB
+  or the CSS contains anything that makes Roll20 drop the chat-card styles.
 - **Granted Skills & Talents:** skills granted by talents cost 5 XP less per Advance; granted
   talents add free ranks.
 - **Migrations:** characters made with earlier versions convert themselves when opened (1.1.0 to
@@ -37,8 +41,6 @@ leaves open are listed in [`NOTES-rules-gaps.md`](NOTES-rules-gaps.md).
 
 ## Next
 
-- [ ] **Sandbox test of 1.3.0:** work through the checklist in
-      [#5](https://github.com/AndrisArickson/SL100-Char-Roll20/pull/5) in a Roll20 sandbox game.
 - [ ] **Rules still open in the wiki** (see `NOTES-rules-gaps.md`): Human, Otolla Gungan and Togruta
       modifiers; Wookiee and Zabrak Movement, Destiny, Resilience and Extra Points; the Force Savant
       level 3 title; Status tier names.

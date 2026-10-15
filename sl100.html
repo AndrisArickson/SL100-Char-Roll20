@@ -11306,6 +11306,7 @@ const sl100Data = {"generated_from":["02 New Star Wars - Species (revised).md","
                 });
 
                 getAttrs(attrs, values => {
+                  try {
                     const num = (key) => parseInt(values[key]) || 0;
 
                     // The character's total Advances in a skill named as a career writes it.
@@ -11394,6 +11395,15 @@ const sl100Data = {"generated_from":["02 New Star Wars - Species (revised).md","
                     });
                     // Silent: these are read-only results, and writing them must not set this off again.
                     setAttrs(update, {silent: true});
+                  } catch (error) {
+                    // Show the failure under each level rather than leaving the line blank.
+                    console.error("SL100 level check failed", error);
+                    const update = {};
+                    careerIds.forEach(id => [1, 2, 3, 4].forEach(n => {
+                        update[`repeating_careers_${id}_career_level${n}_check`] = `Level check error: ${error && error.message}`;
+                    }));
+                    setAttrs(update, {silent: true});
+                  }
                 });
             });
         })));
@@ -12817,18 +12827,20 @@ const sl100Data = {"generated_from":["02 New Star Wars - Species (revised).md","
 // SHEET OPENED
 
 on(`sheet:opened`, eventInfo => slModule.initSheet());
-// Level completion indicators on each career level.
+// Level completion indicators on each career level. Each trigger is registered on its
+// own, in the simple forms the rest of the sheet uses, so one event name Roll20 does
+// not accept cannot stop the others.
 {
-    const levelTriggers = [
-        "sheet:opened", "change:repeating_careers", "remove:repeating_careers", "change:repeating_talent", "remove:repeating_talent",
-        "change:repeating_grants", "remove:repeating_grants",
-        ...slModule.sl.characteristics.map(c => `change:${c}_advances`),
-        ...slModule.sl.skills.map(s => `change:${s}_advances`),
-        ...slModule.sl.specialisations.map(s => `change:${s}_advances`),
-        ...slModule.sl.repeating_skills.map(g => `change:repeating_${g}:specialisation_advances change:repeating_${g}:specialisation_name`),
-        ...[...Array(10).keys()].map(i => `change:species_talent_${i + 1}_name change:species_talent_${i + 1}_advances`),
-    ];
-    on(levelTriggers.join(" "), eventInfo => slModule.checkCareerLevels());
+    const levelCheck = () => slModule.checkCareerLevels();
+    on("sheet:opened", levelCheck);
+    on("change:repeating_careers remove:repeating_careers", levelCheck);
+    on("change:repeating_talent remove:repeating_talent", levelCheck);
+    on("change:repeating_grants remove:repeating_grants", levelCheck);
+    slModule.sl.repeating_skills.forEach(g => on(`change:repeating_${g} remove:repeating_${g}`, levelCheck));
+    slModule.sl.characteristics.forEach(c => on(`change:${c}_advances`, levelCheck));
+    slModule.sl.skills.forEach(s => on(`change:${s}_advances`, levelCheck));
+    slModule.sl.specialisations.forEach(s => on(`change:${s}_advances`, levelCheck));
+    for (let i = 1; i <= 10; i++) on(`change:species_talent_${i}_name change:species_talent_${i}_advances`, levelCheck);
 }
 on(`sheet:opened change:repeating_talent:talent_name remove:repeating_talent ${[...Array(10).keys()].map(i => `change:species_talent_${i + 1}_name change:species_talent_${i + 1}_advances`).join(" ")}`, eventInfo => slModule.applySizeFromTalents());
 

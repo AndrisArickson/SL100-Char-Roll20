@@ -25,7 +25,8 @@ mixin career-level(level, first)
                 .sl-settings__header(data-i18n="Skill Name")
                 .sl-settings__header(data-i18n="Advances")
             
-        each skill in [1,2,3,4,5,6,7,8,9,10]
+        //- Level 1: 10 career skills plus 2 empty slots for skills from special circumstances.
+        each skill in (level === 1 ? [1,2,3,4,5,6,7,8,9,10,11,12] : [1,2,3,4,5,6,7,8,9,10])
 
             if (level === 1 && first === true)
 
@@ -112,6 +113,7 @@ mixin careers-row
                         optgroup(label=className)
                             each career in sl100Data.careers.filter(c => c.class === className)
                                 option(value=career.name, data-i18n=career.name)
+            p.sl-reminder(data-i18n="Weapon choices such as Melee (1H/2H) or Ranged (Blaster/Ordnance) stay as written: edit the skill to the one group you take, e.g. Melee (1H), before clicking Update. Level 1 has two empty skill slots (11 and 12) for skills from special circumstances.")
 
             .sl-settings__row--span
                 .sl-settings__label--full(data-i18n=`Notes`) 

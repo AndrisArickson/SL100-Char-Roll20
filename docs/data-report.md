@@ -12,61 +12,50 @@ empty on the sheet.
 | Careers | 91 | 05 New Star Wars - Careers (revised).md |
 | Talents | 191 (168 general, 23 Force) | 07 New Star Wars - Talents (revised).md |
 | Random talent table rows | 32 | 07 New Star Wars - Talents (revised).md |
-| Talent List (revised) entries | 187 (headers declare 187) | Talent List (revised).md |
+| Talent List (revised) entries | 191 (headers declare 191) | Talent List (revised).md |
 
 Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; Datapad Literate -> Datapad Use; Animal Affinity -> Creature Affinity; Warleader -> War Leader; Regenerate -> Regeneration; Briberyr -> Briber.
 
 ## Gaps (12)
 
-- 02 New Star Wars - Species (revised).md:313: Human has no characteristic modifiers
-- 02 New Star Wars - Species (revised).md:369: Otolla Gungan has no characteristic modifiers
-- 02 New Star Wars - Species (revised).md:382: Togruta has no characteristic modifiers
-- 02 New Star Wars - Species (revised).md:455: Wookiee has no movement
-- 02 New Star Wars - Species (revised).md:455: Wookiee has no fate
-- 02 New Star Wars - Species (revised).md:455: Wookiee has no resilience
-- 02 New Star Wars - Species (revised).md:455: Wookiee has no extra points
-- 02 New Star Wars - Species (revised).md:469: Zabrak has no movement
-- 02 New Star Wars - Species (revised).md:469: Zabrak has no fate
-- 02 New Star Wars - Species (revised).md:469: Zabrak has no resilience
-- 02 New Star Wars - Species (revised).md:469: Zabrak has no extra points
-- 05 New Star Wars - Careers (revised).md:1567: Force Savant has 3 career levels (expected 4)
+- 02 New Star Wars - Species (revised).md:325: Human has no characteristic modifiers
+- 02 New Star Wars - Species (revised).md:389: Otolla Gungan has no characteristic modifiers
+- 02 New Star Wars - Species (revised).md:404: Togruta has no characteristic modifiers
+- 02 New Star Wars - Species (revised).md:489: Wookiee has no movement
+- 02 New Star Wars - Species (revised).md:489: Wookiee has no fate
+- 02 New Star Wars - Species (revised).md:489: Wookiee has no resilience
+- 02 New Star Wars - Species (revised).md:489: Wookiee has no extra points
+- 02 New Star Wars - Species (revised).md:505: Zabrak has no movement
+- 02 New Star Wars - Species (revised).md:505: Zabrak has no fate
+- 02 New Star Wars - Species (revised).md:505: Zabrak has no resilience
+- 02 New Star Wars - Species (revised).md:505: Zabrak has no extra points
+- 05 New Star Wars - Careers (revised).md:1469: Force Savant level 3 title is a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice")
 
-## Mismatches (34)
+## Mismatches (23)
 
-- 07 New Star Wars - Talents (revised).md: "Animal Companion" has an entry but is not in the Talent List (revised)
-- 07 New Star Wars - Talents (revised).md: "Cadence" has an entry but is not in the Talent List (revised)
-- 07 New Star Wars - Talents (revised).md: "Captain's Word" has an entry but is not in the Talent List (revised)
-- 07 New Star Wars - Talents (revised).md: "Large" has an entry but is not in the Talent List (revised)
-- species.csv vs 02: Arkanian fate: CSV blank vs 02 1 (02 used)
-- species.csv vs 02: Besalisk fate: CSV blank vs 02 1 (02 used)
 - species.csv vs 02: Chironian talents: CSV "Datapad Use, Sprinter, roll 3 talents from the random talents list" vs 02 "Datapad Use, Sprinter, Large" (02 used)
-- species.csv vs 02: Chironian fate: CSV blank vs 02 1 (02 used)
-- species.csv vs 02: Chiss fate: CSV blank vs 02 1 (02 used)
-- species.csv vs 02: Echani fate: CSV blank vs 02 1 (02 used)
-- species.csv vs 02: Human fate: CSV blank vs 02 2 (02 used)
-- species.csv vs 02: Kel Dor fate: CSV blank vs 02 2 (02 used)
 - species.csv vs 02: Miraluka talents: CSV "from the random talents list" vs 02 "Datapad Use, Force Sensitive (Sight), Force Sense (Discipline)" (02 used)
-- species.csv vs 02: Miraluka fate: CSV blank vs 02 2 (02 used)
 - species.csv vs 02: Nautolan talents: CSV "" vs 02 "Acute Sense (Smell), Amphibious, Datapad Use, Night Vision, Strong Swimmer" (02 used)
-- species.csv vs 02: Nautolan fate: CSV blank vs 02 1 (02 used)
-- species.csv vs 02: Otolla Gungan fate: CSV blank vs 02 2 (02 used)
-- species.csv vs 02: Togruta fate: CSV blank vs 02 2 (02 used)
-- species.csv vs 02: Trandoshan fate: CSV blank vs 02 1 (02 used)
 - species.csv vs 02: T'surr talents: CSV "Datapad Use, Hardy, Sturdy, Very Resilient, Warrior Born" vs 02 "Datapad Use, Hardy, Sturdy, Very Resilient, Warrior Born, Large" (02 used)
-- species.csv vs 02: T'surr fate: CSV blank vs 02 1 (02 used)
-- species.csv vs 02: Twi'lek fate: CSV blank vs 02 1 (02 used)
-- species.csv vs 02: Weequay fate: CSV blank vs 02 1 (02 used)
 - species.csv vs 02: Wookiee talents: CSV "Craftsman (Profession), Datapad Use, Very Strong, roll 2 talents from the random talents list" vs 02 "Craftsman (Profession), Datapad Use, Very Strong, Large" (02 used)
-- careers_l1.csv vs 05: Physician (Medic) level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Merchant level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Envoy level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Bounty Hunter level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Scout level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Fence level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Outlaw level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Guard level 1 skills differ (05 used)
-- careers_l1.csv vs 05: Soldier level 1 skills differ (05 used)
-- Talent List (revised).md: talent count: 07 (revised) has 191 entries, Talent List (revised) lists 187 and declares 187 (07 used)
+- species.csv vs 02: Askajian talents: CSV "no Datapad Use (uncivilised), Tenacious, Stone Soup, roll 1 talents from the random talents list" vs 02 "Tenacious, Stone Soup" (02 used)
+- species.csv vs 02: Dantari talents: CSV "no Datapad Use (uncivilised), Hardy, Rover, roll 1 talents from the random talents list" vs 02 "Hardy, Rover" (02 used)
+- species.csv vs 02: Dathomirian talents: CSV "no Datapad Use (uncivilised), Sixth Sense, Hardy, roll 1 talents from the random talents list" vs 02 "Sixth Sense, Hardy" (02 used)
+- species.csv vs 02: Ebranite talents: CSV "no Datapad Use (uncivilised), Scale Sheer Surface, Night Vision, roll 1 talent from the random talents list" vs 02 "Scale Sheer Surface, Night Vision" (02 used)
+- species.csv vs 02: Ewok talents: CSV "no Datapad Use (uncivilised), Small, Acute Sense (Smell), Strider (Woodland), roll 1 talent from the random talents list" vs 02 "Small, Acute Sense (Smell), Strider (Woodland)" (02 used)
+- species.csv vs 02: Gamorrean talents: CSV "no Datapad Use (uncivilised), Very Strong, Menacing, roll 1 talent from the random talents list" vs 02 "Very Strong, Menacing" (02 used)
+- species.csv vs 02: Keshiri talents: CSV "no Datapad Use (uncivilised), Attractive, Artistic, roll 1 talent from the random talents list" vs 02 "Attractive, Artistic" (02 used)
+- species.csv vs 02: Massassi talents: CSV "no Datapad Use (uncivilised), Menacing, Force Sensitive (Sith), roll 1 talent from the random talents list" vs 02 "Menacing, Force Sensitive (Sith)" (02 used)
+- species.csv vs 02: Menahuun talents: CSV "no Datapad Use (uncivilised), Small, Night Vision, Scale Sheer Surface, roll 1 talent from the random talents list" vs 02 "Small, Night Vision, Scale Sheer Surface" (02 used)
+- species.csv vs 02: Myneyrsh talents: CSV "no Datapad Use (uncivilised), Rover, Sixth Sense, roll 1 talent from the random talents list" vs 02 "Rover, Sixth Sense" (02 used)
+- species.csv vs 02: Nelvaanian talents: CSV "no Datapad Use (uncivilised), Acute Sense (Smell), Resistance (Cold), roll 1 talent from the random talents list" vs 02 "Acute Sense (Smell), Resistance (Cold)" (02 used)
+- species.csv vs 02: Saheelindeeli talents: CSV "no Datapad Use (uncivilised), Scale Sheer Surface, Hardy, roll 1 talents from the random talents list" vs 02 "Scale Sheer Surface, Hardy" (02 used)
+- species.csv vs 02: Sanyassan talents: CSV "no Datapad Use (uncivilised), Menacing, Hardy, roll 1 talents from the random talents list" vs 02 "Menacing, Hardy" (02 used)
+- species.csv vs 02: Talz talents: CSV "no Datapad Use (uncivilised), Large, Night Vision, Resistance (Cold), roll 1 talents from the random talents list" vs 02 "Large, Night Vision, Resistance (Cold)" (02 used)
+- species.csv vs 02: Tusken Raider talents: CSV "no Datapad Use (uncivilised), Strider (Desert), Resistance (Heat), roll 1 talent from the random talents list" vs 02 "Strider (Desert), Resistance (Heat)" (02 used)
+- species.csv vs 02: Yuuzhan Vong talents: CSV "no Datapad Use (shun mechanical technology), Force Resistance, Hardy, roll 1 talent from the random talents list" vs 02 "Force Resistance, Hardy" (02 used)
+- species.csv vs 02: Yuzzem talents: CSV "no Datapad Use (uncivilised), Large, Very Strong, roll 2 talents from the random talents list" vs 02 "Large, Very Strong" (02 used)
+- species.csv vs 02: Yuzzum talents: CSV "no Datapad Use (uncivilised), Perfect Pitch, Rover, roll 1 talent from the random talents list" vs 02 "Perfect Pitch, Rover" (02 used)
 
 ## Notes
 

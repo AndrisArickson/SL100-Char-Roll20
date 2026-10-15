@@ -17,7 +17,10 @@ const fs = require("fs");
 const path = require("path");
 
 const root = path.join(__dirname, "..");
-const wiki = path.resolve(process.env.SL100_WIKI || path.join(root, "..", "SL100-Wiki"));
+// SL100_WIKI, else a sibling checkout (../SL100-Wiki or ../sl100-wiki).
+const wiki = path.resolve(process.env.SL100_WIKI
+    || ["SL100-Wiki", "sl100-wiki"].map(d => path.join(root, "..", d)).find(d => fs.existsSync(path.join(d, "05 New Star Wars - Careers (revised).md")))
+    || path.join(root, "..", "SL100-Wiki"));
 const renameFile = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "renames.json"), "utf8"));
 const renames = renameFile.talents;
 const skillRenames = renameFile.skills || {};
@@ -545,7 +548,8 @@ const parseCareers = (talentNames) => {
             return;
         }
 
-        const lv = raw.match(/^\*\*(\d)\.\s*(.+?)\s+[—–-]\s+(.+?)\*\*\s*$/);
+        // A level line may end with a review marker ("... — Gold 2** `[review: placeholder]`").
+        const lv = raw.match(/^\*\*(\d)\.\s*(.+?)\s+[—–-]\s+(.+?)\*\*\s*(?:`\[[^\]`]*\]`)?\s*$/);
         if (lv) {
             level = { level: Number(lv[1]), title: clean(lv[2]), status: clean(lv[3]), skills: [], talents: [], trappings: [], line: lineNo };
             career.levels.push(level);

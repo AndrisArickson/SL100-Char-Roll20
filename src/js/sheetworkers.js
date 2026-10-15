@@ -3,7 +3,7 @@ const slModule = ( () => {
     // Global Variables
 
     const sl = {
-        sheet_version: "1.2.0",
+        sheet_version: "1.3.0",
 
         characteristics: [
             "weapon_skill",
@@ -81,24 +81,15 @@ const slModule = ( () => {
 
         // Weapon groups: the Melee and Ranged specialisations.
         weapon_specialisations: [
+            "1h",
+            "2h",
             "brawling",
-            "vibroblade",
-            "vibro-axe",
-            "force_pike",
             "lightsaber",
-            "electrostaff",
-            "stun_baton",
-            "parry",
-            "two-handed",
-            "blaster_pistol",
-            "blaster_rifle",
-            "heavy_blaster",
-            "slugthrower",
-            "bowcaster",
-            "disruptor",
-            "grenade_explosives",
-            "missile_rocket",
-            "sniper"
+            "archaic",
+            "blaster",
+            "exotic",
+            "ordnance",
+            "thrown"
         ],
 
         // Use the Force disciplines a Force power can be rolled against.
@@ -112,28 +103,19 @@ const slModule = ( () => {
             "mega_freighter",
             "capital_ship",
             "space_station",
-            "blaster_pistol",
-            "blaster_rifle",
-            "heavy_blaster",
-            "slugthrower",
-            "bowcaster",
-            "disruptor",
-            "grenade_explosives",
-            "missile_rocket",
-            "sniper",
+            "archaic",
+            "blaster",
+            "exotic",
+            "ordnance",
+            "thrown",
             "sense",
             "control",
             "alter",
             "custom",
+            "1h",
+            "2h",
             "brawling",
-            "vibroblade",
-            "vibro-axe",
-            "force_pike",
             "lightsaber",
-            "electrostaff",
-            "stun_baton",
-            "parry",
-            "two-handed",
             "speeder",
             "starship",
             "air",
@@ -180,6 +162,8 @@ const slModule = ( () => {
         ]
     }
 
+    const careerSkillSlots = (level) => (parseInt(level) === 1 ? 12 : 10);
+
     // Sheet Functions
 
     const initSheet = () => {
@@ -215,36 +199,21 @@ const slModule = ( () => {
     const updateSheet = (version) => {
         const done = () => setAttrs({sheet_version: sl.sheet_version});
 
-        if (!version || version < "1.1.0") migrateTo110(() => migrateTo120(done));
-        else if (version < "1.2.0") migrateTo120(done);
+        if (!version || version < "1.1.0") migrateTo110(() => migrateTo120(() => migrateTo130(done)));
+        else if (version < "1.2.0") migrateTo120(() => migrateTo130(done));
+        else if (version < "1.3.0") migrateTo130(done);
         else done();
     }
 
-    // 1.1.0: skill list aligned with chapter 06. Skills and specialisations 06
-    // renamed keep their player-entered bonus and notes; Knowledge rows move
-    // to Lore; weapon groups whose 06 name plainly succeeds the old one are
-    // renamed (Pistol -> Blaster Pistol and so on). Advances are recalculated
-    // from the career and origin entries, so they need no copying. Old
-    // attributes are left in place.
+    // 1.1.0: skill list aligned with chapter 06. Skills 06 renamed keep their
+    // player-entered bonus and notes; Knowledge rows move to Lore. Advances are
+    // recalculated from the career and origin entries, so they need no
+    // copying. Old attributes are left in place. (Weapon groups: see 1.3.0.)
     const RENAMED_SKILLS = {
         "carouse": "consume-intoxicant",
         "survival": "outdoor-survival",
         "animal-handling": "charm-creature",
         "security": "slice-security-system",
-        "pistol": "blaster_pistol",
-        "rifle": "blaster_rifle",
-        "heavy": "heavy_blaster",
-        "explosives": "grenade_explosives",
-        "stun": "stun_baton",
-    };
-    const RENAMED_WEAPON_GROUPS = {
-        "Pistol": "Blaster Pistol",
-        "Rifle": "Blaster Rifle",
-        "Heavy": "Heavy Blaster",
-        "Explosives": "Grenade/Explosives",
-        "Stun": "Stun Baton",
-        // Names used by test builds of 1.1.0.
-        "2H": "Two-Handed",
     };
 
     const migrateTo110 = (callback) => {
@@ -252,57 +221,99 @@ const slModule = ( () => {
         Object.keys(RENAMED_SKILLS).forEach(old => attrs.push(`${old}_bonus`, `${old}_notes`));
 
         getSectionIDs("knowledge", knowledgeIds => {
-            getSectionIDs("weapons", weaponIds => {
-                knowledgeIds.forEach(id => ["name", "characteristic", "modifier", "notes"].forEach(f => attrs.push(`repeating_knowledge_${id}_specialisation_${f}`)));
-                weaponIds.forEach(id => attrs.push(`repeating_weapons_${id}_weapon_group`));
+            knowledgeIds.forEach(id => ["name", "characteristic", "modifier", "notes"].forEach(f => attrs.push(`repeating_knowledge_${id}_specialisation_${f}`)));
 
-                getAttrs(attrs, values => {
-                    const update = {};
+            getAttrs(attrs, values => {
+                const update = {};
 
-                    Object.entries(RENAMED_SKILLS).forEach(([old, now]) => {
-                        ["bonus", "notes"].forEach(f => {
-                            if (values[`${old}_${f}`]) update[`${now}_${f}`] = values[`${old}_${f}`];
-                        });
+                Object.entries(RENAMED_SKILLS).forEach(([old, now]) => {
+                    ["bonus", "notes"].forEach(f => {
+                        if (values[`${old}_${f}`]) update[`${now}_${f}`] = values[`${old}_${f}`];
                     });
-
-                    knowledgeIds.forEach(id => {
-                        const name = values[`repeating_knowledge_${id}_specialisation_name`];
-                        if (!name) return;
-                        const row = `repeating_lore_${generateRowID()}`;
-                        ["name", "characteristic", "modifier", "notes"].forEach(f => {
-                            const v = values[`repeating_knowledge_${id}_specialisation_${f}`];
-                            if (v) update[`${row}_specialisation_${f}`] = v;
-                        });
-                    });
-
-                    weaponIds.forEach(id => {
-                        const group = values[`repeating_weapons_${id}_weapon_group`];
-                        if (RENAMED_WEAPON_GROUPS[group]) update[`repeating_weapons_${id}_weapon_group`] = RENAMED_WEAPON_GROUPS[group];
-                    });
-
-                    setAttrs(update, {}, callback);
                 });
+
+                knowledgeIds.forEach(id => {
+                    const name = values[`repeating_knowledge_${id}_specialisation_name`];
+                    if (!name) return;
+                    const row = `repeating_lore_${generateRowID()}`;
+                    ["name", "characteristic", "modifier", "notes"].forEach(f => {
+                        const v = values[`repeating_knowledge_${id}_specialisation_${f}`];
+                        if (v) update[`${row}_specialisation_${f}`] = v;
+                    });
+                });
+
+                setAttrs(update, {}, callback);
             });
         });
     }
 
     // 1.2.0: 02 gives species no skills, so the species skill slots are only
     // shown on characters that already use them (species_skills_used); their
-    // advances still count, so skill totals and XP do not change. Weapon
-    // groups from 1.1.0 test builds are renamed as in 1.1.0. Talent rows get
-    // the characteristic bonus their talent gives (Warrior Born: "WS +5").
+    // advances still count, so skill totals and XP do not change. Talent rows
+    // get the characteristic bonus their talent gives (Warrior Born: "WS +5").
     const migrateTo120 = (callback) => {
+        updateSpeciesSkillsUsed();
+        fillTalentModifiers(callback);
+    };
+
+    // 1.3.0: weapon groups of 06 (15 Oct 2026): Melee 1H / 2H / Brawling /
+    // Lightsaber, Ranged Archaic / Blaster / Exotic / Ordnance / Thrown. The
+    // specialisations of 1.0.0 and of the 1.1.0 / 1.2.0 test builds map onto
+    // them as the wiki's consolidation map does (tools/consolidate/skillmap.py):
+    // bonus and notes are copied (the first one found wins), weapon groups and
+    // NPC attack types are renamed. Old attributes are left in place.
+    const WEAPON_GROUP_MAP = {
+        // 1.0.0
+        "basic": "1H", "vibroweapon": "1H", "stun": "1H", "parry": "1H", "polearm": "2H", "two-handed": "2H",
+        "brawling": "Brawling", "lightsaber": "Lightsaber",
+        "pistol": "Blaster", "rifle": "Blaster", "heavy": "Ordnance", "gunnery": "Ordnance",
+        "exotic": "Exotic", "entangling": "Exotic", "explosives": "Thrown", "throwing": "Thrown",
+        // 1.1.0 test builds
+        "1h": "1H", "2h": "2H", "archaic": "Archaic", "blaster": "Blaster", "ordinance": "Ordnance", "wilderness": "",
+        // 1.2.0 test builds
+        "vibroblade": "1H", "stun baton": "1H", "vibro-axe": "2H", "force pike": "2H", "electrostaff": "2H",
+        "blaster pistol": "Blaster", "blaster rifle": "Blaster", "heavy blaster": "Blaster", "disruptor": "Blaster", "sniper": "Blaster",
+        "slugthrower": "Archaic", "bowcaster": "Archaic", "grenade/explosives": "Thrown", "missile/rocket": "Ordnance",
+    };
+    const groupAttr = (group) => group.toLowerCase().replace(/[ \/]/g, "_");
+
+    const migrateTo130 = (callback) => {
+        const oldSpecs = Object.keys(WEAPON_GROUP_MAP).map(groupAttr).filter(a => !sl.specialisations.includes(a));
+        const attrs = [];
+        oldSpecs.forEach(a => attrs.push(`${a}_bonus`, `${a}_notes`));
+        sl.weapon_specialisations.forEach(a => attrs.push(`${a}_bonus`, `${a}_notes`));
+
         getSectionIDs("weapons", weaponIds => {
-            const attrs = weaponIds.map(id => `repeating_weapons_${id}_weapon_group`);
-            getAttrs(attrs, values => {
-                const update = {};
-                weaponIds.forEach(id => {
-                    const group = values[`repeating_weapons_${id}_weapon_group`];
-                    if (RENAMED_WEAPON_GROUPS[group]) update[`repeating_weapons_${id}_weapon_group`] = RENAMED_WEAPON_GROUPS[group];
-                });
-                setAttrs(update, {}, () => {
-                    updateSpeciesSkillsUsed();
-                    fillTalentModifiers(callback);
+            getSectionIDs("attacks", attackIds => {
+                weaponIds.forEach(id => attrs.push(`repeating_weapons_${id}_weapon_group`));
+                attackIds.forEach(id => attrs.push(`repeating_attacks_${id}_attack_type`));
+
+                getAttrs(attrs, values => {
+                    const update = {};
+                    oldSpecs.forEach(a => {
+                        const group = WEAPON_GROUP_MAP[Object.keys(WEAPON_GROUP_MAP).find(k => groupAttr(k) === a)];
+                        if (!group) return;
+                        const now = groupAttr(group);
+                        ["bonus", "notes"].forEach(f => {
+                            if (values[`${a}_${f}`] && !values[`${now}_${f}`] && !update[`${now}_${f}`]) update[`${now}_${f}`] = values[`${a}_${f}`];
+                        });
+                    });
+                    const mapGroup = (name) => {
+                        const key = (name || "").trim().toLowerCase();
+                        return Object.prototype.hasOwnProperty.call(WEAPON_GROUP_MAP, key) ? WEAPON_GROUP_MAP[key] : null;
+                    };
+                    weaponIds.forEach(id => {
+                        const group = values[`repeating_weapons_${id}_weapon_group`];
+                        const now = mapGroup(group);
+                        if (now && now !== group) update[`repeating_weapons_${id}_weapon_group`] = now;
+                    });
+                    attackIds.forEach(id => {
+                        const type = values[`repeating_attacks_${id}_attack_type`] || "";
+                        const m = type.match(/^(Melee|Ranged) \((.+)\)$/);
+                        const now = m && mapGroup(m[2]);
+                        if (now && now !== m[2]) update[`repeating_attacks_${id}_attack_type`] = `${m[1]} (${now})`;
+                    });
+                    setAttrs(update, {}, callback);
                 });
             });
         });
@@ -1115,6 +1126,8 @@ const slModule = ( () => {
     // career name, each level's title, status, skills (10 slots), talents
     // (5 slots) and trappings, then ticks the in-career characteristics for the
     // row's current level. Advances are left alone.
+    // Level 1 lists 10 career skills and keeps 2 empty slots for skills a
+    // career gains through special circumstances (05 intro); levels 2-4 hold 10.
     const CAREER_SKILL_SLOTS = 10;
     const CAREER_TALENT_SLOTS = 5;
 
@@ -1427,7 +1440,7 @@ const slModule = ( () => {
         sl.characteristics.forEach(characteristic => attrs.push(`${repeating_id}_career_${characteristic}_advances`));
 
         for (let i = 1; i <= 4; i++) {
-            for (let j = 1; j <= 10; j++) {
+            for (let j = 1; j <= careerSkillSlots(i); j++) {
                 attrs.push(`${repeating_id}_career_skill_${i}_${j}_advances`); 
                 attrs.push(`${repeating_id}_career_skill_${i}_${j}_init`); 
             }
@@ -1551,7 +1564,7 @@ const slModule = ( () => {
                 }
 
                 for (let i = 1; i <= 4; i++) {
-                    for (let j = 1; j <= 10; j++) {
+                    for (let j = 1; j <= careerSkillSlots(i); j++) {
                         attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_name`); 
                         attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_advances`); 
                         attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_init`); 
@@ -1616,7 +1629,7 @@ const slModule = ( () => {
                     });
     
                     for (let i = 1; i <= 4; i++) {
-                        for (let j = 1; j <= 10; j++) {
+                        for (let j = 1; j <= careerSkillSlots(i); j++) {
                             const skill = values[`repeating_careers_${id}_career_skill_${i}_${j}_name`];
 
                             const value = parseInt(values[`repeating_careers_${id}_career_skill_${i}_${j}_advances`]) || 0;
@@ -1840,7 +1853,7 @@ const slModule = ( () => {
                 id_array.forEach((id, index) => {
 
                     for (let i = 1; i <= 4; i++) {
-                        for (let j = 1; j <= 10; j++) {
+                        for (let j = 1; j <= careerSkillSlots(i); j++) {
                             attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_name`); 
                             attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_advances`); 
                             if (i === 1) attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_init`); 
@@ -2059,7 +2072,7 @@ const slModule = ( () => {
         }
 
         if (source_type === "skill") {
-            for (let i = 1; i <= 10; i++) {
+            for (let i = 1; i <= careerSkillSlots(1); i++) {
                 attrs.push(`${source_id}_career_skill_1_${i}_init`); 
             }
         }
@@ -2497,6 +2510,7 @@ const slModule = ( () => {
         changeSpecies:changeSpecies,
         checkSpeciesAdvances:checkSpeciesAdvances,
         updateSpeciesSkillsUsed:updateSpeciesSkillsUsed,
+        careerSkillSlots:careerSkillSlots,
         syncTalentGrants:syncTalentGrants,
         updateGrantDiscount:updateGrantDiscount,
         applyExtraPoints:applyExtraPoints,
@@ -2736,7 +2750,7 @@ slModule.sl.characteristics.forEach(characteristic => {
         advance_triggers.push(`change:repeating_careers:career_talent_${level}_${talent}_name change:repeating_careers:career_talent_${level}_${talent}_init change:repeating_careers:career_talent_${level}_${talent}_advances`)
     });
 
-    [1,2,3,4,5,6,7,8,9,10].forEach(skill => {
+    [1,2,3,4,5,6,7,8,9,10,11,12].slice(0, slModule.careerSkillSlots(level)).forEach(skill => {
         advance_triggers.push(`change:repeating_careers:career_skill_${level}_${skill}_name change:repeating_careers:career_skill_${level}_${skill}_init change:repeating_careers:career_skill_${level}_${skill}_advances`);
     });
 });

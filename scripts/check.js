@@ -136,6 +136,15 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     if (bareRules.length) errors.push(`sl100.css has rules for classes without the sheet- prefix, which never match in Roll20: ${bareRules.slice(0, 10).map(c => "." + c).join(", ")} (write .sheet-${bareRules[0]})`);
 }
 
+// Size. Roll20 kept the old sheet without warning once sl100.html grew past
+// about 1.45 MB (1,444,731 bytes loaded; 1,456,090 did not). Stay well under.
+{
+    const bytes = fs.statSync(path.join(root, "sl100.html")).size;
+    const limit = 1400000;
+    if (bytes > limit) errors.push(`sl100.html is ${bytes} bytes; keep it under ${limit} or Roll20 may silently keep the old sheet`);
+    else if (bytes > limit - 50000) warnings.push(`sl100.html is ${bytes} bytes, close to the ${limit}-byte limit this check enforces`);
+}
+
 // Rules data (scripts/gen-data.js) against the counts read from the documents.
 {
     const counts = sl100Data.source_counts || {};

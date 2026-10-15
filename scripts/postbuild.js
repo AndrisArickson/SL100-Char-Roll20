@@ -44,7 +44,12 @@ let html = fs.readFileSync(htmlPath, "utf8");
 
 // Leave the sheet worker script untouched.
 const parts = html.split(/(<script type="text\/worker">[\s\S]*?<\/script>)/);
-html = parts.map(part => part.startsWith('<script type="text/worker">') ? part : fillLabels(prefixClasses(part))).join("");
+// 4. Indentation. Roll20 appears to stop accepting the sheet somewhere above
+//    1.44 MB, keeping the old version without saying so. The pretty-printed
+//    indentation is about 130 KB; each line keeps its line break, which the
+//    browser treats as the same single space, so the layout does not change.
+const stripIndent = (markup) => markup.replace(/\n[ \t]+/g, "\n");
+html = parts.map(part => part.startsWith('<script type="text/worker">') ? part : stripIndent(fillLabels(prefixClasses(part)))).join("");
 
 // 3. Build stamp: the date and time of this build, shown under the header title
 //    (HTML) and after it (CSS), so it is easy to see which build Roll20 runs.

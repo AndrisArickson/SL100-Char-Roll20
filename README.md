@@ -132,20 +132,32 @@ To add or rename a skill, update all three lists and add the label to
 
 Custom sheets need a Pro subscription on the game creator's account.
 
-1. Run `npm run build`. Upload the **generated** files, not anything in `src/`.
+1. Make sure your copy is the latest: `git checkout main && git pull origin main`,
+   or download [sl100.html](https://github.com/AndrisArickson/SL100-Char-Roll20/raw/main/sl100.html),
+   [sl100.css](https://github.com/AndrisArickson/SL100-Char-Roll20/raw/main/sl100.css) and
+   [translation.json](https://github.com/AndrisArickson/SL100-Char-Roll20/raw/main/translation.json)
+   straight from GitHub. A copy left on another branch, or a pull that stopped on an error, looks
+   fine but uploads an old sheet. Compare the size of `sl100.html` with the one on GitHub
+   before pasting.
 2. In the game, open **Settings → Game Settings**, set **Character Sheet Template**
    to **Custom**, and paste:
    - the whole of `sl100.html` into the **HTML Layout** tab
    - the whole of `sl100.css` into the **CSS Styling** tab
    - the whole of `translation.json` into the **Translation** tab
-3. Click **Save Changes**, then close and reopen any open character sheets.
+3. Click **Save Changes**. Close any pop-out sheets, reload the game, and reopen the character.
+4. Check the build date in the bottom-right corner of the sheet's header ("Build … UTC · CSS … UTC").
+   It should match the date in the `sl100.html` you pasted (search it for `Build 20`). A missing CSS
+   date means the CSS tab holds an old stylesheet.
+
+If you build the sheet yourself, run `npm run build` and upload the **generated** files, not anything
+in `src/`.
 
 The build writes the `sheet-` class prefix and fallback label text into the
 HTML, so the sheet styles correctly whether **Legacy Sanitization** is on or
 off. If it still looks unstyled, check that the CSS tab contains `sl100.css`
 starting with `@import url("https://fonts.googleapis.com/...")`, and that the
 HTML tab contains `sl100.html` (its first line is a hidden `attr_sheet_version`
-input).
+input, whose `1.0.0` is only the starting value for new characters).
 
 ### Previewing without Roll20
 

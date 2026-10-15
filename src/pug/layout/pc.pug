@@ -331,6 +331,10 @@ input(name="attr_setting_button_hide", type="hidden")
             .sl-careertable__cell(data-i18n="Status")
             .sl-careertable__cell--last(data-i18n="Advances")
         +repeating-section("careers","careers-row")
+        //- Diagnostic: the sheet scripts replace this text when they load.
+        .sl-workerstatus
+            input(name="attr_worker_status", type="hidden", value="Sheet scripts have not run on this character.")
+            span(name="attr_worker_status")
 
     .sl-panel
         input(name="attr_control_hide--characteristics", type="hidden")

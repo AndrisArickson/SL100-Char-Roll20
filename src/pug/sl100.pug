@@ -44,10 +44,15 @@ include rolltemplates.pug
 
 script(type="text/worker")
     |
+    | // Shows on the Careers panel whether the sheet scripts load (diagnostic).
+    | on("sheet:opened", () => setAttrs({worker_status: "Sheet scripts started but stopped while loading."}));
+    |
     include ../js/data/sl100-data.js
     |
     include ../js/sheetworkers.js
     |
     include ../js/helperfunctions.js
+    |
+    | on("sheet:opened", () => setAttrs({worker_status: `Sheet scripts running (version ${slModule.sl.sheet_version}).`}));
     |
     | //# sourceURL=sheetworkers.js

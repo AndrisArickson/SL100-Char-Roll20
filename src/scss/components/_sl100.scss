@@ -331,3 +331,11 @@ input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
     color: #1d5e3a;
     font-weight: bold;
 }
+
+// Diagnostic line under the career list.
+.sheet-sl-workerstatus {
+    font-size: 0.8em;
+    font-style: italic;
+    opacity: 0.7;
+    padding: 2px 4px;
+}

@@ -10,6 +10,7 @@ mixin career-level(level, first)
     .sl-levelcheck
         input.sl-levelcheck__flag(name=`attr_career_level${level}_complete`, type="hidden", value="0")
         span.sl-levelcheck__text(name=`attr_career_level${level}_check`)
+        input(name=`attr_career_level${level}_check`, type="hidden", value="Level check has not run yet.")
 
     .sl-settings__row--invert
         .sl-settings__label(data-i18n=`Name`)

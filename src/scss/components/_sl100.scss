@@ -339,3 +339,24 @@ input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
     opacity: 0.7;
     padding: 2px 4px;
 }
+
+// Build stamp in the header's bottom-right corner. The CSS adds its own stamp after it, so a
+// stale stylesheet shows up as a missing or different "CSS" date.
+.sheet-sl-header__build {
+    position: absolute;
+    right: 8px;
+    bottom: 4px;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    color: #c8d3e0;
+    opacity: 0.8;
+
+    &::after {
+        content: " · CSS __SL_BUILD__";
+    }
+}
+
+.sheet-sl-header__logo {
+    position: relative;
+}

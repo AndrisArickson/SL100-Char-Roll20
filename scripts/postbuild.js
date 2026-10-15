@@ -46,5 +46,12 @@ let html = fs.readFileSync(htmlPath, "utf8");
 const parts = html.split(/(<script type="text\/worker">[\s\S]*?<\/script>)/);
 html = parts.map(part => part.startsWith('<script type="text/worker">') ? part : fillLabels(prefixClasses(part))).join("");
 
+// 3. Build stamp: the date and time of this build, shown under the header title
+//    (HTML) and after it (CSS), so it is easy to see which build Roll20 runs.
+const stamp = new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC";
+html = html.split("__SL_BUILD__").join(`Build ${stamp}`);
+const cssPath = path.join(root, "sl100.css");
+fs.writeFileSync(cssPath, fs.readFileSync(cssPath, "utf8").split("__SL_BUILD__").join(stamp));
+
 fs.writeFileSync(htmlPath, html);
 console.log("postbuild: classes prefixed with sheet-, label fallbacks filled");

@@ -131,6 +131,9 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     // Modern Sass colour maths emits rgb(12.3%, ...) / hsl(...); stick to hex and rgba(r, g, b, a).
     const modernColour = css.match(/rgba?\([^)]*%[^)]*\)|hsla?\([^)]*\)/);
     if (modernColour) errors.push(`sl100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
+    // The HTML classes get the sheet- prefix at build time, the CSS does not: a rule written as .sl-x never applies.
+    const bareRules = [...new Set([...css.replace(/url\([^)]*\)/g, "").matchAll(/(^|[\s,>+~(])\.(sl-[\w-]+)/g)].map(m => m[2]))];
+    if (bareRules.length) errors.push(`sl100.css has rules for classes without the sheet- prefix, which never match in Roll20: ${bareRules.slice(0, 10).map(c => "." + c).join(", ")} (write .sheet-${bareRules[0]})`);
 }
 
 // Rules data (scripts/gen-data.js) against the counts read from the documents.

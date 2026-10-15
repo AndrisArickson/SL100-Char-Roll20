@@ -1290,21 +1290,21 @@ input[name=attr_grant_auto]:not([value=""]) + .sheet-sl-granttable__row {
   box-shadow: inset 3px 0 0 #f3c331;
 }
 
-.sl-levelcheck {
+.sheet-sl-levelcheck {
   grid-column: 1/-1;
   font-size: 0.85em;
   font-style: italic;
   margin: 2px 0 6px;
   opacity: 0.85;
 }
-.sl-levelcheck__flag[value="1"] + .sl-levelcheck__text {
+.sheet-sl-levelcheck__flag[value="1"] + .sheet-sl-levelcheck__text {
   font-style: normal;
   font-weight: bold;
   color: #2e8b57;
   opacity: 1;
 }
 
-.sl-levelcheck__ready {
+.sheet-sl-levelcheck__ready {
   display: block;
   font-size: 0.8em;
   font-weight: bold;

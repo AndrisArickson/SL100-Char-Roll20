@@ -14,10 +14,10 @@ WFRP artwork is used.
 
 | Tab | Contents |
 | --- | --- |
-| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics, Resilience/Resolve, Destiny & Force Points, Movement, Experience, Basic and Advanced Skills, Talents, Conditions, Psychology, Dark Side, Ambitions, Party |
+| **Main** | Character portrait (the avatar from the Bio & Info tab), Characteristics (with a Species / Origin row), Resilience/Resolve/Motivation and Extra Points, Destiny & Fortune (with refresh buttons), Movement (metres), Experience, Basic and Advanced Skills, Talents (with the talent library), Conditions, Psychology, Dark Side, Ambitions, Party |
 | **Combat** | Gear, Encumbrance, Wealth (Credits / Bank / Debt), d100 hit-location Armour Points, quick-roll Controls, Advantage, Wounds, Critical Wounds, Armour, Weapons |
-| **Force** | Force Powers (rolled against Force: Control, Sense or Alter) and Conflict |
-| **Advances** | Careers with four levels, species skills and talents, XP awards and spends |
+| **Force** | Force Powers (rolled against Use the Force: Sense, Control or Alter, showing the discipline rank as +SL on success) and Conflict |
+| **Advances** | Careers (with the career library), Species, Origin, Granted Skills & Talents (from talents such as Perfect Pitch, species, career or GM, with a reason), Faction, Character Creation helper, XP awards and spends |
 | **Settings** | Custom modifiers, non-career advances, roll options |
 | **NPC** | A compact stat-block view (toggle **NPC** in Settings) |
 
@@ -25,39 +25,79 @@ Rolls use the d100 roll-under engine from the WFRP sheet: difficulty query, bonu
 Advantage, Success Levels, automatic success and failure, and hit locations. All of
 this goes to a themed roll template.
 
+### Rules sources
+
+The rules content comes from the SL100 rules pages of the
+[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki). Each part of the sheet is listed with the wiki page it follows. Nothing is invented on the
+sheet: where a document is silent, the field is left blank and editable and the gap is listed in
+[`NOTES-rules-gaps.md`](NOTES-rules-gaps.md) and [`docs/data-report.md`](docs/data-report.md).
+
+| Sheet part | Wiki page |
+| --- | --- |
+| Characteristics, creation methods, bonus XP, point-buy (110), Wounds by Size (set by the Small and Large talents), Destiny/Fortune, Resilience/Resolve, Extra Points | Characteristics |
+| Species (223: modifiers, talents, Movement, Destiny, Resilience, Extra Points, Size, Traits) | Species |
+| Origin (13 worlds, +5 bonuses, 12 starting skills) | Origin |
+| Faction (145 factions: details and recruitment; no game effects are written) | Faction |
+| Career library (91 careers x 4 levels, grouped by class; 12 skill slots at level 1) | Careers |
+| Skills and specialisations | Skills |
+| Talent library (191 talents, plus named versions such as Night Vision (Thermal)) and random-talent table | Talents (with its index and random-talent table) |
+
 ### How WFRP 4e maps to SL100
 
 | WFRP 4e | SL100 | Attribute (for macros) |
 | --- | --- | --- |
-| Fate / Fortune | Destiny / Force Points | `fate` / `fortune` |
+| Fate / Fortune | Destiny / Fortune (labels only; attributes unchanged) | `fate` / `fortune` |
 | Corruption & Mutations | Dark Side Points & taints | `corruption_points`, `repeating_corruption` |
 | Spells & Prayers, Sin | Force Powers, Conflict | `repeating_spells`, `sin` |
-| Channelling (winds of magic) | Force (Control / Sense / Alter / Custom) | `control`, `sense`, `alter`, `custom` |
+| Channelling | Use the Force (Sense / Control / Alter / Custom) | `force`; `sense`, `control`, `alter`, `custom` |
+| Read/Write | Datapad Use (talent) | — |
 | GC / SS / BP | Credits / Bank / Debt | `credits`, `bank`, `debt` |
 | Trappings | Gear | `repeating_trappings` |
 | Hair | Homeworld | `homeworld` |
+| Yards | Metres (Walk = 2 x Movement, Run = 4 x Movement) | `walk`, `run` |
 
-The characteristics stay the same: WS, BS, S, T, I, Ag, Dex, Int, WP, Fel.
+**Characteristics.** WS, BS, S, T, I, Ag, Dex, Int, WP, Fel (ten, per Characteristics).
 
-**Skills.** Basic: Animal Handling, Art, Athletics, Bribery, Carouse, Charm, Climb, Cool,
-Dodge, Drive, Endurance, Entertain, Gamble, Haggle, Intimidate, Intuition, Leadership,
-Melee, Navigation, Perception, Ride, Stealth, Streetwise, Survival, Zero-G.
-Advanced: Astrogation, Computers, Deceive, Demolitions, Force, Knowledge, Language,
-Mechanics, Medicine, Perform, Pilot, Ranged, Research, Security, Sleight of Hand,
-Slicing, Swim, Tactics, Track, Trade.
+**Skills.** Basic: Art, Athletics, Bribery, Charm, Charm Creature, Climb, Consume Intoxicant,
+Cool, Dodge, Endurance, Entertain, Gamble, Gossip, Haggle, Intimidate, Intuition, Leadership,
+Melee (1H, 2H, Brawling, Lightsaber), Navigation, Outdoor Survival, Perception, Pilot (Speeder, Starship),
+Ride (Air, Land, Water), Stealth (Rural, Underground, Urban). Advanced: Codes, Creature Care, Creature
+Training, Demolitions, Evaluate, Language, Lore, Medicine, Meditate, Perform, Pilot (Capital Ship) (Mega
+Freighter, Capital Ship, Space Station), Play, Profession, Ranged (Archaic, Blaster, Exotic, Ordnance,
+Thrown), Research, Sleight of Hand, Slice Security System, Swim, Track, Use the Force (Sense, Control, Alter).
+Careers and origins write weapon choices with slashes, e.g. Melee (1H/2H): the player edits the career
+skill to one group before Update. Career level 1 has 12 skill slots (10 from the career, 2 for skills
+from special circumstances).
 
-**Weapon groups.** Melee: Basic, Brawling, Lightsaber, Vibroweapon, Parry, Polearm,
-Two-Handed, Stun. Ranged: Pistol, Rifle, Heavy, Gunnery, Exotic, Entangling,
-Explosives, Throwing.
+**Species.** The 17 design-group species (Arkanian, Besalisk, Chironian, Chiss,
+Echani, Human, Kel Dor, Miraluka, Nautolan, Otolla Gungan, Togruta, Trandoshan, T'surr, Twi'lek,
+Weequay, Wookiee, Zabrak), then 206 provisional species added from Legends lore, plus Custom
+(applies nothing).
 
-**Species.** Human, Bothan, Duros, Mon Calamari, Rodian, Trandoshan, Twi'lek,
-Wookiee, Zabrak and Droid. A Custom option is also available. Picking a species
-fills in Destiny, Resilience, Movement and Size, plus starter species skills and
-talents. These presets are placeholders. Edit `species_presets` in
-`src/js/sheetworkers.js` to match your rules.
+### Rules data and how to regenerate it
+
+Species, origins, factions, careers and talents are generated from the wiki's rules pages (the master copy of
+the rules, exported as markdown by `./wiki.sh rules-md`) by
+`scripts/gen-data.js` into `src/js/data/sl100-data.js` (sheet workers) and
+`src/pug/sl100-data.pug` (templates). Both are committed, so the sheet builds without the wiki.
+When the wiki changes:
+
+```bash
+# SL100-Wiki checked out next to this repository as SL100-Wiki or sl100-wiki (or set SL100_WIKI=/path/to/SL100-Wiki)
+(cd ../SL100-Wiki && git pull && ./wiki.sh rules-md)   # markdown copies of the rules pages, in build/rules
+npm run gen        # regenerate the data and docs/data-report.md
+npm run build      # compile and check
+npm run i18n       # add/remove translation keys for new or removed names
+npm run build      # rebuild so labels pick up the translations
+```
+
+`gen` warns if the Talents page and its index list a different number of talents (the Talents page is used).
+Names that the Species or Careers pages spell differently from the Talents or Skills pages are mapped in
+`scripts/data/renames.json` (e.g. Read/Write -> Datapad Use); `docs/data-report.md` lists every name that
+still does not match.
 
 The WFRP sheet loaded species and talent data from the WFRP compendium.
-SL100 has no compendium, so that drag-and-drop code has been removed.
+SL100 has no compendium (Roll20 does not allow custom ones), so the libraries are built into the sheet.
 
 ## Building
 
@@ -78,6 +118,8 @@ npm start         # watch mode while editing
   - `src/scss/_abstracts.scss`
 - the `data-i18n` keys used in the HTML and the entries in `translation.json`. Roll20
   shows a blank label for any key that has no translation.
+- the rules data counts: talents vs the Talents page, 13 origins, species vs the Species page.
+- retired terms in visible labels ("Fate", "Read/Write").
 
 It also fails if any Roll20-hosted WFRP artwork is referenced.
 

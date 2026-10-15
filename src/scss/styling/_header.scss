@@ -107,6 +107,7 @@
         
         &--character_name,
         &--species,
+        &--origin,
         &--career,
         &--career_path {
             border: 0;
@@ -115,6 +116,7 @@
         }
 
         &--class,
+        &--faction,
         &--career_level,
         &--status {
             border: 0;

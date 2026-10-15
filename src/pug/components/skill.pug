@@ -1,7 +1,7 @@
 mixin skill(skill)
     - 
         const {name, characteristic, type, grouped, specialisations, forced} = skill;
-        const attr = name.toLowerCase().replace(/ /g, "-");
+        const attr = skillAttr(skill);
         const classn = (attr === "evaluate") ? "eva1uate" : attr; // Roll20 hates the word "evaluate" in stylesheets.
         const char_attr = characteristic.toLowerCase().replace(/ /g, "_");
     .sl-skillwrapper    

@@ -42,6 +42,7 @@ input(name="attr_setting_button_hide", type="hidden")
     .sl-chartable
         .sl-chartable__cell--noborder &nbsp;
         .sl-chartable__cell--left(data-i18n="Initial")
+        .sl-chartable__cell--left(data-i18n="Species / Origin")
         .sl-chartable__cell--left(data-i18n="Advances")
         .sl-chartable__cell--left(data-i18n="Modifier")
         .sl-chartable__cell--left(data-i18n="Current")
@@ -55,11 +56,36 @@ input(name="attr_setting_button_hide", type="hidden")
         +generic-field(resilience[0], "text", "2-1")
         +generic-field(resilience[1], "text", "2-1")
     +generic-field(resilience[2], "text", "1-2")
+    //- Extra Points come from the species and are split between Destiny and
+    //- Resilience; the sheet worker checks the split and applies it.
+    .sl-extrapoints
+        label.sl-extrapoints__item
+            span.sl-extrapoints__label(data-i18n="Extra Points")
+            input.sl-extrapoints__input(name="attr_extra_points", type="number")
+        label.sl-extrapoints__item
+            span.sl-extrapoints__label(data-i18n="to Destiny")
+            input.sl-extrapoints__input(name="attr_extra_fate", type="number", value="0")
+        label.sl-extrapoints__item
+            span.sl-extrapoints__label(data-i18n="to Resilience")
+            input.sl-extrapoints__input(name="attr_extra_resilience", type="number", value="0")
+    input(name="attr_species_fate", type="hidden")
+    input(name="attr_species_resilience", type="hidden")
+    p.sl-reminder(data-i18n="Split the species' Extra Points between Destiny and Resilience. Destiny, Fortune, Resilience and Resolve update as you enter them.")
+    .sl-extrapoints__check
+        span(name="attr_extra_points_check")
+    .sl-panelbuttons
+        button.sl-panelbuttons__button(data-i18n="Refresh Resolve", name="act_refresh_resolve", type="action")
+    //- Characteristics, Resilience and Resolve.
+    p.sl-reminder(data-i18n="Resolve: ignore Psychology or Critical Wound modifiers for a round, or remove a Condition. Resilience: I Will Not Fail, Not My Path.")
 
 .sl-fate.sl-panel.page__main
     h1.sl-panel__header(data-i18n="Destiny")
     each field in fate 
         +generic-field(field, "number", "1-1")
+    .sl-panelbuttons
+        button.sl-panelbuttons__button(data-i18n="Refresh Fortune", name="act_refresh_fortune", type="action")
+    //- Characteristics, Destiny and Fortune.
+    p.sl-reminder(data-i18n="Fortune: reroll a failed Test, add +1 SL, or pick your place in the Initiative order. Destiny: Not Today, That Was Close.")
 
 .sl-movement.sl-panel.page__main
     input(name="attr_movement_mod", type="hidden")
@@ -311,7 +337,66 @@ input(name="attr_setting_button_hide", type="hidden")
         h1.sl-panel__header(data-i18n="Species")
         +species("spells","spell-row")
 
+    .sl-panel
+        h1.sl-panel__header(data-i18n="Origin")
+        +origin
+
+    //- Granted skills and talents: anything a talent, species, career or the GM
+    //- grants outside the normal lists. A granted skill counts as a career skill
+    //- in every career; skills granted by a talent cost 5 XP less per Advance.
+    .sl-panel.sl-grants
+        h1.sl-panel__header(data-i18n="Granted Skills & Talents")
+        p.sl-reminder(data-i18n="A granted skill counts as a career skill in every career: enter its Advances here. Skills granted by a talent cost 5 XP less per Advance. Granted talents add their Advances as free ranks. Talents such as Perfect Pitch add their row by themselves.")
+        .sl-granttable__row--head
+            .sl-granttable__cell(data-i18n="Type")
+            .sl-granttable__cell(data-i18n="Name")
+            .sl-granttable__cell(data-i18n="Granted by")
+            .sl-granttable__cell(data-i18n="Reason")
+            .sl-granttable__cell(data-i18n="Adv.")
+            .sl-granttable__cell--last(data-i18n="XP −")
+        +repeating-section("grants","grant-row")
+
+    //- Faction: the Faction page gives lore only, so this is a selector and notes.
+    .sl-panel.sl-faction
+        h1.sl-panel__header(data-i18n="Faction")
+        .sl-faction__info
+            span.sl-origin__name(name="attr_faction")
+            span.sl-faction__group(name="attr_faction_group")
+            span.sl-origin__description(name="attr_faction_description")
+        .sl-settings__row--span
+            .sl-settings__label--full(data-i18n="Faction notes")
+            textarea.sl-settings__textarea(name="attr_faction_notes")
+
 .sl-experience--alt.page__advances--flex
+
+    //- Character creation helper (Characteristics, Determine Characteristics):
+    //- method, bonus XP, what to enter, and a check of the Initial column.
+    .sl-panel.sl-creation
+        h1.sl-panel__header(data-i18n="Character Creation")
+        .sl-creation__row.sl-creation__row--method
+            span.sl-creation__label(data-i18n="Method")
+            select.sl-creation__select(name="attr_creation_method")
+                option(value="", data-i18n="Choose…")
+                option(value="rolled", data-i18n="Rolled, kept in order (+50 XP)")
+                option(value="rearranged", data-i18n="Rolled, rearranged (+25 XP)")
+                option(value="rerolled", data-i18n="Rolled again (no bonus)")
+                option(value="pointbuy", data-i18n="Point-buy (no bonus)")
+        input(name="attr_creation_xp", type="hidden", value="0")
+        .sl-creation__row
+            span.sl-creation__label(data-i18n="Bonus XP")
+            span.sl-creation__value(name="attr_creation_xp")
+        input(name="attr_creation_method", type="hidden")
+        .sl-creation__body
+            p.sl-creation__help.sl-creation__help--rolled(data-i18n="Roll 2d10+20 for each Characteristic and enter the results in the Initial column of the Characteristics table (Main tab). Species and Origin modifiers are added for you in the next column.")
+            p.sl-creation__help.sl-creation__help--pointbuy(data-i18n="Every Characteristic starts at 20. Share 110 points between the ten (4 to 18 each) and enter 20 + its points in the Initial column: 12 points is 32. Species and Origin modifiers are added for you in the next column.")
+            .sl-creation__pointbuy
+                .sl-creation__row
+                    span.sl-creation__label(data-i18n="Point-buy budget")
+                    input.sl-creation__input(name="attr_pointbuy_budget", type="number", value="110")
+            .sl-creation__status
+                span(name="attr_creation_status")
+            .sl-creation__warning
+                span(name="attr_creation_warning")
 
     input(name="attr_advances_changed", type="hidden")
     .sl-panel.sl-advancenotify

@@ -206,7 +206,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .sheet-sl-pc .sheet-sl-careers {
   grid-column: 1/span 4;
   display: grid;
-  grid-template-rows: 1fr minmax(5rem, auto);
+  grid-template-rows: 1fr repeat(3, auto);
 }
 .sheet-sl-pc .sheet-sl-careers + .sheet-sl-experience {
   grid-column: span 2;
@@ -310,13 +310,13 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
   width: auto;
   padding: 0 1.5em 0.5em;
 }
-.sheet-sl-header__item-wrapper, .sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--career_path, .sheet-sl-header__item-wrapper--age, .sheet-sl-header__item-wrapper--height, .sheet-sl-header__item-wrapper--homeworld, .sheet-sl-header__item-wrapper--eyes {
+.sheet-sl-header__item-wrapper, .sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--origin, .sheet-sl-header__item-wrapper--faction, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--career_path, .sheet-sl-header__item-wrapper--age, .sheet-sl-header__item-wrapper--height, .sheet-sl-header__item-wrapper--homeworld, .sheet-sl-header__item-wrapper--eyes {
   display: flex;
   flex-flow: row nowrap;
   align-items: baseline;
   min-width: 0;
 }
-.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level {
+.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--origin, .sheet-sl-header__item-wrapper--faction, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_level {
   grid-column: span 2;
 }
 .sheet-sl-header__item-wrapper--career_path {
@@ -497,7 +497,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .sheet-sl-chartable {
   display: grid;
   grid-template-columns: 2fr repeat(10, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   grid-auto-flow: column;
 }
 .sheet-sl-chartable input[type=number],
@@ -1046,6 +1046,249 @@ button.sheet-pictos[type=action]:hover {
   gap: 0.25rem;
   margin: 0.25rem;
 }
+.sheet-sl-settingstable__hint {
+  grid-column: 1/-1;
+  font-size: 0.8em;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.sheet-sl-extrapoints {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px 0.25rem;
+  padding: 2px 0.25rem;
+  border-top: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-extrapoints__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sheet-sl-extrapoints__label {
+  font-size: 11px;
+  white-space: nowrap;
+}
+.sheet-sl-extrapoints__check {
+  min-height: 0;
+  padding: 0 0.25rem;
+  color: #a5282c;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.sheet-sl-wrapper .sheet-sl-panelbuttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 2px 0.25rem;
+}
+.sheet-sl-wrapper .sheet-sl-panelbuttons button.sheet-sl-panelbuttons__button[type=action] {
+  width: auto;
+  padding: 1px 8px;
+  border: 1px solid #3c4857;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #262e39, #151a21);
+  color: #e6edf4;
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sheet-sl-wrapper .sheet-sl-panelbuttons button.sheet-sl-panelbuttons__button[type=action]:hover {
+  color: #f3c331;
+}
+
+.sheet-sl-tbd {
+  color: #a77b06;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.sheet-sl-creation__row {
+  display: grid;
+  grid-template-columns: 1fr 9em;
+  align-items: center;
+  padding: 1px 0.25rem;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-creation__row--method {
+  grid-template-columns: 4em 1fr;
+}
+.sheet-sl-creation__label {
+  font-size: 12px;
+}
+.sheet-sl-creation__value {
+  text-align: center;
+}
+.sheet-sl-creation__warning {
+  padding: 2px 0.25rem;
+  color: #a5282c;
+  font-size: 11px;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.sheet-sl-creation__pointbuy,
+.sheet-sl-creation__help {
+  display: none;
+}
+
+.sheet-sl-creation__help {
+  margin: 0;
+  padding: 2px 0.25rem;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.sheet-sl-creation__status {
+  padding: 2px 0.25rem;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+input[name=attr_creation_method][value=pointbuy] + .sheet-sl-creation__body .sheet-sl-creation__pointbuy,
+input[name=attr_creation_method][value=pointbuy] + .sheet-sl-creation__body .sheet-sl-creation__help--pointbuy {
+  display: block;
+}
+
+input[name=attr_creation_method][value=rolled] + .sheet-sl-creation__body .sheet-sl-creation__help--rolled,
+input[name=attr_creation_method][value=rearranged] + .sheet-sl-creation__body .sheet-sl-creation__help--rolled,
+input[name=attr_creation_method][value=rerolled] + .sheet-sl-creation__body .sheet-sl-creation__help--rolled {
+  display: block;
+}
+
+.sheet-sl-speciesinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sheet-sl-speciesinfo__notes {
+  font-size: 11px;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.sheet-sl-speciesmods__grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 2px;
+}
+
+.sheet-sl-speciesmods__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+}
+
+.sheet-sl-origin {
+  padding: 2px 0.25rem;
+}
+.sheet-sl-origin__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 0.25rem;
+}
+.sheet-sl-origin__name {
+  font-family: "Orbitron", "Exo 2", Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.sheet-sl-origin__description {
+  font-size: 11px;
+  font-style: italic;
+}
+.sheet-sl-origin__choice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 2px 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.sheet-sl-origin__option {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.sheet-sl-origin__option input[type=radio] {
+  width: auto;
+}
+
+input[type=hidden][name*=origin_disable3][value="1"] ~ * input[type=radio][value="3"]:not(:checked),
+input[type=hidden][name*=origin_disable5][value="1"] ~ * input[type=radio][value="5"]:not(:checked) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.sheet-sl-faction__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 2px 0.25rem;
+}
+
+.sheet-sl-faction__group {
+  font-size: 11px;
+}
+
+.sheet-sl-library {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sheet-sl-wrapper select.sheet-control__custom {
+  display: block;
+}
+
+.sheet-sl-speciesskills {
+  display: none;
+}
+
+.sheet-sl-speciesskills__flag[value="1"] + .sheet-sl-speciesskills {
+  display: block;
+}
+
+.sheet-sl-speciesskills__flag:not([value="1"]) ~ .sheet-sl-settings__col {
+  grid-column: 1/-1;
+}
+
+.sheet-sl-reminder {
+  grid-column: 1/-1;
+  margin: 2px 0 0;
+  padding: 0 0.25rem;
+  font-size: 10px;
+  font-style: italic;
+  line-height: 1.25;
+}
+
+.sheet-sl-granttable__row, .sheet-sl-granttable__row--head {
+  display: grid;
+  grid-template-columns: 4.4rem 1fr 4.8rem 1fr 2.6rem 2.6rem;
+  gap: 2px;
+  align-items: center;
+  padding: 1px 0.25rem;
+  border-bottom: 1px solid rgba(60, 72, 87, 0.55);
+}
+.sheet-sl-granttable__row--head {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.sheet-sl-granttable__select, .sheet-sl-granttable__input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+input[name=attr_grant_auto]:not([value=""]) + .sheet-sl-granttable__row {
+  box-shadow: inset 3px 0 0 #f3c331;
+}
 
 .sheet-sl-wrapper input[type=text],
 .sheet-sl-wrapper input[type=number],
@@ -1312,12 +1555,12 @@ button.sheet-pictos[type=action]:hover {
   line-height: 1.4;
   text-transform: uppercase;
 }
-.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_path {
+.sheet-sl-header__item-wrapper--character_name, .sheet-sl-header__item-wrapper--species, .sheet-sl-header__item-wrapper--origin, .sheet-sl-header__item-wrapper--career, .sheet-sl-header__item-wrapper--career_path {
   border: 0;
   border-right: 1px solid rgba(60, 72, 87, 0.55);
   border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
-.sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--status {
+.sheet-sl-header__item-wrapper--class, .sheet-sl-header__item-wrapper--faction, .sheet-sl-header__item-wrapper--career_level, .sheet-sl-header__item-wrapper--status {
   border: 0;
   border-bottom: 1px solid rgba(60, 72, 87, 0.55);
 }
@@ -1518,7 +1761,7 @@ button.sheet-pictos[type=action]:hover {
   display: block;
 }
 
-.sheet-sl-npcsettings__wrapper, .sheet-control__hide--npctalent_settings, .sheet-control__hide--npctrait_settings, .sheet-control__hide--npcattack_settings, .sheet-control__hide--Custom, .sheet-control__hide--skill, .sheet-control__hide--characteristic, .sheet-sl-criticaltable__row .sheet-sl-criticaltable__cell--description, .sheet-sl-corruptiontable__row .sheet-sl-corruptiontable__cell--description, .sheet-sl-psychologytable__row .sheet-sl-psychologytable__cell--description, .sheet-sl-conditiontable__row .sheet-sl-conditiontable__cell--description, .sheet-sl-talenttable__row .sheet-sl-talenttable__cell--description, .sheet-control__hide--spell_settings, .sheet-control__hide--weapon_settings, .sheet-control__hide--armour_settings, .sheet-control__hide--trappings_settings, .sheet-control__hide--species_settings, .sheet-control__hide--career_settings, .sheet-control__hide--critical_settings, .sheet-control__hide--corruption_settings, .sheet-control__hide--psychology_settings, .sheet-control__hide--condition_settings, .sheet-control__hide--talent_settings, .sheet-control__hide--custom, .sheet-control__hide--galactic_basic, .sheet-control__hide--alter, .sheet-control__hide--sense, .sheet-control__hide--control, .sheet-control__hide--throwing, .sheet-control__hide--explosives, .sheet-control__hide--entangling, .sheet-control__hide--exotic, .sheet-control__hide--gunnery, .sheet-control__hide--heavy, .sheet-control__hide--rifle, .sheet-control__hide--pistol, .sheet-control__hide--stun, .sheet-control__hide--two-handed, .sheet-control__hide--polearm, .sheet-control__hide--parry, .sheet-control__hide--vibroweapon, .sheet-control__hide--lightsaber, .sheet-control__hide--brawling, .sheet-control__hide--basic, .sheet-control__hide--custom_settings, .sheet-control__hide--galactic_basic_settings, .sheet-control__hide--alter_settings, .sheet-control__hide--sense_settings, .sheet-control__hide--control_settings, .sheet-control__hide--throwing_settings, .sheet-control__hide--explosives_settings, .sheet-control__hide--entangling_settings, .sheet-control__hide--exotic_settings, .sheet-control__hide--gunnery_settings, .sheet-control__hide--heavy_settings, .sheet-control__hide--rifle_settings, .sheet-control__hide--pistol_settings, .sheet-control__hide--stun_settings, .sheet-control__hide--two-handed_settings, .sheet-control__hide--polearm_settings, .sheet-control__hide--parry_settings, .sheet-control__hide--vibroweapon_settings, .sheet-control__hide--lightsaber_settings, .sheet-control__hide--brawling_settings, .sheet-control__hide--basic_settings, .sheet-control__hide--zero-g_settings, .sheet-control__hide--survival_settings, .sheet-control__hide--streetwise_settings, .sheet-control__hide--stealth_settings, .sheet-control__hide--ride_settings, .sheet-control__hide--perception_settings, .sheet-control__hide--navigation_settings, .sheet-control__hide--melee_settings, .sheet-control__hide--leadership_settings, .sheet-control__hide--intuition_settings, .sheet-control__hide--intimidate_settings, .sheet-control__hide--haggle_settings, .sheet-control__hide--gamble_settings, .sheet-control__hide--entertain_settings, .sheet-control__hide--endurance_settings, .sheet-control__hide--drive_settings, .sheet-control__hide--dodge_settings, .sheet-control__hide--cool_settings, .sheet-control__hide--climb_settings, .sheet-control__hide--charm_settings, .sheet-control__hide--carouse_settings, .sheet-control__hide--bribery_settings, .sheet-control__hide--athletics_settings, .sheet-control__hide--art_settings, .sheet-control__hide--animal-handling_settings, .sheet-control__hide--trade_settings, .sheet-control__hide--track_settings, .sheet-control__hide--tactics_settings, .sheet-control__hide--swim_settings, .sheet-control__hide--slicing_settings, .sheet-control__hide--sleight-of-hand_settings, .sheet-control__hide--security_settings, .sheet-control__hide--research_settings, .sheet-control__hide--ranged_settings, .sheet-control__hide--pilot_settings, .sheet-control__hide--perform_settings, .sheet-control__hide--medicine_settings, .sheet-control__hide--mechanics_settings, .sheet-control__hide--language_settings, .sheet-control__hide--knowledge_settings, .sheet-control__hide--force_settings, .sheet-control__hide--deceive_settings, .sheet-control__hide--demolitions_settings, .sheet-control__hide--computers_settings, .sheet-control__hide--settings, .sheet-control__hide--astrogation_settings, .sheet-control__hide--fellowship, .sheet-control__hide--willpower, .sheet-control__hide--intelligence, .sheet-control__hide--dexterity, .sheet-control__hide--agility, .sheet-control__hide--initiative, .sheet-control__hide--toughness, .sheet-control__hide--strength, .sheet-control__hide--ballistic_skill, .sheet-control__hide--weapon_skill {
+.sheet-sl-npcsettings__wrapper, .sheet-control__hide--npctalent_settings, .sheet-control__hide--npctrait_settings, .sheet-control__hide--npcattack_settings, .sheet-control__hide--Custom, .sheet-control__hide--skill, .sheet-control__hide--characteristic, .sheet-sl-criticaltable__row .sheet-sl-criticaltable__cell--description, .sheet-sl-corruptiontable__row .sheet-sl-corruptiontable__cell--description, .sheet-sl-psychologytable__row .sheet-sl-psychologytable__cell--description, .sheet-sl-conditiontable__row .sheet-sl-conditiontable__cell--description, .sheet-sl-talenttable__row .sheet-sl-talenttable__cell--description, .sheet-control__hide--spell_settings, .sheet-control__hide--weapon_settings, .sheet-control__hide--armour_settings, .sheet-control__hide--trappings_settings, .sheet-control__hide--species_settings, .sheet-control__hide--career_settings, .sheet-control__hide--critical_settings, .sheet-control__hide--corruption_settings, .sheet-control__hide--psychology_settings, .sheet-control__hide--condition_settings, .sheet-control__hide--talent_settings, .sheet-control__hide--urban, .sheet-control__hide--underground, .sheet-control__hide--rural, .sheet-control__hide--water, .sheet-control__hide--land, .sheet-control__hide--air, .sheet-control__hide--starship, .sheet-control__hide--speeder, .sheet-control__hide--lightsaber, .sheet-control__hide--brawling, .sheet-control__hide--2h, .sheet-control__hide--1h, .sheet-control__hide--custom, .sheet-control__hide--alter, .sheet-control__hide--control, .sheet-control__hide--sense, .sheet-control__hide--thrown, .sheet-control__hide--ordnance, .sheet-control__hide--exotic, .sheet-control__hide--blaster, .sheet-control__hide--archaic, .sheet-control__hide--space_station, .sheet-control__hide--capital_ship, .sheet-control__hide--mega_freighter, .sheet-control__hide--urban_settings, .sheet-control__hide--underground_settings, .sheet-control__hide--rural_settings, .sheet-control__hide--water_settings, .sheet-control__hide--land_settings, .sheet-control__hide--air_settings, .sheet-control__hide--starship_settings, .sheet-control__hide--speeder_settings, .sheet-control__hide--lightsaber_settings, .sheet-control__hide--brawling_settings, .sheet-control__hide--2h_settings, .sheet-control__hide--1h_settings, .sheet-control__hide--custom_settings, .sheet-control__hide--alter_settings, .sheet-control__hide--control_settings, .sheet-control__hide--sense_settings, .sheet-control__hide--thrown_settings, .sheet-control__hide--ordnance_settings, .sheet-control__hide--exotic_settings, .sheet-control__hide--blaster_settings, .sheet-control__hide--archaic_settings, .sheet-control__hide--space_station_settings, .sheet-control__hide--capital_ship_settings, .sheet-control__hide--mega_freighter_settings, .sheet-control__hide--stealth_settings, .sheet-control__hide--ride_settings, .sheet-control__hide--pilot_settings, .sheet-control__hide--perception_settings, .sheet-control__hide--outdoor-survival_settings, .sheet-control__hide--navigation_settings, .sheet-control__hide--melee_settings, .sheet-control__hide--leadership_settings, .sheet-control__hide--intuition_settings, .sheet-control__hide--intimidate_settings, .sheet-control__hide--haggle_settings, .sheet-control__hide--gossip_settings, .sheet-control__hide--gamble_settings, .sheet-control__hide--entertain_settings, .sheet-control__hide--endurance_settings, .sheet-control__hide--dodge_settings, .sheet-control__hide--cool_settings, .sheet-control__hide--consume-intoxicant_settings, .sheet-control__hide--climb_settings, .sheet-control__hide--charm-creature_settings, .sheet-control__hide--charm_settings, .sheet-control__hide--bribery_settings, .sheet-control__hide--athletics_settings, .sheet-control__hide--art_settings, .sheet-control__hide--force_settings, .sheet-control__hide--track_settings, .sheet-control__hide--swim_settings, .sheet-control__hide--slice-security-system_settings, .sheet-control__hide--sleight-of-hand_settings, .sheet-control__hide--research_settings, .sheet-control__hide--ranged_settings, .sheet-control__hide--profession_settings, .sheet-control__hide--play_settings, .sheet-control__hide--pilot-capital-ship_settings, .sheet-control__hide--perform_settings, .sheet-control__hide--meditate_settings, .sheet-control__hide--medicine_settings, .sheet-control__hide--lore_settings, .sheet-control__hide--language_settings, .sheet-control__hide--eva1uate_settings, .sheet-control__hide--demolitions_settings, .sheet-control__hide--creature-training_settings, .sheet-control__hide--creature-care_settings, .sheet-control__hide--settings, .sheet-control__hide--codes_settings, .sheet-control__hide--fellowship, .sheet-control__hide--willpower, .sheet-control__hide--intelligence, .sheet-control__hide--dexterity, .sheet-control__hide--agility, .sheet-control__hide--initiative, .sheet-control__hide--toughness, .sheet-control__hide--strength, .sheet-control__hide--ballistic_skill, .sheet-control__hide--weapon_skill {
   display: none;
 }
 
@@ -1526,7 +1769,7 @@ input[name*=characteristic][value=fellowship] ~ .sheet-control__hide--fellowship
   display: block;
 }
 
-input[name*=npc_settings][value=on] + .sheet-sl-npcsettings__wrapper, input[name*=settings][value="1"] + div > .sheet-control__hide--npctalent_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npctrait_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npcattack_settings, input[name*=type][value=Custom] ~ .sheet-control__hide--Custom, input[name=attr_talent_test_type][value=skill] ~ .sheet-control__hide--skill, input[name=attr_talent_test_type][value=characteristic] ~ .sheet-control__hide--characteristic, .sheet-sl-criticaltable__row input[name=attr_critical_toggle][value="1"] + .sheet-sl-criticaltable__cell--description, .sheet-sl-corruptiontable__row input[name=attr_corruption_toggle][value="1"] + .sheet-sl-corruptiontable__cell--description, .sheet-sl-psychologytable__row input[name=attr_psychology_toggle][value="1"] + .sheet-sl-psychologytable__cell--description, .sheet-sl-conditiontable__row input[name=attr_condition_toggle][value="1"] + .sheet-sl-conditiontable__cell--description, .sheet-sl-talenttable__row input[name=attr_talent_toggle][value="1"] + .sheet-sl-talenttable__cell--description, input[name*=settings][value="1"] + div > .sheet-control__hide--spell_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--weapon_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--armour_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--trappings_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--species_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--career_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--critical_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--corruption_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--psychology_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--condition_settings, input[name*=settings][value="1"] + div > div[class*=settings], input[name*=settings][value="1"] + div > .sheet-control__hide--talent_settings, input[name*=control][value=on] + .sheet-control__hide--custom, input[name*=control][value=on] + .sheet-control__hide--galactic_basic, input[name*=control][value=on] + .sheet-control__hide--alter, input[name*=control][value=on] + .sheet-control__hide--sense, input[name*=control][value=on] + .sheet-control__hide--control, input[name*=control][value=on] + .sheet-control__hide--throwing, input[name*=control][value=on] + .sheet-control__hide--explosives, input[name*=control][value=on] + .sheet-control__hide--entangling, input[name*=control][value=on] + .sheet-control__hide--exotic, input[name*=control][value=on] + .sheet-control__hide--gunnery, input[name*=control][value=on] + .sheet-control__hide--heavy, input[name*=control][value=on] + .sheet-control__hide--rifle, input[name*=control][value=on] + .sheet-control__hide--pistol, input[name*=control][value=on] + .sheet-control__hide--stun, input[name*=control][value=on] + .sheet-control__hide--two-handed, input[name*=control][value=on] + .sheet-control__hide--polearm, input[name*=control][value=on] + .sheet-control__hide--parry, input[name*=control][value=on] + .sheet-control__hide--vibroweapon, input[name*=control][value=on] + .sheet-control__hide--lightsaber, input[name*=control][value=on] + .sheet-control__hide--brawling, input[name*=control][value=on] + .sheet-control__hide--basic, input[name*=settings][value="1"] ~ div > .sheet-control__hide--custom_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--galactic_basic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--alter_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sense_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--control_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--throwing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--explosives_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entangling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--exotic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gunnery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--heavy_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--rifle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pistol_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stun_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--two-handed_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--polearm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--parry_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--vibroweapon_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--lightsaber_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--brawling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--basic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--zero-g_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--survival_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--streetwise_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stealth_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ride_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perception_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--navigation_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--melee_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--leadership_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intuition_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intimidate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--haggle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gamble_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entertain_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--endurance_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--drive_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--dodge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--cool_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--climb_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--charm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--carouse_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--bribery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--athletics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--art_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--animal-handling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--trade_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--track_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--tactics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--swim_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--slicing_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sleight-of-hand_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--security_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--research_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ranged_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pilot_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perform_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--medicine_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--mechanics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--language_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--knowledge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--force_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--deceive_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--demolitions_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--computers_settings, input[name*=settings][value="1"] ~ div > div[class*=settings], input[name*=settings][value="1"] ~ div > .sheet-control__hide--astrogation_settings {
+input[name*=npc_settings][value=on] + .sheet-sl-npcsettings__wrapper, input[name*=settings][value="1"] + div > .sheet-control__hide--npctalent_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npctrait_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--npcattack_settings, input[name*=type][value=Custom] ~ .sheet-control__hide--Custom, input[name=attr_talent_test_type][value=skill] ~ .sheet-control__hide--skill, input[name=attr_talent_test_type][value=characteristic] ~ .sheet-control__hide--characteristic, .sheet-sl-criticaltable__row input[name=attr_critical_toggle][value="1"] + .sheet-sl-criticaltable__cell--description, .sheet-sl-corruptiontable__row input[name=attr_corruption_toggle][value="1"] + .sheet-sl-corruptiontable__cell--description, .sheet-sl-psychologytable__row input[name=attr_psychology_toggle][value="1"] + .sheet-sl-psychologytable__cell--description, .sheet-sl-conditiontable__row input[name=attr_condition_toggle][value="1"] + .sheet-sl-conditiontable__cell--description, .sheet-sl-talenttable__row input[name=attr_talent_toggle][value="1"] + .sheet-sl-talenttable__cell--description, input[name*=settings][value="1"] + div > .sheet-control__hide--spell_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--weapon_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--armour_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--trappings_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--species_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--career_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--critical_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--corruption_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--psychology_settings, input[name*=settings][value="1"] + div > .sheet-control__hide--condition_settings, input[name*=settings][value="1"] + div > div[class*=settings], input[name*=settings][value="1"] + div > .sheet-control__hide--talent_settings, input[name*=control][value=on] + .sheet-control__hide--urban, input[name*=control][value=on] + .sheet-control__hide--underground, input[name*=control][value=on] + .sheet-control__hide--rural, input[name*=control][value=on] + .sheet-control__hide--water, input[name*=control][value=on] + .sheet-control__hide--land, input[name*=control][value=on] + .sheet-control__hide--air, input[name*=control][value=on] + .sheet-control__hide--starship, input[name*=control][value=on] + .sheet-control__hide--speeder, input[name*=control][value=on] + .sheet-control__hide--lightsaber, input[name*=control][value=on] + .sheet-control__hide--brawling, input[name*=control][value=on] + .sheet-control__hide--2h, input[name*=control][value=on] + .sheet-control__hide--1h, input[name*=control][value=on] + .sheet-control__hide--custom, input[name*=control][value=on] + .sheet-control__hide--alter, input[name*=control][value=on] + .sheet-control__hide--control, input[name*=control][value=on] + .sheet-control__hide--sense, input[name*=control][value=on] + .sheet-control__hide--thrown, input[name*=control][value=on] + .sheet-control__hide--ordnance, input[name*=control][value=on] + .sheet-control__hide--exotic, input[name*=control][value=on] + .sheet-control__hide--blaster, input[name*=control][value=on] + .sheet-control__hide--archaic, input[name*=control][value=on] + .sheet-control__hide--space_station, input[name*=control][value=on] + .sheet-control__hide--capital_ship, input[name*=control][value=on] + .sheet-control__hide--mega_freighter, input[name*=settings][value="1"] ~ div > .sheet-control__hide--urban_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--underground_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--rural_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--water_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--land_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--air_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--starship_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--speeder_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--lightsaber_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--brawling_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--2h_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--1h_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--custom_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--alter_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--control_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sense_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--thrown_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ordnance_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--exotic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--blaster_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--archaic_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--space_station_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--capital_ship_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--mega_freighter_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--stealth_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ride_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pilot_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perception_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--outdoor-survival_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--navigation_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--melee_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--leadership_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intuition_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--intimidate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--haggle_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gossip_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--gamble_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--entertain_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--endurance_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--dodge_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--cool_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--consume-intoxicant_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--climb_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--charm-creature_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--charm_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--bribery_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--athletics_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--art_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--force_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--track_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--swim_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--slice-security-system_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--sleight-of-hand_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--research_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--ranged_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--profession_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--play_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--pilot-capital-ship_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--perform_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--meditate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--medicine_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--lore_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--language_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--eva1uate_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--demolitions_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--creature-training_settings, input[name*=settings][value="1"] ~ div > .sheet-control__hide--creature-care_settings, input[name*=settings][value="1"] ~ div > div[class*=settings], input[name*=settings][value="1"] ~ div > .sheet-control__hide--codes_settings {
   display: grid;
 }
 

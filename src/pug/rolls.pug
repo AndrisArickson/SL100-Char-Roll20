@@ -60,7 +60,7 @@
     rolls.skills = {};
 
     [...skills.advanced, ...skills.basic].forEach(skill => {
-        const attr = skill.name.toLowerCase().replace(/ /g,"-");
+        const attr = skillAttr(skill);
 
         const roll_values = {
             roll_name: `${skill.name}`,
@@ -76,7 +76,7 @@
 
         skill.specialisations.forEach(specialisation => {
 
-            const attr = specialisation.toLowerCase().replace(/ /g,"_");
+            const attr = specAttr(specialisation);
 
             const rollName = (specialisation === "Custom") ? "@{custom_name}" : specialisation;
 
@@ -171,6 +171,7 @@
             roll_duration: `@{spell_duration}`,
             roll_range: `@{spell_range}`,
             roll_cn: `[[@{spell_cn}-?{Focus|0}]]`,
+            roll_rank: `[[@{spell_rank}]]`,
             roll_text: `@{spell_description}`,
             roll_spell: 1,
         }
@@ -216,6 +217,16 @@
 
         rolls.npctalent = makeRoll(roll_values)
     }
+
+    // Random talent: d100 on the table on the Talents page; the roll template
+    // names the result (see random-talent in rolltemplates.pug).
+    rolls.random_talent = [
+        `@{roll_whisper}`,
+        `&{template:sl}`,
+        `{{name=@{character_name}}}`,
+        `{{roll_name=Random Talent}}`,
+        `{{random_talent=[[1d100]]}}`,
+    ].join(" ");
 
     rolls.combat = {};
 

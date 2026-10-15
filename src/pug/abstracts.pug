@@ -7,34 +7,26 @@
         {
             "name":"Species",
             "field":"select",
-            "options":[
-                "",
-                "Human",
-                "Bothan",
-                "Duros",
-                "Mon Calamari",
-                "Rodian",
-                "Trandoshan",
-                "Twi'lek",
-                "Wookiee",
-                "Zabrak",
-                "Droid",
-            ]
+            // Species, generated into sl100-data.pug.
+            "options":["", ...sl100Data.species.map(sp => sp.name)]
         },
         {
             "name":"Class",
             "field":"select",
-            "options":[
-                "Fringer",
-                "Scoundrel",
-                "Soldier",
-                "Pilot",
-                "Technician",
-                "Noble",
-                "Diplomat",
-                "Bounty Hunter",
-                "Force Adept",
-            ]
+            // The career classes on the Careers page.
+            "options":["", ...[...new Set(sl100Data.careers.map(c => c.class))]]
+        },
+        {
+            "name":"Origin",
+            "field":"select",
+            // Origin, generated into sl100-data.pug.
+            "options":["", ...sl100Data.origins.map(o => o.name)]
+        },
+        {
+            "name":"Faction",
+            "field":"select",
+            // Faction (selector only: the Faction page gives no game effects).
+            "options":["", ...sl100Data.factions.map(f => f.name)]
         },
         {
             "name":"Career",
@@ -78,7 +70,7 @@
         "advances",
         "settings",
     ]
-    
+
     const characteristics = [
         {
             "name":"Weapon Skill",
@@ -140,11 +132,13 @@
             "field":"text",
         },
         {
-            "name":"Walk",
+            "name":"Walk (m)",
+            "attr":"walk",
             "field":"text",
         },
         {
-            "name":"Run",
+            "name":"Run (m)",
+            "attr":"run",
             "field":"text",
         },
     ];
@@ -156,7 +150,7 @@
             "field": "number"
         },
         {
-            "name": "Force Points",
+            "name": "Fortune",
             "attr": "fortune",
             "field": "number"
         },
@@ -192,299 +186,81 @@
         },
     ]
 
-    // Skill lists. "shown" lists the specialisations displayed on a new sheet;
-    // players toggle the rest from the skill's settings cog.
-    // The attribute for each skill is its name in lower case with
-    // spaces replaced by "-" (specialisations use "_"). Any change here must be
-    // mirrored in src/js/sheetworkers.js (sl.skills / sl.specialisations /
+    // Skill lists, from the Skills page. The attribute for each skill is
+    // its `attr`, or its name in lower case with spaces replaced by "-";
+    // specialisations use lower case with " " and "/" replaced by "_". Any change here must be mirrored
+    // in src/js/sheetworkers.js (sl.skills / sl.specialisations /
     // sl.repeating_skills) and src/scss/_abstracts.scss ($skills /
     // $specialisations); `npm run check` verifies that they agree.
+    //
+    // "shown" lists the specialisations displayed on a new sheet; players
+    // toggle the rest from the skill's settings cog. "forced: 1" keeps a list
+    // of extra specialisation rows as well as the fixed ones, so career
+    // entries such as "Melee (Brawling)" still find a row.
+    //
     const skills = {
         advanced: [
-            {
-                "name":"Astrogation",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false,
-            },
-            {
-                "name":"Computers",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false,
-            },
-            {
-                "name":"Demolitions",
-                "characteristic":"dexterity",
-                "type":"advanced",
-                "grouped":false,
-            },
-            {
-                "name":"Deceive",
-                "characteristic":"fellowship",
-                "type":"advanced",
-                "grouped":false,
-            },
-            {
-                "name":"Force",
-                "characteristic":"willpower",
-                "type":"advanced",
-                "grouped":true,
-                "specialisations":["Control","Sense","Alter","Custom"],
-            },
-            {
-                "name":"Knowledge",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":true
-            },
-            {
-                "name":"Language",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":true,
-                "specialisations":["Galactic Basic"],
-                "shown":["Galactic Basic"],
-                "forced":1
-            },
-            {
-                "name":"Mechanics",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false,
-            },
-            {
-                "name":"Medicine",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false,
-            },
-            {
-                "name":"Perform",
-                "characteristic":"agility",
-                "type":"advanced",
-                "grouped":true
-            },
-            {
-                "name":"Pilot",
-                "characteristic":"agility",
-                "type":"advanced",
-                "grouped":true
-            },
-            {
-                "name":"Ranged",
-                "characteristic":"ballistic skill",
-                "type":"advanced",
-                "grouped":true,
-                "specialisations":["Pistol", "Rifle", "Heavy", "Gunnery", "Exotic", "Entangling", "Explosives", "Throwing"],
-                "shown":["Pistol", "Rifle"],
-            },
-            {
-                "name":"Research",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Security",
-                "characteristic":"dexterity",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Sleight of Hand",
-                "characteristic":"dexterity",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Slicing",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Swim",
-                "characteristic":"strength",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Tactics",
-                "characteristic":"intelligence",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Track",
-                "characteristic":"initiative",
-                "type":"advanced",
-                "grouped":false
-            },
-            {
-                "name":"Trade",
-                "characteristic":"dexterity",
-                "type":"advanced",
-                "grouped":true
-            },
+            { "name":"Codes", "characteristic":"intelligence", "type":"advanced", "grouped":true },
+            { "name":"Creature Care", "characteristic":"intelligence", "type":"advanced", "grouped":false },
+            { "name":"Creature Training", "characteristic":"intelligence", "type":"advanced", "grouped":true },
+            { "name":"Demolitions", "characteristic":"dexterity", "type":"advanced", "grouped":false },
+            { "name":"Evaluate", "characteristic":"intelligence", "type":"advanced", "grouped":false },
+            { "name":"Language", "characteristic":"intelligence", "type":"advanced", "grouped":true },
+            { "name":"Lore", "characteristic":"intelligence", "type":"advanced", "grouped":true },
+            { "name":"Medicine", "characteristic":"intelligence", "type":"advanced", "grouped":false },
+            { "name":"Meditate", "characteristic":"willpower", "type":"advanced", "grouped":false },
+            { "name":"Perform", "characteristic":"agility", "type":"advanced", "grouped":true },
+            { "name":"Pilot (Capital Ship)", "attr":"pilot-capital-ship", "characteristic":"agility", "type":"advanced", "grouped":true,
+                "specialisations":["Mega Freighter","Capital Ship","Space Station"] },
+            { "name":"Play", "characteristic":"dexterity", "type":"advanced", "grouped":true },
+            { "name":"Profession", "characteristic":"dexterity", "type":"advanced", "grouped":true },
+            { "name":"Ranged", "characteristic":"ballistic skill", "type":"advanced", "grouped":true, "forced":1,
+                "specialisations":["Archaic","Blaster","Exotic","Ordnance","Thrown"], "shown":["Blaster"] },
+            { "name":"Research", "characteristic":"intelligence", "type":"advanced", "grouped":false },
+            { "name":"Sleight of Hand", "characteristic":"dexterity", "type":"advanced", "grouped":false },
+            { "name":"Slice Security System", "characteristic":"dexterity", "type":"advanced", "grouped":false },
+            { "name":"Swim", "characteristic":"strength", "type":"advanced", "grouped":false },
+            { "name":"Track", "characteristic":"initiative", "type":"advanced", "grouped":false },
+            { "name":"Use the Force", "attr":"force", "characteristic":"willpower", "type":"advanced", "grouped":true,
+                "specialisations":["Sense","Control","Alter","Custom"] },                                                // disciplines from the Force Talents on the Talents page
         ],
         basic: [
-            {
-                "name":"Animal Handling",
-                "characteristic":"willpower",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Art",
-                "characteristic":"dexterity",
-                "type":"basic",
-                "grouped":true,
-            },
-            {
-                "name":"Athletics",
-                "characteristic":"agility",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Bribery",
-                "characteristic":"fellowship",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Carouse",
-                "characteristic":"toughness",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Charm",
-                "characteristic":"fellowship",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Climb",
-                "characteristic":"strength",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Cool",
-                "characteristic":"willpower",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Dodge",
-                "characteristic":"agility",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Drive",
-                "characteristic":"agility",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Endurance",
-                "characteristic":"toughness",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Entertain",
-                "characteristic":"fellowship",
-                "type":"basic",
-                "grouped":true,
-            },
-            {
-                "name":"Gamble",
-                "characteristic":"intelligence",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Haggle",
-                "characteristic":"fellowship",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Intimidate",
-                "characteristic":"strength",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Intuition",
-                "characteristic":"initiative",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Leadership",
-                "characteristic":"fellowship",
-                "type":"basic",
-                "grouped":false
-            },
-            {
-                "name":"Melee",
-                "characteristic":"weapon skill",
-                "type":"basic",
-                "grouped":true,
-                "specialisations":["Basic","Brawling","Lightsaber","Vibroweapon","Parry","Polearm","Two-Handed","Stun"],
-                "shown":["Basic","Brawling"],
-            },
-            {
-                "name":"Navigation",
-                "characteristic":"initiative",
-                "type":"basic",
-                "grouped":false
-            },
-            {
-                "name":"Perception",
-                "characteristic":"initiative",
-                "type":"basic",
-                "grouped":false
-            },
-            {
-                "name":"Ride",
-                "characteristic":"agility",
-                "type":"basic",
-                "grouped":true
-            },
-            {
-                "name":"Stealth",
-                "characteristic":"agility",
-                "type":"basic",
-                "grouped":true
-            },
-            {
-                "name":"Streetwise",
-                "characteristic":"fellowship",
-                "type":"basic",
-                "grouped":false,
-            },
-            {
-                "name":"Survival",
-                "characteristic":"intelligence",
-                "type":"basic",
-                "grouped":false
-            },
-            {
-                "name":"Zero-G",
-                "characteristic":"agility",
-                "type":"basic",
-                "grouped":false
-            },
+            { "name":"Art", "characteristic":"dexterity", "type":"basic", "grouped":true },
+            { "name":"Athletics", "characteristic":"agility", "type":"basic", "grouped":false },
+            { "name":"Bribery", "characteristic":"fellowship", "type":"basic", "grouped":false },
+            { "name":"Charm", "characteristic":"fellowship", "type":"basic", "grouped":false },
+            { "name":"Charm Creature", "characteristic":"willpower", "type":"basic", "grouped":false },                  // described inside Charm; not in the Skills list
+            { "name":"Climb", "characteristic":"strength", "type":"basic", "grouped":false },
+            { "name":"Consume Intoxicant", "characteristic":"toughness", "type":"basic", "grouped":false },
+            { "name":"Cool", "characteristic":"willpower", "type":"basic", "grouped":false },
+            { "name":"Dodge", "characteristic":"agility", "type":"basic", "grouped":false },
+            { "name":"Endurance", "characteristic":"toughness", "type":"basic", "grouped":false },
+            { "name":"Entertain", "characteristic":"fellowship", "type":"basic", "grouped":true },
+            { "name":"Gamble", "characteristic":"intelligence", "type":"basic", "grouped":false },
+            { "name":"Gossip", "characteristic":"fellowship", "type":"basic", "grouped":false },
+            { "name":"Haggle", "characteristic":"fellowship", "type":"basic", "grouped":false },
+            { "name":"Intimidate", "characteristic":"strength", "type":"basic", "grouped":false },
+            { "name":"Intuition", "characteristic":"initiative", "type":"basic", "grouped":false },
+            { "name":"Leadership", "characteristic":"fellowship", "type":"basic", "grouped":false },
+            { "name":"Melee", "characteristic":"weapon skill", "type":"basic", "grouped":true, "forced":1,
+                "specialisations":["1H","2H","Brawling","Lightsaber"], "shown":["1H","Brawling"] },
+            { "name":"Navigation", "characteristic":"initiative", "type":"basic", "grouped":false },
+            { "name":"Outdoor Survival", "characteristic":"intelligence", "type":"basic", "grouped":false },
+            { "name":"Perception", "characteristic":"initiative", "type":"basic", "grouped":false },
+            { "name":"Pilot", "characteristic":"agility", "type":"basic", "grouped":true, "forced":1,
+                "specialisations":["Speeder","Starship"], "shown":["Speeder","Starship"] },
+            { "name":"Ride", "characteristic":"agility", "type":"basic", "grouped":true, "forced":1,
+                "specialisations":["Air","Land","Water"] },
+            { "name":"Stealth", "characteristic":"agility", "type":"basic", "grouped":true, "forced":1,
+                "specialisations":["Rural","Underground","Urban"] },
         ]
     };
 
-    // Skills that carry fixed specialisation rows (Melee, Ranged, Force, Language).
+    // Attribute names (see the comment above).
+    const skillAttr = (skill) => skill.attr || skill.name.toLowerCase().replace(/ /g, "-");
+    const specAttr = (spec) => spec.toLowerCase().replace(/[ \/]/g, "_");
+
+    // Skills that carry fixed specialisation rows.
     const specialised_skills = [...skills.basic, ...skills.advanced].filter(skill => skill.specialisations);
     const findSkill = (name) => [...skills.basic, ...skills.advanced].find(skill => skill.name === name);
 

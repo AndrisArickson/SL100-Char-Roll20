@@ -1,0 +1,292 @@
+// Components added for the SL100 rules: Extra Points, creation helper,
+// origin/faction blocks, library pickers and "rules TBD" hints.
+
+.sheet-sl-extrapoints {
+    display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px $margin-small;
+    padding: 2px $margin-small;
+
+    border-top: $grid-border;
+
+    &__item {
+        display: flex;
+            flex-direction: column;
+            align-items: center;
+    }
+
+    &__label {
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    &__check {
+        min-height: 0;
+        padding: 0 $margin-small;
+
+        color: $sl-fail;
+        font-size: 11px;
+        font-style: italic;
+    }
+}
+
+.sheet-sl-wrapper .sheet-sl-panelbuttons {
+    display: flex;
+        justify-content: flex-end;
+        gap: $margin-small;
+    padding: 2px $margin-small;
+
+    button.sheet-sl-panelbuttons__button[type="action"] {
+        width: auto;
+        padding: 1px 8px;
+
+        border: 1px solid $sl-steel;
+        border-radius: 3px;
+        background: linear-gradient(180deg, $sl-frame-light, $sl-frame);
+        color: #e6edf4;
+
+        font-family: $font-family-display;
+        font-size: 9px;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+
+        &:hover {
+            color: $sl-accent;
+        }
+    }
+}
+
+// Small italic hint for fields the rules documents leave undefined.
+.sheet-sl-tbd {
+    color: $sl-accent-dark;
+    font-size: 10px;
+    font-style: italic;
+}
+
+.sheet-sl-creation {
+
+    &__row {
+        display: grid;
+            grid-template-columns: 1fr 9em;
+            align-items: center;
+        padding: 1px $margin-small;
+
+        border-bottom: $grid-border;
+    }
+
+    &__row--method {
+        grid-template-columns: 4em 1fr;
+    }
+
+    &__label {
+        font-size: 12px;
+    }
+
+    &__value {
+        text-align: center;
+    }
+
+    &__warning {
+        padding: 2px $margin-small;
+
+        color: $sl-fail;
+        font-size: 11px;
+        font-style: italic;
+        white-space: pre-line;
+    }
+}
+
+// The help text and point-buy rows follow the chosen method.
+.sheet-sl-creation__pointbuy,
+.sheet-sl-creation__help {
+    display: none;
+}
+
+.sheet-sl-creation__help {
+    margin: 0;
+    padding: 2px $margin-small;
+
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+.sheet-sl-creation__status {
+    padding: 2px $margin-small;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+input[name="attr_creation_method"][value="pointbuy"] + .sheet-sl-creation__body {
+    .sheet-sl-creation__pointbuy,
+    .sheet-sl-creation__help--pointbuy {
+        display: block;
+    }
+}
+
+input[name="attr_creation_method"][value="rolled"] + .sheet-sl-creation__body,
+input[name="attr_creation_method"][value="rearranged"] + .sheet-sl-creation__body,
+input[name="attr_creation_method"][value="rerolled"] + .sheet-sl-creation__body {
+    .sheet-sl-creation__help--rolled {
+        display: block;
+    }
+}
+
+.sheet-sl-speciesinfo {
+    display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+    &__notes {
+        font-size: 11px;
+        font-style: italic;
+        white-space: pre-line;
+    }
+}
+
+.sheet-sl-speciesmods__grid {
+    display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+}
+
+.sheet-sl-speciesmods__item {
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    font-size: 10px;
+}
+
+.sheet-sl-origin {
+    padding: 2px $margin-small;
+
+    &__info {
+        display: flex;
+            flex-direction: column;
+            gap: 2px;
+        margin-bottom: $margin-small;
+    }
+
+    &__name {
+        font-family: $font-family-display;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    &__description {
+        font-size: 11px;
+        font-style: italic;
+    }
+
+    &__choice {
+        display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 2px $margin-general;
+        margin-bottom: $margin-small;
+    }
+
+    &__option {
+        grid-column: 2;
+        display: flex;
+            align-items: center;
+            gap: $margin-small;
+
+        input[type="radio"] {
+            width: auto;
+        }
+    }
+}
+
+// Same 3 x +3 / 3 x +5 limit as the species skills.
+input[type="hidden"][name*="origin_disable3"][value="1"] ~ * input[type="radio"][value="3"]:not(:checked),
+input[type="hidden"][name*="origin_disable5"][value="1"] ~ * input[type="radio"][value="5"]:not(:checked) {
+    pointer-events: none;
+    opacity: .5;
+}
+
+.sheet-sl-faction__info {
+    display: flex;
+        flex-direction: column;
+        gap: 2px;
+    padding: 2px $margin-small;
+}
+
+.sheet-sl-faction__group {
+    font-size: 11px;
+}
+
+.sheet-sl-library {
+    display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: $margin-general;
+}
+
+// Selects that switch to a text box when "Custom" is chosen (header Species,
+// Class, Origin, Faction; species panel). The WFRP reset used to reveal them
+// with display: unset; this shows them explicitly. The "Custom" rule in
+// control/_hide.scss is more specific and still hides the select then.
+.sheet-sl-wrapper select.sheet-control__custom {
+    display: block;
+}
+
+// Species skills: hidden unless a character from an earlier version uses them.
+.sheet-sl-speciesskills {
+    display: none;
+}
+
+.sheet-sl-speciesskills__flag[value="1"] + .sheet-sl-speciesskills {
+    display: block;
+}
+
+.sheet-sl-speciesskills__flag:not([value="1"]) ~ .sheet-sl-settings__col {
+    grid-column: 1 / -1;
+}
+
+// One-line rules reminders under the Destiny and Resilience panels (Characteristics).
+.sheet-sl-reminder {
+    grid-column: 1 / -1;
+    margin: 2px 0 0;
+    padding: 0 $margin-small;
+
+    font-size: 10px;
+    font-style: italic;
+    line-height: 1.25;
+}
+
+// Granted Skills & Talents (Advances tab).
+.sheet-sl-granttable {
+
+    &__row,
+    &__row--head {
+        display: grid;
+            grid-template-columns: 4.4rem 1fr 4.8rem 1fr 2.6rem 2.6rem;
+            gap: 2px;
+            align-items: center;
+        padding: 1px $margin-small;
+
+        border-bottom: $grid-border;
+    }
+
+    &__row--head {
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    &__select,
+    &__input {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+
+        font-size: 12px;
+    }
+}
+
+// Rows a talent added by itself are marked with a yellow edge.
+input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
+    box-shadow: inset 3px 0 0 $sl-accent;
+}

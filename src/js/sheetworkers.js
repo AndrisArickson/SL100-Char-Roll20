@@ -3,7 +3,7 @@ const slModule = ( () => {
     // Global Variables
 
     const sl = {
-        sheet_version: "1.0.0",
+        sheet_version: "1.3.0",
 
         characteristics: [
             "weapon_skill",
@@ -31,116 +31,125 @@ const slModule = ( () => {
             "Fel"
         ],
 
+        // Skill attributes (Skills page; see src/pug/abstracts.pug).
         skills: [
-            "astrogation",
-            "computers",
+            "codes",
+            "creature-care",
+            "creature-training",
             "demolitions",
-            "deceive",
-            "force",
-            "knowledge",
+            "evaluate",
             "language",
-            "mechanics",
+            "lore",
             "medicine",
+            "meditate",
             "perform",
-            "pilot",
+            "pilot-capital-ship",
+            "play",
+            "profession",
             "ranged",
             "research",
-            "security",
             "sleight-of-hand",
-            "slicing",
+            "slice-security-system",
             "swim",
-            "tactics",
             "track",
-            "trade",
-            "animal-handling",
+            "force",
             "art",
             "athletics",
             "bribery",
-            "carouse",
             "charm",
+            "charm-creature",
             "climb",
+            "consume-intoxicant",
             "cool",
             "dodge",
-            "drive",
             "endurance",
             "entertain",
             "gamble",
+            "gossip",
             "haggle",
             "intimidate",
             "intuition",
             "leadership",
             "melee",
             "navigation",
+            "outdoor-survival",
             "perception",
+            "pilot",
             "ride",
-            "stealth",
-            "streetwise",
-            "survival",
-            "zero-g"
+            "stealth"
         ],
 
         // Weapon groups: the Melee and Ranged specialisations.
         weapon_specialisations: [
-            "basic",
+            "1h",
+            "2h",
             "brawling",
             "lightsaber",
-            "vibroweapon",
-            "parry",
-            "polearm",
-            "two-handed",
-            "stun",
-            "pistol",
-            "rifle",
-            "heavy",
-            "gunnery",
+            "archaic",
+            "blaster",
             "exotic",
-            "entangling",
-            "explosives",
-            "throwing"
+            "ordnance",
+            "thrown"
         ],
 
-        // Force specialisations a Force power can be rolled against.
+        // Use the Force disciplines a Force power can be rolled against.
         force_specialisations: [
-            "control",
             "sense",
+            "control",
             "alter"
         ],
 
         specialisations: [
-            "basic",
+            "mega_freighter",
+            "capital_ship",
+            "space_station",
+            "archaic",
+            "blaster",
+            "exotic",
+            "ordnance",
+            "thrown",
+            "sense",
+            "control",
+            "alter",
+            "custom",
+            "1h",
+            "2h",
             "brawling",
             "lightsaber",
-            "vibroweapon",
-            "parry",
-            "polearm",
-            "two-handed",
-            "stun",
-            "pistol",
-            "rifle",
-            "heavy",
-            "gunnery",
-            "exotic",
-            "entangling",
-            "explosives",
-            "throwing",
-            "control",
-            "sense",
-            "alter",
-            "galactic_basic",
-            "custom"
+            "speeder",
+            "starship",
+            "air",
+            "land",
+            "water",
+            "rural",
+            "underground",
+            "urban"
         ],
 
         repeating_skills: [
+            "codes",
+            "creature-training",
+            "language",
+            "lore",
+            "perform",
+            "play",
+            "profession",
+            "ranged",
             "art",
             "entertain",
-            "ride",
-            "stealth",
-            "knowledge",
-            "language",
-            "perform",
+            "melee",
             "pilot",
-            "trade"
+            "ride",
+            "stealth"
         ],
+
+        // Career/species/origin skill names that are spelling variants of a
+        // skill or specialisation on the sheet (lower case -> attribute).
+        skill_aliases: {
+            "bribe": "bribery",
+            "slice security": "slice-security-system",
+            "pilot (capital ship)": "capital_ship"
+        },
 
         repeating_sections: [
             "talent",
@@ -152,6 +161,8 @@ const slModule = ( () => {
             "weapons"
         ]
     }
+
+    const careerSkillSlots = (level) => (parseInt(level) === 1 ? 12 : 10);
 
     // Sheet Functions
 
@@ -186,16 +197,136 @@ const slModule = ( () => {
     }
 
     const updateSheet = (version) => {
-        let updateAttrs = {};
+        const done = () => setAttrs({sheet_version: sl.sheet_version});
 
-        switch (version) {
-            default:
-                updateAttrs["sheet_version"] = sl.sheet_version;
-            break; 
-        }
+        if (!version || version < "1.1.0") migrateTo110(() => migrateTo120(() => migrateTo130(done)));
+        else if (version < "1.2.0") migrateTo120(() => migrateTo130(done));
+        else if (version < "1.3.0") migrateTo130(done);
+        else done();
+    }
 
-        setAttrs(updateAttrs);
-    }  
+    // 1.1.0: skill list aligned with the Skills page. Skills it renamed keep their
+    // player-entered bonus and notes; Knowledge rows move to Lore. Advances are
+    // recalculated from the career and origin entries, so they need no
+    // copying. Old attributes are left in place. (Weapon groups: see 1.3.0.)
+    const RENAMED_SKILLS = {
+        "carouse": "consume-intoxicant",
+        "survival": "outdoor-survival",
+        "animal-handling": "charm-creature",
+        "security": "slice-security-system",
+    };
+
+    const migrateTo110 = (callback) => {
+        const attrs = [];
+        Object.keys(RENAMED_SKILLS).forEach(old => attrs.push(`${old}_bonus`, `${old}_notes`));
+
+        getSectionIDs("knowledge", knowledgeIds => {
+            knowledgeIds.forEach(id => ["name", "characteristic", "modifier", "notes"].forEach(f => attrs.push(`repeating_knowledge_${id}_specialisation_${f}`)));
+
+            getAttrs(attrs, values => {
+                const update = {};
+
+                Object.entries(RENAMED_SKILLS).forEach(([old, now]) => {
+                    ["bonus", "notes"].forEach(f => {
+                        if (values[`${old}_${f}`]) update[`${now}_${f}`] = values[`${old}_${f}`];
+                    });
+                });
+
+                knowledgeIds.forEach(id => {
+                    const name = values[`repeating_knowledge_${id}_specialisation_name`];
+                    if (!name) return;
+                    const row = `repeating_lore_${generateRowID()}`;
+                    ["name", "characteristic", "modifier", "notes"].forEach(f => {
+                        const v = values[`repeating_knowledge_${id}_specialisation_${f}`];
+                        if (v) update[`${row}_specialisation_${f}`] = v;
+                    });
+                });
+
+                setAttrs(update, {}, callback);
+            });
+        });
+    }
+
+    // 1.2.0: the Species page gives species no skills, so the species skill slots are only
+    // shown on characters that already use them (species_skills_used); their
+    // advances still count, so skill totals and XP do not change. Talent rows
+    // get the characteristic bonus their talent gives (Warrior Born: "WS +5").
+    const migrateTo120 = (callback) => {
+        updateSpeciesSkillsUsed();
+        fillTalentModifiers(callback);
+    };
+
+    // 1.3.0: weapon groups from the Skills page (15 Oct 2026): Melee 1H / 2H / Brawling /
+    // Lightsaber, Ranged Archaic / Blaster / Exotic / Ordnance / Thrown. The
+    // specialisations of 1.0.0 and of the 1.1.0 / 1.2.0 test builds map onto
+    // them as the wiki's consolidation map does (tools/consolidate/skillmap.py):
+    // bonus and notes are copied (the first one found wins), weapon groups and
+    // NPC attack types are renamed. Old attributes are left in place.
+    const WEAPON_GROUP_MAP = {
+        // 1.0.0
+        "basic": "1H", "vibroweapon": "1H", "stun": "1H", "parry": "1H", "polearm": "2H", "two-handed": "2H",
+        "brawling": "Brawling", "lightsaber": "Lightsaber",
+        "pistol": "Blaster", "rifle": "Blaster", "heavy": "Ordnance", "gunnery": "Ordnance",
+        "exotic": "Exotic", "entangling": "Exotic", "explosives": "Thrown", "throwing": "Thrown",
+        // 1.1.0 test builds
+        "1h": "1H", "2h": "2H", "archaic": "Archaic", "blaster": "Blaster", "ordinance": "Ordnance", "wilderness": "",
+        // 1.2.0 test builds
+        "vibroblade": "1H", "stun baton": "1H", "vibro-axe": "2H", "force pike": "2H", "electrostaff": "2H",
+        "blaster pistol": "Blaster", "blaster rifle": "Blaster", "heavy blaster": "Blaster", "disruptor": "Blaster", "sniper": "Blaster",
+        "slugthrower": "Archaic", "bowcaster": "Archaic", "grenade/explosives": "Thrown", "missile/rocket": "Ordnance",
+    };
+    const groupAttr = (group) => group.toLowerCase().replace(/[ \/]/g, "_");
+
+    const migrateTo130 = (callback) => {
+        const oldSpecs = Object.keys(WEAPON_GROUP_MAP).map(groupAttr).filter(a => !sl.specialisations.includes(a));
+        const attrs = [];
+        oldSpecs.forEach(a => attrs.push(`${a}_bonus`, `${a}_notes`));
+        sl.weapon_specialisations.forEach(a => attrs.push(`${a}_bonus`, `${a}_notes`));
+
+        getSectionIDs("weapons", weaponIds => {
+            getSectionIDs("attacks", attackIds => {
+                weaponIds.forEach(id => attrs.push(`repeating_weapons_${id}_weapon_group`));
+                attackIds.forEach(id => attrs.push(`repeating_attacks_${id}_attack_type`));
+
+                getAttrs(attrs, values => {
+                    const update = {};
+                    oldSpecs.forEach(a => {
+                        const group = WEAPON_GROUP_MAP[Object.keys(WEAPON_GROUP_MAP).find(k => groupAttr(k) === a)];
+                        if (!group) return;
+                        const now = groupAttr(group);
+                        ["bonus", "notes"].forEach(f => {
+                            if (values[`${a}_${f}`] && !values[`${now}_${f}`] && !update[`${now}_${f}`]) update[`${now}_${f}`] = values[`${a}_${f}`];
+                        });
+                    });
+                    const mapGroup = (name) => {
+                        const key = (name || "").trim().toLowerCase();
+                        return Object.prototype.hasOwnProperty.call(WEAPON_GROUP_MAP, key) ? WEAPON_GROUP_MAP[key] : null;
+                    };
+                    weaponIds.forEach(id => {
+                        const group = values[`repeating_weapons_${id}_weapon_group`];
+                        const now = mapGroup(group);
+                        if (now && now !== group) update[`repeating_weapons_${id}_weapon_group`] = now;
+                    });
+                    attackIds.forEach(id => {
+                        const type = values[`repeating_attacks_${id}_attack_type`] || "";
+                        const m = type.match(/^(Melee|Ranged) \((.+)\)$/);
+                        const now = m && mapGroup(m[2]);
+                        if (now && now !== m[2]) update[`repeating_attacks_${id}_attack_type`] = `${m[1]} (${now})`;
+                    });
+                    setAttrs(update, {}, callback);
+                });
+            });
+        });
+    };
+
+    const updateSpeciesSkillsUsed = () => {
+        const attrs = [];
+        for (let i = 1; i <= SPECIES_SKILL_SLOTS; i++) attrs.push(`species_skill_${i}_name`, `species_skill_${i}_advances`);
+        getAttrs(attrs, values => {
+            const used = Object.values(values).some(v => v && v !== "0");
+            setAttrs({species_skills_used: used ? 1 : 0}, {silent: true});
+        });
+    };
 
     const toggleRollDifficulty = (new_value) => {
         const difficulty = (new_value === "1") ? `?{Difficulty|Average (+20), 20|Very Easy (+60), 60|Easy (+40), 40|Average (+20), 20|Challenging (0), 0|Difficult (-10), -10|Hard (-20), -20|Very Hard (-30), -30}` :
@@ -297,7 +428,7 @@ const slModule = ( () => {
             "ballistic_skill": ["bs","ballistic_skill"],
             "strength": ["s", "strength"],
             "toughness": ["t", "toughness"],
-            "initiative": ["int", "initiative"],
+            "initiative": ["i", "initiative"],
             "agility": ["ag", "agility"],
             "dexterity": ["dex", "dexterity"],
             "intelligence": ["int", "intelligence"],
@@ -355,7 +486,7 @@ const slModule = ( () => {
                                 mod = mod.replace(`\[rank\]`, ranks);
 
                                 match_array.forEach(match => {
-                                    const reg = new RegExp(`${match}\\b`, "g")
+                                    const reg = new RegExp(`\\b${match}\\b`, "g")
                                     mod = mod.replace(reg, query)
                                 });
 
@@ -380,59 +511,364 @@ const slModule = ( () => {
 
     // Species Controls
 
-    // Species presets. Selecting a species sets Destiny (fate), Resilience,
-    // Movement and Size, and fills the species skill and talent lists on the
-    // Advances tab. Edit this table to match your game.
-    const species_presets = {
-        "human":        {fate: 2, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Cool", "Gamble", "Haggle", "Leadership", "Navigation", "Perception", "Streetwise", "Knowledge (Galaxy)", "Language (Galactic Basic)", "Melee (Basic)", "Ranged (Pistol)"], talents: ["Savvy, Sharp", "Lucky"]},
-        "bothan":       {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Deceive", "Gamble", "Intuition", "Perception", "Research", "Slicing", "Stealth (Urban)", "Streetwise", "Knowledge (Politics)", "Language (Bothese)", "Language (Galactic Basic)"], talents: ["Read/Write", "Suave, Schemer"]},
-        "duros":        {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Astrogation", "Computers", "Cool", "Mechanics", "Navigation", "Perception", "Pilot (Freighter)", "Pilot (Starfighter)", "Research", "Knowledge (Hyperspace Routes)", "Language (Durese)", "Language (Galactic Basic)"], talents: ["Night Vision", "Coolheaded, Savvy"]},
-        "mon calamari": {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Astrogation", "Computers", "Cool", "Leadership", "Mechanics", "Perception", "Pilot (Capital Ship)", "Swim", "Tactics", "Knowledge (Engineering)", "Language (Mon Calamarian)", "Language (Galactic Basic)"], talents: ["Amphibious", "Night Vision"]},
-        "rodian":       {fate: 1, resilience: 2, movement: 4, size: "average", skills: ["Cool", "Dodge", "Intimidate", "Perception", "Ranged (Rifle)", "Ranged (Pistol)", "Stealth (Rural)", "Streetwise", "Survival", "Track", "Language (Rodese)", "Language (Galactic Basic)"], talents: ["Acute Sense (Smell)", "Marksman, Rover"]},
-        "trandoshan":   {fate: 0, resilience: 2, movement: 4, size: "average", skills: ["Athletics", "Climb", "Cool", "Endurance", "Intimidate", "Melee (Brawling)", "Perception", "Ranged (Heavy)", "Survival", "Track", "Language (Dosh)", "Language (Galactic Basic)"], talents: ["Regenerate", "Claws", "Strong-minded, Hardy"]},
-        "twi'lek":      {fate: 1, resilience: 1, movement: 4, size: "average", skills: ["Charm", "Deceive", "Dodge", "Entertain (Dance)", "Gamble", "Haggle", "Intuition", "Perception", "Sleight of Hand", "Streetwise", "Language (Ryl)", "Language (Galactic Basic)"], talents: ["Attractive", "Etiquette (Criminals), Suave"]},
-        "wookiee":      {fate: 0, resilience: 2, movement: 4, size: "large", skills: ["Athletics", "Climb", "Cool", "Endurance", "Intimidate", "Mechanics", "Melee (Brawling)", "Melee (Two-Handed)", "Perception", "Survival", "Language (Shyriiwook)", "Language (Galactic Basic)"], talents: ["Very Strong", "Very Resilient", "Night Vision"]},
-        "zabrak":       {fate: 1, resilience: 2, movement: 4, size: "average", skills: ["Athletics", "Cool", "Dodge", "Endurance", "Intimidate", "Melee (Basic)", "Perception", "Ranged (Pistol)", "Survival", "Tactics", "Language (Zabraki)", "Language (Galactic Basic)"], talents: ["Strong-minded", "Hardy, Resolute"]},
-        "droid":        {fate: 0, resilience: 0, movement: 3, size: "average", skills: ["Computers", "Cool", "Mechanics", "Perception", "Research", "Security", "Slicing", "Knowledge (Technology)", "Language (Binary)", "Language (Galactic Basic)"], talents: ["Inorganic", "Programmed Specialist"]},
+    // Species, from the generated data in src/js/data/sl100-data.js.
+    // Selecting a species fills its characteristic modifiers, Destiny,
+    // Resilience, Extra Points, Movement, Size and talents. Fields the Species page leaves
+    // empty are set blank (not zero), stay editable, and are listed in
+    // species_gap. "Custom" (or an unknown name) applies nothing.
+    const SIZE_VALUES = {tiny: "tiny", little: "little", small: "small", average: "average", medium: "average", large: "large", enormous: "enormous", monstrous: "monstrous"};
+    const SPECIES_TALENT_SLOTS = 10;
+    const SPECIES_SKILL_SLOTS = 12;
+
+    // A span bound to an attribute set to "" can keep showing its old text in
+    // Roll20, so messages the worker clears are set to a single space.
+    const CLEARED = " ";
+
+    const findSpecies = (name) => {
+        const key = (name || "").trim().toLowerCase();
+        return key ? sl100Data.species.find(sp => sp.name.toLowerCase() === key) : undefined;
     };
 
     const changeSpecies = (new_value) => {
-        
-        new_value = (new_value || "").toLowerCase();
+        const preset = findSpecies(new_value);
+        if (!preset) return;
 
-        if (new_value === "") {
-            return;
-        }
-
-        const preset = species_presets[new_value];
-
-        if (!preset) {
-            return;
-        }
-
+        const blankIfNull = (value) => (value === null || value === undefined) ? "" : value;
         const update = {
-            fate: preset.fate,
-            resilience: preset.resilience,
-            movement: preset.movement,
-            size: preset.size
+            species_fate: blankIfNull(preset.fate),
+            species_resilience: blankIfNull(preset.resilience),
+            extra_points: blankIfNull(preset.extra_points),
+            // A new species starts a new Extra Points split.
+            extra_fate: 0,
+            extra_resilience: 0,
+            movement: blankIfNull(preset.movement),
         };
 
-        for (let index = 1; index <= 12; index++) {
-            update[`species_skill_${index}_name`] = preset.skills[index - 1] || "";
-            update[`species_skill_${index}_advances`] = "0";
+        // Destiny / Resilience follow the species via applyExtraPoints; when the Species page
+        // gives no value they are blanked rather than left from another species.
+        if (preset.fate === null) update.fate = "";
+        if (preset.resilience === null) update.resilience = "";
+
+        // Size only when the Species page names a single size ("Medium or Large" is a choice).
+        const size = SIZE_VALUES[(preset.size || "").toLowerCase()];
+        if (size) update.size = size;
+
+        const noMods = preset.gap.includes("characteristics");
+        sl.characteristics.forEach(c => {
+            update[`${c}_species`] = noMods ? "" : (preset.modifiers[c] || 0);
+        });
+
+        // Talents: fixed ones are taken; "X or Y" choices and random rolls wait
+        // for the player.
+        const slots = [...preset.talents];
+        for (let i = 0; i < preset.random_talents; i++) slots.push(t("random_talent_slot", "Random talent (roll)"));
+        for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) {
+            const talent = slots[i - 1] || "";
+            const isChoice = / or /.test(talent) || talent === t("random_talent_slot", "Random talent (roll)");
+            update[`species_talent_${i}_name`] = talent;
+            update[`species_talent_${i}_advances`] = (talent && !isChoice) ? "1" : "0";
         }
 
-        // A talent entry of "A, B" is a choice between talents, so it starts unticked.
-        for (let index = 1; index <= 10; index++) {
-            const talent = preset.talents[index - 1] || "";
-            update[`species_talent_${index}_name`] = talent;
-            update[`species_talent_${index}_advances`] = (talent && !talent.includes(",")) ? "1" : "0";
-        }
+        const gapLabels = {characteristics: "characteristic modifiers", talents: "talents", movement: "Movement", fate: "Destiny", resilience: "Resilience", extra_points: "Extra Points"};
+        update.species_gap = preset.gap.length
+            ? t("species_gap_prefix", "Rules TBD on the Species page:") + " " + preset.gap.map(g => gapLabels[g] || g).join(", ")
+            : CLEARED;
+
+        const notes = [];
+        if (preset.status === "review") notes.push(t("species_review", "Provisional: added from Legends lore and marked [review] on the Species page."));
+        notes.push(...preset.notes);
+        if (preset.traits) notes.push(`${t("Traits", "Traits")}: ${preset.traits}`);
+        if (preset.natural_weapons) notes.push(`${t("Natural weapons", "Natural weapons")}: ${preset.natural_weapons}`);
+        if (preset.size && !size) notes.push(`${t("Size", "Size")}: ${preset.size}`);
+        update.species_notes = notes.join("\n") || CLEARED;
 
         update["advances_changed"] = 1;
 
-        setAttrs(update, {silent:true});
+        setAttrs(update, {}, () => {
+            applyExtraPoints();
+            updateMovementRates(update.movement);
+            sl.characteristics.forEach(c => calculateCharacteristic(c));
+        });
     }
+
+    // Origin: +5 to one fixed characteristic and +5 to one of
+    // three, applied to the starting value like the species modifiers; 12
+    // starting skills taking 3 x +5 and 3 x +3 (like the species skills).
+    const ORIGIN_SKILL_SLOTS = 12;
+    const ORIGIN_BONUS = 5;
+    const CHARACTERISTIC_NAMES = {
+        weapon_skill: "Weapon Skill", ballistic_skill: "Ballistic Skill", strength: "Strength", toughness: "Toughness",
+        initiative: "Initiative", agility: "Agility", dexterity: "Dexterity", intelligence: "Intelligence",
+        willpower: "Willpower", fellowship: "Fellowship",
+    };
+
+    const findOrigin = (name) => sl100Data.origins.find(o => o.name.toLowerCase() === (name || "").trim().toLowerCase());
+
+    const changeOrigin = (new_value) => {
+        const origin = findOrigin(new_value);
+        if (!origin) return;
+
+        const label = (c) => t(CHARACTERISTIC_NAMES[c], CHARACTERISTIC_NAMES[c]);
+        const update = {
+            origin_description: origin.description,
+            origin_fixed_label: origin.fixed ? label(origin.fixed) : "",
+            origin_choice: "",
+        };
+        [1, 2, 3].forEach(n => {
+            update[`origin_choice_${n}_label`] = origin.choice[n - 1] ? label(origin.choice[n - 1]) : "";
+        });
+        for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) {
+            update[`origin_skill_${i}`] = origin.skills[i - 1] || "";
+            update[`origin_adv_${i}`] = "0";
+        }
+        update.origin_gap = (origin.skills.length !== ORIGIN_SKILL_SLOTS)
+            ? t("origin_gap_skills", "Rules TBD on the Origin page: this origin lists") + ` ${origin.skills.length} ` + t("origin_gap_skills_end", "starting skills, not 12.")
+            : CLEARED;
+        update.advances_changed = 1;
+
+        setAttrs(update, {}, () => applyOriginBonus());
+    };
+
+    const applyOriginBonus = () => {
+        getAttrs(["origin", "origin_choice"], values => {
+            const origin = findOrigin(values.origin);
+            if (!origin) return;
+
+            const chosen = origin.choice[(parseInt(values.origin_choice) || 0) - 1];
+            const update = {};
+            sl.characteristics.forEach(c => {
+                update[`${c}_origin`] = ((c === origin.fixed) ? ORIGIN_BONUS : 0) + ((c === chosen) ? ORIGIN_BONUS : 0);
+            });
+            setAttrs(update);
+        });
+    };
+
+    // Faction: lore only, so choosing one just shows its details.
+    const changeFaction = (new_value) => {
+        const faction = sl100Data.factions.find(f => f.name.toLowerCase() === (new_value || "").trim().toLowerCase());
+        setAttrs({
+            faction_group: faction ? [faction.section, faction.group, faction.era].filter(Boolean).join(" · ") : CLEARED,
+            faction_description: faction
+                ? [faction.description, faction.draws_from ? `${t("Draws from", "Draws from")}: ${faction.draws_from}` : ""].filter(Boolean).join("\n")
+                : CLEARED,
+        });
+    };
+
+    const checkOriginAdvances = () => {
+        const attrs = [];
+        for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) attrs.push(`origin_adv_${i}`);
+
+        getAttrs(attrs, values => {
+            const counts = Object.values(values).reduce((acc, v) => { acc[v] = (acc[v] || 0) + 1; return acc; }, {});
+            setAttrs({
+                origin_disable3: (counts["3"] || 0) >= 3 ? 1 : 0,
+                origin_disable5: (counts["5"] || 0) >= 3 ? 1 : 0,
+            });
+        });
+    };
+
+    // Character creation helper (Characteristics, "Determine Characteristics")
+
+    // Bonus XP by method: keep the rolled order 50, rearrange 25, otherwise 0.
+    const CREATION_XP = {rolled: 50, rearranged: 25, rerolled: 0, pointbuy: 0};
+    // Point-buy: each Characteristic starts at 20 and takes 4 to 18 of the
+    // budget (01: 110 points across the ten Characteristics).
+    const POINTBUY_BASE = 20;
+    const POINTBUY_MIN = 4;
+    const POINTBUY_MAX = 18;
+    const POINTBUY_BUDGET = 110;
+    // Rolled: 2d10 + 20.
+    const ROLLED_MIN = 22;
+    const ROLLED_MAX = 40;
+
+    // The Initial column holds each Characteristic before species and Origin.
+    // creation_status explains what to enter and where the character stands;
+    // creation_warning lists any value outside the rules. Warnings never block.
+    const checkCreation = () => {
+        const attrs = ["creation_method", "pointbuy_budget"];
+        sl.characteristics.forEach(c => attrs.push(`${c}_initial`));
+
+        getAttrs(attrs, values => {
+            const method = values.creation_method || "";
+            const update = {creation_xp: CREATION_XP[method] || 0};
+            const warnings = [];
+            const label = (c) => sl.characteristics_short[sl.characteristics.indexOf(c)];
+            const initial = (c) => parseInt(values[`${c}_initial`]) || 0;
+
+            if (method === "pointbuy") {
+                const budgetValue = parseInt(values.pointbuy_budget);
+                const budget = isNaN(budgetValue) ? POINTBUY_BUDGET : budgetValue;
+                let spent = 0;
+                sl.characteristics.forEach(c => {
+                    const points = initial(c) - POINTBUY_BASE;
+                    spent += points;
+                    if (points < POINTBUY_MIN || points > POINTBUY_MAX) {
+                        warnings.push(`${label(c)} ${initial(c)} = 20 + ${points}: ` + t("creation_points_range", "each Characteristic takes 4 to 18 points (24 to 38)."));
+                    }
+                });
+                const left = budget - spent;
+                update.creation_spent = spent;
+                update.creation_remaining = left;
+                update.creation_status = `${t("creation_spent_of", "Points spent:")} ${spent} / ${budget}. ` + (
+                    left > 0 ? `${t("creation_left", "Still to spend:")} ${left}.` :
+                    left < 0 ? `${t("creation_over", "Over budget by")} ${-left}.` :
+                    t("creation_all_spent", "All points spent."));
+            } else if (method) {
+                update.creation_spent = "";
+                update.creation_remaining = "";
+                sl.characteristics.forEach(c => {
+                    if (initial(c) < ROLLED_MIN || initial(c) > ROLLED_MAX) warnings.push(`${label(c)} ${initial(c)}: ` + t("creation_rolled_range", "a 2d10+20 roll is 22 to 40."));
+                });
+                update.creation_status = warnings.length ? "" : t("creation_rolled_ok", "All ten Initial values are possible 2d10+20 rolls.");
+            } else {
+                update.creation_spent = "";
+                update.creation_remaining = "";
+                update.creation_status = t("creation_choose", "Choose how the Characteristics were made.");
+            }
+
+            update.creation_warning = warnings.join("\n") || CLEARED;
+            if (!update.creation_status) update.creation_status = CLEARED;
+            setAttrs(update, {silent: true}, () => recalculateEarnedXP());
+        });
+    };
+
+    // Use the Force discipline ranks, from the "Force Sense / Control / Alter
+    // (Discipline)" talents on the Talents page.
+    const calculateForceRanks = () => {
+        getSectionIDs("talent", ids => {
+            const attrs = [];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`, `repeating_talent_${id}_talent_ranks`));
+            getAttrs(attrs, values => {
+                const ranks = {sense: 0, control: 0, alter: 0};
+                ids.forEach(id => {
+                    const name = (values[`repeating_talent_${id}_talent_name`] || "").trim().toLowerCase();
+                    const match = name.match(/^force (sense|control|alter)\b/);
+                    if (match) ranks[match[1]] += parseInt(values[`repeating_talent_${id}_talent_ranks`]) || 0;
+                });
+                setAttrs({force_rank_sense: ranks.sense, force_rank_control: ranks.control, force_rank_alter: ranks.alter});
+            });
+        });
+    };
+
+    // Size from the Small and Large talents (Characteristics, Wounds): a character
+    // with Small is Small, with Large is Large. size_auto remembers what was set
+    // here, so removing the talent puts the character back to Average unless the
+    // player has chosen another size in Settings since.
+    const applySizeFromTalents = () => {
+        getSectionIDs("talent", ids => {
+            const attrs = ["size", "size_auto"];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`));
+            for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) attrs.push(`species_talent_${i}_name`, `species_talent_${i}_advances`);
+            getAttrs(attrs, values => {
+                const names = ids.map(id => values[`repeating_talent_${id}_talent_name`]);
+                for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) {
+                    if ((parseInt(values[`species_talent_${i}_advances`]) || 0) > 0) names.push(values[`species_talent_${i}_name`]);
+                }
+                const has = (talent) => names.some(n => (n || "").trim().toLowerCase() === talent);
+                const target = (has("large") && !has("small")) ? "large" : (has("small") && !has("large")) ? "small" : "";
+                const size = (values.size || "average").toLowerCase();
+                const auto = values.size_auto || "";
+                const update = {};
+                if (target) {
+                    if (size !== target) update.size = target;
+                    if (auto !== target) update.size_auto = target;
+                } else if (auto) {
+                    if (size === auto) update.size = "average";
+                    update.size_auto = "";
+                }
+                if (Object.keys(update).length) setAttrs(update);
+            });
+        });
+    };
+
+    // Destiny / Resilience and Extra Points
+
+    // Translated text for messages set from the worker, with an English fallback.
+    const t = (key, fallback) => {
+        const text = (typeof getTranslationByKey === "function") ? getTranslationByKey(key) : false;
+        return text || fallback;
+    };
+
+    // Characteristics, Species Values and Extra Points: Destiny = species Destiny + the
+    // Extra Points put into Destiny, and the same for Resilience; starting
+    // Fortune equals Destiny and starting Resolve equals Resilience. Runs only
+    // when the species or the split changes, so points spent in play are not
+    // reset. The species values come from the species data, so characters made
+    // before the hidden species_fate / species_resilience fields existed work too.
+    const applyExtraPoints = () => {
+        const attrs = ["species", "species_fate", "species_resilience", "extra_points", "extra_fate", "extra_resilience"];
+
+        getAttrs(attrs, values => {
+            const preset = findSpecies(values.species);
+            const fromData = (field, hidden) => {
+                if (preset && preset[field] !== null && preset[field] !== undefined) return preset[field];
+                const n = parseInt(values[hidden]);
+                return isNaN(n) ? null : n;
+            };
+            const speciesFate = fromData("fate", "species_fate");
+            const speciesResilience = fromData("resilience", "species_resilience");
+            const extraValue = parseInt(values.extra_points);
+            const extra = (preset && preset.extra_points !== null) ? preset.extra_points : (isNaN(extraValue) ? null : extraValue);
+
+            const toFate = Math.max(0, parseInt(values.extra_fate) || 0);
+            const toResilience = Math.max(0, parseInt(values.extra_resilience) || 0);
+            const allocated = toFate + toResilience;
+            const update = {
+                species_fate: speciesFate === null ? "" : speciesFate,
+                species_resilience: speciesResilience === null ? "" : speciesResilience,
+            };
+            if (extra !== null && String(extra) !== values.extra_points) update.extra_points = extra;
+
+            if (extra === null) {
+                update.extra_points_check = t("extra_points_unset", "This species has no Extra Points on the Species page (rules TBD): enter them by hand.");
+            } else if (allocated > extra) {
+                update.extra_points_check = t("extra_points_over", "Too many Extra Points allocated, by") + ` ${allocated - extra}.`;
+            } else if (allocated < extra) {
+                update.extra_points_check = t("extra_points_left", "Extra Points still to allocate:") + ` ${extra - allocated}.`;
+            } else {
+                update.extra_points_check = t("extra_points_done", "All Extra Points allocated.");
+            }
+
+            if (speciesFate !== null) {
+                update.fate = speciesFate + toFate;
+                update.fortune = update.fate;
+            }
+            if (speciesResilience !== null) {
+                update.resilience = speciesResilience + toResilience;
+                update.resolve = update.resilience;
+            }
+
+            setAttrs(update, {silent: true});
+        });
+    };
+
+    // Sum the ranks of a named talent across the talent rows.
+    const talentRanks = (name, callback) => {
+        getSectionIDs("talent", ids => {
+            const attrs = [];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`, `repeating_talent_${id}_talent_ranks`));
+            getAttrs(attrs, values => {
+                const total = ids
+                    .filter(id => (values[`repeating_talent_${id}_talent_name`] || "").trim().toLowerCase() === name.toLowerCase())
+                    .reduce((sum, id) => sum + (parseInt(values[`repeating_talent_${id}_talent_ranks`]) || 0), 0);
+                callback(total);
+            });
+        });
+    };
+
+    // Talents page, Luck: maximum Fortune = current Destiny (Fate) + Luck levels.
+    const refreshFortune = () => {
+        talentRanks("Luck", luck => {
+            getAttrs(["fate"], values => setAttrs({fortune: (parseInt(values.fate) || 0) + luck}));
+        });
+    };
+
+    // Talents page, Strong-Minded: add its level to the maximum Resolve pool.
+    const refreshResolve = () => {
+        talentRanks("Strong-Minded", strong => {
+            getAttrs(["resilience"], values => setAttrs({resolve: (parseInt(values.resilience) || 0) + strong}));
+        });
+    };
 
     const checkSpeciesAdvances = () => {
         const attrs = [];
@@ -473,6 +909,8 @@ const slModule = ( () => {
             `${characteristic}_modifier`,
             `${characteristic}_custom_mod`,
             `${characteristic}_bonusmod`,
+            `${characteristic}_species`,
+            `${characteristic}_origin`,
         ];
 
         getAttrs(attrs, values => {
@@ -496,12 +934,16 @@ const slModule = ( () => {
                 return;
             } else {
 
-                const current = initial + advances + modifier;
+                // Species and Origin modifiers apply to the starting
+                // value and are not Advances (Characteristics, "Determine Characteristics").
+                const creation = (parseInt(values[`${characteristic}_species`]) || 0) + (parseInt(values[`${characteristic}_origin`]) || 0);
+                const current = initial + creation + advances + modifier;
     
                 const bonus = Math.floor(current / 10) + bonusmod;
     
                 const updateAttrs = {};
     
+                updateAttrs[`${characteristic}_creation`] = creation;
                 updateAttrs[`${characteristic}`] = current;
                 updateAttrs[`${characteristic}_bonus`] = bonus;
     
@@ -553,6 +995,13 @@ const slModule = ( () => {
         getAttrs(["npc"], check => {
 
             if (check["npc"] === "on") return;
+
+            // Walk = 2 x Movement, Run = 4 x Movement, in metres. A blank
+            // Movement (not yet defined for the species) leaves both blank.
+            if (newValue === "" || newValue === undefined || newValue === null) {
+                setAttrs({walk: "", run: ""});
+                return;
+            }
 
             const movement = parseInt(newValue) || 0;
             const walk = movement * 2 || 0;
@@ -704,6 +1153,209 @@ const slModule = ( () => {
 
     }
 
+    // Career library (Careers page, generated data). Filling a row writes the
+    // career name, each level's title, status, skills (10 slots), talents
+    // (5 slots) and trappings, then ticks the in-career characteristics for the
+    // row's current level. Advances are left alone.
+    // Level 1 lists 10 career skills and keeps 2 empty slots for skills a
+    // career gains through special circumstances (Careers page intro); levels 2-4 hold 10.
+    const CAREER_SKILL_SLOTS = 10;
+    const CAREER_TALENT_SLOTS = 5;
+
+    const findCareer = (name) => sl100Data.careers.find(c => c.name === name);
+
+    const fillCareer = (attribute, name) => {
+        const career = findCareer(name);
+        if (!career) return;
+        const row = helperFunctions.extractRepeatingId(attribute, "careers");
+        const update = {[`${row}_career_name`]: career.name};
+
+        [1, 2, 3, 4].forEach(n => {
+            const level = career.levels.find(l => l.level === n) || {title: "", status: "", skills: [], talents: [], trappings: []};
+            update[`${row}_career_level${n}_name`] = level.title;
+            update[`${row}_career_level${n}_status`] = level.status;
+            for (let i = 1; i <= CAREER_SKILL_SLOTS; i++) update[`${row}_career_skill_${n}_${i}_name`] = level.skills[i - 1] || "";
+            for (let i = 1; i <= CAREER_TALENT_SLOTS; i++) update[`${row}_career_talent_${n}_${i}_name`] = level.talents[i - 1] || "";
+            update[`${row}_career_${n}_trappings`] = level.trappings.join(", ");
+        });
+
+        setAttrs(update, {}, () => updateCareerCharacteristics(attribute));
+    };
+
+    // A characteristic is in-career once the current level reaches the level
+    // that opens it in the advance scheme (05: "a level keeps every
+    // characteristic opened before it").
+    const updateCareerCharacteristics = (attribute) => {
+        const row = helperFunctions.extractRepeatingId(attribute, "careers");
+        getAttrs([`${row}_career_preset`, `${row}_career_level_current`], values => {
+            const career = findCareer(values[`${row}_career_preset`]);
+            if (!career) return;
+            const level = parseInt(values[`${row}_career_level_current`]) || 1;
+            const update = {};
+            sl.characteristics.forEach(c => {
+                const opens = career.scheme[c];
+                update[`${row}_career_${c}`] = (opens && opens <= level) ? "on" : "0";
+            });
+            setAttrs(update);
+        });
+    };
+
+    // Talent library (Talents page, generated data). The name is matched exactly,
+    // then on the part before "(" so "Resistance (Cold)" finds "Resistance
+    // (Threat)". Max rules naming a Characteristic Bonus resolve to the
+    // character's current bonus and follow it as it changes.
+    const BONUS_RULES = {
+        "weapon skill bonus": "weapon_skill_bonus", "ballistic skill bonus": "ballistic_skill_bonus",
+        "strength bonus": "strength_bonus", "toughness bonus": "toughness_bonus", "initiative bonus": "initiative_bonus",
+        "agility bonus": "agility_bonus", "dexterity bonus": "dexterity_bonus", "intelligence bonus": "intelligence_bonus",
+        "willpower bonus": "willpower_bonus", "fellowship bonus": "fellowship_bonus",
+    };
+
+    const findTalent = (name) => {
+        const lower = (name || "").trim().toLowerCase();
+        if (!lower) return null;
+        const exact = sl100Data.talents.find(t => t.name.toLowerCase() === lower);
+        if (exact) return exact;
+        const base = lower.split("(")[0].trim();
+        return sl100Data.talents.find(t => t.name.toLowerCase().split("(")[0].trim() === base) || null;
+    };
+
+    const resolveTalentMax = (rule, bonuses) => {
+        const text = (rule || "").trim();
+        if (/^\d+$/.test(text)) return parseInt(text);
+        const attr = BONUS_RULES[text.toLowerCase()];
+        return attr ? (parseInt(bonuses[attr]) || 0) : "";
+    };
+
+    // Fill one talent row from the library. `overwrite` replaces the rules text
+    // even when the player has written their own (used when picking from the
+    // library list).
+    // The library lists each talent and its named versions from the Species and Careers pages
+    // ("Night Vision (Thermal)"); picking a version keeps that name. Talents
+    // with a permanent characteristic bonus (07: "+5 to your starting Weapon
+    // Skill") put it in Modifiers ("WS +5"), which applies it to the
+    // characteristic.
+    const fillTalent = (attribute, name, overwrite) => {
+        const talent = findTalent(name);
+        if (!talent) return;
+        const row = helperFunctions.extractRepeatingId(attribute, "talent");
+        getAttrs([`${row}_talent_description`, `${row}_talent_name`, `${row}_talent_mods`, ...Object.values(BONUS_RULES)], values => {
+            const update = {
+                [`${row}_talent_max_rule`]: talent.max,
+                [`${row}_talent_tests`]: talent.tests,
+                [`${row}_talent_ranks_max`]: resolveTalentMax(talent.max, values),
+            };
+            if (overwrite) update[`${row}_talent_name`] = name.trim();
+            if (overwrite || !values[`${row}_talent_description`]) update[`${row}_talent_description`] = talent.text;
+            // Picking from the library sets Modifiers to the talent's own (or
+            // clears them); typing a name only fills an empty box.
+            if (overwrite) update[`${row}_talent_mods`] = talent.mods || "";
+            else if (talent.mods && !values[`${row}_talent_mods`]) update[`${row}_talent_mods`] = talent.mods;
+            setAttrs(update);
+        });
+    };
+
+    // Granted Skills & Talents. A talent whose Talents entry grants a skill ("add
+    // Entertain (Sing) to any career you enter") adds a row here by itself,
+    // marked with its talent row's id; the row goes when the talent goes.
+    // Rows added by hand are never touched. Skills granted by a talent always
+    // cost 5 XP less per Advance (design decision, 13 Oct 2026).
+    const TALENT_GRANT_DISCOUNT = 5;
+
+    const syncTalentGrants = () => {
+        getSectionIDs("talent", talentIds => {
+            getSectionIDs("grants", grantIds => {
+                const attrs = [];
+                talentIds.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`));
+                grantIds.forEach(id => attrs.push(`repeating_grants_${id}_grant_auto`, `repeating_grants_${id}_grant_name`));
+                getAttrs(attrs, values => {
+                    const wanted = new Map();
+                    talentIds.forEach(id => {
+                        const name = (values[`repeating_talent_${id}_talent_name`] || "").trim();
+                        const talent = findTalent(name);
+                        if (!talent || !talent.grants || !talent.grants.length) return;
+                        // "Craftsman (Engineer)" grants Profession (Engineer).
+                        const spec = (name.match(/\(([^)]*)\)\s*$/) || [])[1];
+                        const placeholder = ((talent.name.match(/\(([^)]*)\)/) || [])[1] || "").toLowerCase();
+                        const concrete = spec && spec.toLowerCase() !== placeholder;
+                        talent.grants.forEach(grant => {
+                            const grantName = grant.name.includes("{spec}")
+                                ? (concrete ? grant.name.replace("{spec}", spec) : grant.name.replace(/\s*\(\{spec\}\)/, ""))
+                                : grant.name;
+                            wanted.set(`${id}|${grantName.toLowerCase()}`, {id, talent: name, type: grant.type, name: grantName});
+                        });
+                    });
+
+                    const update = {};
+                    grantIds.forEach(gid => {
+                        const auto = (values[`repeating_grants_${gid}_grant_auto`] || "").trim();
+                        if (!auto) return;
+                        const key = `${auto}|${(values[`repeating_grants_${gid}_grant_name`] || "").trim().toLowerCase()}`;
+                        if (wanted.has(key)) wanted.delete(key);
+                        else removeRepeatingRow(`repeating_grants_${gid}`);
+                    });
+                    wanted.forEach(grant => {
+                        const row = `repeating_grants_${generateRowID()}`;
+                        update[`${row}_grant_auto`] = grant.id;
+                        update[`${row}_grant_type`] = grant.type;
+                        update[`${row}_grant_name`] = grant.name;
+                        update[`${row}_grant_source`] = "Talent";
+                        update[`${row}_grant_reason`] = grant.talent;
+                        update[`${row}_grant_advances`] = 0;
+                        update[`${row}_grant_discount`] = grant.type === "skill" ? TALENT_GRANT_DISCOUNT : 0;
+                    });
+                    setAttrs(update, {silent: true}, () => {
+                        recalculateSpentXP();
+                        setAttrs({advances_changed: "1"});
+                    });
+                });
+            });
+        });
+    };
+
+    // Choosing "Talent" as the source of a granted skill sets the 5 XP discount;
+    // other sources start at no discount (editable).
+    const updateGrantDiscount = (attribute) => {
+        const row = helperFunctions.extractRepeatingId(attribute, "grants");
+        getAttrs([`${row}_grant_type`, `${row}_grant_source`], values => {
+            const talentSkill = values[`${row}_grant_source`] === "Talent" && values[`${row}_grant_type`] !== "talent";
+            setAttrs({[`${row}_grant_discount`]: talentSkill ? TALENT_GRANT_DISCOUNT : 0});
+        });
+    };
+
+    // Talent rows made before talents carried modifiers: fill an empty
+    // Modifiers box from the library.
+    const fillTalentModifiers = (callback) => {
+        getSectionIDs("talent", ids => {
+            const attrs = [];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`, `repeating_talent_${id}_talent_mods`));
+            getAttrs(attrs, values => {
+                const update = {};
+                ids.forEach(id => {
+                    const talent = findTalent(values[`repeating_talent_${id}_talent_name`]);
+                    if (talent && talent.mods && !values[`repeating_talent_${id}_talent_mods`]) update[`repeating_talent_${id}_talent_mods`] = talent.mods;
+                });
+                setAttrs(update, {}, callback);
+            });
+        });
+    };
+
+    // Re-resolve every talent's Max after a Characteristic Bonus changes.
+    const updateTalentMaxima = () => {
+        getSectionIDs("talent", ids => {
+            const attrs = [...Object.values(BONUS_RULES)];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_max_rule`));
+            getAttrs(attrs, values => {
+                const update = {};
+                ids.forEach(id => {
+                    const rule = values[`repeating_talent_${id}_talent_max_rule`];
+                    if (rule && BONUS_RULES[rule.trim().toLowerCase()]) update[`repeating_talent_${id}_talent_ranks_max`] = resolveTalentMax(rule, values);
+                });
+                setAttrs(update, {silent: true});
+            });
+        });
+    };
+
     // Career Functions
 
     const updateCareerPath = () => {
@@ -819,7 +1471,7 @@ const slModule = ( () => {
         sl.characteristics.forEach(characteristic => attrs.push(`${repeating_id}_career_${characteristic}_advances`));
 
         for (let i = 1; i <= 4; i++) {
-            for (let j = 1; j <= 10; j++) {
+            for (let j = 1; j <= careerSkillSlots(i); j++) {
                 attrs.push(`${repeating_id}_career_skill_${i}_${j}_advances`); 
                 attrs.push(`${repeating_id}_career_skill_${i}_${j}_init`); 
             }
@@ -931,7 +1583,7 @@ const slModule = ( () => {
 
     const recalculateSpentXP = () => {
 
-        helperFunctions.aggregateRepeatingIDs([`careers`, `experience`, `experiencespent`], ids => {
+        helperFunctions.aggregateRepeatingIDs([`careers`, `experience`, `experiencespent`, `grants`], ids => {
 
             const attrs = [];
 
@@ -943,7 +1595,7 @@ const slModule = ( () => {
                 }
 
                 for (let i = 1; i <= 4; i++) {
-                    for (let j = 1; j <= 10; j++) {
+                    for (let j = 1; j <= careerSkillSlots(i); j++) {
                         attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_name`); 
                         attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_advances`); 
                         attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_init`); 
@@ -969,6 +1621,10 @@ const slModule = ( () => {
 
             for (const id of ids.experience) {
                 attrs.push(`repeating_experience_${id}_experience_amount`);
+            }
+
+            for (const id of ids.grants) {
+                ["type", "name", "advances", "discount"].forEach(f => attrs.push(`repeating_grants_${id}_grant_${f}`));
             }
 
             for (const id of ids.experiencespent) {
@@ -1004,7 +1660,7 @@ const slModule = ( () => {
                     });
     
                     for (let i = 1; i <= 4; i++) {
-                        for (let j = 1; j <= 10; j++) {
+                        for (let j = 1; j <= careerSkillSlots(i); j++) {
                             const skill = values[`repeating_careers_${id}_career_skill_${i}_${j}_name`];
 
                             const value = parseInt(values[`repeating_careers_${id}_career_skill_${i}_${j}_advances`]) || 0;
@@ -1054,14 +1710,36 @@ const slModule = ( () => {
                     const total_free = current_free + value_free;
                 }
 
+                // Granted Skills & Talents: skill Advances are paid like career
+                // Advances, less the row's discount per Advance (5 for a skill
+                // granted by a talent); granted talent ranks are free.
+                const skill_discount = new Map();
+                for (const id of ids.grants) {
+                    const row = `repeating_grants_${id}`;
+                    const name = (values[`${row}_grant_name`] || "").trim();
+                    if (!name) continue;
+                    const advances = parseInt(values[`${row}_grant_advances`]) || 0;
+                    if (values[`${row}_grant_type`] === "talent") {
+                        talent_advances_free.set(name, (talent_advances_free.get(name) || 0) + Math.max(1, advances));
+                        if (!talent_advances.has(name)) talent_advances.set(name, 0);
+                    } else {
+                        skill_advances.set(name, (skill_advances.get(name) || 0) + advances);
+                        if (!skill_advances_free.has(name)) skill_advances_free.set(name, 0);
+                        const discount = parseInt(values[`${row}_grant_discount`]) || 0;
+                        const key = name.toLowerCase();
+                        skill_discount.set(key, Math.max(skill_discount.get(key) || 0, discount));
+                    }
+                }
+
                 let xp = 0;
 
                 characteristic_advances.forEach((value, key) => xp += calculateCharacteristicXP(value, characteristic_advances_free.get(key)));
-                skill_advances.forEach((value, key) => xp += calculateSkillXP(value, skill_advances_free.get(key)));
-                talent_advances.forEach((value, key) => xp += calculateTalentXP(value, talent_advances_free.get(key)));
+                skill_advances.forEach((value, key) => xp += calculateSkillXP(value, skill_advances_free.get(key) || 0));
+                skill_advances.forEach((value, key) => xp -= (skill_discount.get((key || "").trim().toLowerCase()) || 0) * (parseInt(value) || 0));
+                talent_advances.forEach((value, key) => xp += calculateTalentXP(value, talent_advances_free.get(key) || 0));
 
                 for (const id of ids.experiencespent) {
-                    const value = parseInt(values[`repeating_experiencespent_${id}_experience_amount`]);
+                    const value = parseInt(values[`repeating_experiencespent_${id}_experience_amount`]) || 0;
 
                     xp += value;
                 }
@@ -1088,6 +1766,7 @@ const slModule = ( () => {
             });
 
             attrs.push(`experience_mod`);
+            attrs.push(`creation_xp`);
 
             getAttrs(attrs, values => {
                 const int_values = Object.values(values).map(item => parseInt(item) || 0).filter(item => item > 0);
@@ -1150,17 +1829,62 @@ const slModule = ( () => {
         });   
     }
 
+    // Map a skill name as written in a career, species or origin entry to the
+    // sheet: a plain skill, a fixed specialisation, or a row in a grouped
+    // skill. Text after a dash is an explanatory note ("Melee (Lightsaber —
+    // defensive form only)"). Unresolved choices ("1H/2H", "Rural or Urban",
+    // "Any") are skipped until the player picks one.
+    const resolveSkillName = (name) => {
+        const text = (name || "").trim();
+        if (!text) return null;
+        const lower = text.toLowerCase();
+
+        const alias = sl.skill_aliases[lower];
+        if (alias) {
+            if (sl.skills.includes(alias)) return {type: "skill", attr: alias};
+            if (sl.specialisations.includes(alias)) return {type: "specialisation", attr: alias};
+        }
+
+        const plain = lower.replace(/ /g, "-");
+        if (sl.skills.includes(plain)) return {type: "skill", attr: plain};
+
+        const match = text.match(/^([^(]+)\((.*)\)\s*$/);
+        if (!match) return null;
+
+        const group = match[1].trim().toLowerCase().replace(/ /g, "-");
+        const groupAttr = (group === "use-the-force") ? "force" : group;
+        const specialisation = match[2].split(/\s+[—–]\s+|\s+-\s+/)[0].trim();
+        const specLower = specialisation.toLowerCase();
+
+        if (!specialisation) return null;
+
+        // Fixed specialisation rows ("Ranged (Grenade/Explosives)", "Melee (Two-Handed)").
+        const specAttr = specLower.replace(/[ \/]/g, "_");
+        if (sl.specialisations.includes(specAttr)) return {type: "specialisation", attr: specAttr};
+
+        // Choices ("Blaster Pistol or Blaster Rifle", "Air/Land/Water", "Any") wait for the player.
+        if (/\/|\bor\b|^any\b/i.test(specialisation)) return null;
+
+        if (sl.repeating_skills.includes(groupAttr)) return {type: "repeating", group: groupAttr, specialisation: specialisation};
+
+        return null;
+    };
+
     const calculateSkillAdvances = () => {
         getSectionIDs("careers", id_array => {
 
             getSectionIDs("noncareer-skills", id_array_2 => {
+            getSectionIDs("grants", grant_ids => {
                 const attrs = [];
                 const skills = new Map();
+
+                // Granted skills (Granted Skills & Talents) count like career advances.
+                grant_ids.forEach(id => attrs.push(`repeating_grants_${id}_grant_type`, `repeating_grants_${id}_grant_name`, `repeating_grants_${id}_grant_advances`));
 
                 id_array.forEach((id, index) => {
 
                     for (let i = 1; i <= 4; i++) {
-                        for (let j = 1; j <= 10; j++) {
+                        for (let j = 1; j <= careerSkillSlots(i); j++) {
                             attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_name`); 
                             attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_advances`); 
                             if (i === 1) attrs.push(`repeating_careers_${id}_career_skill_${i}_${j}_init`); 
@@ -1177,10 +1901,23 @@ const slModule = ( () => {
                     attrs.push(`species_skill_${i}_name`); 
                     attrs.push(`species_skill_${i}_advances`);
                 }
+
+                for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) {
+                    attrs.push(`origin_skill_${i}`);
+                    attrs.push(`origin_adv_${i}`);
+                }
         
                 getAttrs(attrs, values => {
                     const skill_list = Object.entries(values);
-                    const names = skill_list.filter(([key, value]) => key.match(/name/g) && value !== "");
+                    const isGrantedTalent = (key) => key.startsWith("repeating_grants_") && values[key.replace(/_grant_name$/, "_grant_type")] === "talent";
+                    const names = skill_list.filter(([key, value]) => key.match(/name/g) && value !== "" && !isGrantedTalent(key));
+
+                    // Origin skills use origin_skill_N / origin_adv_N.
+                    for (let i = 1; i <= ORIGIN_SKILL_SLOTS; i++) {
+                        const name = values[`origin_skill_${i}`];
+                        if (!name) continue;
+                        skills.set(name, (skills.get(name) || 0) + (parseInt(values[`origin_adv_${i}`]) || 0));
+                    }
 
                     names.forEach(([id, name]) => {
                         const value_addr = id.substring(0,id.length-4) + "advances";
@@ -1198,35 +1935,17 @@ const slModule = ( () => {
                     const updateAttrs = {};
 
                     skills.forEach((value, key) => {
-                        let parsed_key = key.replace(/ /g,"-").toLowerCase();
+                        const target = resolveSkillName(key);
 
-                        if (sl.skills.includes(parsed_key)) {
+                        if (!target) return;
 
-                            updateAttrs[`${parsed_key}_advances`] = value;
-                            
-                        } else if (key.match(/\(/g)) {
-                            const group = key.split("(")[0]
-                                            .trim()
-                                            .replace(/ /g,"-")
-                                            .toLowerCase();
-                                            
-                            const specialisation = key.split("(")[1]
-                                                      .trim()
-                                                      .replace(/\)/g,"");
-                                            
-                            const specialisation_test = specialisation.toLowerCase();
-
-                            if (sl.specialisations.includes(specialisation_test)) {
-
-                                updateAttrs[`${specialisation}_advances`] = value;
-
-                                if (value > 0) updateAttrs[`${specialisation}_control`] = "on";
-
-                            } else if (sl.repeating_skills.includes(group)) {
-
-                                modifyRepeatingSkill(group, specialisation, value);
-
-                            }
+                        if (target.type === "skill") {
+                            updateAttrs[`${target.attr}_advances`] = value;
+                        } else if (target.type === "specialisation") {
+                            updateAttrs[`${target.attr}_advances`] = value;
+                            if (value > 0) updateAttrs[`${target.attr}_control`] = "on";
+                        } else if (target.type === "repeating") {
+                            modifyRepeatingSkill(target.group, target.specialisation, value);
                         }
                     });
 
@@ -1234,6 +1953,7 @@ const slModule = ( () => {
 
                 });
 
+            });
             });   
 
         });   
@@ -1251,14 +1971,10 @@ const slModule = ( () => {
             });
 
             getAttrs(attrs, values => {
-                const value_array = Object.values(values).filter(item => item !== "");
-                const value_array_test = value_array.map(item=>item.toLowerCase());
-                const key_array = Object.keys(values).filter(item => item !== "");
                 const specialisation_test = specialisation.toLowerCase();
+                const key = Object.keys(values).find(k => (values[k] || "").trim().toLowerCase() === specialisation_test);
 
-                if (value_array_test.includes(specialisation_test)) {
-                    const index = value_array_test.indexOf(specialisation_test);
-                    const key = key_array[index];
+                if (key) {
                     const new_key = `${key.substring(0, key.length-5)}_advances`;
                     
                     updateAttrs[new_key] = value;
@@ -1275,8 +1991,11 @@ const slModule = ( () => {
 
     const calculateTalentAdvances = () => {
         getSectionIDs("careers", id_array => {
+        getSectionIDs("grants", grant_ids => {
             const attrs = [];
             const talents = new Map();
+
+            grant_ids.forEach(id => attrs.push(`repeating_grants_${id}_grant_type`, `repeating_grants_${id}_grant_name`, `repeating_grants_${id}_grant_advances`));
 
             id_array.forEach((id, index) => {
 
@@ -1295,7 +2014,15 @@ const slModule = ( () => {
             }
     
             getAttrs(attrs, values => {
-                const talent_list = Object.entries(values);
+                // Granted talents: free ranks, at least one per row.
+                grant_ids.forEach(id => {
+                    const row = `repeating_grants_${id}`;
+                    const name = (values[`${row}_grant_name`] || "").trim();
+                    if (values[`${row}_grant_type`] !== "talent" || !name) return;
+                    talents.set(name, (talents.get(name) || 0) + Math.max(1, parseInt(values[`${row}_grant_advances`]) || 0));
+                });
+
+                const talent_list = Object.entries(values).filter(([key]) => !key.startsWith("repeating_grants_"));
                 const names = talent_list.filter(([key, value]) => key.match(/name/g) && value !== "");
 
                 names.forEach(([id, name]) => {
@@ -1356,6 +2083,7 @@ const slModule = ( () => {
             });
 
         });
+        });
     }
 
     const calculateInitColumns = (source_attribute, new_value) => {
@@ -1375,7 +2103,7 @@ const slModule = ( () => {
         }
 
         if (source_type === "skill") {
-            for (let i = 1; i <= 10; i++) {
+            for (let i = 1; i <= careerSkillSlots(1); i++) {
                 attrs.push(`${source_id}_career_skill_1_${i}_init`); 
             }
         }
@@ -1633,7 +2361,7 @@ const slModule = ( () => {
 
         getAttrs([`${repeating_id}_weapon_group`], values => {
 
-            const name = values[`${repeating_id}_weapon_group`].toLowerCase();
+            const name = (values[`${repeating_id}_weapon_group`] || "").toLowerCase().replace(/[ \/]/g, "_");
     
             getAttrs([name], values => {
                 const display = values[name];
@@ -1660,7 +2388,8 @@ const slModule = ( () => {
 
             setAttrs({
                 [`${repeating_id}_spell_total`]:`@{${skill}}`, 
-                [`${repeating_id}_spell_display`]:values[skill] || 0
+                [`${repeating_id}_spell_display`]:values[skill] || 0,
+                [`${repeating_id}_spell_rank`]:`@{force_rank_${skill}}`
             });
 
         });
@@ -1685,11 +2414,11 @@ const slModule = ( () => {
             if (type.toLowerCase() === "custom") {
                 setAttrs({[`${repeating_id}_attack_target`]:0});
             } else {  
-                const type_parsed = (!type.match(/\(/)) ? type.replace(/ /, "_")
+                const type_parsed = (!type.match(/\(/)) ? type.replace(/[ \/]/g, "_")
                                                               .toLowerCase() :
                                                          type.split("(")[1]
                                                              .replace(/\)/g, "")
-                                                             .replace(/ /, "_")
+                                                             .replace(/[ \/]/g, "_")
                                                              .toLowerCase();
 
                 const value = values[type_parsed];
@@ -1721,11 +2450,11 @@ const slModule = ( () => {
 
                 for (const id of ids) {
                     const type = values[`repeating_attacks_${id}_attack_type`].toLowerCase();  
-                    const type_parsed = (!type.match(/\(/)) ? type.replace(/ /, "_")
+                    const type_parsed = (!type.match(/\(/)) ? type.replace(/[ \/]/g, "_")
                                                                   .toLowerCase() :
                                                              type.split("(")[1]
                                                                  .replace(/\)/g, "")
-                                                                 .replace(/ /, "_")
+                                                                 .replace(/[ \/]/g, "_")
                                                                  .toLowerCase();
                     const target = `repeating_attacks_${id}_attack_target`; 
                     
@@ -1811,6 +2540,24 @@ const slModule = ( () => {
         // Class and Species Controls
         changeSpecies:changeSpecies,
         checkSpeciesAdvances:checkSpeciesAdvances,
+        updateSpeciesSkillsUsed:updateSpeciesSkillsUsed,
+        careerSkillSlots:careerSkillSlots,
+        syncTalentGrants:syncTalentGrants,
+        updateGrantDiscount:updateGrantDiscount,
+        applyExtraPoints:applyExtraPoints,
+        checkCreation:checkCreation,
+        changeOrigin:changeOrigin,
+        fillTalent:fillTalent,
+        updateTalentMaxima:updateTalentMaxima,
+        fillCareer:fillCareer,
+        updateCareerCharacteristics:updateCareerCharacteristics,
+        changeFaction:changeFaction,
+        applyOriginBonus:applyOriginBonus,
+        checkOriginAdvances:checkOriginAdvances,
+        calculateForceRanks:calculateForceRanks,
+        applySizeFromTalents:applySizeFromTalents,
+        refreshFortune:refreshFortune,
+        refreshResolve:refreshResolve,
 
         // Characteristic Functions
         calculateCharacteristic: calculateCharacteristic,
@@ -1870,6 +2617,7 @@ const slModule = ( () => {
 // SHEET OPENED
 
 on(`sheet:opened`, eventInfo => slModule.initSheet());
+on(`sheet:opened change:repeating_talent:talent_name remove:repeating_talent ${[...Array(10).keys()].map(i => `change:species_talent_${i + 1}_name change:species_talent_${i + 1}_advances`).join(" ")}`, eventInfo => slModule.applySizeFromTalents());
 
 // SHEET FUNCTIONS
 
@@ -1903,8 +2651,33 @@ on(`clicked:remove_custom_species`, eventInfo => setAttrs({"species":""}));
 
 on(`change:species`, eventInfo => slModule.changeSpecies(eventInfo.newValue));
 
+on(`change:species_fate change:species_resilience change:extra_points change:extra_fate change:extra_resilience`, eventInfo => slModule.applyExtraPoints());
+
+on(`clicked:refresh_fortune`, eventInfo => slModule.refreshFortune());
+
+on(`change:origin`, eventInfo => slModule.changeOrigin(eventInfo.newValue));
+
+on(`change:origin_choice`, eventInfo => slModule.applyOriginBonus());
+
+on(`change:faction`, eventInfo => slModule.changeFaction(eventInfo.newValue));
+
+for (let index = 1; index <= 12; index++) {
+    on(`change:origin_adv_${index}`, eventInfo => slModule.checkOriginAdvances());
+    on(`clicked:remove_origin_skill_${index}`, eventInfo => setAttrs({[`origin_adv_${index}`]: "0", advances_changed: "1"}));
+    on(`clicked:remove_skill_${index}`, eventInfo => setAttrs({[`species_skill_${index}_advances`]: "0"}));
+}
+
+on(`change:repeating_talent:talent_name change:repeating_talent:talent_ranks remove:repeating_talent`, eventInfo => slModule.calculateForceRanks());
+
+on(`change:creation_method change:pointbuy_budget ${slModule.sl.characteristics.map(c => `change:${c}_initial`).join(" ")}`, eventInfo => slModule.checkCreation());
+
+slModule.sl.characteristics.forEach(c => on(`change:${c}_species change:${c}_origin`, eventInfo => slModule.calculateCharacteristic(c)));
+
+on(`clicked:refresh_resolve`, eventInfo => slModule.refreshResolve());
+
 for (let index = 1; index <= 12; index++) {
     on(`change:species_skill_${index}_advances`, eventInfo => slModule.checkSpeciesAdvances());
+    on(`change:species_skill_${index}_name change:species_skill_${index}_advances`, eventInfo => slModule.updateSpeciesSkillsUsed());
 } 
 
 // CHARACTERISTIC CALCULATIONS
@@ -1968,7 +2741,28 @@ on(`change:repeating_careers:career_name change:repeating_careers:career_level_c
     on(`clicked:repeating_careers:newcareerlevel-${level}`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, level));
 });
 
-on(`change:repeating_careers:career_level_current`, eventInfo => slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue));
+on(`change:repeating_careers:career_level_current`, eventInfo => {
+    slModule.updateCurrentCareerLevel(eventInfo.sourceAttribute, eventInfo.newValue);
+    slModule.updateCareerCharacteristics(eventInfo.sourceAttribute);
+});
+
+on(`change:repeating_careers:career_preset`, eventInfo => slModule.fillCareer(eventInfo.sourceAttribute, eventInfo.newValue));
+
+on(`change:repeating_talent:talent_library`, eventInfo => slModule.fillTalent(eventInfo.sourceAttribute, eventInfo.newValue, true));
+
+// Typed names, and rows the sheet adds from species and career talents, are
+// filled only where the rules text is still empty.
+on(`change:repeating_talent:talent_name`, eventInfo => slModule.fillTalent(eventInfo.sourceAttribute, eventInfo.newValue, false));
+
+on(`change:repeating_talent:talent_name remove:repeating_talent`, eventInfo => slModule.syncTalentGrants());
+
+on(`change:repeating_grants:grant_source change:repeating_grants:grant_type`, eventInfo => {
+    if (eventInfo.sourceType === "player") slModule.updateGrantDiscount(eventInfo.sourceAttribute);
+});
+
+on(`change:repeating_grants remove:repeating_grants`, eventInfo => slModule.recalculateSpentXP());
+
+on(slModule.sl.characteristics.map(c => `change:${c}_bonus`).join(" "), eventInfo => slModule.updateTalentMaxima());
 
 // EXPERIENCE CHANGES
 
@@ -1989,7 +2783,7 @@ slModule.sl.characteristics.forEach(characteristic => {
         advance_triggers.push(`change:repeating_careers:career_talent_${level}_${talent}_name change:repeating_careers:career_talent_${level}_${talent}_init change:repeating_careers:career_talent_${level}_${talent}_advances`)
     });
 
-    [1,2,3,4,5,6,7,8,9,10].forEach(skill => {
+    [1,2,3,4,5,6,7,8,9,10,11,12].slice(0, slModule.careerSkillSlots(level)).forEach(skill => {
         advance_triggers.push(`change:repeating_careers:career_skill_${level}_${skill}_name change:repeating_careers:career_skill_${level}_${skill}_init change:repeating_careers:career_skill_${level}_${skill}_advances`);
     });
 });
@@ -1998,11 +2792,15 @@ for (let index = 1; index <= 12; index++) {
     advance_triggers.push(`clicked:remove_skill_${index}`);
 
     advance_triggers.push(`change:species_skill_${index}_advances`);
+
+    advance_triggers.push(`change:origin_adv_${index}`, `change:origin_skill_${index}`);
 } 
 
 for (let index = 1; index <= 10; index++) {
     advance_triggers.push(`change:species_talent_${index}_advances`);
 };
+
+advance_triggers.push(`change:repeating_grants:grant_name change:repeating_grants:grant_type change:repeating_grants:grant_advances remove:repeating_grants`);
 
 on(advance_triggers.join(" "), eventInfo => setAttrs({advances_changed:"1"}));
 

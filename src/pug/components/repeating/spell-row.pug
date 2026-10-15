@@ -15,6 +15,7 @@ mixin spell-row
         .sl-spelltable__cell
             span(name=`attr_spell_display`)
             input(name=`attr_spell_total`, type="hidden")
+            input(name=`attr_spell_rank`, type="hidden", value="0")
             input(name=`attr_spell_display`, type="hidden")
 
         .sl-spelltable__cell
@@ -39,7 +40,7 @@ mixin spell-row
             .sl-settings__row
                 .sl-settings__label(data-i18n=`Skill`) 
                 select.sl-settings__input(name=`attr_spell_type`)
-                    each specialisation in findSkill("Force").specialisations.filter(spec => spec !== "Custom")
+                    each specialisation in findSkill("Use the Force").specialisations.filter(spec => spec !== "Custom")
                         option(value=specialisation, data-i18n=specialisation)
         
             .sl-settings__row

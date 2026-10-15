@@ -1,0 +1,35 @@
+//- Origin: description, the +5 characteristic choice and the
+//- 12 starting skills (3 x +5 and 3 x +3), laid out like the species skills.
+mixin origin
+    .sl-origin
+        .sl-origin__info
+            span.sl-origin__name(name="attr_origin")
+            span.sl-origin__description(name="attr_origin_description")
+            span.sl-tbd(name="attr_origin_gap")
+
+        .sl-origin__choice
+            span.sl-settings__label(data-i18n="Fixed +5")
+            span.sl-origin__fixed(name="attr_origin_fixed_label")
+            span.sl-settings__label(data-i18n="Choose +5")
+            input(name="attr_origin_choice", type="hidden")
+            each n in [1, 2, 3]
+                label.sl-origin__option
+                    input(name="attr_origin_choice", type="radio", value=n)
+                    span(name=`attr_origin_choice_${n}_label`)
+
+        .sl-settings__col
+            input(name="attr_origin_disable3", type="hidden", value="0")
+            input(name="attr_origin_disable5", type="hidden", value="0")
+
+            .sl-settings__row--speciesskill
+                .sl-settings__header(data-i18n="Skill Name")
+                .sl-settings__header +3
+                .sl-settings__header +5
+                .sl-settings__header x
+
+            each skill in [1,2,3,4,5,6,7,8,9,10,11,12]
+                .sl-settings__row--speciesskill
+                    input.sl-settings__input(data-i18n-placeholder=`Skill ${skill}`, name=`attr_origin_skill_${skill}`, type="text")
+                    input(name=`attr_origin_adv_${skill}`, type="radio", value=3)
+                    input(name=`attr_origin_adv_${skill}`, type="radio", value=5)
+                    button.sl-header__hidecustom(name=`act_remove_origin_skill_${skill}`, type="action") ╳

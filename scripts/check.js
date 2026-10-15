@@ -22,28 +22,35 @@ const sameSet = (label, a, b) => {
     }
 };
 
+// Generated rules data (scripts/gen-data.js).
+const sl100Data = (() => {
+    const context = {};
+    vm.runInNewContext(`${read("src/js/data/sl100-data.js")}\nthis.result = sl100Data;`, context);
+    return context.result;
+})();
+
 // Pug data: the abstracts file is a single unbuffered code block.
 const abstracts = (() => {
     const source = read("src/pug/abstracts.pug").replace(/^-\s*\n/, "");
-    const context = {};
+    const context = {sl100Data};
     vm.runInNewContext(`${source}\nthis.result = {skills, characteristics};`, context);
     return context.result;
 })();
 
 const allSkills = [...abstracts.skills.basic, ...abstracts.skills.advanced];
-const pugSkills = allSkills.map(skill => skill.name.toLowerCase().replace(/ /g, "-"));
-const pugSpecialisations = allSkills
-    .flatMap(skill => skill.specialisations || [])
-    .map(spec => spec.toLowerCase().replace(/ /g, "_"));
+const skillAttr = (skill) => skill.attr || skill.name.toLowerCase().replace(/ /g, "-");
+const specAttr = (spec) => spec.toLowerCase().replace(/[ \/]/g, "_");
+const pugSkills = allSkills.map(skillAttr);
+const pugSpecialisations = allSkills.flatMap(skill => skill.specialisations || []).map(specAttr);
 const pugRepeating = allSkills
     .filter(skill => skill.grouped && (!skill.specialisations || skill.forced === 1))
-    .map(skill => skill.name.toLowerCase().replace(/ /g, "-"));
+    .map(skillAttr);
 const pugWeaponSpecs = ["Melee", "Ranged"]
     .flatMap(name => allSkills.find(skill => skill.name === name).specialisations)
-    .map(spec => spec.toLowerCase().replace(/ /g, "_"));
-const pugForceSpecs = allSkills.find(skill => skill.name === "Force").specialisations
+    .map(specAttr);
+const pugForceSpecs = allSkills.find(skill => skill.name === "Use the Force").specialisations
     .filter(spec => spec !== "Custom")
-    .map(spec => spec.toLowerCase());
+    .map(specAttr);
 
 // Sheetworkers: run the module with Roll20 globals stubbed out.
 const sl = (() => {
@@ -74,7 +81,8 @@ const scssList = (name) => {
     const match = scss.match(new RegExp(`\\$${name}:([^;]*);`));
     return match ? [...match[1].matchAll(/"([^"]+)"/g)].map(m => m[1]) : [];
 };
-sameSet("skills (pug vs scss)", pugSkills, scssList("skills"));
+// Roll20's CSS sanitizer mangles "evaluate", so the SCSS list spells it "eva1uate".
+sameSet("skills (pug vs scss)", pugSkills.map(s => (s === "evaluate" ? "eva1uate" : s)), scssList("skills"));
 sameSet("specialisations (pug vs scss)", pugSpecialisations, scssList("specialisations"));
 
 // Translations: every data-i18n key used in the HTML (and every key sheet.json
@@ -85,6 +93,9 @@ const used = new Set();
 for (const match of html.matchAll(/data-i18n(?:-placeholder|-title)?="([^"]*)"/g)) {
     used.add(match[1].replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'"));
 }
+// Keys the sheet workers look up with t("key", fallback).
+for (const match of read("src/js/sheetworkers.js").matchAll(/\bt\("([^"]+)"/g)) used.add(match[1]);
+
 const sheetJson = JSON.parse(read("sheet.json"));
 for (const option of sheetJson.useroptions || []) {
     for (const key of [option.displaytranslationkey, option.descriptiontranslationkey, ...(option.optiontranslationkeys || [])]) {
@@ -122,6 +133,28 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     if (modernColour) errors.push(`sl100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
 }
 
+// Rules data (scripts/gen-data.js) against the counts read from the documents.
+{
+    const counts = sl100Data.source_counts || {};
+    // The Talents page is the rules text; a Talents index that disagrees is reported in docs/data-report.md.
+    if (sl100Data.talents.length !== counts.talent_entries) errors.push(`talent library has ${sl100Data.talents.length} talents; the Talents page has ${counts.talent_entries} entries (re-run npm run gen)`);
+    if (counts.talent_list !== counts.talent_entries) warnings.push(`the Talents page has ${counts.talent_entries} talents but the Talents index lists ${counts.talent_list}; see docs/data-report.md`);
+    if (sl100Data.origins.length !== 13) errors.push(`expected 13 origins on the Origin page, found ${sl100Data.origins.length}`);
+    if (sl100Data.species.length !== counts.species_headings) errors.push(`species data has ${sl100Data.species.length} entries; the Species page has ${counts.species_headings}`);
+}
+
+// Retired terms must not appear in visible labels (data inside the sheet
+// worker, such as talent rules text quoting "Fate points", is not checked).
+{
+    const visible = html.replace(/<script type="text\/worker">[\s\S]*?<\/script>/, "").replace(/<rolltemplate[\s\S]*?<\/rolltemplate>/g, (m) => m);
+    const labels = [...visible.matchAll(/>([^<>]+)</g)].map(m => m[1]).concat(Object.values(translation));
+    [/\bFate\b/, /Read\/Write/].forEach(pattern => {
+        const hit = labels.find(text => pattern.test(text));
+        if (hit) errors.push(`visible label uses a retired term (${pattern}): "${hit.trim().slice(0, 80)}"`);
+    });
+    if (sl100Data.talents.some(t => /Read\/Write/.test(t.name))) errors.push("talent library contains Read/Write");
+}
+
 // The WFRP artwork is Cubicle 7's; none of it should ship with this sheet.
 const css = read("sl100.css");
 for (const [name, text] of [["sl100.css", css], ["sl100.html", html]]) {
@@ -134,4 +167,4 @@ if (errors.length) {
     errors.forEach(message => console.error(`error: ${message}`));
     process.exit(1);
 }
-console.log(`check passed: ${pugSkills.length} skills, ${pugSpecialisations.length} specialisations, ${used.size} translation keys`);
+console.log(`check passed: ${pugSkills.length} skills, ${pugSpecialisations.length} specialisations, ${sl100Data.species.length} species, ${sl100Data.origins.length} origins, ${sl100Data.careers.length} careers, ${sl100Data.talents.length} talents, ${used.size} translation keys`);

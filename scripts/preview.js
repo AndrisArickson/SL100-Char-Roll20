@@ -26,10 +26,17 @@ const root = path.join(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
 const sample = {
-    character_name: "Kessa Varn", species: "Human", class: "Scoundrel", career: "Smuggler",
+    character_name: "Kessa Varn", species: "Twi'lek", class: "Scoundrels", origin: "Hive Worlds", faction: "Smugglers' Alliance", career: "Smuggler",
     career_level: "Freighter Captain", career_path: "Spacer ⟶ Smuggler", status: "Silver 3",
     age: "31", height: "1.72m", homeworld: "Corvane Prime", eyes: "Amber",
-    fate: 2, fortune: 2, resilience: 1, resolve: 1, motivation: "Never owe the syndicate again",
+    fate: 2, fortune: 2, resilience: 2, resolve: 2, extra_points: 2, extra_fate: 1, extra_resilience: 1, species_fate: 1, species_resilience: 1,
+    extra_points_check: "All Extra Points allocated.",
+    origin_description: "Highly urbanized planets with massive, sprawling cities that cover most of the surface.", origin_fixed_label: "Agility",
+    origin_choice_1_label: "Ballistic Skill", origin_choice_2_label: "Initiative", origin_choice_3_label: "Fellowship", origin_choice: 3,
+    origin_skill_1: "Bribery", origin_skill_2: "Charm", origin_skill_3: "Consume Intoxicant", origin_skill_4: "Cool", origin_skill_5: "Dodge", origin_skill_6: "Evaluate",
+    faction_group: "Criminal Underworld · Smugglers & Pirate Gangs", faction_description: "Loose network of independent smugglers.",
+    creation_method: "pointbuy", creation_xp: 0, pointbuy_budget: 110, creation_spent: 110, creation_remaining: 0, creation_status: "Points spent: 110 / 110. All points spent.", creation_warning: " ",
+    species_talent_1_name: "Attractive or Beneath Notice", species_talent_2_name: "Datapad Use", species_talent_3_name: "Random talent (roll)", motivation: "Never owe the syndicate again",
     movement: 4, walk: 8, run: 16, current_xp: 340, spent_xp: 1260, total_xp: 1600,
     wounds: 11, wounds_max: 13, advantage: 2, encumbrance: 6, encumbrance_max: 7,
     credits: 2450, bank: 800, debt: 12000, corruption_points: 1, sin: 0,
@@ -45,17 +52,20 @@ const sample = {
         '</svg>'),
 };
 
+// [point-buy Initial (110 points over 20 each), species + Origin (Twi'lek, Hive Worlds), advances]
 const chars = {
-    weapon_skill: [31, 5], ballistic_skill: [44, 10], strength: [28, 0], toughness: [33, 0],
-    initiative: [41, 5], agility: [45, 10], dexterity: [38, 5], intelligence: [36, 0],
-    willpower: [32, 0], fellowship: [47, 10],
+    weapon_skill: [31, 0, 5], ballistic_skill: [34, 0, 10], strength: [28, 0, 0], toughness: [30, 10, 0],
+    initiative: [32, 0, 5], agility: [33, 15, 10], dexterity: [32, 0, 5], intelligence: [30, 0, 0],
+    willpower: [28, -10, 0], fellowship: [32, 25, 10],
 };
-for (const [char, [initial, adv]] of Object.entries(chars)) {
+for (const [char, [initial, creation, adv]] of Object.entries(chars)) {
     sample[`${char}_initial`] = initial;
+    sample[`${char}_creation`] = creation;
+    sample[`${char}_species`] = { toughness: 10, agility: 10, willpower: -10, fellowship: 20 }[char] || 0;
     sample[`${char}_advances`] = adv;
     sample[`${char}_modifier`] = 0;
-    sample[char] = initial + adv;
-    sample[`${char}_bonus`] = Math.floor((initial + adv) / 10);
+    sample[char] = initial + creation + adv;
+    sample[`${char}_bonus`] = Math.floor((initial + creation + adv) / 10);
 }
 
 const rows = {
@@ -70,14 +80,18 @@ const rows = {
     ],
     armour: [{ armour_name: "Padded Flight Suit", armour_locations_display: "Arms, Body, Legs", armour_points: 1, armour_qualities: "Flexible" }],
     weapons: [
-        { weapon_name: "Heavy Blaster Pistol", weapon_group: "Pistol", weapon_target_display: 54, weapon_range: "30", weapon_damage_flat: "+6", weapon_qualities: "Stun, Penetrating" },
+        { weapon_name: "Heavy Blaster Pistol", weapon_group: "Blaster", weapon_target_display: 54, weapon_range: "30", weapon_damage_flat: "+6", weapon_qualities: "Stun, Penetrating" },
         { weapon_name: "Vibroknife", weapon_group: "Vibroweapon", weapon_target_display: 36, weapon_range: "Very Short", weapon_damage_flat: "+3", weapon_qualities: "Fast" },
     ],
     criticals: [{ critical_name: "Blaster Burn", critical_location: "Left Arm", critical_wounds: 3 }],
     spells: [{ spell_name: "Sense Danger", spell_lore: "Universal", spell_display: 37, spell_cn: 3, spell_range: "Self", spell_target: "Self", spell_duration: "1 hour" }],
     careers: [{ career_name: "Smuggler", career_level: "Freighter Captain", career_status: "Silver 3" }],
     experience: [{ experience_desc: "Escaped the orbital blockade", experience_amount: 150 }],
-    experiencespent: [{ experience_desc: "Ranged (Pistol) +5", experience_amount: 50 }],
+    grants: [
+        { grant_auto: "-talentrow", grant_type: "skill", grant_name: "Entertain (Sing)", grant_source: "Talent", grant_reason: "Perfect Pitch", grant_advances: 5, grant_discount: 5 },
+        { grant_type: "talent", grant_name: "Night Vision", grant_source: "GM", grant_reason: "Cybernetic eyes (Kessel job)", grant_advances: 1, grant_discount: 0 },
+    ],
+    experiencespent: [{ experience_desc: "Ranged (Blaster) +5", experience_amount: 50 }],
     knowledge: [{ specialisation_name: "Frontier Worlds", specialisation: 41 }],
     pilot: [{ specialisation_name: "Freighter", specialisation: 60 }],
     language: [{ specialisation_name: "Trade Cant", specialisation: 41 }],
@@ -95,7 +109,7 @@ const escapeHtml = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "
 
 // A resolved skill test for the roll card screenshot.
 const cardValues = {
-    name: "Kessa Varn", roll_name: "Ranged (Pistol)", roll_type: "Skill", roll: 23, target: 64,
+    name: "Kessa Varn", roll_name: "Ranged (Blaster)", roll_type: "Skill", roll: 23, target: 64,
     difficulty: 20, bonus: 0, roll_damage: 10, roll_qualities: "Stun, Penetrating", roll_range: "30",
     roll_notes: "Aimed shot from cover", roll_hit_location: 1, roll_crit_location: 32,
 };

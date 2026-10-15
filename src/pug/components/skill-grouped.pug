@@ -1,7 +1,7 @@
 mixin skill-grouped(skill)
     - 
         const {name, characteristic, type, grouped, specialisations, forced, shown = []} = skill;
-        const attr = name.toLowerCase().replace(/ /g, "-");
+        const attr = skillAttr(skill);
         const classn = (attr === "evaluate") ? "eva1uate" : attr; // Roll20 hates the word "evaluate" in stylesheets.
         const char_attr = characteristic.toLowerCase().replace(/ /g, "_");
     .sl-skillwrapper    
@@ -24,12 +24,12 @@ mixin skill-grouped(skill)
                     each specialisation in specialisations
                         .sl-settings__row 
                             .sl-settings__label(data-i18n=specialisation)
-                            input.sl-settings__checkbox(name=`attr_${specialisation.toLowerCase().replace(/ /g,"_")}_control`, type="checkbox", checked=shown.includes(specialisation))
+                            input.sl-settings__checkbox(name=`attr_${specAttr(specialisation)}_control`, type="checkbox", checked=shown.includes(specialisation))
 
     if (grouped && specialisations && specialisations[0] !== 1)
         each specialisation in specialisations
             .specialisation_wrapper
-                -const attr = specialisation.toLowerCase().replace(/ /g,"_");
+                -const attr = specAttr(specialisation);
                 input(name=`attr_${attr}_settings`, type="hidden")
                 input(name=`attr_${attr}_control`, type="hidden", value=(shown.includes(specialisation) ? "on" : false))
                 

@@ -9,6 +9,8 @@ input(name="attr_setting_button_hide", type="hidden")
             span.sl-header__logo-title-fill(data-i18n="Star Legends")
         span.sl-header__logo-tagline(data-i18n="Galactic Wars")
         span.sl-header__logo-subtitle(data-i18n="SL100 Character Record")
+        //- Filled in by scripts/postbuild.js, so the sheet shows which build Roll20 is running.
+        span.sl-header__build __SL_BUILD__
     .sl-header__body
         //- Roll20's read-only avatar pseudo-attribute: shows the image set on
         //- the Bio & Info tab. Only displayed on the Main tab.

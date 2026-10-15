@@ -15,7 +15,8 @@ mixin career-level(level, first)
         .sl-settings__label(data-i18n=`Name`)
         input.sl-settings__input(name=`attr_career_level${level}_name`, type="text")
 
-    .sl-settings__row--invert
+    input.sl-levelcheck__flag(name=`attr_career_level${level}_complete`, type="hidden", value="0")
+    .sl-settings__row--invert.sl-levelcheck__statusrow
         .sl-settings__label(data-i18n=`Status`) 
         input.sl-settings__input(name=`attr_career_level${level}_status`, type="text")
 
@@ -93,11 +94,13 @@ mixin careers-row
 
         .sl-careertable__cell
             span(name=`attr_career_level`)
-            span.sl-levelcheck__ready(name=`attr_career_rankup`)
 
         .sl-careertable__cell
-            span(name=`attr_career_status`)
+            //- Green, with "Level complete" under it, when the career's current level is complete.
+            input.sl-levelcheck__rowflag(name=`attr_career_rankup_flag`, type="hidden", value="0")
+            span.sl-levelcheck__status(name=`attr_career_status`)
             input(name=`attr_career_status`, type="hidden")
+            span.sl-levelcheck__ready(name=`attr_career_rankup`)
 
         .sl-careertable__cell--last
             span(name=`attr_career_advances`)

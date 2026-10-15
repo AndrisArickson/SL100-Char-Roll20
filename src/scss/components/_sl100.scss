@@ -313,3 +313,21 @@ input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
     font-weight: bold;
     color: #2e8b57;
 }
+
+// The career list's Status, and each completed level's Status box, turn green.
+.sheet-sl-levelcheck__rowflag[value="1"] + .sheet-sl-levelcheck__status {
+    color: #2e8b57;
+    font-weight: bold;
+
+    &::after {
+        content: " \2713";
+    }
+}
+
+// Specific enough to beat the sheet's own text-input styles.
+.charsheet .sheet-sl-wrapper .sheet-sl-levelcheck__flag[value="1"] + .sheet-sl-levelcheck__statusrow input.sheet-sl-settings__input[type="text"] {
+    background: #d6efdf;
+    border-color: #2e8b57;
+    color: #1d5e3a;
+    font-weight: bold;
+}

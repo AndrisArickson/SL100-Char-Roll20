@@ -131,6 +131,17 @@ if (unused.length) warnings.push(`translation.json has ${unused.length} unused k
     // Modern Sass colour maths emits rgb(12.3%, ...) / hsl(...); stick to hex and rgba(r, g, b, a).
     const modernColour = css.match(/rgba?\([^)]*%[^)]*\)|hsla?\([^)]*\)/);
     if (modernColour) errors.push(`sl100.css has a percentage/hsl colour Roll20 may reject: ${modernColour[0]} (use a hex token in _abstracts.scss)`);
+    // Roll20 scans the stylesheet for "security violations" and, if it finds one, silently drops every
+    // roll-template rule (chat cards go unstyled; the sheet itself looks fine). Known triggers: any
+    // non-ASCII character (Sass then also adds @charset), an escape in content:, an HTML tag, and
+    // the words window, eval, cookie, this, behavior/behaviour and data:, comments included.
+    const nonAscii = css.match(/[^\x00-\x7f]/);
+    if (nonAscii) errors.push(`sl100.css has a non-ASCII character ("${nonAscii[0]}"); Roll20 then drops the roll-template styles. Use ASCII, or draw it in CSS`);
+    if (/@charset/i.test(css)) errors.push("sl100.css starts with @charset (Sass adds it for non-ASCII text); Roll20 then drops the roll-template styles");
+    const escaped = css.match(/content:\s*[^;]*\\[^;]*;/);
+    if (escaped) errors.push(`sl100.css has an escape in content: (${escaped[0]}); Roll20 then drops the roll-template styles`);
+    const banned = css.replace(/url\([^)]*\)/g, "").match(/window|eval|cookie|\bthis\b|behaviou?r|data:|<[a-z\/!]/i);
+    if (banned) errors.push(`sl100.css contains "${banned[0]}", which Roll20's CSS check rejects; it then drops the roll-template styles`);
     // The HTML classes get the sheet- prefix at build time, the CSS does not: a rule written as .sl-x never applies.
     const bareRules = [...new Set([...css.replace(/url\([^)]*\)/g, "").matchAll(/(^|[\s,>+~(])\.(sl-[\w-]+)/g)].map(m => m[2]))];
     if (bareRules.length) errors.push(`sl100.css has rules for classes without the sheet- prefix, which never match in Roll20: ${bareRules.slice(0, 10).map(c => "." + c).join(", ")} (write .sheet-${bareRules[0]})`);

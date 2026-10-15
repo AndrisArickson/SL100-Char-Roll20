@@ -319,8 +319,17 @@ input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
     color: #2e8b57;
     font-weight: bold;
 
+    // A tick drawn with borders: Roll20 drops all roll-template CSS if the
+    // stylesheet holds a non-ASCII character or a content escape.
     &::after {
-        content: " \2713";
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 8px;
+        margin-left: 6px;
+        border: solid #2e8b57;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
     }
 }
 
@@ -353,7 +362,7 @@ input[name="attr_grant_auto"]:not([value=""]) + .sheet-sl-granttable__row {
     opacity: 0.8;
 
     &::after {
-        content: " · CSS __SL_BUILD__";
+        content: " - CSS __SL_BUILD__";
     }
 }
 

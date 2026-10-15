@@ -1319,7 +1319,10 @@ const slModule = ( () => {
                                 if (!talentOk) needs.push(t("level_talent_needed", "a talent of this level"));
                                 update[`${row}_career_level${n}_check`] = `${t("level_needs", "Needs")}: ${needs.join(" · ")}`;
                             }
-                            if (n === current) update[`${row}_career_rankup`] = complete ? t("level_ready", "Level complete") : " ";
+                            if (n === current) {
+                                update[`${row}_career_rankup`] = complete ? t("level_ready", "Level complete") : " ";
+                                update[`${row}_career_rankup_flag`] = complete ? "1" : "0";
+                            }
                         });
                     });
                     // Silent: these are read-only results, and writing them must not set this off again.

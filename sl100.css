@@ -1046,6 +1046,12 @@ button.sheet-pictos[type=action]:hover {
   gap: 0.25rem;
   margin: 0.25rem;
 }
+.sheet-sl-settingstable__hint {
+  grid-column: 1/-1;
+  font-size: 0.8em;
+  font-style: italic;
+  opacity: 0.8;
+}
 
 .sheet-sl-extrapoints {
   display: grid;

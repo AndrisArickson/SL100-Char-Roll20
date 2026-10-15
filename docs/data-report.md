@@ -29,7 +29,7 @@ Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; D
 - Species, line 505: Zabrak has no fate
 - Species, line 505: Zabrak has no resilience
 - Species, line 505: Zabrak has no extra points
-- Careers, line 1467: Force Savant level 3 title is a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice")
+- Careers, line 1477: Force Savant level 3 title is a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice")
 
 ## Mismatches (23)
 

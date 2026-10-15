@@ -1,8 +1,12 @@
 // Generates the SL100 rules data the sheet uses (species, origins, factions,
-// careers, talents) from the SL100 design documents.
+// careers, talents) from the SL100 wiki's rules pages.
 //
 //   node scripts/gen-data.js            reads ../SL100-Wiki
 //   SL100_WIKI=/path/to/SL100-Wiki node scripts/gen-data.js
+//
+// The wiki pages are the master copy of the rules. Run `./wiki.sh rules-md` in the
+// wiki first: it writes markdown copies of the pages to build/rules/, which this
+// script reads (SL100_RULES=/path/to/folder overrides).
 //
 // Outputs (committed, so the sheet builds without the wiki present):
 //   src/js/data/sl100-data.js     data for the sheet workers
@@ -19,8 +23,14 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 // SL100_WIKI, else a sibling checkout (../SL100-Wiki or ../sl100-wiki).
 const wiki = path.resolve(process.env.SL100_WIKI
-    || ["SL100-Wiki", "sl100-wiki"].map(d => path.join(root, "..", d)).find(d => fs.existsSync(path.join(d, "05 New Star Wars - Careers (revised).md")))
+    || ["SL100-Wiki", "sl100-wiki"].map(d => path.join(root, "..", d)).find(d => fs.existsSync(path.join(d, "wiki.sh")))
     || path.join(root, "..", "SL100-Wiki"));
+// The markdown copies of the rules pages: SL100_RULES, else <wiki>/build/rules.
+const rulesDir = path.resolve(process.env.SL100_RULES || path.join(wiki, "build", "rules"));
+if (!fs.existsSync(path.join(rulesDir, "05 New Star Wars - Careers (revised).md"))) {
+    console.error(`gen-data: no rules found in ${rulesDir}. Run ./wiki.sh rules-md in the SL100 wiki first (or set SL100_WIKI / SL100_RULES).`);
+    process.exit(1);
+}
 const renameFile = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "renames.json"), "utf8"));
 const renames = renameFile.talents;
 const skillRenames = renameFile.skills || {};
@@ -41,7 +51,7 @@ const gap = (where, text) => report.gaps.push(`${where}: ${text}`);
 const mismatch = (where, text) => report.mismatches.push(`${where}: ${text}`);
 
 const readSource = (key) => {
-    const file = path.join(wiki, SOURCES[key]);
+    const file = path.join(rulesDir, SOURCES[key]);
     if (!fs.existsSync(file)) {
         console.error(`gen-data: missing ${file}\nSet SL100_WIKI to the SL100-Wiki folder.`);
         process.exit(1);

@@ -34,7 +34,7 @@ sheet: where a document is silent, the field is left blank and editable and the 
 
 | Sheet part | Wiki page |
 | --- | --- |
-| Characteristics, creation methods, bonus XP, point-buy (110), Wounds, Destiny/Fortune, Resilience/Resolve, Extra Points | Characteristics |
+| Characteristics, creation methods, bonus XP, point-buy (110), Wounds by Size (set by the Small and Large talents), Destiny/Fortune, Resilience/Resolve, Extra Points | Characteristics |
 | Species (223: modifiers, talents, Movement, Destiny, Resilience, Extra Points, Size, Traits) | Species |
 | Origin (13 worlds, +5 bonuses, 12 starting skills) | Origin |
 | Faction (145 factions: details and recruitment; no game effects are written) | Faction |
@@ -76,13 +76,15 @@ Weequay, Wookiee, Zabrak), then 206 provisional species added from Legends lore,
 
 ### Rules data and how to regenerate it
 
-Species, origins, factions, careers and talents are generated from the wiki's rules markdown by
+Species, origins, factions, careers and talents are generated from the wiki's rules pages (the master copy of
+the rules, exported as markdown by `./wiki.sh rules-md`) by
 `scripts/gen-data.js` into `src/js/data/sl100-data.js` (sheet workers) and
 `src/pug/sl100-data.pug` (templates). Both are committed, so the sheet builds without the wiki.
 When the wiki changes:
 
 ```bash
 # SL100-Wiki checked out next to this repository as SL100-Wiki or sl100-wiki (or set SL100_WIKI=/path/to/SL100-Wiki)
+(cd ../SL100-Wiki && git pull && ./wiki.sh rules-md)   # markdown copies of the rules pages, in build/rules
 npm run gen        # regenerate the data and docs/data-report.md
 npm run build      # compile and check
 npm run i18n       # add/remove translation keys for new or removed names

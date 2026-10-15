@@ -750,6 +750,37 @@ const slModule = ( () => {
         });
     };
 
+    // Size from the Small and Large talents (Characteristics, Wounds): a character
+    // with Small is Small, with Large is Large. size_auto remembers what was set
+    // here, so removing the talent puts the character back to Average unless the
+    // player has chosen another size in Settings since.
+    const applySizeFromTalents = () => {
+        getSectionIDs("talent", ids => {
+            const attrs = ["size", "size_auto"];
+            ids.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`));
+            for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) attrs.push(`species_talent_${i}_name`, `species_talent_${i}_advances`);
+            getAttrs(attrs, values => {
+                const names = ids.map(id => values[`repeating_talent_${id}_talent_name`]);
+                for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) {
+                    if ((parseInt(values[`species_talent_${i}_advances`]) || 0) > 0) names.push(values[`species_talent_${i}_name`]);
+                }
+                const has = (talent) => names.some(n => (n || "").trim().toLowerCase() === talent);
+                const target = (has("large") && !has("small")) ? "large" : (has("small") && !has("large")) ? "small" : "";
+                const size = (values.size || "average").toLowerCase();
+                const auto = values.size_auto || "";
+                const update = {};
+                if (target) {
+                    if (size !== target) update.size = target;
+                    if (auto !== target) update.size_auto = target;
+                } else if (auto) {
+                    if (size === auto) update.size = "average";
+                    update.size_auto = "";
+                }
+                if (Object.keys(update).length) setAttrs(update);
+            });
+        });
+    };
+
     // Destiny / Resilience and Extra Points
 
     // Translated text for messages set from the worker, with an English fallback.
@@ -2524,6 +2555,7 @@ const slModule = ( () => {
         applyOriginBonus:applyOriginBonus,
         checkOriginAdvances:checkOriginAdvances,
         calculateForceRanks:calculateForceRanks,
+        applySizeFromTalents:applySizeFromTalents,
         refreshFortune:refreshFortune,
         refreshResolve:refreshResolve,
 
@@ -2585,6 +2617,7 @@ const slModule = ( () => {
 // SHEET OPENED
 
 on(`sheet:opened`, eventInfo => slModule.initSheet());
+on(`sheet:opened change:repeating_talent:talent_name remove:repeating_talent ${[...Array(10).keys()].map(i => `change:species_talent_${i + 1}_name change:species_talent_${i + 1}_advances`).join(" ")}`, eventInfo => slModule.applySizeFromTalents());
 
 // SHEET FUNCTIONS
 

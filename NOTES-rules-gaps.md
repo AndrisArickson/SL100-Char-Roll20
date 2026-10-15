@@ -11,8 +11,10 @@ list of gaps is in [`docs/data-report.md`](docs/data-report.md); re-run `npm run
 
 ## 1. Characteristics and creation (Characteristics)
 
-- **Size and Wounds:** Characteristics, Wounds gives one formula. The sheet keeps WFRP's size scaling (Small, Large
-  and so on) from the Size setting; the page doesn't mention size.
+- **Size and Wounds:** Wounds follow the Size table in Characteristics, Wounds (Small = 2 × TB + WPB, Large = double
+  the Average total, and so on). The **Small** and **Large** talents set Size by themselves, whether they come from the
+  species or are added as talent rows; removing the talent puts the character back to Average unless Size was changed
+  by hand in Settings.
 - **Hardy** "adds to this total" (Characteristics, Wounds; Talents: + Toughness Bonus). It isn't automated: add it in
   the talent's Modifiers box (`Wounds +3`) or the Wounds modifier.
 - **Bonus XP:** rolled and kept = 50, rearranged = 25, rolled again = 0, point-buy = 0 (Characteristics, Determine
@@ -40,12 +42,14 @@ Points can be typed in by hand for these species.
 - **Kel Dor:** "Force Sense, Force Control or Force Alter (Discipline)". The comma makes this read as Force Sense
   plus a choice of Control or Alter; it probably means a choice of one of the three. The sheet follows the text as
   written.
-- **Size "Medium or Large"** (T'surr, Wookiee) is a choice, so Size isn't set. Both also get the Large talent from
-  their "Size talent" lines, which suggests Large.
+- **Size "Medium or Large"** (T'surr, Wookiee): the Size field is a choice, but both have the Large talent, so the
+  sheet makes them Large.
 - **"No Datapad Use"** (e.g. Yuzzem, Yuzzum) is shown as a note.
 - **Zeltron** "Fel +20 (near-human)": the "(near-human)" is shown as a note.
 - **Human:** "Choose any one Talent … Gain +5 free ranks in any skill." Shown as a note, not automated.
 - **Natural weapons** and **Traits** are shown as notes; no weapon rows are created.
+- **Possibly Small:** eight Average species described as short (Bothan, Elom, Gand, Meerian, Pacithhip, Rybet, Sullustan,
+  Svivreni) carry review notes on the Species page; they stay Average until the notes are settled.
 - **"Roll N talents from the random talents list"** becomes N "Random talent (roll)" slots. The roll button uses the
   d100 table in Talents, Random Talents.
 

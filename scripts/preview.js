@@ -80,7 +80,7 @@ const rows = {
     ],
     armour: [{ armour_name: "Padded Flight Suit", armour_locations_display: "Arms, Body, Legs", armour_points: 1, armour_qualities: "Flexible" }],
     weapons: [
-        { weapon_name: "Heavy Blaster Pistol", weapon_group: "Blaster Pistol", weapon_target_display: 54, weapon_range: "30", weapon_damage_flat: "+6", weapon_qualities: "Stun, Penetrating" },
+        { weapon_name: "Heavy Blaster Pistol", weapon_group: "Blaster", weapon_target_display: 54, weapon_range: "30", weapon_damage_flat: "+6", weapon_qualities: "Stun, Penetrating" },
         { weapon_name: "Vibroknife", weapon_group: "Vibroweapon", weapon_target_display: 36, weapon_range: "Very Short", weapon_damage_flat: "+3", weapon_qualities: "Fast" },
     ],
     criticals: [{ critical_name: "Blaster Burn", critical_location: "Left Arm", critical_wounds: 3 }],
@@ -91,7 +91,7 @@ const rows = {
         { grant_auto: "-talentrow", grant_type: "skill", grant_name: "Entertain (Sing)", grant_source: "Talent", grant_reason: "Perfect Pitch", grant_advances: 5, grant_discount: 5 },
         { grant_type: "talent", grant_name: "Night Vision", grant_source: "GM", grant_reason: "Cybernetic eyes (Kessel job)", grant_advances: 1, grant_discount: 0 },
     ],
-    experiencespent: [{ experience_desc: "Ranged (Blaster Pistol) +5", experience_amount: 50 }],
+    experiencespent: [{ experience_desc: "Ranged (Blaster) +5", experience_amount: 50 }],
     knowledge: [{ specialisation_name: "Frontier Worlds", specialisation: 41 }],
     pilot: [{ specialisation_name: "Freighter", specialisation: 60 }],
     language: [{ specialisation_name: "Trade Cant", specialisation: 41 }],
@@ -109,7 +109,7 @@ const escapeHtml = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "
 
 // A resolved skill test for the roll card screenshot.
 const cardValues = {
-    name: "Kessa Varn", roll_name: "Ranged (Blaster Pistol)", roll_type: "Skill", roll: 23, target: 64,
+    name: "Kessa Varn", roll_name: "Ranged (Blaster)", roll_type: "Skill", roll: 23, target: 64,
     difficulty: 20, bonus: 0, roll_damage: 10, roll_qualities: "Stun, Penetrating", roll_range: "30",
     roll_notes: "Aimed shot from cover", roll_hit_location: 1, roll_crit_location: 32,
 };

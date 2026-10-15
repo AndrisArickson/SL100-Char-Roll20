@@ -6,7 +6,8 @@ rule is missing, the field is blank and editable. Where the sources disagree, th
 stated so it can be reversed.
 
 **Source snapshot.** The documents were read from
-[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki) at commit `c89dd36` (2026-10-13). The
+[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki) at main `0542ff6` plus the 15 Oct weapon-skills
+branch (`claude/weapon-skills`, [SL100-Wiki#1](https://github.com/AndrisArickson/SL100-Wiki/pull/1)). The
 sheet uses **02 Species (revised)**, **05 Careers (revised)**, **07 Talents (revised)** and the
 Talent List (revised), with 01, 03, 04 and 06 as they stand. The machine-generated list of gaps and
 mismatches is in [`docs/data-report.md`](docs/data-report.md); re-run `npm run gen` after the wiki
@@ -46,8 +47,7 @@ These were gaps in the earlier snapshot and are now taken from the documents:
 
 ## 3. Species (02 revised)
 
-**223 species:** 17 written by the design group (`[sl100]`) and 206 added from Legends lore (`[review]`).
-02 says the review entries are provisional until reviewed. The sheet says so in the species notes.
+**223 species**, all now tagged `[sl100]` in 02 (17 by the design group, 206 added from Legends lore).
 
 | Species | Missing in 02 | Line |
 |---|---|---|
@@ -77,7 +77,7 @@ Points can be typed in by hand for these species.
 ## 4. Origin (03)
 
 - **Choice entries** are left for the player to edit before they gain advances, e.g.
-  "Ranged (Blaster Pistol or Blaster Rifle)", "Ride (Air, Land or Water)", "Melee (any one)".
+  "Melee (1H/2H/Brawling)", "Ranged (Archaic/Blaster)", "Ride (Air, Land or Water)".
 - **Space** is the only Origin heading without "Worlds" (03:162); the sheet uses the names as written.
 
 ## 5. Faction (04)
@@ -88,32 +88,28 @@ Points can be typed in by hand for these species.
 
 ## 6. Careers (05 revised)
 
-**91 careers:** 24 by the design group (`[sl100]`) and 67 converted or new (`[review]`). 05 says the
-advance-scheme levels 2–4 of converted careers are proposals. The career library groups them by class,
-including the new Spacers class.
+**91 careers**, all `[sl100]` after the 15 Oct pass ([SL100-Wiki#1](https://github.com/AndrisArickson/SL100-Wiki/pull/1)):
+Conversion notes accepted (alternatives taken), weapon skills in slash form, Ranged (Blaster) at level 1–2 almost
+everywhere, Ranged (Ordnance) in starship careers, Lightsaber only in Force-tradition careers, Datapad Use removed
+from career talents. Every level now has 10 / 6 / 4 / 2 skills and 4 talents. The career library groups them by class.
 
-- **Conversion typos**, read correctly by `scripts/data/renames.json` but worth fixing in the wiki:
-  - **"Briberyry"** (16 places, e.g. 05:252, 05:384) for the skill Bribery;
-  - **"Briberyr"** (9 places, e.g. 05:456, 05:875) for the talent Briber (07:124).
-- **Levels that differ from 8 / 6 / 4 / 2 skills and 4 talents:**
-  - Force Savant: 3 levels (05:1567); level 2 has 4 skills.
-  - Force Warrior 1: 4 skills. Force Warrior 2: 3 talents.
-  - Bounty Hunter 1: 9 skills and 5 talents. Bounty Hunter 4: 1 skill.
-  - Smuggler 2: 7 skills.
-- **Specialisations not in 06** get their own extra row under the skill, so their advances still land:
-  Melee (Force Tradition Weapon), Ranged (Entangling) and similar.
+- **Level 1 has 12 skill slots on the sheet:** the career's 10 plus 2 empty slots for skills from special
+  circumstances (05 intro).
+- **Weapon choices** such as Melee (1H/2H) are filled in as written and count for nothing until the player edits
+  the skill to one group, e.g. Melee (1H). The career panel says so.
+- **Force Savant level 3 title** is still a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice").
 - **Etiquette (Trade Guild)** and **Etiquette (Trade Guilds)** are both used; the library offers both.
 - **Statuses** are still WFRP Brass / Silver / Gold (05 lists renaming them as an open decision).
 
 ## 7. Skills (06)
 
-The sheet's skill list now follows 06:16 and 06:25:
+The sheet's skill list follows 06:17 and 06:25:
 
-- **Melee:** Brawling, Vibroblade, Vibro-Axe, Force Pike, Lightsaber, Electrostaff, Stun Baton, Parry, Two-Handed.
-- **Ranged** (advanced): Blaster Pistol, Blaster Rifle, Heavy Blaster, Slugthrower, Bowcaster,
-  Disruptor, Grenade/Explosives, Missile/Rocket, Sniper.
+- **Melee** (basic): 1H, 2H, Brawling, Lightsaber.
+- **Ranged** (advanced): Archaic, Blaster, Exotic, Ordnance, Thrown. Ordnance covers heavy, tripod and turreted
+  weapons and every vehicle and starship weapon.
 - **Stealth:** Rural, Underground, Urban.
-- **Meditate** is now Willpower (06:228).
+- **Meditate** is Willpower (06:228).
 - **Removed** (no longer used by 03 or 05): the stand-ins Consume Alcohol, Heal, Secret Signs and Trade.
 
 Still open in 06:
@@ -126,8 +122,7 @@ Still open in 06:
 
 ## 8. Talents (07 revised)
 
-- **07 has 191 entries; the Talent List (revised) lists 187.** Animal Companion, Cadence,
-  Captain's Word and Large have entries in 07 but aren't in the list. The sheet uses all 191.
+- **191 talents** (07 and the Talent List (revised) now agree).
 - **Characteristic bonuses:** ten talents give "a permanent +5 bonus to your starting …":
   Coolheaded (WP), Lightning Reflexes (Ag), Marksman (BS), Nimble Fingered (Dex), Savvy (Int),
   Sharp (I), Suave (Fel), Very Resilient (T), Very Strong (S) and Warrior Born (WS). Picking one
@@ -136,13 +131,11 @@ Still open in 06:
   in the talent library, taken from the names 02 and 05 use. Others can still be typed.
 - **Talents that grant a skill** (07 has three wordings for it): Amphibious (Swim, 07:62),
   Artistic (Profession (Artist), 07:77), Craftsman (the Profession of its specialisation, 07:212),
-  Perfect Pitch (Entertain (Sing), 07:572) and Seasoned Traveller (Lore (Local), 07:684). Each adds
+  Perfect Pitch (Entertain (Singing), 07:572) and Seasoned Traveller (Lore (Local), 07:684). Each adds
   a row to **Granted Skills & Talents** by itself. The skill counts as a career skill in every
   career and, by design decision (13 Oct), always costs **5 XP less per Advance**. Craftsman's text
   gives no discount, but it gets one under that decision. A `**Grants:** Career skill X; Talent Y`
   line under a talent's Max/Tests would be read in place of the prose.
-- **Entertain (Sing)** (Perfect Pitch) vs 06's Entertain specialisation **Singing** (06:141). The
-  sheet uses the talent's wording, so the advances land on a "Sing" row.
 - **Max values** "None", "Number of spells available" and similar can't be resolved, so the Max
   number is left blank. "<Characteristic> Bonus" follows the character's bonus.
 - **Force section:** Jedi and other disciplines are talents with +1 SL per rank. Force power rolls show
@@ -150,24 +143,25 @@ Still open in 06:
 
 ## 9. Sheet compatibility notes (not rules gaps)
 
-**Sheet version 1.2.0.** Migrations run once when an existing character is opened. Old attributes are
+**Sheet version 1.3.0.** Migrations run once when an existing character is opened. Old attributes are
 left in place.
 
-- **From 1.0.0:**
-  - Bonus and notes are copied from Carouse, Survival, Animal Handling and Security to Consume
-    Intoxicant, Outdoor Survival, Charm Creature and Slice Security System.
-  - The same is done for Pistol, Rifle, Heavy, Explosives and Stun to Blaster Pistol, Blaster Rifle,
-    Heavy Blaster, Grenade/Explosives and Stun Baton.
-  - Knowledge rows are copied to Lore.
-  - Weapon groups Pistol, Rifle, Heavy, Explosives and Stun are renamed to their 06 successors.
-    Brawling, Lightsaber, Parry and Two-Handed are unchanged.
-- **Weapon groups not remapped:** Basic, Vibroweapon (Vibroblade or Vibro-Axe?), Polearm (Force Pike?),
-  Gunnery, Exotic, Entangling and Throwing have no clear 06 successor. Players re-select the group.
-- **From 1.1.0 test builds:** 2H becomes Two-Handed. 1H, Archaic, Blaster, Ordinance and Wilderness
-  need re-selecting.
-- **Granted Skills & Talents** (Advances tab, new section `repeating_grants`): granted skills add
-  paid Advances at the row's discount; granted talents add free ranks (at least 1) and create the
-  talent row if needed. The Settings "Non-Career Advances" list is unchanged. Origin skills stay in
-  the Origin panel.
-- **Talent rows** whose talent gives a characteristic bonus get it in their Modifiers box if that box is empty.
-- **NPC attack rows** using old "Melee (…)" / "Ranged (…)" names need re-selecting.
+- **From 1.0.0 (1.1.0 step):** bonus and notes are copied from Carouse, Survival, Animal Handling and
+  Security to Consume Intoxicant, Outdoor Survival, Charm Creature and Slice Security System;
+  Knowledge rows are copied to Lore.
+- **1.2.0 step:** the species skill block shows only where it is already used; talent rows whose talent
+  gives a characteristic bonus get it in an empty Modifiers box.
+- **1.3.0 step (weapon groups):** old specialisations map onto the 06 groups as the wiki's
+  `tools/consolidate/skillmap.py` does. Bonus and notes are copied (the first found wins); weapon groups
+  and NPC attack types are renamed.
+  - 1H: Basic, Vibroweapon, Stun, Parry, Vibroblade, Stun Baton.
+  - 2H: Two-Handed, Polearm, Vibro-Axe, Force Pike, Electrostaff.
+  - Blaster: Pistol, Rifle, Blaster Pistol, Blaster Rifle, Heavy Blaster, Disruptor, Sniper.
+  - Ordnance: Heavy, Gunnery, Missile/Rocket, Ordinance.
+  - Thrown: Explosives, Throwing, Grenade/Explosives.
+  - Exotic: Entangling. Archaic: Slugthrower, Bowcaster.
+  - Brawling, Lightsaber, Exotic, 1H, 2H, Archaic and Blaster keep their names. Wilderness (a 1.1.0 test
+    Stealth group) has no successor.
+- **Granted Skills & Talents** (Advances tab, `repeating_grants`): granted skills add paid Advances at
+  the row's discount; granted talents add free ranks (at least 1) and create the talent row if needed.
+  The Settings "Non-Career Advances" list is unchanged. Origin skills stay in the Origin panel.

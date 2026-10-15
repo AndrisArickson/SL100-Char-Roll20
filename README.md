@@ -38,7 +38,7 @@ sheet: where a document is silent, the field is left blank and editable and the 
 | Species (223: modifiers, talents, Movement, Destiny, Resilience, Extra Points, Size, Traits) | 02 Species (revised) |
 | Origin (13 worlds, +5 bonuses, 12 starting skills) | 03 Origin |
 | Faction (145 factions: details and recruitment; no game effects are written) | 04 Faction |
-| Career library (91 careers x 4 levels, grouped by class) | 05 Careers (revised) |
+| Career library (91 careers x 4 levels, grouped by class; 12 skill slots at level 1) | 05 Careers (revised) |
 | Skills and specialisations | 06 Skills |
 | Talent library (191 talents, plus named versions such as Night Vision (Thermal)) and random-talent table | 07 Talents (revised), Talent List (revised) |
 
@@ -60,13 +60,14 @@ sheet: where a document is silent, the field is left blank and editable and the 
 
 **Skills (06).** Basic: Art, Athletics, Bribery, Charm, Charm Creature, Climb, Consume Intoxicant,
 Cool, Dodge, Endurance, Entertain, Gamble, Gossip, Haggle, Intimidate, Intuition, Leadership,
-Melee (Brawling, Vibroblade, Vibro-Axe, Force Pike, Lightsaber, Electrostaff, Stun Baton, Parry,
-Two-Handed), Navigation, Outdoor Survival, Perception, Pilot (Speeder, Starship), Ride (Air, Land,
-Water), Stealth (Rural, Underground, Urban). Advanced: Codes, Creature Care, Creature Training,
-Demolitions, Evaluate, Language, Lore, Medicine, Meditate, Perform, Pilot (Capital Ship) (Mega
-Freighter, Capital Ship, Space Station), Play, Profession, Ranged (Blaster Pistol, Blaster Rifle,
-Heavy Blaster, Slugthrower, Bowcaster, Disruptor, Grenade/Explosives, Missile/Rocket, Sniper),
-Research, Sleight of Hand, Slice Security System, Swim, Track, Use the Force (Sense, Control, Alter).
+Melee (1H, 2H, Brawling, Lightsaber), Navigation, Outdoor Survival, Perception, Pilot (Speeder, Starship),
+Ride (Air, Land, Water), Stealth (Rural, Underground, Urban). Advanced: Codes, Creature Care, Creature
+Training, Demolitions, Evaluate, Language, Lore, Medicine, Meditate, Perform, Pilot (Capital Ship) (Mega
+Freighter, Capital Ship, Space Station), Play, Profession, Ranged (Archaic, Blaster, Exotic, Ordnance,
+Thrown), Research, Sleight of Hand, Slice Security System, Swim, Track, Use the Force (Sense, Control, Alter).
+Careers and origins write weapon choices with slashes, e.g. Melee (1H/2H): the player edits the career
+skill to one group before Update. Career level 1 has 12 skill slots (10 from the career, 2 for skills
+from special circumstances).
 
 **Species (02 revised).** The 17 design-group species (Arkanian, Besalisk, Chironian, Chiss,
 Echani, Human, Kel Dor, Miraluka, Nautolan, Otolla Gungan, Togruta, Trandoshan, T'surr, Twi'lek,
@@ -81,7 +82,7 @@ Species, origins, factions, careers and talents are generated from the design do
 When the documents change:
 
 ```bash
-# SL100-Wiki checked out next to this repository (or set SL100_WIKI=/path/to/SL100-Wiki)
+# SL100-Wiki checked out next to this repository as SL100-Wiki or sl100-wiki (or set SL100_WIKI=/path/to/SL100-Wiki)
 npm run gen        # regenerate the data and docs/data-report.md
 npm run build      # compile and check
 npm run i18n       # add/remove translation keys for new or removed names

@@ -27,20 +27,20 @@ this goes to a themed roll template.
 
 ### Rules sources
 
-The rules content comes from the SL100 design documents in the
-[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki) repository. Nothing is invented on the
+The rules content comes from the SL100 rules pages of the
+[SL100-Wiki](https://github.com/AndrisArickson/SL100-Wiki). Each part of the sheet is listed with the wiki page it follows. Nothing is invented on the
 sheet: where a document is silent, the field is left blank and editable and the gap is listed in
 [`NOTES-rules-gaps.md`](NOTES-rules-gaps.md) and [`docs/data-report.md`](docs/data-report.md).
 
-| Sheet part | Source |
+| Sheet part | Wiki page |
 | --- | --- |
-| Characteristics, creation methods, bonus XP, point-buy (110), Wounds, Destiny/Fortune, Resilience/Resolve, Extra Points | 01 Introduction & Characteristics |
-| Species (223: modifiers, talents, Movement, Destiny, Resilience, Extra Points, Size, Traits) | 02 Species (revised) |
-| Origin (13 worlds, +5 bonuses, 12 starting skills) | 03 Origin |
-| Faction (145 factions: details and recruitment; no game effects are written) | 04 Faction |
-| Career library (91 careers x 4 levels, grouped by class; 12 skill slots at level 1) | 05 Careers (revised) |
-| Skills and specialisations | 06 Skills |
-| Talent library (191 talents, plus named versions such as Night Vision (Thermal)) and random-talent table | 07 Talents (revised), Talent List (revised) |
+| Characteristics, creation methods, bonus XP, point-buy (110), Wounds, Destiny/Fortune, Resilience/Resolve, Extra Points | Characteristics |
+| Species (223: modifiers, talents, Movement, Destiny, Resilience, Extra Points, Size, Traits) | Species |
+| Origin (13 worlds, +5 bonuses, 12 starting skills) | Origin |
+| Faction (145 factions: details and recruitment; no game effects are written) | Faction |
+| Career library (91 careers x 4 levels, grouped by class; 12 skill slots at level 1) | Careers |
+| Skills and specialisations | Skills |
+| Talent library (191 talents, plus named versions such as Night Vision (Thermal)) and random-talent table | Talents (with its index and random-talent table) |
 
 ### How WFRP 4e maps to SL100
 
@@ -56,9 +56,9 @@ sheet: where a document is silent, the field is left blank and editable and the 
 | Hair | Homeworld | `homeworld` |
 | Yards | Metres (Walk = 2 x Movement, Run = 4 x Movement) | `walk`, `run` |
 
-**Characteristics.** WS, BS, S, T, I, Ag, Dex, Int, WP, Fel (ten, per 01).
+**Characteristics.** WS, BS, S, T, I, Ag, Dex, Int, WP, Fel (ten, per Characteristics).
 
-**Skills (06).** Basic: Art, Athletics, Bribery, Charm, Charm Creature, Climb, Consume Intoxicant,
+**Skills.** Basic: Art, Athletics, Bribery, Charm, Charm Creature, Climb, Consume Intoxicant,
 Cool, Dodge, Endurance, Entertain, Gamble, Gossip, Haggle, Intimidate, Intuition, Leadership,
 Melee (1H, 2H, Brawling, Lightsaber), Navigation, Outdoor Survival, Perception, Pilot (Speeder, Starship),
 Ride (Air, Land, Water), Stealth (Rural, Underground, Urban). Advanced: Codes, Creature Care, Creature
@@ -69,17 +69,17 @@ Careers and origins write weapon choices with slashes, e.g. Melee (1H/2H): the p
 skill to one group before Update. Career level 1 has 12 skill slots (10 from the career, 2 for skills
 from special circumstances).
 
-**Species (02 revised).** The 17 design-group species (Arkanian, Besalisk, Chironian, Chiss,
+**Species.** The 17 design-group species (Arkanian, Besalisk, Chironian, Chiss,
 Echani, Human, Kel Dor, Miraluka, Nautolan, Otolla Gungan, Togruta, Trandoshan, T'surr, Twi'lek,
 Weequay, Wookiee, Zabrak), then 206 provisional species added from Legends lore, plus Custom
 (applies nothing).
 
 ### Rules data and how to regenerate it
 
-Species, origins, factions, careers and talents are generated from the design documents by
+Species, origins, factions, careers and talents are generated from the wiki's rules markdown by
 `scripts/gen-data.js` into `src/js/data/sl100-data.js` (sheet workers) and
 `src/pug/sl100-data.pug` (templates). Both are committed, so the sheet builds without the wiki.
-When the documents change:
+When the wiki changes:
 
 ```bash
 # SL100-Wiki checked out next to this repository as SL100-Wiki or sl100-wiki (or set SL100_WIKI=/path/to/SL100-Wiki)
@@ -89,10 +89,10 @@ npm run i18n       # add/remove translation keys for new or removed names
 npm run build      # rebuild so labels pick up the translations
 ```
 
-`gen` warns if the number of talents in 07 (revised) differs from the revised Talent List (07 is used).
-Names that 02/05 spell differently from 07 or 06 are mapped in `scripts/data/renames.json`
-(e.g. Read/Write -> Datapad Use, and the conversion typo Briberyry -> Bribery); `docs/data-report.md`
-lists every name that still does not match.
+`gen` warns if the Talents page and its index list a different number of talents (the Talents page is used).
+Names that the Species or Careers pages spell differently from the Talents or Skills pages are mapped in
+`scripts/data/renames.json` (e.g. Read/Write -> Datapad Use); `docs/data-report.md` lists every name that
+still does not match.
 
 The WFRP sheet loaded species and talent data from the WFRP compendium.
 SL100 has no compendium (Roll20 does not allow custom ones), so the libraries are built into the sheet.
@@ -116,7 +116,7 @@ npm start         # watch mode while editing
   - `src/scss/_abstracts.scss`
 - the `data-i18n` keys used in the HTML and the entries in `translation.json`. Roll20
   shows a blank label for any key that has no translation.
-- the rules data counts: talents vs 07 (revised), 13 origins, species vs 02.
+- the rules data counts: talents vs the Talents page, 13 origins, species vs the Species page.
 - retired terms in visible labels ("Fate", "Read/Write").
 
 It also fails if any Roll20-hosted WFRP artwork is referenced.

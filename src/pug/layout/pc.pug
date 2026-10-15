@@ -56,7 +56,7 @@ input(name="attr_setting_button_hide", type="hidden")
         +generic-field(resilience[0], "text", "2-1")
         +generic-field(resilience[1], "text", "2-1")
     +generic-field(resilience[2], "text", "1-2")
-    //- Extra Points come from the species (02) and are split between Destiny and
+    //- Extra Points come from the species and are split between Destiny and
     //- Resilience; the sheet worker checks the split and applies it.
     .sl-extrapoints
         label.sl-extrapoints__item
@@ -75,7 +75,7 @@ input(name="attr_setting_button_hide", type="hidden")
         span(name="attr_extra_points_check")
     .sl-panelbuttons
         button.sl-panelbuttons__button(data-i18n="Refresh Resolve", name="act_refresh_resolve", type="action")
-    //- 01, Resilience and Resolve.
+    //- Characteristics, Resilience and Resolve.
     p.sl-reminder(data-i18n="Resolve: ignore Psychology or Critical Wound modifiers for a round, or remove a Condition. Resilience: I Will Not Fail, Not My Path.")
 
 .sl-fate.sl-panel.page__main
@@ -84,7 +84,7 @@ input(name="attr_setting_button_hide", type="hidden")
         +generic-field(field, "number", "1-1")
     .sl-panelbuttons
         button.sl-panelbuttons__button(data-i18n="Refresh Fortune", name="act_refresh_fortune", type="action")
-    //- 01, Destiny and Fortune.
+    //- Characteristics, Destiny and Fortune.
     p.sl-reminder(data-i18n="Fortune: reroll a failed Test, add +1 SL, or pick your place in the Initiative order. Destiny: Not Today, That Was Close.")
 
 .sl-movement.sl-panel.page__main
@@ -356,7 +356,7 @@ input(name="attr_setting_button_hide", type="hidden")
             .sl-granttable__cell--last(data-i18n="XP −")
         +repeating-section("grants","grant-row")
 
-    //- Faction (chapter 04): 04 gives lore only, so this is a selector and notes.
+    //- Faction: the Faction page gives lore only, so this is a selector and notes.
     .sl-panel.sl-faction
         h1.sl-panel__header(data-i18n="Faction")
         .sl-faction__info
@@ -369,7 +369,7 @@ input(name="attr_setting_button_hide", type="hidden")
 
 .sl-experience--alt.page__advances--flex
 
-    //- Character creation helper (chapter 01, Determine Characteristics):
+    //- Character creation helper (Characteristics, Determine Characteristics):
     //- method, bonus XP, what to enter, and a check of the Initial column.
     .sl-panel.sl-creation
         h1.sl-panel__header(data-i18n="Character Creation")

@@ -31,7 +31,7 @@ const slModule = ( () => {
             "Fel"
         ],
 
-        // Skill attributes (chapter 06; see src/pug/abstracts.pug).
+        // Skill attributes (Skills page; see src/pug/abstracts.pug).
         skills: [
             "codes",
             "creature-care",
@@ -205,7 +205,7 @@ const slModule = ( () => {
         else done();
     }
 
-    // 1.1.0: skill list aligned with chapter 06. Skills 06 renamed keep their
+    // 1.1.0: skill list aligned with the Skills page. Skills it renamed keep their
     // player-entered bonus and notes; Knowledge rows move to Lore. Advances are
     // recalculated from the career and origin entries, so they need no
     // copying. Old attributes are left in place. (Weapon groups: see 1.3.0.)
@@ -247,7 +247,7 @@ const slModule = ( () => {
         });
     }
 
-    // 1.2.0: 02 gives species no skills, so the species skill slots are only
+    // 1.2.0: the Species page gives species no skills, so the species skill slots are only
     // shown on characters that already use them (species_skills_used); their
     // advances still count, so skill totals and XP do not change. Talent rows
     // get the characteristic bonus their talent gives (Warrior Born: "WS +5").
@@ -256,7 +256,7 @@ const slModule = ( () => {
         fillTalentModifiers(callback);
     };
 
-    // 1.3.0: weapon groups of 06 (15 Oct 2026): Melee 1H / 2H / Brawling /
+    // 1.3.0: weapon groups from the Skills page (15 Oct 2026): Melee 1H / 2H / Brawling /
     // Lightsaber, Ranged Archaic / Blaster / Exotic / Ordnance / Thrown. The
     // specialisations of 1.0.0 and of the 1.1.0 / 1.2.0 test builds map onto
     // them as the wiki's consolidation map does (tools/consolidate/skillmap.py):
@@ -511,9 +511,9 @@ const slModule = ( () => {
 
     // Species Controls
 
-    // Species (chapter 02), from the generated data in src/js/data/sl100-data.js.
+    // Species, from the generated data in src/js/data/sl100-data.js.
     // Selecting a species fills its characteristic modifiers, Destiny,
-    // Resilience, Extra Points, Movement, Size and talents. Fields 02 leaves
+    // Resilience, Extra Points, Movement, Size and talents. Fields the Species page leaves
     // empty are set blank (not zero), stay editable, and are listed in
     // species_gap. "Custom" (or an unknown name) applies nothing.
     const SIZE_VALUES = {tiny: "tiny", little: "little", small: "small", average: "average", medium: "average", large: "large", enormous: "enormous", monstrous: "monstrous"};
@@ -544,12 +544,12 @@ const slModule = ( () => {
             movement: blankIfNull(preset.movement),
         };
 
-        // Destiny / Resilience follow the species via applyExtraPoints; when 02
+        // Destiny / Resilience follow the species via applyExtraPoints; when the Species page
         // gives no value they are blanked rather than left from another species.
         if (preset.fate === null) update.fate = "";
         if (preset.resilience === null) update.resilience = "";
 
-        // Size only when 02 names a single size ("Medium or Large" is a choice).
+        // Size only when the Species page names a single size ("Medium or Large" is a choice).
         const size = SIZE_VALUES[(preset.size || "").toLowerCase()];
         if (size) update.size = size;
 
@@ -571,11 +571,11 @@ const slModule = ( () => {
 
         const gapLabels = {characteristics: "characteristic modifiers", talents: "talents", movement: "Movement", fate: "Destiny", resilience: "Resilience", extra_points: "Extra Points"};
         update.species_gap = preset.gap.length
-            ? t("species_gap_prefix", "Rules TBD in 02:") + " " + preset.gap.map(g => gapLabels[g] || g).join(", ")
+            ? t("species_gap_prefix", "Rules TBD on the Species page:") + " " + preset.gap.map(g => gapLabels[g] || g).join(", ")
             : CLEARED;
 
         const notes = [];
-        if (preset.status === "review") notes.push(t("species_review", "Provisional: added from Legends lore and marked [review] in 02."));
+        if (preset.status === "review") notes.push(t("species_review", "Provisional: added from Legends lore and marked [review] on the Species page."));
         notes.push(...preset.notes);
         if (preset.traits) notes.push(`${t("Traits", "Traits")}: ${preset.traits}`);
         if (preset.natural_weapons) notes.push(`${t("Natural weapons", "Natural weapons")}: ${preset.natural_weapons}`);
@@ -591,7 +591,7 @@ const slModule = ( () => {
         });
     }
 
-    // Origin (chapter 03): +5 to one fixed characteristic and +5 to one of
+    // Origin: +5 to one fixed characteristic and +5 to one of
     // three, applied to the starting value like the species modifiers; 12
     // starting skills taking 3 x +5 and 3 x +3 (like the species skills).
     const ORIGIN_SKILL_SLOTS = 12;
@@ -622,7 +622,7 @@ const slModule = ( () => {
             update[`origin_adv_${i}`] = "0";
         }
         update.origin_gap = (origin.skills.length !== ORIGIN_SKILL_SLOTS)
-            ? t("origin_gap_skills", "Rules TBD in 03: this origin lists") + ` ${origin.skills.length} ` + t("origin_gap_skills_end", "starting skills, not 12.")
+            ? t("origin_gap_skills", "Rules TBD on the Origin page: this origin lists") + ` ${origin.skills.length} ` + t("origin_gap_skills_end", "starting skills, not 12.")
             : CLEARED;
         update.advances_changed = 1;
 
@@ -643,7 +643,7 @@ const slModule = ( () => {
         });
     };
 
-    // Faction (chapter 04): lore only, so choosing one just shows its details.
+    // Faction: lore only, so choosing one just shows its details.
     const changeFaction = (new_value) => {
         const faction = sl100Data.factions.find(f => f.name.toLowerCase() === (new_value || "").trim().toLowerCase());
         setAttrs({
@@ -667,7 +667,7 @@ const slModule = ( () => {
         });
     };
 
-    // Character creation helper (chapter 01, "Determine Characteristics")
+    // Character creation helper (Characteristics, "Determine Characteristics")
 
     // Bonus XP by method: keep the rolled order 50, rearrange 25, otherwise 0.
     const CREATION_XP = {rolled: 50, rearranged: 25, rerolled: 0, pointbuy: 0};
@@ -733,7 +733,7 @@ const slModule = ( () => {
     };
 
     // Use the Force discipline ranks, from the "Force Sense / Control / Alter
-    // (Discipline)" talents in 07 (revised).
+    // (Discipline)" talents on the Talents page.
     const calculateForceRanks = () => {
         getSectionIDs("talent", ids => {
             const attrs = [];
@@ -758,7 +758,7 @@ const slModule = ( () => {
         return text || fallback;
     };
 
-    // 01, Species Values and Extra Points: Destiny = species Destiny + the
+    // Characteristics, Species Values and Extra Points: Destiny = species Destiny + the
     // Extra Points put into Destiny, and the same for Resilience; starting
     // Fortune equals Destiny and starting Resolve equals Resilience. Runs only
     // when the species or the split changes, so points spent in play are not
@@ -789,7 +789,7 @@ const slModule = ( () => {
             if (extra !== null && String(extra) !== values.extra_points) update.extra_points = extra;
 
             if (extra === null) {
-                update.extra_points_check = t("extra_points_unset", "This species has no Extra Points in 02 (rules TBD): enter them by hand.");
+                update.extra_points_check = t("extra_points_unset", "This species has no Extra Points on the Species page (rules TBD): enter them by hand.");
             } else if (allocated > extra) {
                 update.extra_points_check = t("extra_points_over", "Too many Extra Points allocated, by") + ` ${allocated - extra}.`;
             } else if (allocated < extra) {
@@ -825,14 +825,14 @@ const slModule = ( () => {
         });
     };
 
-    // 07 (revised), Luck: maximum Fortune = current Destiny (Fate) + Luck levels.
+    // Talents page, Luck: maximum Fortune = current Destiny (Fate) + Luck levels.
     const refreshFortune = () => {
         talentRanks("Luck", luck => {
             getAttrs(["fate"], values => setAttrs({fortune: (parseInt(values.fate) || 0) + luck}));
         });
     };
 
-    // 07 (revised), Strong-Minded: add its level to the maximum Resolve pool.
+    // Talents page, Strong-Minded: add its level to the maximum Resolve pool.
     const refreshResolve = () => {
         talentRanks("Strong-Minded", strong => {
             getAttrs(["resilience"], values => setAttrs({resolve: (parseInt(values.resilience) || 0) + strong}));
@@ -903,8 +903,8 @@ const slModule = ( () => {
                 return;
             } else {
 
-                // Species (02) and Origin (03) modifiers apply to the starting
-                // value and are not Advances (01, "Determine Characteristics").
+                // Species and Origin modifiers apply to the starting
+                // value and are not Advances (Characteristics, "Determine Characteristics").
                 const creation = (parseInt(values[`${characteristic}_species`]) || 0) + (parseInt(values[`${characteristic}_origin`]) || 0);
                 const current = initial + creation + advances + modifier;
     
@@ -1122,12 +1122,12 @@ const slModule = ( () => {
 
     }
 
-    // Career library (chapter 05, generated data). Filling a row writes the
+    // Career library (Careers page, generated data). Filling a row writes the
     // career name, each level's title, status, skills (10 slots), talents
     // (5 slots) and trappings, then ticks the in-career characteristics for the
     // row's current level. Advances are left alone.
     // Level 1 lists 10 career skills and keeps 2 empty slots for skills a
-    // career gains through special circumstances (05 intro); levels 2-4 hold 10.
+    // career gains through special circumstances (Careers page intro); levels 2-4 hold 10.
     const CAREER_SKILL_SLOTS = 10;
     const CAREER_TALENT_SLOTS = 5;
 
@@ -1169,7 +1169,7 @@ const slModule = ( () => {
         });
     };
 
-    // Talent library (07 revised, generated data). The name is matched exactly,
+    // Talent library (Talents page, generated data). The name is matched exactly,
     // then on the part before "(" so "Resistance (Cold)" finds "Resistance
     // (Threat)". Max rules naming a Characteristic Bonus resolve to the
     // character's current bonus and follow it as it changes.
@@ -1199,7 +1199,7 @@ const slModule = ( () => {
     // Fill one talent row from the library. `overwrite` replaces the rules text
     // even when the player has written their own (used when picking from the
     // library list).
-    // The library lists each talent and its named versions from 02/05
+    // The library lists each talent and its named versions from the Species and Careers pages
     // ("Night Vision (Thermal)"); picking a version keeps that name. Talents
     // with a permanent characteristic bonus (07: "+5 to your starting Weapon
     // Skill") put it in Modifiers ("WS +5"), which applies it to the
@@ -1224,7 +1224,7 @@ const slModule = ( () => {
         });
     };
 
-    // Granted Skills & Talents. A talent whose 07 entry grants a skill ("add
+    // Granted Skills & Talents. A talent whose Talents entry grants a skill ("add
     // Entertain (Sing) to any career you enter") adds a row here by itself,
     // marked with its talent row's id; the row goes when the talent goes.
     // Rows added by hand are never touched. Skills granted by a talent always

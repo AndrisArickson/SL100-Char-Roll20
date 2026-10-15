@@ -18,17 +18,17 @@ Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; D
 
 ## Gaps (12)
 
-- Species, line 329: Human has no characteristic modifiers
-- Species, line 393: Otolla Gungan has no characteristic modifiers
-- Species, line 408: Togruta has no characteristic modifiers
-- Species, line 497: Wookiee has no movement
-- Species, line 497: Wookiee has no fate
-- Species, line 497: Wookiee has no resilience
-- Species, line 497: Wookiee has no extra points
-- Species, line 513: Zabrak has no movement
-- Species, line 513: Zabrak has no fate
-- Species, line 513: Zabrak has no resilience
-- Species, line 513: Zabrak has no extra points
+- Species, line 1370: Human has no characteristic modifiers
+- Species, line 2293: Otolla Gungan has no characteristic modifiers
+- Species, line 3059: Togruta has no characteristic modifiers
+- Species, line 3438: Wookiee has no movement
+- Species, line 3438: Wookiee has no fate
+- Species, line 3438: Wookiee has no resilience
+- Species, line 3438: Wookiee has no extra points
+- Species, line 3590: Zabrak has no movement
+- Species, line 3590: Zabrak has no fate
+- Species, line 3590: Zabrak has no resilience
+- Species, line 3590: Zabrak has no extra points
 - Careers, line 1477: Force Savant level 3 title is a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice")
 
 ## Mismatches (25)

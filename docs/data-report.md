@@ -18,24 +18,26 @@ Talent renames applied (scripts/data/renames.json): Read/Write -> Datapad Use; D
 
 ## Gaps (12)
 
-- Species, line 325: Human has no characteristic modifiers
-- Species, line 389: Otolla Gungan has no characteristic modifiers
-- Species, line 404: Togruta has no characteristic modifiers
-- Species, line 489: Wookiee has no movement
-- Species, line 489: Wookiee has no fate
-- Species, line 489: Wookiee has no resilience
-- Species, line 489: Wookiee has no extra points
-- Species, line 505: Zabrak has no movement
-- Species, line 505: Zabrak has no fate
-- Species, line 505: Zabrak has no resilience
-- Species, line 505: Zabrak has no extra points
+- Species, line 329: Human has no characteristic modifiers
+- Species, line 393: Otolla Gungan has no characteristic modifiers
+- Species, line 408: Togruta has no characteristic modifiers
+- Species, line 497: Wookiee has no movement
+- Species, line 497: Wookiee has no fate
+- Species, line 497: Wookiee has no resilience
+- Species, line 497: Wookiee has no extra points
+- Species, line 513: Zabrak has no movement
+- Species, line 513: Zabrak has no fate
+- Species, line 513: Zabrak has no resilience
+- Species, line 513: Zabrak has no extra points
 - Careers, line 1477: Force Savant level 3 title is a placeholder ("Jedi Councillor / (Tradition) xxx / Sith Apprentice")
 
-## Mismatches (23)
+## Mismatches (25)
 
+- species.csv vs Species: Besalisk talents: CSV "Datapad Use, Ambidextrous, roll 3 talents from the random talents list" vs Species "Datapad Use, Ambidextrous, Large" (Species used)
 - species.csv vs Species: Chironian talents: CSV "Datapad Use, Sprinter, roll 3 talents from the random talents list" vs Species "Datapad Use, Sprinter, Large" (Species used)
 - species.csv vs Species: Miraluka talents: CSV "from the random talents list" vs Species "Datapad Use, Force Sensitive (Sight), Force Sense (Discipline)" (Species used)
 - species.csv vs Species: Nautolan talents: CSV "" vs Species "Acute Sense (Smell), Amphibious, Datapad Use, Night Vision, Strong Swimmer" (Species used)
+- species.csv vs Species: Trandoshan talents: CSV "Datapad Use, Night Vision (Thermal), Regeneration (Minor), Warrior Born, Roll 1 talent from the random talents list" vs Species "Datapad Use, Night Vision (Thermal), Regeneration (Minor), Warrior Born, Large" (Species used)
 - species.csv vs Species: T'surr talents: CSV "Datapad Use, Hardy, Sturdy, Very Resilient, Warrior Born" vs Species "Datapad Use, Hardy, Sturdy, Very Resilient, Warrior Born, Large" (Species used)
 - species.csv vs Species: Wookiee talents: CSV "Craftsman (Profession), Datapad Use, Very Strong, roll 2 talents from the random talents list" vs Species "Craftsman (Profession), Datapad Use, Very Strong, Large" (Species used)
 - species.csv vs Species: Askajian talents: CSV "no Datapad Use (uncivilised), Tenacious, Stone Soup, roll 1 talents from the random talents list" vs Species "Tenacious, Stone Soup" (Species used)

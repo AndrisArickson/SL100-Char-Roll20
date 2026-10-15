@@ -6,6 +6,11 @@ mixin career-level(level, first)
             span(data-i18n="Current" class=`sl-current_level--${level}`) 
         h2(data-i18n=`Level ${level}`) 
 
+    //- Level completion: Advances in the level's characteristics and 8 career skills, and a talent of this level.
+    .sl-levelcheck
+        input.sl-levelcheck__flag(name=`attr_career_level${level}_complete`, type="hidden", value="0")
+        span.sl-levelcheck__text(name=`attr_career_level${level}_check`)
+
     .sl-settings__row--invert
         .sl-settings__label(data-i18n=`Name`)
         input.sl-settings__input(name=`attr_career_level${level}_name`, type="text")
@@ -88,6 +93,7 @@ mixin careers-row
 
         .sl-careertable__cell
             span(name=`attr_career_level`)
+            span.sl-levelcheck__ready(name=`attr_career_rankup`)
 
         .sl-careertable__cell
             span(name=`attr_career_status`)

@@ -1200,6 +1200,135 @@ const slModule = ( () => {
         });
     };
 
+    // Level completion (Careers page): level N of a career is complete when the
+    // character has at least N x 5 Advances in every characteristic the level
+    // opens, N x 5 Advances in 8 of the career's skills (its levels 1 to N, the
+    // two extra level-1 slots and any granted skills), and at least one rank in
+    // a talent of level N (gained anywhere). Advances are the character's
+    // totals: initial plus bought, in every career. Trappings are not tracked.
+    const LEVEL_SKILLS_NEEDED = 8;
+    const CHARACTERISTIC_ABBREVIATIONS = {weapon_skill: "WS", ballistic_skill: "BS", strength: "S", toughness: "T", initiative: "I",
+        agility: "Ag", dexterity: "Dex", intelligence: "Int", willpower: "WP", fellowship: "Fel"};
+    const talentBase = (name) => (name || "").replace(/\s*\(.*\)\s*$/, "").trim().toLowerCase();
+
+    const checkCareerLevels = () => {
+        getSectionIDs("careers", careerIds => getSectionIDs("talent", talentIds => getSectionIDs("grants", grantIds => {
+            const groupIds = {};
+            const loadGroups = (i, done) => {
+                if (i >= sl.repeating_skills.length) return done();
+                getSectionIDs(sl.repeating_skills[i], ids => { groupIds[sl.repeating_skills[i]] = ids; loadGroups(i + 1, done); });
+            };
+            loadGroups(0, () => {
+                const attrs = [];
+                sl.characteristics.forEach(c => attrs.push(`${c}_advances`));
+                sl.skills.forEach(s => attrs.push(`${s}_advances`));
+                sl.specialisations.forEach(s => attrs.push(`${s}_advances`));
+                Object.entries(groupIds).forEach(([g, ids]) => ids.forEach(id =>
+                    attrs.push(`repeating_${g}_${id}_specialisation_name`, `repeating_${g}_${id}_specialisation_advances`)));
+                talentIds.forEach(id => attrs.push(`repeating_talent_${id}_talent_name`, `repeating_talent_${id}_talent_ranks`));
+                for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) attrs.push(`species_talent_${i}_name`, `species_talent_${i}_advances`);
+                grantIds.forEach(id => attrs.push(`repeating_grants_${id}_grant_type`, `repeating_grants_${id}_grant_name`, `repeating_grants_${id}_grant_advances`));
+                careerIds.forEach(id => {
+                    const row = `repeating_careers_${id}`;
+                    attrs.push(`${row}_career_preset`, `${row}_career_level_current`);
+                    sl.characteristics.forEach(c => attrs.push(`${row}_career_${c}`));
+                    [1, 2, 3, 4].forEach(n => {
+                        for (let j = 1; j <= careerSkillSlots(n); j++) attrs.push(`${row}_career_skill_${n}_${j}_name`);
+                        for (let k = 1; k <= CAREER_TALENT_SLOTS; k++) attrs.push(`${row}_career_talent_${n}_${k}_name`);
+                    });
+                });
+
+                getAttrs(attrs, values => {
+                    const num = (key) => parseInt(values[key]) || 0;
+
+                    // The character's total Advances in a skill named as a career writes it.
+                    const skillAdvances = (name) => {
+                        const target = resolveSkillName(name);
+                        if (!target) return null;
+                        if (target.type !== "repeating") return {key: target.attr, value: num(`${target.attr}_advances`)};
+                        const spec = target.specialisation.toLowerCase();
+                        const id = (groupIds[target.group] || []).find(i => (values[`repeating_${target.group}_${i}_specialisation_name`] || "").trim().toLowerCase() === spec);
+                        return {key: `${target.group}:${spec}`, value: id ? num(`repeating_${target.group}_${id}_specialisation_advances`) : 0};
+                    };
+
+                    // Talents the character holds with at least one rank, from any source.
+                    const held = new Set();
+                    talentIds.forEach(id => { if (num(`repeating_talent_${id}_talent_ranks`) > 0) held.add(talentBase(values[`repeating_talent_${id}_talent_name`])); });
+                    for (let i = 1; i <= SPECIES_TALENT_SLOTS; i++) {
+                        if (num(`species_talent_${i}_advances`) > 0) held.add(talentBase(values[`species_talent_${i}_name`]));
+                    }
+                    const grantedSkills = [];
+                    grantIds.forEach(id => {
+                        const name = values[`repeating_grants_${id}_grant_name`];
+                        if (values[`repeating_grants_${id}_grant_type`] === "talent") held.add(talentBase(name));
+                        else if (name) grantedSkills.push(name);
+                    });
+                    held.delete("");
+
+                    const update = {};
+                    careerIds.forEach(id => {
+                        const row = `repeating_careers_${id}`;
+                        const career = findCareer(values[`${row}_career_preset`]);
+                        const current = parseInt(values[`${row}_career_level_current`]) || 1;
+                        [1, 2, 3, 4].forEach(n => {
+                            const target = n * 5;
+                            const names = [];
+                            for (let m = 1; m <= n; m++) {
+                                for (let j = 1; j <= careerSkillSlots(m); j++) names.push(values[`${row}_career_skill_${m}_${j}_name`]);
+                            }
+                            const levelTalents = [];
+                            for (let k = 1; k <= CAREER_TALENT_SLOTS; k++) {
+                                const talent = (values[`${row}_career_talent_${n}_${k}_name`] || "").trim();
+                                if (talent) levelTalents.push(talent);
+                            }
+                            const hasContent = levelTalents.length || names.some(x => (x || "").trim());
+                            if (!hasContent) {
+                                update[`${row}_career_level${n}_complete`] = "0";
+                                update[`${row}_career_level${n}_check`] = " ";
+                                return;
+                            }
+
+                            // Characteristics this level opens: from the advance scheme for a library
+                            // career, otherwise the ticked in-career characteristics.
+                            const chars = sl.characteristics.filter(c => career
+                                ? (career.scheme[c] && career.scheme[c] <= n)
+                                : values[`${row}_career_${c}`] === "on");
+                            const shortChars = chars.filter(c => num(`${c}_advances`) < target);
+
+                            const counted = {};
+                            names.concat(grantedSkills).forEach(name => {
+                                const s = skillAdvances(name);
+                                if (s) counted[s.key] = s.value;
+                            });
+                            const skillsAt = Object.values(counted).filter(v => v >= target).length;
+
+                            const talentOk = levelTalents.some(talent => talent.split(/\s+or\s+|,\s*/i).some(o => held.has(talentBase(o))));
+                            const charsOk = chars.length > 0 && shortChars.length === 0;
+                            const complete = charsOk && skillsAt >= LEVEL_SKILLS_NEEDED && talentOk;
+
+                            update[`${row}_career_level${n}_complete`] = complete ? "1" : "0";
+                            if (complete) {
+                                update[`${row}_career_level${n}_check`] = n < 4
+                                    ? t("level_complete", "Complete: ready for the next level (Trappings not tracked).")
+                                    : t("level_complete_last", "Complete: the career's last level (Trappings not tracked).");
+                            } else {
+                                const needs = [];
+                                if (skillsAt < LEVEL_SKILLS_NEEDED) needs.push(`${t("Skills", "Skills")} ${skillsAt}/${LEVEL_SKILLS_NEEDED} ${t("level_skills_at", "at")} ${target}+`);
+                                if (!chars.length) needs.push(t("level_no_characteristics", "tick the in-career characteristics"));
+                                shortChars.forEach(c => needs.push(`${CHARACTERISTIC_ABBREVIATIONS[c] || c} ${num(`${c}_advances`)}/${target}`));
+                                if (!talentOk) needs.push(t("level_talent_needed", "a talent of this level"));
+                                update[`${row}_career_level${n}_check`] = `${t("level_needs", "Needs")}: ${needs.join(" · ")}`;
+                            }
+                            if (n === current) update[`${row}_career_rankup`] = complete ? t("level_ready", "Level complete") : " ";
+                        });
+                    });
+                    // Silent: these are read-only results, and writing them must not set this off again.
+                    setAttrs(update, {silent: true});
+                });
+            });
+        })));
+    };
+
     // Talent library (Talents page, generated data). The name is matched exactly,
     // then on the part before "(" so "Resistance (Cold)" finds "Resistance
     // (Threat)". Max rules naming a Characteristic Bonus resolve to the
@@ -2556,6 +2685,7 @@ const slModule = ( () => {
         checkOriginAdvances:checkOriginAdvances,
         calculateForceRanks:calculateForceRanks,
         applySizeFromTalents:applySizeFromTalents,
+        checkCareerLevels:checkCareerLevels,
         refreshFortune:refreshFortune,
         refreshResolve:refreshResolve,
 
@@ -2617,6 +2747,19 @@ const slModule = ( () => {
 // SHEET OPENED
 
 on(`sheet:opened`, eventInfo => slModule.initSheet());
+// Level completion indicators on each career level.
+{
+    const levelTriggers = [
+        "sheet:opened", "change:repeating_careers", "remove:repeating_careers", "change:repeating_talent", "remove:repeating_talent",
+        "change:repeating_grants", "remove:repeating_grants",
+        ...slModule.sl.characteristics.map(c => `change:${c}_advances`),
+        ...slModule.sl.skills.map(s => `change:${s}_advances`),
+        ...slModule.sl.specialisations.map(s => `change:${s}_advances`),
+        ...slModule.sl.repeating_skills.map(g => `change:repeating_${g}:specialisation_advances change:repeating_${g}:specialisation_name`),
+        ...[...Array(10).keys()].map(i => `change:species_talent_${i + 1}_name change:species_talent_${i + 1}_advances`),
+    ];
+    on(levelTriggers.join(" "), eventInfo => slModule.checkCareerLevels());
+}
 on(`sheet:opened change:repeating_talent:talent_name remove:repeating_talent ${[...Array(10).keys()].map(i => `change:species_talent_${i + 1}_name change:species_talent_${i + 1}_advances`).join(" ")}`, eventInfo => slModule.applySizeFromTalents());
 
 // SHEET FUNCTIONS
